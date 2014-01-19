@@ -82,8 +82,4 @@ public class Text implements CharSequence {
     public ListAttribute<ValueAttribute<ISO15924>> getScriptRegions() {
         return (ListAttribute<ValueAttribute<ISO15924>>) attributes.get(SCRIPT_REGION_ATTRIBUTE);
     }
-
-
-
-
 }

@@ -28,25 +28,33 @@ public class Token extends Attribute {
     private final List<String> normalized;
     private final List<String> partOfSpeech;
     private final List<String> lemma;
+    private final List<String> stem;
     private final List<List<String>> readings;
     // if components, they are represented as tokens, so that they can have offsets, POS, etc.
     private final List<List<Token>> components;
     private final String source;
+    private final List<String> variations;
 
     public Token(int startOffset, int endOffset,
                  String text,
                  List<String> normalized,
-                 List<String> partOfSpeech, List<String> lemma, List<List<String>> readings,
+                 List<String> partOfSpeech,
+                 List<String> lemma,
+                 List<String> stem,
+                 List<List<String>> readings,
                  List<List<Token>> components,
-                 String source) {
+                 String source,
+                 List<String> variations) {
         super(Token.class.getName(), startOffset, endOffset);
         this.text = text;
         this.normalized = normalized;
         this.partOfSpeech = partOfSpeech;
         this.lemma = lemma;
+        this.stem = stem;
         this.readings = readings;
         this.components = components;
         this.source = source;
+        this.variations = variations;
     }
 
     public String getText() {
@@ -65,6 +73,10 @@ public class Token extends Attribute {
         return lemma;
     }
 
+    public List<String> getStem() {
+        return stem;
+    }
+
     public List<List<String>> getReadings() {
         return readings;
     }
@@ -77,14 +89,20 @@ public class Token extends Attribute {
         return source;
     }
 
+    public List<String> getVariations() {
+        return variations;
+    }
+
     public static class Builder extends Attribute.Builder {
         private String text;
         private List<String> normalized;
         private List<String> partOfSpeech;
         private List<String> lemma;
+        private List<String> stem;
         private List<List<String>> readings;
         private List<List<Token>> components;
         private String source;
+        private List<String> variations;
 
         public Builder(int startOffset, int endOffset, String text) {
             super(Token.class.getName(), startOffset, endOffset);
@@ -92,8 +110,10 @@ public class Token extends Attribute {
             normalized = Lists.newArrayList();
             partOfSpeech = Lists.newArrayList();
             lemma = Lists.newArrayList();
+            stem = Lists.newArrayList();
             readings = Lists.newArrayList();
             components = Lists.newArrayList();
+            variations = Lists.newArrayList();
         }
 
         public Builder(Token toCopy) {
@@ -102,8 +122,10 @@ public class Token extends Attribute {
             normalized.addAll(toCopy.normalized);
             partOfSpeech.addAll(toCopy.partOfSpeech);
             lemma.addAll(toCopy.lemma);
+            stem.addAll(toCopy.stem);
             readings.addAll(toCopy.readings);
             components.addAll(toCopy.components);
+            variations.addAll(toCopy.variations);
         }
 
         public void text(String text) {
@@ -122,6 +144,10 @@ public class Token extends Attribute {
             this.lemma.add(lemma);
         }
 
+        public void addStem(String stem) {
+            this.stem.add(stem);
+        }
+
         public void addReadings(List<String> readings) {
             this.readings.add(readings);
         }
@@ -134,8 +160,14 @@ public class Token extends Attribute {
             this.source = source;
         }
 
+        public void addVariation(String variation) {
+            this.variations.add(variation);
+        }
+
         public Token build() {
-            Token token = new Token(startOffset, endOffset, text, normalized, partOfSpeech, lemma, readings, components, source);
+            Token token = new Token(startOffset, endOffset, text, normalized, partOfSpeech, lemma, stem,
+                readings, components, source,
+                variations);
             token.extendedProperties.putAll(extendedProperties);
             return token;
         }

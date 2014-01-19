@@ -16,6 +16,7 @@ package com.basistech.dm;
 
 import com.google.common.collect.Lists;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -24,16 +25,33 @@ import java.util.List;
  * {@link Text} to have a set of tokens or named entities or language
  * regions or whatever.
  */
-public class ListAttribute<Item extends BaseAttribute> extends Attribute {
+public class ListAttribute<Item extends BaseAttribute> extends BaseAttribute {
 
     private final List<Item> items;
 
-    public ListAttribute(String type, int startOffset, int endOffset) {
-        super(type, startOffset, endOffset);
-        items = Lists.newArrayList();
+    public ListAttribute(List<Item> items) {
+        super(ListAttribute.class.getName());
+        this.items = Collections.unmodifiableList(items);
     }
 
     public List<Item> getItems() {
         return items;
+    }
+
+    public static class Builder<Item extends BaseAttribute> extends BaseAttribute.Builder {
+        private List<Item> items;
+
+        public Builder() {
+            super(ListAttribute.class.getName());
+            items = Lists.newArrayList();
+        }
+
+        public void add(Item item) {
+            items.add(item);
+        }
+
+        public ListAttribute<Item> build() {
+            return new ListAttribute<Item>(items);
+        }
     }
 }

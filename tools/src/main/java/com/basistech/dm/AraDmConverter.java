@@ -16,6 +16,9 @@
 package com.basistech.dm;
 
 import com.basistech.rlp.AbstractResultAccess;
+import com.google.common.collect.Lists;
+
+import java.util.List;
 
 /**
  * Convert an {@link com.basistech.rlp.AbstractResultAccess} to a {@link Text}.
@@ -26,7 +29,150 @@ public final class AraDmConverter {
     }
 
     public static Text convert(AbstractResultAccess ara) {
+        Text text = new Text(ara.getRawText(), 0, ara.getRawText().length);
+        // no provisions for original binary data, so no getRawBytes.
+        /* an ARA by itself doesn't have language regions or detections;
+         * The code for that is just in the RWS, so we'll ignore it at this prototype stage.
+         */
 
+        buildTokens(ara, text);
+        buildEntities(ara, text);
+
+        return text;
+    }
+
+    private static void buildEntities(AbstractResultAccess ara, Text text) {
+
+    }
+
+    private static void buildTokens(AbstractResultAccess ara, Text text) {
+        ListAttribute.Builder<Token> tokenListBuilder = new ListAttribute.Builder<Token>();
+        int tokenCount = ara.getTokens().length;
+
+        for (int x = 0; x < tokenCount; x++) {
+            tokenListBuilder.add(buildOneToken(ara, x));
+        }
+        text.getAttributes().put(Token.class.getName(), tokenListBuilder.build());
+    }
+
+    private static Token buildOneToken(AbstractResultAccess ara, int x) {
+        int start = ara.getTokenOffset()[x * 2];
+        int end = ara.getTokenOffset()[(x * 2) + 1];
+        Token.Builder builder = new Token.Builder(start, end, ara.getTokens()[x]);
+        // todo, the arabic PSL stuff, or strings, more likely, for the bits.
+        if (ara.getTokenVariations() != null) {
+            String[] variations = ara.getTokenVariations().getStringsForTokenIndex(x);
+            if (variations != null) {
+                for (String variation : variations) {
+                    builder.addVariation(variation);
+                }
+            }
+        }
+        if (ara.getPartOfSpeech() != null) {
+            builder.addPartOfSpeech(ara.getPartOfSpeech()[x]);
+        }
+
+        if (ara.getAlternativePartsOfSpeech() != null) {
+            String[] parts = ara.getAlternativePartsOfSpeech().getStringsForTokenIndex(x);
+            if (parts != null) {
+                for (String part : parts) {
+                    builder.addPartOfSpeech(part);
+                }
+            }
+        }
+
+        if (ara.getLemma() != null) {
+            builder.addLemma(ara.getLemma()[x]);
+        }
+        if (ara.getAlternativeLemmas() != null) {
+            String[] lemmas = ara.getAlternativeLemmas().getStringsForTokenIndex(x);
+            if (lemmas != null) {
+                for (String lemma : lemmas) {
+                    builder.addLemma(lemma);
+                }
+            }
+        }
+
+        if (ara.getStem() != null) {
+            builder.addStem(ara.getStem()[x]);
+        }
+        if (ara.getAlternativeStems() != null) {
+            String[] stems = ara.getAlternativeStems().getStringsForTokenIndex(x);
+            if (stems != null) {
+                for (String stem : stems) {
+                    builder.addLemma(stem);
+                }
+            }
+        }
+
+        if (ara.getNormalizedToken() != null) {
+            builder.addNormalized(ara.getNormalizedToken()[x]);
+        }
+        if (ara.getAlternativeNormalizedToken() != null) {
+            String[] norms = ara.getAlternativeNormalizedToken().getStringsForTokenIndex(x);
+            if (norms != null) {
+                for (String norm : norms) {
+                    builder.addNormalized(norm);
+                }
+            }
+        }
+        // TODO: Many-to-One, which may contain redundant data?
+        // TODO: 'roots', not yet allowed for in token?
+        if (ara.getReading() != null) {
+            String[] readings = ara.getReading().getStringsForTokenIndex(x);
+            if (readings != null) {
+                // the ellipsis in newArrayList should accept the String[].
+                List<String> readingsInList = Lists.newArrayList(readings);
+                builder.addReadings(readingsInList);
+            }
+        }
+
+        if (ara.getCompound() != null) {
+            String[] comps = ara.getCompound().getStringsForTokenIndex(x);
+            if (comps != null) {
+                builder.addComponents(buildTokensForComps(comps, start, end));
+            }
+        }
+
+        if (ara.getAlternativeCompounds() != null) {
+            String[] encComps = ara.getAlternativeCompounds().getStringsForTokenIndex(x);
+            if (encComps != null) {
+                List<List<Token>> alts = buildTokensForAltComps(encComps, start, end);
+                for (List<Token> alt : alts) {
+                    builder.addComponents(alt);
+                }
+            }
+        }
+
+        if (ara.getTokenSourceName() != null) {
+            builder.source(ara.getTokenSourceName()[x]);
+        }
+
+        return builder.build();
+    }
+
+    private static List<List<Token>> buildTokensForAltComps(String[] encComps, int start, int end) {
+        List<List<Token>> tokenSets = Lists.newArrayList();
+        for (String compSet : encComps) {
+            List<Token> tokens = Lists.newArrayList();
+            // hmm, we can't get the delim easily, and this is all for show at this point.
+            String[] comps = compSet.split("\uf8ff");
+            for (String comp : comps) {
+                Token.Builder builder = new Token.Builder(start, end, comp);
+                tokens.add(builder.build());
+            }
+            tokenSets.add(tokens);
+        }
+        return tokenSets;
+    }
+
+    private static List<Token> buildTokensForComps(String[] comps, int start, int end) {
+        List<Token> tokens = Lists.newArrayList();
+        for (String comp : comps) {
+            Token.Builder builder = new Token.Builder(start, end, comp);
+            tokens.add(builder.build());
+        }
+        return tokens;
     }
 
 }
