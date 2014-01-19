@@ -17,14 +17,13 @@ package com.basistech.dm;
 /**
  * An entity
  */
-public class EntityMention extends TokenRangeAttribute {
+public class EntityMention extends Attribute {
     private final String entityType;
     private final double confidence;
 
     public EntityMention(int startOffset, int endOffset,
-                         int startTokenOffset, int endTokenOffset,
                          String entityType, double confidence) {
-        super(EntityMention.class.getName(), startOffset, endOffset, startTokenOffset, endTokenOffset);
+        super(EntityMention.class.getName(), startOffset, endOffset);
         this.entityType = entityType;
         this.confidence = confidence;
     }
