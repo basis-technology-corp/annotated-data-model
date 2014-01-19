@@ -20,12 +20,19 @@ package com.basistech.dm;
 public class EntityMention extends Attribute {
     private final String entityType;
     private final double confidence;
+    private final int coreferenceChainId;
+    private final int flags;
+    private final String source;
 
     public EntityMention(int startOffset, int endOffset,
-                         String entityType, double confidence) {
+                         String entityType, int coreferenceChainId, double confidence, int flags,
+                         String source) {
         super(EntityMention.class.getName(), startOffset, endOffset);
         this.entityType = entityType;
         this.confidence = confidence;
+        this.coreferenceChainId = coreferenceChainId;
+        this.flags = flags;
+        this.source = source;
     }
 
     public String getEntityType() {
@@ -34,5 +41,68 @@ public class EntityMention extends Attribute {
 
     public double getConfidence() {
         return confidence;
+    }
+
+    public int getCoreferenceChainId() {
+        return coreferenceChainId;
+    }
+
+    public int getFlags() {
+        return flags;
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    /**
+     * Fluent builder to deal with all these annoying facts.
+     */
+    public static class Builder extends Attribute.Builder {
+        private String entityType;
+        private double confidence;
+        private int coreferenceChainId;
+        private int flags;
+        private String source;
+
+        public Builder(int startOffset, int endOffset, String entityType) {
+            super(EntityMention.class.getName(), startOffset, endOffset);
+            this.entityType = entityType;
+        }
+
+        public Builder(EntityMention toCopy) {
+            super(toCopy);
+            this.entityType = toCopy.entityType;
+            this.confidence = toCopy.confidence;
+            this.coreferenceChainId = toCopy.coreferenceChainId;
+            this.flags = toCopy.flags;
+            this.source = toCopy.source;
+        }
+
+        public void entityType(String entityType) {
+            this.entityType = entityType;
+        }
+
+        public void confidence(double confidence) {
+            this.confidence = confidence;
+        }
+
+        public void coreferenceChainId(int coreferenceChainId) {
+            this.coreferenceChainId = coreferenceChainId;
+        }
+
+        public void flags(int flags) {
+            this.flags = flags;
+        }
+
+        public void source(String source) {
+            this.source = source;
+        }
+
+        public EntityMention build() {
+            EntityMention mention = new EntityMention(startOffset, endOffset, entityType, coreferenceChainId, confidence, flags, source);
+            mention.extendedProperties.putAll(this.extendedProperties);
+            return mention;
+        }
     }
 }

@@ -33,7 +33,7 @@ public class Text implements CharSequence {
      * Only one attribute of a type is permitted, thus the concept
      * of a SetAttribute.
      */
-    private final Map<String, Attribute> attributes;
+    private final Map<String, BaseAttribute> attributes;
 
     public Text(char[] data, int startOffset, int endOffset) {
         this.data = data;
@@ -54,7 +54,7 @@ public class Text implements CharSequence {
         return new String(data, start + startOffset, end - start);
     }
 
-    public Map<String, Attribute> getAttributes() {
+    public Map<String, BaseAttribute> getAttributes() {
         return attributes;
     }
 
@@ -69,8 +69,8 @@ public class Text implements CharSequence {
     }
 
     @SuppressWarnings("unchecked")
-    public ListAttribute<Attribute> getSentences() {
-        return (ListAttribute<Attribute>)attributes.get(SENTENCE_ATTRIBUTE);
+    public ListAttribute<BaseAttribute> getSentences() {
+        return (ListAttribute<BaseAttribute>)attributes.get(SENTENCE_ATTRIBUTE);
     }
 
     @SuppressWarnings("unchecked")

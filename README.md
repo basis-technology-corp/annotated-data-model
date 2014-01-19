@@ -19,6 +19,12 @@ with Jackson. Attributes can, as a result have attibutes.
 * Tokens: Much of the complexity of all this adheres to the tokens.
 * Named Entities: and other spans.
 
+## Mutability ##
+
+Currently, all the attribute classes are immutable. The idea is that mutation requires making a new one.
+If we decide that this bit of functional programming thinking is in fact evidence of confused thinking, we can add
+setters.
+
 ## Token Data Model ##
 
 We need to be able to represent the current output of RLP. This is a bit messy. In RLP, a token can have a set of 'alternative lemmas',
@@ -36,5 +42,12 @@ David Murgatroyd has pointed out that the concept of 'correct' or 'selected' is 
 disambiguation reorders the multi-valued attributes so that the right answer is in the \[0] slot. If we ever do a full
 ranking component, it could deliver a full order. I think that this is preferable to the RLP-like solution of a additional attributes
 to contain the selected solution from amongst the multiple alternatives.
+
+## Entity Data Model ##
+
+Entities have offsets, type, confidence, and chainId. Keeping an integer chain ID is a compromise; we could add a new top-level
+attribute called 'CoreferenceChain' that stored a list of EntityMentions. That would require care in serialization and deserialization,
+but I skipped that work for the moment.
+
 
 

@@ -12,28 +12,21 @@
  ** 7-104.9(a).
  ******************************************************************************/
 
+
 package com.basistech.dm;
 
-import com.google.common.collect.Lists;
-
-import java.util.List;
+import com.basistech.rlp.AbstractResultAccess;
 
 /**
- * When attributes nest, the outer object has a single attribute
- * that carries the set. The obvious use of this is for an entire
- * {@link Text} to have a set of tokens or named entities or language
- * regions or whatever.
+ * Convert an {@link com.basistech.rlp.AbstractResultAccess} to a {@link Text}.
  */
-public class ListAttribute<Item extends BaseAttribute> extends Attribute {
-
-    private final List<Item> items;
-
-    public ListAttribute(String type, int startOffset, int endOffset) {
-        super(type, startOffset, endOffset);
-        items = Lists.newArrayList();
+public final class AraDmConverter {
+    private AraDmConverter() {
+        //
     }
 
-    public List<Item> getItems() {
-        return items;
+    public static Text convert(AbstractResultAccess ara) {
+
     }
+
 }

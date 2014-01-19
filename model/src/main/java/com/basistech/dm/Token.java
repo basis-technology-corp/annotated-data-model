@@ -14,45 +14,130 @@
 
 package com.basistech.dm;
 
+import com.google.common.collect.Lists;
+
+import java.util.List;
+
 /**
- * The token.
+ * The token. A token carries multiple possible values for a set of
+ * analytical attributes.
  */
 public class Token extends Attribute {
-    private final String[] normalized;
-    private final String[] partOfSpeech;
-    private final String[] lemma;
-    private final String[][] reading;
+    // we don't want to have to go look at the parent {@link Text}.
+    private final String text;
+    private final List<String> normalized;
+    private final List<String> partOfSpeech;
+    private final List<String> lemma;
+    private final List<List<String>> readings;
     // if components, they are represented as tokens, so that they can have offsets, POS, etc.
-    private final ListAttribute<Token> components;
+    private final List<List<Token>> components;
+    private final String source;
 
-    public Token(int startOffset, int endOffset, String[] normalized,
-                 String[] partOfSpeech, String[] lemma, String[][] reading,
-                 ListAttribute<Token> components) {
+    public Token(int startOffset, int endOffset,
+                 String text,
+                 List<String> normalized,
+                 List<String> partOfSpeech, List<String> lemma, List<List<String>> readings,
+                 List<List<Token>> components,
+                 String source) {
         super(Token.class.getName(), startOffset, endOffset);
+        this.text = text;
         this.normalized = normalized;
         this.partOfSpeech = partOfSpeech;
         this.lemma = lemma;
-        this.reading = reading;
+        this.readings = readings;
         this.components = components;
+        this.source = source;
     }
 
-    public String[] getNormalized() {
+    public String getText() {
+        return text;
+    }
+
+    public List<String> getNormalized() {
         return normalized;
     }
 
-    public String[] getPartOfSpeech() {
+    public List<String> getPartOfSpeech() {
         return partOfSpeech;
     }
 
-    public String[] getLemma() {
+    public List<String> getLemma() {
         return lemma;
     }
 
-    public String[][] getReading() {
-        return reading;
+    public List<List<String>> getReadings() {
+        return readings;
     }
 
-    public ListAttribute<Token> getComponents() {
+    public List<List<Token>> getComponents() {
         return components;
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public static class Builder extends Attribute.Builder {
+        private String text;
+        private List<String> normalized;
+        private List<String> partOfSpeech;
+        private List<String> lemma;
+        private List<List<String>> readings;
+        private List<List<Token>> components;
+        private String source;
+
+        public Builder(int startOffset, int endOffset, String text) {
+            super(Token.class.getName(), startOffset, endOffset);
+            this.text = text;
+            normalized = Lists.newArrayList();
+            partOfSpeech = Lists.newArrayList();
+            lemma = Lists.newArrayList();
+            readings = Lists.newArrayList();
+            components = Lists.newArrayList();
+        }
+
+        public Builder(Token toCopy) {
+            super(toCopy);
+            text = toCopy.text;
+            normalized.addAll(toCopy.normalized);
+            partOfSpeech.addAll(toCopy.partOfSpeech);
+            lemma.addAll(toCopy.lemma);
+            readings.addAll(toCopy.readings);
+            components.addAll(toCopy.components);
+        }
+
+        public void text(String text) {
+            this.text = text;
+        }
+
+        public void addNormalized(String normalized) {
+            this.normalized.add(normalized);
+        }
+
+        public void addPartOfSpeech(String partOfSpeech) {
+            this.partOfSpeech.add(partOfSpeech);
+        }
+
+        public void addLemma(String lemma) {
+            this.lemma.add(lemma);
+        }
+
+        public void addReadings(List<String> readings) {
+            this.readings.add(readings);
+        }
+
+        public void addComponents(List<Token> components) {
+            this.components.add(components);
+        }
+
+        public void source(String source) {
+            this.source = source;
+        }
+
+        public Token build() {
+            Token token = new Token(startOffset, endOffset, text, normalized, partOfSpeech, lemma, readings, components, source);
+            token.extendedProperties.putAll(extendedProperties);
+            return token;
+        }
     }
 }

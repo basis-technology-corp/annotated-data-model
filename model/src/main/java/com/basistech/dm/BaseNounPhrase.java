@@ -14,26 +14,26 @@
 
 package com.basistech.dm;
 
-import com.google.common.collect.Lists;
-
-import java.util.List;
-
 /**
- * When attributes nest, the outer object has a single attribute
- * that carries the set. The obvious use of this is for an entire
- * {@link Text} to have a set of tokens or named entities or language
- * regions or whatever.
+ * A base noun phrase.
  */
-public class ListAttribute<Item extends BaseAttribute> extends Attribute {
+public class BaseNounPhrase extends Attribute {
 
-    private final List<Item> items;
-
-    public ListAttribute(String type, int startOffset, int endOffset) {
-        super(type, startOffset, endOffset);
-        items = Lists.newArrayList();
+    public BaseNounPhrase(int startOffset, int endOffset) {
+        super(BaseNounPhrase.class.getName(), startOffset, endOffset);
     }
 
-    public List<Item> getItems() {
-        return items;
+    public static class Builder extends Attribute.Builder {
+        public Builder(int startOffset, int endOffset) {
+            super(BaseNounPhrase.class.getName(), startOffset, endOffset);
+        }
+
+        public Builder(BaseNounPhrase toCopy) {
+            super(toCopy);
+        }
+
+        public BaseNounPhrase build() {
+            return new BaseNounPhrase(startOffset, endOffset);
+        }
     }
 }

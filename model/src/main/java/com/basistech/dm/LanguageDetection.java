@@ -20,20 +20,59 @@ import com.basistech.util.LanguageCode;
  * A detected language.
  */
 public class LanguageDetection extends Attribute {
-    private final LanguageCode[] language;
-    private final double[] confidence;
 
-    public LanguageDetection(int startOffset, int endOffset, LanguageCode[] language, double[] confidence) {
+    public static class DetectionResult {
+        private final LanguageCode language;
+        private final String encoding;
+        private final double confidence;
+
+        public DetectionResult(LanguageCode language, String encoding, double confidence) {
+            this.language = language;
+            this.encoding = encoding;
+            this.confidence = confidence;
+        }
+
+        public LanguageCode getLanguage() {
+            return language;
+        }
+
+        public String getEncoding() {
+            return encoding;
+        }
+
+        public double getConfidence() {
+            return confidence;
+        }
+    }
+
+    private final DetectionResult[] detectionResults;
+
+    public LanguageDetection(int startOffset, int endOffset, DetectionResult[] detectionResults) {
         super(LanguageDetection.class.getName(), startOffset, endOffset);
-        this.language = language;
-        this.confidence = confidence;
+        this.detectionResults = detectionResults;
     }
 
-    public LanguageCode[] getLanguage() {
-        return language;
+    public DetectionResult[] getDetectionResults() {
+        return detectionResults;
     }
 
-    public double[] getConfidence() {
-        return confidence;
+    public static class Builder extends Attribute.Builder {
+        private DetectionResult[] detectionResults;
+
+        public Builder(int startOffset, int endOffset, DetectionResult[] detectionResults) {
+            super(LanguageDetection.class.getName(), startOffset, endOffset);
+            this.detectionResults = detectionResults;
+        }
+
+        public Builder(LanguageDetection toCopy) {
+            super(toCopy);
+            this.detectionResults = toCopy.detectionResults;
+        }
+
+        public LanguageDetection build() {
+            LanguageDetection detection = new LanguageDetection(startOffset, endOffset, detectionResults);
+            detection.extendedProperties.putAll(extendedProperties);
+            return detection;
+        }
     }
 }
