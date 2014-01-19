@@ -20,10 +20,9 @@ import com.google.common.collect.Maps;
 import java.util.Map;
 
 /**
- * The root of the data model. A blob of text and its atttibutes.
+ * The root of the data model. A blob of text and its attributes.
  */
 public class Text implements CharSequence {
-    private static final String SENTENCE_ATTRIBUTE = "com.basistech.dm.Sentence";
     private static final String SCRIPT_REGION_ATTRIBUTE = "com.basistech.dm.ScriptRegion";
 
     private final char[] data;
@@ -66,11 +65,6 @@ public class Text implements CharSequence {
     @SuppressWarnings("unchecked")
     public ListAttribute<LanguageDetection> getLanguageDetections() {
         return (ListAttribute<LanguageDetection>)attributes.get(LanguageDetection.class.getName());
-    }
-
-    @SuppressWarnings("unchecked")
-    public ListAttribute<BaseAttribute> getSentences() {
-        return (ListAttribute<BaseAttribute>)attributes.get(SENTENCE_ATTRIBUTE);
     }
 
     @SuppressWarnings("unchecked")

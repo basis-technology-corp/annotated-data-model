@@ -23,16 +23,18 @@ public class EntityMention extends Attribute {
     private final int coreferenceChainId;
     private final int flags;
     private final String source;
+    private final String normalized;
 
     public EntityMention(int startOffset, int endOffset,
                          String entityType, int coreferenceChainId, double confidence, int flags,
-                         String source) {
+                         String source, String normalized) {
         super(EntityMention.class.getName(), startOffset, endOffset);
         this.entityType = entityType;
         this.confidence = confidence;
         this.coreferenceChainId = coreferenceChainId;
         this.flags = flags;
         this.source = source;
+        this.normalized = normalized;
     }
 
     public String getEntityType() {
@@ -55,6 +57,10 @@ public class EntityMention extends Attribute {
         return source;
     }
 
+    public String getNormalized() {
+        return normalized;
+    }
+
     /**
      * Fluent builder to deal with all these annoying facts.
      */
@@ -64,6 +70,7 @@ public class EntityMention extends Attribute {
         private int coreferenceChainId;
         private int flags;
         private String source;
+        private String normalized;
 
         public Builder(int startOffset, int endOffset, String entityType) {
             super(EntityMention.class.getName(), startOffset, endOffset);
@@ -77,6 +84,7 @@ public class EntityMention extends Attribute {
             this.coreferenceChainId = toCopy.coreferenceChainId;
             this.flags = toCopy.flags;
             this.source = toCopy.source;
+            this.normalized = toCopy.normalized;
         }
 
         public void entityType(String entityType) {
@@ -99,8 +107,13 @@ public class EntityMention extends Attribute {
             this.source = source;
         }
 
+        public void normalized(String normalized) {
+            this.normalized = normalized;
+        }
+
         public EntityMention build() {
-            EntityMention mention = new EntityMention(startOffset, endOffset, entityType, coreferenceChainId, confidence, flags, source);
+            EntityMention mention = new EntityMention(startOffset, endOffset, entityType, coreferenceChainId, confidence, flags, source,
+                normalized);
             mention.extendedProperties.putAll(this.extendedProperties);
             return mention;
         }

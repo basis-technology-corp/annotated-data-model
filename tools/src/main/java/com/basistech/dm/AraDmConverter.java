@@ -42,7 +42,41 @@ public final class AraDmConverter {
     }
 
     private static void buildEntities(AbstractResultAccess ara, Text text) {
+        ListAttribute.Builder<EntityMention> entityListBuilder = new ListAttribute.Builder<EntityMention>();
+        int namedEntityCount = ara.getNamedEntitySourceString().length;
 
+        for (int x = 0; x < namedEntityCount; x++) {
+            entityListBuilder.add(buildOneEntity(ara, x));
+        }
+        text.getAttributes().put(EntityMention.class.getName(), entityListBuilder.build());
+    }
+
+    private static EntityMention buildOneEntity(AbstractResultAccess ara, int x) {
+        int startToken = ara.getNamedEntity()[x * 3];
+        int endToken = ara.getNamedEntity()[(x + 3) + 1];
+        String entityType = ara.getNamedEntityTypeString()[x];
+
+        int start = ara.getTokenOffset()[startToken * 2];
+        int end = ara.getTokenOffset()[(endToken * 2) + 1];
+
+        EntityMention.Builder builder = new EntityMention.Builder(start, end, entityType);
+        if (ara.getNamedEntityTokenConfidence() != null) {
+            double confidence = Double.POSITIVE_INFINITY;
+            for (int tx = start; tx < end; tx++) {
+                confidence = Math.min(confidence, ara.getNamedEntityTokenConfidence()[tx]);
+            }
+            builder.confidence(confidence);
+        }
+        if (ara.getNamedEntityChainId() != null) {
+            builder.coreferenceChainId(ara.getNamedEntityChainId()[x]);
+        }
+        if (ara.getNormalizedNamedEntity() != null) {
+            builder.normalized(ara.getNormalizedNamedEntity()[x]);
+        }
+        if (ara.getNamedEntitySourceString() != null) {
+            builder.source(ara.getNamedEntitySourceString()[x]);
+        }
+        return builder.build();
     }
 
     private static void buildTokens(AbstractResultAccess ara, Text text) {
