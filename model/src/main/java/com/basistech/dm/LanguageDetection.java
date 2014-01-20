@@ -48,7 +48,7 @@ public class LanguageDetection extends Attribute {
     private final DetectionResult[] detectionResults;
 
     public LanguageDetection(int startOffset, int endOffset, DetectionResult[] detectionResults) {
-        super(LanguageDetection.class.getName(), startOffset, endOffset);
+        super(startOffset, endOffset);
         this.detectionResults = detectionResults;
     }
 
@@ -60,7 +60,7 @@ public class LanguageDetection extends Attribute {
         private DetectionResult[] detectionResults;
 
         public Builder(int startOffset, int endOffset, DetectionResult[] detectionResults) {
-            super(LanguageDetection.class.getName(), startOffset, endOffset);
+            super(startOffset, endOffset);
             this.detectionResults = detectionResults;
         }
 

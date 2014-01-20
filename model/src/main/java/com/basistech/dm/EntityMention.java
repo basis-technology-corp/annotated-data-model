@@ -28,13 +28,23 @@ public class EntityMention extends Attribute {
     public EntityMention(int startOffset, int endOffset,
                          String entityType, int coreferenceChainId, double confidence, int flags,
                          String source, String normalized) {
-        super(EntityMention.class.getName(), startOffset, endOffset);
+        super(startOffset, endOffset);
         this.entityType = entityType;
         this.confidence = confidence;
         this.coreferenceChainId = coreferenceChainId;
         this.flags = flags;
         this.source = source;
         this.normalized = normalized;
+    }
+
+    protected EntityMention() {
+        // make jackson happy.
+        entityType = null;
+        confidence = 0.0;
+        coreferenceChainId = 0;
+        flags = 0;
+        source = null;
+        normalized = null;
     }
 
     public String getEntityType() {
@@ -73,7 +83,7 @@ public class EntityMention extends Attribute {
         private String normalized;
 
         public Builder(int startOffset, int endOffset, String entityType) {
-            super(EntityMention.class.getName(), startOffset, endOffset);
+            super(startOffset, endOffset);
             this.entityType = entityType;
         }
 

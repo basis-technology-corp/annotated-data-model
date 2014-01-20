@@ -23,9 +23,13 @@ public class SentenceBoundaries extends BaseAttribute {
     private final int[] tokenBoundaries;
 
     public SentenceBoundaries(int [] charBoundaries, int[] tokenBoundaries) {
-        super(SentenceBoundaries.class.getName());
         this.charBoundaries = charBoundaries;
         this.tokenBoundaries = tokenBoundaries;
+    }
+
+    protected SentenceBoundaries() {
+        charBoundaries = null;
+        tokenBoundaries = null;
     }
 
     public int[] getCharBoundaries() {
@@ -41,7 +45,7 @@ public class SentenceBoundaries extends BaseAttribute {
         private int[] tokenBoundaries;
 
         public Builder() {
-            super(SentenceBoundaries.class.getName());
+            //
         }
 
         public Builder(SentenceBoundaries toCopy) {

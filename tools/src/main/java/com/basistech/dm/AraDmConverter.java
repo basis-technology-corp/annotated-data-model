@@ -16,8 +16,18 @@
 package com.basistech.dm;
 
 import com.basistech.rlp.AbstractResultAccess;
+import com.basistech.rlp.ResultAccessDeserializer;
+import com.basistech.rlp.ResultAccessSerializedFormat;
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.databind.MappingJsonFactory;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import com.google.common.collect.Lists;
+import org.apache.commons.io.IOUtils;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.List;
 
 /**
@@ -37,8 +47,42 @@ public final class AraDmConverter {
 
         buildTokens(ara, text);
         buildEntities(ara, text);
+        buildSentences(ara, text);
 
         return text;
+    }
+
+    public static void main(String[] args) throws Exception {
+        if (args.length != 2) {
+            System.err.println("Usage: AraDmConverter ara.json dm.json");
+            return;
+        }
+
+        ResultAccessDeserializer rad = new ResultAccessDeserializer();
+        rad.setFormat(ResultAccessSerializedFormat.JSON);
+        InputStream input = null;
+        AbstractResultAccess ara;
+        try {
+            input = new FileInputStream(args[0]);
+            ara = rad.deserializeAbstractResultAccess(input);
+        } finally {
+            IOUtils.closeQuietly(input);
+        }
+
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectWriter writer = mapper.writer().withDefaultPrettyPrinter();
+        writer.writeValue(new File(args[1]), convert(ara));
+    }
+
+    private static void buildSentences(AbstractResultAccess ara, Text text) {
+        SentenceBoundaries.Builder builder = new SentenceBoundaries.Builder();
+        if (ara.getSentenceBoundaries() != null) {
+            builder.tokenBoundaries(ara.getSentenceBoundaries());
+        }
+        if (ara.getTextBoundaries() != null) {
+            builder.charBoundaries(ara.getTextBoundaries());
+        }
+        text.getAttributes().put(SentenceBoundaries.class.getName(), builder.build());
     }
 
     private static void buildEntities(AbstractResultAccess ara, Text text) {
@@ -53,7 +97,7 @@ public final class AraDmConverter {
 
     private static EntityMention buildOneEntity(AbstractResultAccess ara, int x) {
         int startToken = ara.getNamedEntity()[x * 3];
-        int endToken = ara.getNamedEntity()[(x + 3) + 1];
+        int endToken = ara.getNamedEntity()[(x * 3) + 1];
         String entityType = ara.getNamedEntityTypeString()[x];
 
         int start = ara.getTokenOffset()[startToken * 2];

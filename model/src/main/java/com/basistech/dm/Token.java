@@ -45,7 +45,7 @@ public class Token extends Attribute {
                  List<List<Token>> components,
                  String source,
                  List<String> variations) {
-        super(Token.class.getName(), startOffset, endOffset);
+        super(startOffset, endOffset);
         this.text = text;
         this.normalized = normalized;
         this.partOfSpeech = partOfSpeech;
@@ -56,6 +56,20 @@ public class Token extends Attribute {
         this.source = source;
         this.variations = variations;
     }
+
+    protected Token() {
+        this(0, 0, null, Lists.<String>newArrayList(),
+            Lists.<String>newArrayList(),
+            Lists.<String>newArrayList(),
+            Lists.<String>newArrayList(),
+            Lists.<List<String>>newArrayList(),
+            Lists.<List<Token>>newArrayList(),
+            null,
+            Lists.<String>newArrayList());
+
+
+    }
+
 
     public String getText() {
         return text;
@@ -105,7 +119,7 @@ public class Token extends Attribute {
         private List<String> variations;
 
         public Builder(int startOffset, int endOffset, String text) {
-            super(Token.class.getName(), startOffset, endOffset);
+            super(startOffset, endOffset);
             this.text = text;
             normalized = Lists.newArrayList();
             partOfSpeech = Lists.newArrayList();

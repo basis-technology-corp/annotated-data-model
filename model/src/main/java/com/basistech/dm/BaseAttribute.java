@@ -16,6 +16,8 @@ package com.basistech.dm;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.google.common.collect.Maps;
 
 import java.util.Map;
@@ -23,17 +25,13 @@ import java.util.Map;
 /**
  * The simplest possible attribute.
  */
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "class")
+@JsonInclude(JsonInclude.Include.NON_DEFAULT)
 public class BaseAttribute {
-    protected final String type;
     protected final Map<String, Object> extendedProperties;
 
-    public BaseAttribute(String type) {
+    public BaseAttribute() {
         extendedProperties = Maps.newHashMap();
-        this.type = type;
-    }
-
-    public String getType() {
-        return type;
     }
 
     /**
@@ -47,16 +45,13 @@ public class BaseAttribute {
     }
 
     public static class Builder {
-        protected final String type;
         protected final Map<String, Object> extendedProperties;
 
-        public Builder(String type) {
-            this.type = type;
+        public Builder() {
             this.extendedProperties = Maps.newHashMap();
         }
 
         public Builder(BaseAttribute toCopy) {
-            this.type = toCopy.type;
             this.extendedProperties = Maps.newHashMap();
             this.extendedProperties.putAll(toCopy.extendedProperties);
         }
@@ -66,7 +61,7 @@ public class BaseAttribute {
         }
 
         public BaseAttribute build() {
-            BaseAttribute newAttribute =  new BaseAttribute(type);
+            BaseAttribute newAttribute =  new BaseAttribute();
             newAttribute.extendedProperties.putAll(this.extendedProperties);
             return newAttribute;
         }

@@ -15,6 +15,9 @@
 package com.basistech.dm;
 
 import com.basistech.util.ISO15924;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.collect.Maps;
 
 import java.util.Map;
@@ -34,7 +37,8 @@ public class Text implements CharSequence {
      */
     private final Map<String, BaseAttribute> attributes;
 
-    public Text(char[] data, int startOffset, int endOffset) {
+    @JsonCreator
+    public Text(@JsonProperty("data") char[] data, @JsonProperty("startOffset") int startOffset, @JsonProperty("endOffset") int endOffset) {
         this.data = data;
         this.startOffset = startOffset;
         this.endOffset = endOffset;

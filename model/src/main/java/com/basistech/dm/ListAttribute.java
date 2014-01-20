@@ -30,8 +30,11 @@ public class ListAttribute<Item extends BaseAttribute> extends BaseAttribute {
     private final List<Item> items;
 
     public ListAttribute(List<Item> items) {
-        super(ListAttribute.class.getName());
         this.items = Collections.unmodifiableList(items);
+    }
+
+    protected ListAttribute() {
+        items = Lists.newArrayList();
     }
 
     public List<Item> getItems() {
@@ -42,7 +45,6 @@ public class ListAttribute<Item extends BaseAttribute> extends BaseAttribute {
         private List<Item> items;
 
         public Builder() {
-            super(ListAttribute.class.getName());
             items = Lists.newArrayList();
         }
 

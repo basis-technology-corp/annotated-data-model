@@ -20,13 +20,19 @@ package com.basistech.dm;
  */
 public class ValueAttribute<T> extends Attribute {
     private final T value;
+    private final String type;
 
     public ValueAttribute(String type, int startOffset, int endOffset, T value) {
-        super(type, startOffset, endOffset);
+        super(startOffset, endOffset);
+        this.type = type;
         this.value = value;
     }
 
     public T getValue() {
         return value;
+    }
+
+    public String getType() {
+        return type;
     }
 }

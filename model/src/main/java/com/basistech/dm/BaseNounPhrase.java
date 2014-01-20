@@ -20,12 +20,12 @@ package com.basistech.dm;
 public class BaseNounPhrase extends Attribute {
 
     public BaseNounPhrase(int startOffset, int endOffset) {
-        super(BaseNounPhrase.class.getName(), startOffset, endOffset);
+        super(startOffset, endOffset);
     }
 
     public static class Builder extends Attribute.Builder {
         public Builder(int startOffset, int endOffset) {
-            super(BaseNounPhrase.class.getName(), startOffset, endOffset);
+            super(startOffset, endOffset);
         }
 
         public Builder(BaseNounPhrase toCopy) {

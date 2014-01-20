@@ -14,26 +14,24 @@
 
 package com.basistech.dm;
 
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.google.common.collect.Maps;
-
-import java.util.Map;
-
 /**
  * Base class for attributes. Note that this class works 'as is' for attributes
  * that simply mark a span of text as having a boolean feature.
   */
-@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "class")
 public class Attribute extends BaseAttribute {
     protected final int startOffset;
     protected final int endOffset;
 
-    public Attribute(String type, int startOffset, int endOffset) {
-        super(type);
+    public Attribute(int startOffset, int endOffset) {
         this.startOffset = startOffset;
         this.endOffset = endOffset;
+    }
+
+    // make Jackson happy.
+    protected Attribute() {
+        //
+        startOffset = 0;
+        endOffset = 0;
     }
 
     public int getStartOffset() {
@@ -48,8 +46,8 @@ public class Attribute extends BaseAttribute {
         protected int startOffset;
         protected int endOffset;
 
-        public Builder(String type, int startOffset, int endOffset) {
-            super(type);
+        public Builder(int startOffset, int endOffset) {
+            super();
             this.startOffset = startOffset;
             this.endOffset = endOffset;
         }
@@ -69,7 +67,7 @@ public class Attribute extends BaseAttribute {
         }
 
         public Attribute build() {
-            Attribute attribute = new Attribute(type, startOffset, endOffset);
+            Attribute attribute = new Attribute(startOffset, endOffset);
             attribute.extendedProperties.putAll(this.extendedProperties);
             return attribute;
         }
