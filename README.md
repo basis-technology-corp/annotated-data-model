@@ -17,7 +17,8 @@ with Jackson. Attributes can, as a result have attibutes.
 * Sentence Boundaries: just as in RLP, a sentence boundary is just a marker in the text blob. There can be other boundaries.
 * RLI attributes: such as overall languages detected and language region boundaries.
 * Tokens: Much of the complexity of all this adheres to the tokens.
-* Named Entities: and other spans.
+* Named Entities
+* Base Noun Porases
 
 ## Mutability ##
 
@@ -27,11 +28,63 @@ setters.
 
 ## Token Data Model ##
 
-We need to be able to represent the current output of RLP. This is a bit messy. In RLP, a token can have a set of 'alternative lemmas',
-and a set of 'alternative POS tags', and the two _are not connected_. This is more complex than the model of RBL-JE, which
-is that a token has one or more analyses, each consisting of a collection of attributes such as lemma and POS.
+We need to be able to represent the current output of RLP. This is a
+bit messy.  In RLP, a token can have a set of 'alternative lemmas',
+and a set of 'alternative POS tags', and the two _are not connected_,
+because the compound components are included in the lemmas. This is
+more complex than the model of RBL-JE, which is that a token has one
+or more analyses, each consisting of a collection of attributes such
+as lemma and POS. Underneath, C++ has the same data as Java, more or
+less, and we could add an option, even for '7.10.2', to make it
+possible to retrieve that model.
 
-An obvious solution here is to give a token a set of attributes, each of which can be multi-valued: a list of POS, a list of lemmas,
+Let's fill in details, language by language. 
+
+### Xerox/FST ###
+
+The output of the FSTs is a set of analyses, each consisting of:
+
+* POS
+* Lemma
+* compound components
+
+### Arabic ###
+
+The output of Buckwalter is a set of analyses, each consisting of:
+
+* Prefix/stem/suffix
+* POS
+* Lemma
+
+The P/S/S can have POS codes of their own, which we have not exposed via RLP.
+
+### Korean ###
+
+Korean is a bit in flux, but one variation looks like a set of analyses:
+
+* Lemma
+* POS, but sort of by convention
+* Compound components, each with a POS
+
+### 'Lemmatizer' / 'Dictionary Only' languages
+
+The results are a set of alternative lemmas.
+
+### Chinese ###
+
+In Chinese a token might have several possible POS tags and several possible readings. The two might or might not be connected.
+
+### Japanese ###
+
+In Japanese a token might have several possible POS tags and several possible readings. The two might or might not be connected.
+
+### The 'Term Expander' ### 
+
+In addition to all this, there is a 'term expander'. This attaches a
+set of alternative forms to a token. To me, this feels like it should
+be a Lucene TokenFilter that is not handled in this data model at all.
+
+One solution here is to give a token a set of attributes, each of which can be multi-valued: a list of POS, a list of lemmas,
 etc. Then we need to be able to indicate the interconnections when they are present. A solution here would be a `Text`-level
 boolean attribute that indicates that the token attributes correlate into 'analyses' (or not).
 
