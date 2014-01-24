@@ -50,13 +50,27 @@ The output of the FSTs is a set of analyses, each consisting of:
 
 ### Arabic ###
 
+Arabic starts by producing a 'normalized token' which consists
+of the results of cleaning up orthographic variations. There can be
+several alternative normalizations.
+
+Then, it does 'Buckwalter analysis' on each of the alternative
+normalizations, and that produces several normalizations.
+
 The output of Buckwalter is a set of analyses, each consisting of:
 
-* Prefix/stem/suffix
+* the normalized form that started this analysis.
+* division of the normalized token into prefix/stem/suffix.
 * POS
 * Lemma
+* Semitic Root
 
-The P/S/S can have POS codes of their own, which we have not exposed via RLP.
+The P/S/S can have POS codes of their own, which we have not exposed
+via RLP.
+
+On top of all of this, the code can generate a collection of
+alternative forms, for the benefit of applications that prefer to
+query for variations instead of indexing reduced forms.
 
 ### Korean ###
 
