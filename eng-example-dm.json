@@ -1,10 +1,12 @@
 {
   "attributes" : {
     "com.basistech.dm.SentenceBoundaries" : {
+      "@class" : "com.basistech.dm.SentenceBoundaries",
       "charBoundaries" : [ 72, 188, 223, 330, 502, 608, 754 ],
       "tokenBoundaries" : [ 13, 34, 42, 62, 94, 114, 140 ]
     },
     "com.basistech.dm.EntityMention" : {
+      "@class" : "com.basistech.dm.ListAttribute",
       "itemClass" : "com.basistech.dm.EntityMention",
       "items" : [ {
         "startOffset" : 16,
@@ -153,6 +155,7 @@
       } ]
     },
     "com.basistech.dm.Token" : {
+      "@class" : "com.basistech.dm.ListAttribute",
       "itemClass" : "com.basistech.dm.Token",
       "items" : [ {
         "endOffset" : 3,

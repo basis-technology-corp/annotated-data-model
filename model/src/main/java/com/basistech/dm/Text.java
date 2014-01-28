@@ -19,6 +19,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.google.common.collect.Maps;
 
 import java.util.Map;
@@ -58,6 +59,7 @@ public class Text implements CharSequence {
         return new String(data, start + startOffset, end - start);
     }
 
+    @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)
     public Map<String, BaseAttribute> getAttributes() {
         return attributes;
     }

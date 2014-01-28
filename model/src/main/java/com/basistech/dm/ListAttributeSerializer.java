@@ -17,6 +17,7 @@ package com.basistech.dm;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
+import com.fasterxml.jackson.databind.jsontype.TypeSerializer;
 
 import java.io.IOException;
 
@@ -30,5 +31,13 @@ public class ListAttributeSerializer extends JsonSerializer<ListAttribute> {
         jgen.writeStringField("itemClass", value.getItemClass().getName());
         jgen.writeObjectField("items", value.getItems());
         jgen.writeEndObject();
+    }
+
+    @Override
+    public void serializeWithType(ListAttribute value, JsonGenerator jgen, SerializerProvider provider, TypeSerializer typeSer) throws IOException {
+        typeSer.writeTypePrefixForObject(value, jgen);
+        jgen.writeStringField("itemClass", value.getItemClass().getName());
+        jgen.writeObjectField("items", value.getItems());
+        typeSer.writeTypeSuffixForObject(value, jgen);
     }
 }
