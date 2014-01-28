@@ -15,6 +15,7 @@
 package com.basistech.dm;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.google.common.collect.Lists;
 
@@ -28,6 +29,7 @@ import java.util.List;
  * regions or whatever.
  */
 @JsonSerialize(using = ListAttributeSerializer.class)
+@JsonDeserialize(using = ListAttributeDeserializer.class)
 public class ListAttribute<Item extends BaseAttribute> extends BaseAttribute {
 
     private final List<Item> items;
@@ -59,6 +61,10 @@ public class ListAttribute<Item extends BaseAttribute> extends BaseAttribute {
 
         public void add(Item item) {
             items.add(item);
+        }
+
+        public void setItems(List<Item> items) {
+            this.items.addAll(items);
         }
 
         public ListAttribute<Item> build() {
