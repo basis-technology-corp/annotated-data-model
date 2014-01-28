@@ -56,6 +56,7 @@ public class RoundTripTest extends Assert {
         writer.writeValue(jsonContainer, text);
 
         ObjectReader reader = mapper.reader(Text.class);
-        Text text2 = reader.readValue(jsonContainer.toByteArray());
+        // just see if we get an exception for now.
+        reader.readValue(jsonContainer.toByteArray());
     }
 }
