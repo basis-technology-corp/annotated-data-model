@@ -31,6 +31,9 @@ import java.util.List;
  * completely OK with the compiler, I don't know what it would be.
  */
 public class ListAttributeDeserializer extends JsonDeserializer<ListAttribute> {
+
+    static final SerializedString ITEMS = new SerializedString("items");
+
     @Override
     @SuppressWarnings("unchecked")
     public ListAttribute deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
@@ -43,7 +46,7 @@ public class ListAttributeDeserializer extends JsonDeserializer<ListAttribute> {
         } catch (ClassNotFoundException e) {
             throw new JsonMappingException("Failed to find class " + itemClassName);
         }
-        if (!jp.nextFieldName(new SerializedString("items"))) {
+        if (!jp.nextFieldName(ITEMS)) {
             throw ctxt.wrongTokenException(jp, JsonToken.FIELD_NAME, "Expected items");
         }
         List<BaseAttribute> items = Lists.newArrayList();
