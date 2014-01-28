@@ -16,6 +16,7 @@ package com.basistech.dm;
 
 import com.basistech.util.ISO15924;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.collect.Maps;
@@ -33,7 +34,7 @@ public class Text implements CharSequence {
     private final int endOffset;
     /* The attributes for this text, indexed by type.
      * Only one attribute of a type is permitted, thus the concept
-     * of a SetAttribute.
+     * of a ListAttribute.
      */
     private final Map<String, BaseAttribute> attributes;
 
@@ -61,21 +62,25 @@ public class Text implements CharSequence {
         return attributes;
     }
 
+    @JsonIgnore
     @SuppressWarnings("unchecked")
     public ListAttribute<Token> getTokens() {
         return (ListAttribute<Token>) attributes.get(Token.class.getName());
     }
 
+    @JsonIgnore
     @SuppressWarnings("unchecked")
     public ListAttribute<LanguageDetection> getLanguageDetections() {
         return (ListAttribute<LanguageDetection>)attributes.get(LanguageDetection.class.getName());
     }
 
+    @JsonIgnore
     @SuppressWarnings("unchecked")
     public ListAttribute<EntityMention> getEntityMentions() {
         return (ListAttribute<EntityMention>)attributes.get(EntityMention.class.getName());
     }
 
+    @JsonIgnore
     @SuppressWarnings("unchecked")
     public ListAttribute<ValueAttribute<ISO15924>> getScriptRegions() {
         return (ListAttribute<ValueAttribute<ISO15924>>) attributes.get(SCRIPT_REGION_ATTRIBUTE);
