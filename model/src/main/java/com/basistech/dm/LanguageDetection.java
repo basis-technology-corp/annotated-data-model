@@ -16,6 +16,8 @@ package com.basistech.dm;
 
 import com.basistech.util.LanguageCode;
 
+import java.util.Map;
+
 /**
  * A detected language.
  */
@@ -52,6 +54,11 @@ public class LanguageDetection extends Attribute {
         this.detectionResults = detectionResults;
     }
 
+    public LanguageDetection(int startOffset, int endOffset, DetectionResult[] detectionResults, Map<String, Object> extendedProperties) {
+        super(startOffset, endOffset, extendedProperties);
+        this.detectionResults = detectionResults;
+    }
+
     public DetectionResult[] getDetectionResults() {
         return detectionResults;
     }
@@ -70,9 +77,7 @@ public class LanguageDetection extends Attribute {
         }
 
         public LanguageDetection build() {
-            LanguageDetection detection = new LanguageDetection(startOffset, endOffset, detectionResults);
-            detection.extendedProperties.putAll(extendedProperties);
-            return detection;
+            return new LanguageDetection(startOffset, endOffset, detectionResults, extendedProperties);
         }
     }
 }

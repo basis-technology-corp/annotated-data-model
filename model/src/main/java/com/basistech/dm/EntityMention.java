@@ -14,6 +14,8 @@
 
 package com.basistech.dm;
 
+import java.util.Map;
+
 /**
  * An entity
  */
@@ -26,9 +28,26 @@ public class EntityMention extends Attribute {
     private final String normalized;
 
     public EntityMention(int startOffset, int endOffset,
-                         String entityType, int coreferenceChainId, double confidence, int flags,
+                         String entityType,
+                         int coreferenceChainId,
+                         double confidence, int flags,
                          String source, String normalized) {
         super(startOffset, endOffset);
+        this.entityType = entityType;
+        this.confidence = confidence;
+        this.coreferenceChainId = coreferenceChainId;
+        this.flags = flags;
+        this.source = source;
+        this.normalized = normalized;
+    }
+
+    public EntityMention(int startOffset, int endOffset,
+                         String entityType,
+                         int coreferenceChainId,
+                         double confidence,
+                         int flags, String source, String normalized,
+                         Map<String, Object> extendedProperties) {
+        super(startOffset, endOffset, extendedProperties);
         this.entityType = entityType;
         this.confidence = confidence;
         this.coreferenceChainId = coreferenceChainId;
@@ -122,10 +141,8 @@ public class EntityMention extends Attribute {
         }
 
         public EntityMention build() {
-            EntityMention mention = new EntityMention(startOffset, endOffset, entityType, coreferenceChainId, confidence, flags, source,
-                normalized);
-            mention.extendedProperties.putAll(this.extendedProperties);
-            return mention;
+            return new EntityMention(startOffset, endOffset, entityType, coreferenceChainId, confidence, flags, source,
+                normalized, extendedProperties);
         }
     }
 }

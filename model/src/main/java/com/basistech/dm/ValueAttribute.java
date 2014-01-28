@@ -14,6 +14,8 @@
 
 package com.basistech.dm;
 
+import java.util.Map;
+
 /**
  * An attribute that carries a value. Do we want to use this, or just keep making
  * specific classes? Script regions are a potential use of this.
@@ -26,6 +28,12 @@ public class ValueAttribute<T> extends Attribute {
         super(startOffset, endOffset);
         this.type = type;
         this.value = value;
+    }
+
+    public ValueAttribute(int startOffset, int endOffset, T value, String type, Map<String, Object> extendedProperties) {
+        super(startOffset, endOffset, extendedProperties);
+        this.value = value;
+        this.type = type;
     }
 
     public T getValue() {

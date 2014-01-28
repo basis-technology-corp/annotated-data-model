@@ -17,6 +17,7 @@ package com.basistech.dm;
 import com.google.common.collect.Lists;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * The token. A token carries multiple possible values for a set of
@@ -57,6 +58,19 @@ public class Token extends Attribute {
         this.variations = variations;
     }
 
+    public Token(int startOffset, int endOffset, String text, List<String> normalized, List<String> partOfSpeech, List<String> lemma, List<String> stem, List<List<String>> readings, List<List<Token>> components, String source, List<String> variations, Map<String, Object> extendedProperties) {
+        super(startOffset, endOffset, extendedProperties);
+        this.text = text;
+        this.normalized = normalized;
+        this.partOfSpeech = partOfSpeech;
+        this.lemma = lemma;
+        this.stem = stem;
+        this.readings = readings;
+        this.components = components;
+        this.source = source;
+        this.variations = variations;
+    }
+
     protected Token() {
         this(0, 0, null, Lists.<String>newArrayList(),
             Lists.<String>newArrayList(),
@@ -66,10 +80,7 @@ public class Token extends Attribute {
             Lists.<List<Token>>newArrayList(),
             null,
             Lists.<String>newArrayList());
-
-
     }
-
 
     public String getText() {
         return text;
@@ -179,11 +190,9 @@ public class Token extends Attribute {
         }
 
         public Token build() {
-            Token token = new Token(startOffset, endOffset, text, normalized, partOfSpeech, lemma, stem,
+            return new Token(startOffset, endOffset, text, normalized, partOfSpeech, lemma, stem,
                 readings, components, source,
-                variations);
-            token.extendedProperties.putAll(extendedProperties);
-            return token;
+                variations, extendedProperties);
         }
     }
 }

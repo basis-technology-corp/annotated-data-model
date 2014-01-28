@@ -14,6 +14,8 @@
 
 package com.basistech.dm;
 
+import java.util.Map;
+
 /**
  * A base noun phrase.
  */
@@ -21,6 +23,10 @@ public class BaseNounPhrase extends Attribute {
 
     public BaseNounPhrase(int startOffset, int endOffset) {
         super(startOffset, endOffset);
+    }
+
+    public BaseNounPhrase(int startOffset, int endOffset, Map<String, Object> extendedProperties) {
+        super(startOffset, endOffset, extendedProperties);
     }
 
     public static class Builder extends Attribute.Builder {

@@ -19,6 +19,7 @@ import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.google.common.collect.Maps;
 
+import java.util.Collections;
 import java.util.Map;
 
 /**
@@ -26,10 +27,15 @@ import java.util.Map;
  */
 @JsonInclude(JsonInclude.Include.NON_DEFAULT)
 public class BaseAttribute {
-    protected final Map<String, Object> extendedProperties;
+    protected Map<String, Object> extendedProperties;
 
     public BaseAttribute() {
-        extendedProperties = Maps.newHashMap();
+        Map<String, Object> emptyMap = Maps.newHashMap();
+        extendedProperties = Collections.unmodifiableMap(emptyMap);
+    }
+
+    public BaseAttribute(Map<String, Object> extendedProperties) {
+        this.extendedProperties = Collections.unmodifiableMap(extendedProperties);
     }
 
     /**
@@ -37,9 +43,18 @@ public class BaseAttribute {
      * @return home for wayward properties.
      */
     @JsonAnyGetter
-    @JsonAnySetter
     public Map<String, Object> getExtendedProperties() {
         return extendedProperties;
+    }
+
+    @JsonAnySetter
+    void setExtendedProperty(String name, Object value) {
+        /* This is only called in deserialization. So we do something
+        * to work around the read-only collection. */
+        Map<String, Object> newExtendedProperties = Maps.newHashMap();
+        newExtendedProperties.putAll(extendedProperties);
+        newExtendedProperties.put(name, value);
+        extendedProperties = Collections.unmodifiableMap(newExtendedProperties);
     }
 
     public static class Builder {
@@ -59,9 +74,7 @@ public class BaseAttribute {
         }
 
         public BaseAttribute build() {
-            BaseAttribute newAttribute =  new BaseAttribute();
-            newAttribute.extendedProperties.putAll(this.extendedProperties);
-            return newAttribute;
+            return new BaseAttribute(extendedProperties);
         }
 
     }

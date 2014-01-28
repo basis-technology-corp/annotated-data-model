@@ -14,6 +14,8 @@
 
 package com.basistech.dm;
 
+import java.util.Map;
+
 /**
  * Sentence Boundaries are an attribute of the overall text, and contain the token
  * and character offsets of the boundaries.
@@ -23,6 +25,12 @@ public class SentenceBoundaries extends BaseAttribute {
     private final int[] tokenBoundaries;
 
     public SentenceBoundaries(int [] charBoundaries, int[] tokenBoundaries) {
+        this.charBoundaries = charBoundaries;
+        this.tokenBoundaries = tokenBoundaries;
+    }
+
+    public SentenceBoundaries(int[] charBoundaries, int[] tokenBoundaries, Map<String, Object> extendedProperties) {
+        super(extendedProperties);
         this.charBoundaries = charBoundaries;
         this.tokenBoundaries = tokenBoundaries;
     }
@@ -63,7 +71,7 @@ public class SentenceBoundaries extends BaseAttribute {
         }
 
         public SentenceBoundaries build() {
-            return new SentenceBoundaries(this.charBoundaries, this.tokenBoundaries);
+            return new SentenceBoundaries(this.charBoundaries, this.tokenBoundaries, extendedProperties);
         }
     }
 }

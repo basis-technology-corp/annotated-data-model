@@ -21,6 +21,7 @@ import com.google.common.collect.Lists;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 /**
  * When attributes nest, the outer object has a single attribute
@@ -38,6 +39,12 @@ public class ListAttribute<Item extends BaseAttribute> extends BaseAttribute {
     public ListAttribute(Class<Item> itemClass, List<Item> items) {
         this.itemClass = itemClass;
         this.items = Collections.unmodifiableList(items);
+    }
+
+    public ListAttribute(Class<Item> itemClass, List<Item> items, Map<String, Object> extendedProperties) {
+        super(extendedProperties);
+        this.items = items;
+        this.itemClass = itemClass;
     }
 
     public List<Item> getItems() {
@@ -68,7 +75,7 @@ public class ListAttribute<Item extends BaseAttribute> extends BaseAttribute {
         }
 
         public ListAttribute<Item> build() {
-            return new ListAttribute<Item>(itemClass, items);
+            return new ListAttribute<Item>(itemClass, items, extendedProperties);
         }
     }
 }

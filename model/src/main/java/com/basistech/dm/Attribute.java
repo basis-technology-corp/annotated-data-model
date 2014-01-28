@@ -14,6 +14,8 @@
 
 package com.basistech.dm;
 
+import java.util.Map;
+
 /**
  * Base class for attributes. Note that this class works 'as is' for attributes
  * that simply mark a span of text as having a boolean feature.
@@ -23,6 +25,12 @@ public class Attribute extends BaseAttribute {
     protected final int endOffset;
 
     public Attribute(int startOffset, int endOffset) {
+        this.startOffset = startOffset;
+        this.endOffset = endOffset;
+    }
+
+    public Attribute(int startOffset, int endOffset, Map<String, Object> extendedProperties) {
+        super(extendedProperties);
         this.startOffset = startOffset;
         this.endOffset = endOffset;
     }
@@ -67,9 +75,7 @@ public class Attribute extends BaseAttribute {
         }
 
         public Attribute build() {
-            Attribute attribute = new Attribute(startOffset, endOffset);
-            attribute.extendedProperties.putAll(this.extendedProperties);
-            return attribute;
+            return new Attribute(startOffset, endOffset, extendedProperties);
         }
     }
 }
