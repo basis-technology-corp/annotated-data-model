@@ -1,0 +1,999 @@
+{
+  "attributes" : {
+    "com.basistech.dm.SentenceBoundaries" : {
+      "charBoundaries" : [ 72, 188, 223, 330, 502, 608, 754 ],
+      "tokenBoundaries" : [ 13, 34, 42, 62, 94, 114, 140 ]
+    },
+    "com.basistech.dm.EntityMention" : {
+      "itemClass" : "com.basistech.dm.EntityMention",
+      "items" : [ {
+        "startOffset" : 16,
+        "endOffset" : 39,
+        "entityType" : "ORGANIZATION",
+        "source" : "gazetteer:/Users/benson/x/trunk/rlp/rlp/dicts/en-all-gazetteer-LE.bin",
+        "normalized" : "Samsung Electronics"
+      }, {
+        "startOffset" : 40,
+        "endOffset" : 51,
+        "entityType" : "ORGANIZATION",
+        "source" : "statistical",
+        "normalized" : "Apple"
+      }, {
+        "startOffset" : 211,
+        "endOffset" : 221,
+        "entityType" : "ORGANIZATION",
+        "source" : "gazetteer:/Users/benson/x/trunk/rlp/rlp/dicts/multilang-cor-gazetteer-LE.bin",
+        "normalized" : "Samsung"
+      }, {
+        "startOffset" : 223,
+        "endOffset" : 237,
+        "entityType" : "ORGANIZATION",
+        "source" : "statistical",
+        "normalized" : "Apple"
+      }, {
+        "startOffset" : 249,
+        "endOffset" : 259,
+        "entityType" : "LOCATION",
+        "source" : "gazetteer:/Users/benson/x/trunk/rlp/rlp/dicts/en-all-gazetteer-LE.bin",
+        "normalized" : "U.S."
+      }, {
+        "startOffset" : 262,
+        "endOffset" : 275,
+        "entityType" : "TITLE",
+        "source" : "statistical",
+        "normalized" : "judge"
+      }, {
+        "startOffset" : 281,
+        "endOffset" : 292,
+        "entityType" : "ORGANIZATION",
+        "source" : "gazetteer:/Users/benson/x/trunk/rlp/rlp/dicts/multilang-cor-gazetteer-LE.bin",
+        "normalized" : "Samsung"
+      }, {
+        "startOffset" : 316,
+        "endOffset" : 327,
+        "entityType" : "LOCATION",
+        "source" : "gazetteer:/Users/benson/x/trunk/rlp/rlp/dicts/en-all-gazetteer-LE.bin",
+        "normalized" : "U.S."
+      }, {
+        "startOffset" : 333,
+        "endOffset" : 347,
+        "entityType" : "LOCATION",
+        "source" : "gazetteer:/Users/benson/x/trunk/rlp/rlp/dicts/en-all-gazetteer-LE.bin",
+        "normalized" : "United States"
+      }, {
+        "startOffset" : 348,
+        "endOffset" : 363,
+        "entityType" : "ORGANIZATION",
+        "source" : "statistical",
+        "normalized" : "Apple"
+      }, {
+        "startOffset" : 387,
+        "endOffset" : 397,
+        "entityType" : "ORGANIZATION",
+        "source" : "gazetteer:/Users/benson/x/trunk/rlp/rlp/dicts/multilang-cor-gazetteer-LE.bin",
+        "normalized" : "Samsung"
+      }, {
+        "startOffset" : 398,
+        "endOffset" : 404,
+        "entityType" : "TEMPORAL:DATE",
+        "source" : "regex:eng",
+        "normalized" : "April"
+      }, {
+        "startOffset" : 423,
+        "endOffset" : 447,
+        "entityType" : "NATIONALITY",
+        "source" : "gazetteer:/Users/benson/x/trunk/rlp/rlp/dicts/en-all-gazetteer-LE.bin",
+        "normalized" : "South Korean"
+      }, {
+        "startOffset" : 481,
+        "endOffset" : 491,
+        "entityType" : "PRODUCT",
+        "source" : "statistical",
+        "normalized" : "iPhone"
+      }, {
+        "startOffset" : 496,
+        "endOffset" : 501,
+        "entityType" : "PRODUCT",
+        "source" : "statistical",
+        "normalized" : "iPad"
+      }, {
+        "startOffset" : 515,
+        "endOffset" : 530,
+        "entityType" : "ORGANIZATION",
+        "source" : "statistical",
+        "normalized" : "Apple"
+      }, {
+        "startOffset" : 536,
+        "endOffset" : 548,
+        "entityType" : "ORGANIZATION",
+        "source" : "gazetteer:/Users/benson/x/trunk/rlp/rlp/dicts/multilang-cor-gazetteer-LE.bin",
+        "normalized" : "Samsung"
+      }, {
+        "startOffset" : 595,
+        "endOffset" : 606,
+        "entityType" : "LOCATION",
+        "source" : "gazetteer:/Users/benson/x/trunk/rlp/rlp/dicts/en-all-gazetteer-LE.bin",
+        "normalized" : "U.S."
+      }, {
+        "startOffset" : 646,
+        "endOffset" : 653,
+        "entityType" : "TEMPORAL:DATE",
+        "source" : "regex:eng",
+        "normalized" : "Friday"
+      }, {
+        "startOffset" : 657,
+        "endOffset" : 670,
+        "entityType" : "LOCATION",
+        "source" : "gazetteer:/Users/benson/x/trunk/rlp/rlp/dicts/en-all-gazetteer-LE.bin",
+        "normalized" : "U.S."
+      }, {
+        "startOffset" : 662,
+        "endOffset" : 681,
+        "entityType" : "TITLE",
+        "source" : "statistical",
+        "normalized" : "District Judge"
+      }, {
+        "startOffset" : 677,
+        "endOffset" : 692,
+        "entityType" : "PERSON",
+        "source" : "statistical",
+        "normalized" : "Lucy Koh"
+      }, {
+        "startOffset" : 693,
+        "endOffset" : 700,
+        "entityType" : "ORGANIZATION",
+        "source" : "statistical",
+        "normalized" : "Apple"
+      }, {
+        "startOffset" : 745,
+        "endOffset" : 753,
+        "entityType" : "ORGANIZATION",
+        "source" : "gazetteer:/Users/benson/x/trunk/rlp/rlp/dicts/multilang-cor-gazetteer-LE.bin",
+        "normalized" : "Samsung"
+      } ]
+    },
+    "com.basistech.dm.Token" : {
+      "itemClass" : "com.basistech.dm.Token",
+      "items" : [ {
+        "endOffset" : 3,
+        "text" : "The",
+        "partOfSpeech" : [ "DET" ],
+        "lemma" : [ "the" ]
+      }, {
+        "startOffset" : 4,
+        "endOffset" : 7,
+        "text" : "war",
+        "partOfSpeech" : [ "NOUN" ],
+        "lemma" : [ "war" ]
+      }, {
+        "startOffset" : 8,
+        "endOffset" : 15,
+        "text" : "between",
+        "partOfSpeech" : [ "PREP" ],
+        "lemma" : [ "between" ]
+      }, {
+        "startOffset" : 16,
+        "endOffset" : 23,
+        "text" : "Samsung",
+        "partOfSpeech" : [ "PROP" ],
+        "lemma" : [ "Samsung" ]
+      }, {
+        "startOffset" : 24,
+        "endOffset" : 35,
+        "text" : "Electronics",
+        "partOfSpeech" : [ "PROP" ],
+        "lemma" : [ "Electronics" ]
+      }, {
+        "startOffset" : 36,
+        "endOffset" : 39,
+        "text" : "and",
+        "partOfSpeech" : [ "COORD" ],
+        "lemma" : [ "and" ]
+      }, {
+        "startOffset" : 40,
+        "endOffset" : 45,
+        "text" : "Apple",
+        "partOfSpeech" : [ "PROP" ],
+        "lemma" : [ "Apple" ]
+      }, {
+        "startOffset" : 46,
+        "endOffset" : 51,
+        "text" : "seems",
+        "partOfSpeech" : [ "VPRES" ],
+        "lemma" : [ "seem" ]
+      }, {
+        "startOffset" : 52,
+        "endOffset" : 54,
+        "text" : "to",
+        "partOfSpeech" : [ "INFTO" ],
+        "lemma" : [ "to" ]
+      }, {
+        "startOffset" : 55,
+        "endOffset" : 57,
+        "text" : "be",
+        "partOfSpeech" : [ "VBI" ],
+        "lemma" : [ "be" ]
+      }, {
+        "startOffset" : 58,
+        "endOffset" : 63,
+        "text" : "never",
+        "partOfSpeech" : [ "ADV" ],
+        "lemma" : [ "never" ]
+      }, {
+        "startOffset" : 64,
+        "endOffset" : 70,
+        "text" : "ending",
+        "partOfSpeech" : [ "PARTPRES" ],
+        "lemma" : [ "end" ]
+      }, {
+        "startOffset" : 70,
+        "endOffset" : 71,
+        "text" : ".",
+        "partOfSpeech" : [ "SENT" ],
+        "lemma" : [ "." ]
+      }, {
+        "startOffset" : 72,
+        "endOffset" : 75,
+        "text" : "The",
+        "partOfSpeech" : [ "DET" ],
+        "lemma" : [ "the" ]
+      }, {
+        "startOffset" : 76,
+        "endOffset" : 85,
+        "text" : "companies",
+        "partOfSpeech" : [ "NOUN" ],
+        "lemma" : [ "company" ]
+      }, {
+        "startOffset" : 86,
+        "endOffset" : 90,
+        "text" : "have",
+        "partOfSpeech" : [ "VHPRES" ],
+        "lemma" : [ "have" ]
+      }, {
+        "startOffset" : 91,
+        "endOffset" : 98,
+        "text" : "engaged",
+        "partOfSpeech" : [ "VPAP" ],
+        "lemma" : [ "engage" ]
+      }, {
+        "startOffset" : 99,
+        "endOffset" : 101,
+        "text" : "in",
+        "partOfSpeech" : [ "PREP" ],
+        "lemma" : [ "in" ]
+      }, {
+        "startOffset" : 102,
+        "endOffset" : 104,
+        "text" : "an",
+        "partOfSpeech" : [ "DET" ],
+        "lemma" : [ "an" ]
+      }, {
+        "startOffset" : 105,
+        "endOffset" : 118,
+        "text" : "international",
+        "partOfSpeech" : [ "ADJ" ],
+        "lemma" : [ "international" ]
+      }, {
+        "startOffset" : 119,
+        "endOffset" : 126,
+        "text" : "warfare",
+        "partOfSpeech" : [ "NOUN" ],
+        "lemma" : [ "warfare" ]
+      }, {
+        "startOffset" : 126,
+        "endOffset" : 127,
+        "text" : ",",
+        "partOfSpeech" : [ "CM" ],
+        "lemma" : [ "," ]
+      }, {
+        "startOffset" : 128,
+        "endOffset" : 134,
+        "text" : "across",
+        "partOfSpeech" : [ "PREP" ],
+        "lemma" : [ "across" ]
+      }, {
+        "startOffset" : 135,
+        "endOffset" : 145,
+        "text" : "continents",
+        "partOfSpeech" : [ "NOUN" ],
+        "lemma" : [ "continent" ]
+      }, {
+        "startOffset" : 145,
+        "endOffset" : 146,
+        "text" : ",",
+        "partOfSpeech" : [ "CM" ],
+        "lemma" : [ "," ]
+      }, {
+        "startOffset" : 147,
+        "endOffset" : 151,
+        "text" : "with",
+        "partOfSpeech" : [ "PREP" ],
+        "lemma" : [ "with" ]
+      }, {
+        "startOffset" : 152,
+        "endOffset" : 156,
+        "text" : "more",
+        "partOfSpeech" : [ "QUANTCMP" ],
+        "lemma" : [ "more" ]
+      }, {
+        "startOffset" : 157,
+        "endOffset" : 161,
+        "text" : "than",
+        "partOfSpeech" : [ "COTHAN" ],
+        "lemma" : [ "than" ]
+      }, {
+        "startOffset" : 162,
+        "endOffset" : 164,
+        "text" : "20",
+        "partOfSpeech" : [ "CARD" ],
+        "lemma" : [ "20" ]
+      }, {
+        "startOffset" : 165,
+        "endOffset" : 170,
+        "text" : "cases",
+        "partOfSpeech" : [ "NOUN" ],
+        "lemma" : [ "case" ]
+      }, {
+        "startOffset" : 171,
+        "endOffset" : 173,
+        "text" : "in",
+        "partOfSpeech" : [ "PREP" ],
+        "lemma" : [ "in" ]
+      }, {
+        "startOffset" : 174,
+        "endOffset" : 176,
+        "text" : "10",
+        "partOfSpeech" : [ "CARD" ],
+        "lemma" : [ "10" ]
+      }, {
+        "startOffset" : 177,
+        "endOffset" : 186,
+        "text" : "countries",
+        "partOfSpeech" : [ "NOUN" ],
+        "lemma" : [ "country" ]
+      }, {
+        "startOffset" : 186,
+        "endOffset" : 187,
+        "text" : ".",
+        "partOfSpeech" : [ "SENT" ],
+        "lemma" : [ "." ]
+      }, {
+        "startOffset" : 188,
+        "endOffset" : 191,
+        "text" : "The",
+        "partOfSpeech" : [ "DET" ],
+        "lemma" : [ "the" ]
+      }, {
+        "startOffset" : 192,
+        "endOffset" : 198,
+        "text" : "latest",
+        "partOfSpeech" : [ "ADJSUP" ],
+        "lemma" : [ "late" ]
+      }, {
+        "startOffset" : 199,
+        "endOffset" : 203,
+        "text" : "news",
+        "partOfSpeech" : [ "NOUN" ],
+        "lemma" : [ "news" ]
+      }, {
+        "startOffset" : 204,
+        "endOffset" : 206,
+        "text" : "in",
+        "partOfSpeech" : [ "PREP" ],
+        "lemma" : [ "in" ]
+      }, {
+        "startOffset" : 207,
+        "endOffset" : 210,
+        "text" : "the",
+        "partOfSpeech" : [ "DET" ],
+        "lemma" : [ "the" ]
+      }, {
+        "startOffset" : 211,
+        "endOffset" : 218,
+        "text" : "Samsung",
+        "partOfSpeech" : [ "PROP" ],
+        "lemma" : [ "Samsung" ]
+      }, {
+        "startOffset" : 219,
+        "endOffset" : 221,
+        "text" : "vs",
+        "partOfSpeech" : [ "PREP" ],
+        "lemma" : [ "vs" ]
+      }, {
+        "startOffset" : 221,
+        "endOffset" : 222,
+        "text" : ".",
+        "partOfSpeech" : [ "SENT" ],
+        "lemma" : [ "." ]
+      }, {
+        "startOffset" : 223,
+        "endOffset" : 228,
+        "text" : "Apple",
+        "partOfSpeech" : [ "PROP" ],
+        "lemma" : [ "Apple" ]
+      }, {
+        "startOffset" : 229,
+        "endOffset" : 237,
+        "text" : "conflict",
+        "partOfSpeech" : [ "NOUN" ],
+        "lemma" : [ "conflict" ]
+      }, {
+        "startOffset" : 238,
+        "endOffset" : 243,
+        "text" : "comes",
+        "partOfSpeech" : [ "VPRES" ],
+        "lemma" : [ "come" ]
+      }, {
+        "startOffset" : 244,
+        "endOffset" : 248,
+        "text" : "from",
+        "partOfSpeech" : [ "PREP" ],
+        "lemma" : [ "from" ]
+      }, {
+        "startOffset" : 249,
+        "endOffset" : 253,
+        "text" : "U.S.",
+        "partOfSpeech" : [ "PROP" ],
+        "lemma" : [ "U.S." ]
+      }, {
+        "startOffset" : 254,
+        "endOffset" : 259,
+        "text" : "where",
+        "partOfSpeech" : [ "COSUB" ],
+        "lemma" : [ "where" ]
+      }, {
+        "startOffset" : 260,
+        "endOffset" : 261,
+        "text" : "a",
+        "partOfSpeech" : [ "DET" ],
+        "lemma" : [ "a" ]
+      }, {
+        "startOffset" : 262,
+        "endOffset" : 267,
+        "text" : "judge",
+        "partOfSpeech" : [ "NOUN" ],
+        "lemma" : [ "judge" ]
+      }, {
+        "startOffset" : 268,
+        "endOffset" : 275,
+        "text" : "decided",
+        "partOfSpeech" : [ "VPAST" ],
+        "lemma" : [ "decide" ]
+      }, {
+        "startOffset" : 276,
+        "endOffset" : 280,
+        "text" : "that",
+        "partOfSpeech" : [ "COSUB" ],
+        "lemma" : [ "that" ]
+      }, {
+        "startOffset" : 281,
+        "endOffset" : 288,
+        "text" : "Samsung",
+        "partOfSpeech" : [ "PROP" ],
+        "lemma" : [ "Samsung" ]
+      }, {
+        "startOffset" : 289,
+        "endOffset" : 292,
+        "text" : "can",
+        "partOfSpeech" : [ "VAUX" ],
+        "lemma" : [ "can" ]
+      }, {
+        "startOffset" : 293,
+        "endOffset" : 297,
+        "text" : "sell",
+        "partOfSpeech" : [ "VI" ],
+        "lemma" : [ "sell" ]
+      }, {
+        "startOffset" : 298,
+        "endOffset" : 301,
+        "text" : "its",
+        "partOfSpeech" : [ "DET" ],
+        "lemma" : [ "it" ]
+      }, {
+        "startOffset" : 302,
+        "endOffset" : 308,
+        "text" : "tablet",
+        "partOfSpeech" : [ "NOUN" ],
+        "lemma" : [ "tablet" ]
+      }, {
+        "startOffset" : 309,
+        "endOffset" : 311,
+        "text" : "in",
+        "partOfSpeech" : [ "PREP" ],
+        "lemma" : [ "in" ]
+      }, {
+        "startOffset" : 312,
+        "endOffset" : 315,
+        "text" : "the",
+        "partOfSpeech" : [ "DET" ],
+        "lemma" : [ "the" ]
+      }, {
+        "startOffset" : 316,
+        "endOffset" : 320,
+        "text" : "U.S.",
+        "partOfSpeech" : [ "PROP" ],
+        "lemma" : [ "U.S." ]
+      }, {
+        "startOffset" : 321,
+        "endOffset" : 327,
+        "text" : "market",
+        "partOfSpeech" : [ "NOUN" ],
+        "lemma" : [ "market" ]
+      }, {
+        "startOffset" : 327,
+        "endOffset" : 328,
+        "text" : ".",
+        "partOfSpeech" : [ "SENT" ],
+        "lemma" : [ "." ]
+      }, {
+        "startOffset" : 330,
+        "endOffset" : 332,
+        "text" : "In",
+        "partOfSpeech" : [ "PREP" ],
+        "lemma" : [ "in" ]
+      }, {
+        "startOffset" : 333,
+        "endOffset" : 339,
+        "text" : "United",
+        "partOfSpeech" : [ "PROP" ],
+        "lemma" : [ "United" ]
+      }, {
+        "startOffset" : 340,
+        "endOffset" : 346,
+        "text" : "States",
+        "partOfSpeech" : [ "PROP" ],
+        "lemma" : [ "State" ]
+      }, {
+        "startOffset" : 346,
+        "endOffset" : 347,
+        "text" : ",",
+        "partOfSpeech" : [ "CM" ],
+        "lemma" : [ "," ]
+      }, {
+        "startOffset" : 348,
+        "endOffset" : 353,
+        "text" : "Apple",
+        "partOfSpeech" : [ "PROP" ],
+        "lemma" : [ "Apple" ]
+      }, {
+        "startOffset" : 354,
+        "endOffset" : 363,
+        "text" : "initiated",
+        "partOfSpeech" : [ "VPAST" ],
+        "lemma" : [ "initiate" ]
+      }, {
+        "startOffset" : 364,
+        "endOffset" : 365,
+        "text" : "a",
+        "partOfSpeech" : [ "DET" ],
+        "lemma" : [ "a" ]
+      }, {
+        "startOffset" : 366,
+        "endOffset" : 371,
+        "text" : "legal",
+        "partOfSpeech" : [ "ADJ" ],
+        "lemma" : [ "legal" ]
+      }, {
+        "startOffset" : 372,
+        "endOffset" : 378,
+        "text" : "action",
+        "partOfSpeech" : [ "NOUN" ],
+        "lemma" : [ "action" ]
+      }, {
+        "startOffset" : 379,
+        "endOffset" : 386,
+        "text" : "against",
+        "partOfSpeech" : [ "PREP" ],
+        "lemma" : [ "against" ]
+      }, {
+        "startOffset" : 387,
+        "endOffset" : 394,
+        "text" : "Samsung",
+        "partOfSpeech" : [ "PROP" ],
+        "lemma" : [ "Samsung" ]
+      }, {
+        "startOffset" : 395,
+        "endOffset" : 397,
+        "text" : "in",
+        "partOfSpeech" : [ "PREP" ],
+        "lemma" : [ "in" ]
+      }, {
+        "startOffset" : 398,
+        "endOffset" : 403,
+        "text" : "April",
+        "partOfSpeech" : [ "PROP" ],
+        "lemma" : [ "April" ]
+      }, {
+        "startOffset" : 403,
+        "endOffset" : 404,
+        "text" : ",",
+        "partOfSpeech" : [ "CM" ],
+        "lemma" : [ "," ]
+      }, {
+        "startOffset" : 405,
+        "endOffset" : 413,
+        "text" : "claiming",
+        "partOfSpeech" : [ "PARTPRES" ],
+        "lemma" : [ "claim" ]
+      }, {
+        "startOffset" : 414,
+        "endOffset" : 418,
+        "text" : "that",
+        "partOfSpeech" : [ "COSUB" ],
+        "lemma" : [ "that" ]
+      }, {
+        "startOffset" : 419,
+        "endOffset" : 422,
+        "text" : "the",
+        "partOfSpeech" : [ "DET" ],
+        "lemma" : [ "the" ]
+      }, {
+        "startOffset" : 423,
+        "endOffset" : 428,
+        "text" : "South",
+        "partOfSpeech" : [ "PROP" ],
+        "lemma" : [ "South" ]
+      }, {
+        "startOffset" : 429,
+        "endOffset" : 435,
+        "text" : "Korean",
+        "partOfSpeech" : [ "ADJ" ],
+        "lemma" : [ "Korean" ]
+      }, {
+        "startOffset" : 436,
+        "endOffset" : 447,
+        "text" : "smartphones",
+        "partOfSpeech" : [ "NOUN" ],
+        "lemma" : [ "smartphones" ]
+      }, {
+        "startOffset" : 448,
+        "endOffset" : 451,
+        "text" : "and",
+        "partOfSpeech" : [ "COORD" ],
+        "lemma" : [ "and" ]
+      }, {
+        "startOffset" : 452,
+        "endOffset" : 459,
+        "text" : "tablets",
+        "partOfSpeech" : [ "NOUN" ],
+        "lemma" : [ "tablet" ]
+      }, {
+        "startOffset" : 460,
+        "endOffset" : 461,
+        "text" : "“",
+        "partOfSpeech" : [ "PUNCT" ],
+        "lemma" : [ "“" ]
+      }, {
+        "startOffset" : 461,
+        "endOffset" : 470,
+        "text" : "slavishly",
+        "partOfSpeech" : [ "ADV" ],
+        "lemma" : [ "slavishly" ]
+      }, {
+        "startOffset" : 470,
+        "endOffset" : 471,
+        "text" : "”",
+        "partOfSpeech" : [ "PUNCT" ],
+        "lemma" : [ "”" ]
+      }, {
+        "startOffset" : 472,
+        "endOffset" : 476,
+        "text" : "copy",
+        "partOfSpeech" : [ "VPRES" ],
+        "lemma" : [ "copy" ]
+      }, {
+        "startOffset" : 477,
+        "endOffset" : 480,
+        "text" : "the",
+        "partOfSpeech" : [ "DET" ],
+        "lemma" : [ "the" ]
+      }, {
+        "startOffset" : 481,
+        "endOffset" : 487,
+        "text" : "iPhone",
+        "partOfSpeech" : [ "PROP" ],
+        "lemma" : [ "iPhone" ]
+      }, {
+        "startOffset" : 488,
+        "endOffset" : 491,
+        "text" : "and",
+        "partOfSpeech" : [ "COORD" ],
+        "lemma" : [ "and" ]
+      }, {
+        "startOffset" : 492,
+        "endOffset" : 495,
+        "text" : "the",
+        "partOfSpeech" : [ "DET" ],
+        "lemma" : [ "the" ]
+      }, {
+        "startOffset" : 496,
+        "endOffset" : 500,
+        "text" : "iPad",
+        "partOfSpeech" : [ "PROP" ],
+        "lemma" : [ "iPad" ]
+      }, {
+        "startOffset" : 500,
+        "endOffset" : 501,
+        "text" : ".",
+        "partOfSpeech" : [ "SENT" ],
+        "lemma" : [ "." ]
+      }, {
+        "startOffset" : 502,
+        "endOffset" : 504,
+        "text" : "As",
+        "partOfSpeech" : [ "PREPADVAS" ],
+        "lemma" : [ "as" ]
+      }, {
+        "startOffset" : 505,
+        "endOffset" : 506,
+        "text" : "a",
+        "partOfSpeech" : [ "DET" ],
+        "lemma" : [ "a" ]
+      }, {
+        "startOffset" : 507,
+        "endOffset" : 513,
+        "text" : "result",
+        "partOfSpeech" : [ "NOUN" ],
+        "lemma" : [ "result" ]
+      }, {
+        "startOffset" : 513,
+        "endOffset" : 514,
+        "text" : ",",
+        "partOfSpeech" : [ "CM" ],
+        "lemma" : [ "," ]
+      }, {
+        "startOffset" : 515,
+        "endOffset" : 520,
+        "text" : "Apple",
+        "partOfSpeech" : [ "PROP" ],
+        "lemma" : [ "Apple" ]
+      }, {
+        "startOffset" : 521,
+        "endOffset" : 530,
+        "text" : "requested",
+        "partOfSpeech" : [ "VPAST" ],
+        "lemma" : [ "request" ]
+      }, {
+        "startOffset" : 531,
+        "endOffset" : 535,
+        "text" : "that",
+        "partOfSpeech" : [ "COSUB" ],
+        "lemma" : [ "that" ]
+      }, {
+        "startOffset" : 536,
+        "endOffset" : 543,
+        "text" : "Samsung",
+        "partOfSpeech" : [ "PROP" ],
+        "lemma" : [ "Samsung" ]
+      }, {
+        "startOffset" : 544,
+        "endOffset" : 548,
+        "text" : "will",
+        "partOfSpeech" : [ "VAUX" ],
+        "lemma" : [ "will" ]
+      }, {
+        "startOffset" : 549,
+        "endOffset" : 551,
+        "text" : "be",
+        "partOfSpeech" : [ "VBI" ],
+        "lemma" : [ "be" ]
+      }, {
+        "startOffset" : 552,
+        "endOffset" : 562,
+        "text" : "prohibited",
+        "partOfSpeech" : [ "VPAP" ],
+        "lemma" : [ "prohibit" ]
+      }, {
+        "startOffset" : 563,
+        "endOffset" : 567,
+        "text" : "from",
+        "partOfSpeech" : [ "PREP" ],
+        "lemma" : [ "from" ]
+      }, {
+        "startOffset" : 568,
+        "endOffset" : 575,
+        "text" : "selling",
+        "partOfSpeech" : [ "PARTPRES" ],
+        "lemma" : [ "sell" ]
+      }, {
+        "startOffset" : 576,
+        "endOffset" : 579,
+        "text" : "the",
+        "partOfSpeech" : [ "DET" ],
+        "lemma" : [ "the" ]
+      }, {
+        "startOffset" : 580,
+        "endOffset" : 587,
+        "text" : "gadgets",
+        "partOfSpeech" : [ "NOUN" ],
+        "lemma" : [ "gadget" ]
+      }, {
+        "startOffset" : 588,
+        "endOffset" : 590,
+        "text" : "in",
+        "partOfSpeech" : [ "PREP" ],
+        "lemma" : [ "in" ]
+      }, {
+        "startOffset" : 591,
+        "endOffset" : 594,
+        "text" : "the",
+        "partOfSpeech" : [ "DET" ],
+        "lemma" : [ "the" ]
+      }, {
+        "startOffset" : 595,
+        "endOffset" : 599,
+        "text" : "U.S.",
+        "partOfSpeech" : [ "PROP" ],
+        "lemma" : [ "U.S." ]
+      }, {
+        "startOffset" : 600,
+        "endOffset" : 606,
+        "text" : "market",
+        "partOfSpeech" : [ "NOUN" ],
+        "lemma" : [ "market" ]
+      }, {
+        "startOffset" : 606,
+        "endOffset" : 607,
+        "text" : ".",
+        "partOfSpeech" : [ "SENT" ],
+        "lemma" : [ "." ]
+      }, {
+        "startOffset" : 608,
+        "endOffset" : 611,
+        "text" : "The",
+        "partOfSpeech" : [ "DET" ],
+        "lemma" : [ "the" ]
+      }, {
+        "startOffset" : 612,
+        "endOffset" : 616,
+        "text" : "much",
+        "partOfSpeech" : [ "QUANTADV" ],
+        "lemma" : [ "much" ]
+      }, {
+        "startOffset" : 617,
+        "endOffset" : 625,
+        "text" : "expected",
+        "partOfSpeech" : [ "ADJPAP" ],
+        "lemma" : [ "expected" ]
+      }, {
+        "startOffset" : 626,
+        "endOffset" : 632,
+        "text" : "ruling",
+        "partOfSpeech" : [ "NOUNING" ],
+        "lemma" : [ "ruling" ]
+      }, {
+        "startOffset" : 633,
+        "endOffset" : 637,
+        "text" : "came",
+        "partOfSpeech" : [ "VPAST" ],
+        "lemma" : [ "come" ]
+      }, {
+        "startOffset" : 638,
+        "endOffset" : 642,
+        "text" : "late",
+        "partOfSpeech" : [ "ADV" ],
+        "lemma" : [ "late" ]
+      }, {
+        "startOffset" : 643,
+        "endOffset" : 645,
+        "text" : "on",
+        "partOfSpeech" : [ "PREP" ],
+        "lemma" : [ "on" ]
+      }, {
+        "startOffset" : 646,
+        "endOffset" : 652,
+        "text" : "Friday",
+        "partOfSpeech" : [ "NOUN" ],
+        "lemma" : [ "Friday" ]
+      }, {
+        "startOffset" : 652,
+        "endOffset" : 653,
+        "text" : ",",
+        "partOfSpeech" : [ "CM" ],
+        "lemma" : [ "," ]
+      }, {
+        "startOffset" : 654,
+        "endOffset" : 656,
+        "text" : "as",
+        "partOfSpeech" : [ "PREPADVAS" ],
+        "lemma" : [ "as" ]
+      }, {
+        "startOffset" : 657,
+        "endOffset" : 661,
+        "text" : "U.S.",
+        "partOfSpeech" : [ "PROP" ],
+        "lemma" : [ "U.S." ]
+      }, {
+        "startOffset" : 662,
+        "endOffset" : 670,
+        "text" : "District",
+        "partOfSpeech" : [ "PROP" ],
+        "lemma" : [ "District" ]
+      }, {
+        "startOffset" : 671,
+        "endOffset" : 676,
+        "text" : "Judge",
+        "partOfSpeech" : [ "NOUN" ],
+        "lemma" : [ "judge" ]
+      }, {
+        "startOffset" : 677,
+        "endOffset" : 681,
+        "text" : "Lucy",
+        "partOfSpeech" : [ "PROP" ],
+        "lemma" : [ "Lucy" ]
+      }, {
+        "startOffset" : 682,
+        "endOffset" : 685,
+        "text" : "Koh",
+        "partOfSpeech" : [ "PROP" ],
+        "lemma" : [ "Koh" ]
+      }, {
+        "startOffset" : 686,
+        "endOffset" : 692,
+        "text" : "denied",
+        "partOfSpeech" : [ "VPAST" ],
+        "lemma" : [ "deny" ]
+      }, {
+        "startOffset" : 693,
+        "endOffset" : 698,
+        "text" : "Apple",
+        "partOfSpeech" : [ "PROP" ],
+        "lemma" : [ "Apple" ]
+      }, {
+        "startOffset" : 698,
+        "endOffset" : 700,
+        "text" : "’s",
+        "partOfSpeech" : [ "POSS" ],
+        "lemma" : [ "'s" ]
+      }, {
+        "startOffset" : 701,
+        "endOffset" : 708,
+        "text" : "request",
+        "partOfSpeech" : [ "NOUN" ],
+        "lemma" : [ "request" ]
+      }, {
+        "startOffset" : 709,
+        "endOffset" : 712,
+        "text" : "for",
+        "partOfSpeech" : [ "PREP" ],
+        "lemma" : [ "for" ]
+      }, {
+        "startOffset" : 713,
+        "endOffset" : 714,
+        "text" : "a",
+        "partOfSpeech" : [ "DET" ],
+        "lemma" : [ "a" ]
+      }, {
+        "startOffset" : 715,
+        "endOffset" : 726,
+        "text" : "preliminary",
+        "partOfSpeech" : [ "ADJ" ],
+        "lemma" : [ "preliminary" ]
+      }, {
+        "startOffset" : 727,
+        "endOffset" : 736,
+        "text" : "injuction",
+        "partOfSpeech" : [ "NOUN" ],
+        "lemma" : [ "injuction" ]
+      }, {
+        "startOffset" : 737,
+        "endOffset" : 744,
+        "text" : "against",
+        "partOfSpeech" : [ "PREP" ],
+        "lemma" : [ "against" ]
+      }, {
+        "startOffset" : 745,
+        "endOffset" : 752,
+        "text" : "Samsung",
+        "partOfSpeech" : [ "PROP" ],
+        "lemma" : [ "Samsung" ]
+      }, {
+        "startOffset" : 752,
+        "endOffset" : 753,
+        "text" : ".",
+        "partOfSpeech" : [ "SENT" ],
+        "lemma" : [ "." ]
+      } ]
+    }
+  }
+}

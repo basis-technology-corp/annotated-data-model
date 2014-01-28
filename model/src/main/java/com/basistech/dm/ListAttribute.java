@@ -14,6 +14,8 @@
 
 package com.basistech.dm;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.google.common.collect.Lists;
 
 import java.util.Collections;
@@ -25,26 +27,33 @@ import java.util.List;
  * {@link Text} to have a set of tokens or named entities or language
  * regions or whatever.
  */
+@JsonSerialize(using = ListAttributeSerializer.class)
 public class ListAttribute<Item extends BaseAttribute> extends BaseAttribute {
 
     private final List<Item> items;
+    private final Class<Item> itemClass;
 
-    public ListAttribute(List<Item> items) {
+    public ListAttribute(Class<Item> itemClass, List<Item> items) {
+        this.itemClass = itemClass;
         this.items = Collections.unmodifiableList(items);
-    }
-
-    protected ListAttribute() {
-        items = Lists.newArrayList();
     }
 
     public List<Item> getItems() {
         return items;
     }
 
+    // this is only used by the serializer, never let it get processed automatically.
+    @JsonIgnore
+    Class<Item> getItemClass() {
+        return itemClass;
+    }
+
     public static class Builder<Item extends BaseAttribute> extends BaseAttribute.Builder {
+        private Class<Item> itemClass;
         private List<Item> items;
 
-        public Builder() {
+        public Builder(Class<Item> itemClass) {
+            this.itemClass = itemClass;
             items = Lists.newArrayList();
         }
 
@@ -53,7 +62,7 @@ public class ListAttribute<Item extends BaseAttribute> extends BaseAttribute {
         }
 
         public ListAttribute<Item> build() {
-            return new ListAttribute<Item>(items);
+            return new ListAttribute<Item>(itemClass, items);
         }
     }
 }

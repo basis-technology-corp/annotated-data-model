@@ -84,7 +84,7 @@ public final class AraDmConverter {
     }
 
     private static void buildEntities(AbstractResultAccess ara, Text text) {
-        ListAttribute.Builder<EntityMention> entityListBuilder = new ListAttribute.Builder<EntityMention>();
+        ListAttribute.Builder<EntityMention> entityListBuilder = new ListAttribute.Builder<EntityMention>(EntityMention.class);
         int namedEntityCount = ara.getNamedEntitySourceString().length;
 
         for (int x = 0; x < namedEntityCount; x++) {
@@ -122,7 +122,7 @@ public final class AraDmConverter {
     }
 
     private static void buildTokens(AbstractResultAccess ara, Text text) {
-        ListAttribute.Builder<Token> tokenListBuilder = new ListAttribute.Builder<Token>();
+        ListAttribute.Builder<Token> tokenListBuilder = new ListAttribute.Builder<Token>(Token.class);
         int tokenCount = ara.getTokens().length;
 
         for (int x = 0; x < tokenCount; x++) {
