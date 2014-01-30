@@ -17,6 +17,7 @@ package com.basistech.dm;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 
 import java.util.Collections;
@@ -31,11 +32,11 @@ public class BaseAttribute {
 
     public BaseAttribute() {
         Map<String, Object> emptyMap = Maps.newHashMap();
-        extendedProperties = Collections.unmodifiableMap(emptyMap);
+        extendedProperties = ImmutableMap.<String, Object>builder().putAll(emptyMap).build();
     }
 
     public BaseAttribute(Map<String, Object> extendedProperties) {
-        this.extendedProperties = Collections.unmodifiableMap(extendedProperties);
+        this.extendedProperties = ImmutableMap.<String, Object>builder().putAll(extendedProperties).build();
     }
 
     /**

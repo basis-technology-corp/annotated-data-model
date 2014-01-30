@@ -21,6 +21,7 @@ import com.basistech.rlp.ResultAccessSerializedFormat;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import org.apache.commons.io.IOUtils;
 
 import java.io.File;
@@ -37,7 +38,7 @@ public final class AraDmConverter {
     }
 
     public static Text convert(AbstractResultAccess ara) {
-        Text text = new Text(ara.getRawText(), 0, ara.getRawText().length);
+        Text text = new Text(ara.getRawText(), 0, ara.getRawText().length, Maps.<String, String[]>newHashMap());
         // no provisions for original binary data, so no getRawBytes.
         /* an ARA by itself doesn't have language regions or detections;
          * The code for that is just in the RWS, so we'll ignore it at this prototype stage.

@@ -37,13 +37,28 @@ public class Text implements CharSequence {
      * of a ListAttribute.
      */
     private final Map<String, BaseAttribute> attributes;
+    private final Map<String, String[]> documentMetadata;
 
     @JsonCreator
-    public Text(@JsonProperty("data") char[] data, @JsonProperty("startOffset") int startOffset, @JsonProperty("endOffset") int endOffset) {
+    public Text(@JsonProperty("data") char[] data,
+                @JsonProperty("startOffset") int startOffset,
+                @JsonProperty("endOffset") int endOffset,
+                @JsonProperty("documentMetadata")Map<String, String[]> documentMetadata) {
         this.data = data;
         this.startOffset = startOffset;
         this.endOffset = endOffset;
         attributes = Maps.newHashMap();
+        this.documentMetadata = documentMetadata;
+    }
+
+    public Text(Text copyFrom) {
+        this.data = copyFrom.data;
+        this.startOffset = copyFrom.startOffset;
+        this.endOffset = copyFrom.endOffset;
+        // the attributes themselves are immutable so we can take them.
+        this.attributes = Maps.newHashMap(copyFrom.attributes);
+        // same for the metadata.
+        this.documentMetadata = Maps.newHashMap(copyFrom.documentMetadata);
     }
 
     public int length() {
@@ -56,6 +71,10 @@ public class Text implements CharSequence {
 
     public CharSequence subSequence(int start, int end) {
         return new String(data, start + startOffset, end - start);
+    }
+
+    public Map<String, String[]> getDocumentMetadata() {
+        return documentMetadata;
     }
 
     @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)

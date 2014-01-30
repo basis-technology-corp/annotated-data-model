@@ -37,6 +37,14 @@ public class ListAttributeDeserializer extends JsonDeserializer<ListAttribute> {
     @Override
     @SuppressWarnings("unchecked")
     public ListAttribute deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
+        /*
+         * There are two cases. In the 'normal' case, we arrive pointing to START_OBJECT, and expect itemClass: to come next.
+         * In the 'polymorphism' case, Jackson has already read the START_OBJECT (and the @class: and the class name) and
+         * even the "itemClass:" which it looked at to decide where it was.
+         */
+        if (jp.getCurrentToken() == JsonToken.START_OBJECT) {
+            jp.nextToken();
+        }
         // Jackson 2.3.0 leaves us pointing to the field name for itemClass.
         jp.nextToken();
         String itemClassName = jp.getText();
