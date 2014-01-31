@@ -14,6 +14,7 @@
 
 package com.basistech.dm;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.collect.ImmutableMap;
 
 import java.nio.ByteBuffer;
@@ -28,7 +29,7 @@ public class RawData {
     // a compromise between String and Object
     private final Map<String, String[]> metadata;
 
-    public RawData(ByteBuffer data, Map<String, String[]> metadata) {
+    public RawData(@JsonProperty("data") ByteBuffer data, @JsonProperty("metadata") Map<String, String[]> metadata) {
         this.data = data.asReadOnlyBuffer();
         this.metadata = ImmutableMap.<String, String[]>builder().putAll(metadata).build();
     }
