@@ -61,6 +61,18 @@ public class Text implements CharSequence {
         this.documentMetadata = Maps.newHashMap(copyFrom.documentMetadata);
     }
 
+    public char[] getData() {
+        return data;
+    }
+
+    public int getStartOffset() {
+        return startOffset;
+    }
+
+    public int getEndOffset() {
+        return endOffset;
+    }
+
     public int length() {
         return endOffset - startOffset;
     }

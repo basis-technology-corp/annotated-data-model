@@ -29,6 +29,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.util.Arrays;
 
 /**
  * Here's some testing using an ARA as in input.
@@ -56,7 +57,9 @@ public class RoundTripTest extends Assert {
         writer.writeValue(jsonContainer, text);
 
         ObjectReader reader = mapper.reader(Text.class);
-        // just see if we get an exception for now.
-        reader.readValue(jsonContainer.toByteArray());
+        Text deserializedText = reader.readValue(jsonContainer.toByteArray());
+
+        assertEquals(text.length(), deserializedText.length());
+        assertTrue(Arrays.equals(text.getData(), deserializedText.getData()));
     }
 }

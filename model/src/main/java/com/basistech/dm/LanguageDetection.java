@@ -28,6 +28,13 @@ public class LanguageDetection extends Attribute {
         private final String encoding;
         private final double confidence;
 
+        public DetectionResult() {
+            // make Jackson happy
+            language = LanguageCode.UNKNOWN;
+            encoding = null;
+            confidence = 0.0;
+        }
+
         public DetectionResult(LanguageCode language, String encoding, double confidence) {
             this.language = language;
             this.encoding = encoding;
@@ -48,6 +55,12 @@ public class LanguageDetection extends Attribute {
     }
 
     private final DetectionResult[] detectionResults;
+
+    public LanguageDetection() {
+        // make Jackson happy
+        super();
+        this.detectionResults = new DetectionResult[0];
+    }
 
     public LanguageDetection(int startOffset, int endOffset, DetectionResult[] detectionResults) {
         super(startOffset, endOffset);
