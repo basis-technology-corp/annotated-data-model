@@ -117,5 +117,9 @@ Entities have offsets, type, confidence, and chainId. Keeping an integer chain I
 attribute called 'CoreferenceChain' that stored a list of EntityMentions. That would require care in serialization and deserialization,
 but I skipped that work for the moment.
 
+# How to push the Maven site to gh-pages #
 
-
+````
+  mvn site site:stage
+  mvn scm-publish:publish-scm
+````
