@@ -19,11 +19,17 @@
     <properties>
         <jackson-2-version>2.3.0</jackson-2-version>
     </properties>
-    <url>${url.base}</url>
+    <url>http://git.basistech.net/pages/textanalytics/annotated-data-model</url>
     <scm>
-        <connection>scm:git:git@git.basistech.net:benson/services-data-model.git</connection>
-        <developerConnection>scm:git:git@git.basistech.net:benson/services-data-model.git</developerConnection>
+        <connection>scm:git:git@git.basistech.net:textanalytics/annotated-data-model.git</connection>
+        <developerConnection>scm:git:git@git.basistech.net:textanalytics/annotated-data-model.git</developerConnection>
     </scm>
+    <distributionManagement>
+        <site>
+            <id>site_id</id>
+            <url>scm:git:git@git.basistech.net:textanalytics/annotated-data-model.git</url>
+        </site>
+    </distributionManagement>
     <build>
         <extensions>
             <extension>
@@ -59,40 +65,40 @@
                     </configuration>
                 </plugin>
                 <plugin>
-                  <groupId>org.apache.maven.plugins</groupId>
-                  <artifactId>maven-scm-publish-plugin</artifactId>
-                  <version>1.0</version>
-                  <configuration>
-                    <scmBranch>gh-pages</scmBranch>
-                  </configuration>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-scm-publish-plugin</artifactId>
+                    <version>1.0</version>
+                    <configuration>
+                        <scmBranch>gh-pages</scmBranch>
+                    </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>
         <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-javadoc-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>aggregate</id>
-                <goals>
-                  <goal>aggregate</goal>
-                </goals>
-                <phase>site</phase>
-                <configuration>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>aggregate</id>
+                        <goals>
+                            <goal>aggregate</goal>
+                        </goals>
+                        <phase>site</phase>
+                        <configuration>
                 </configuration>
-              </execution>
-              <execution>
-                <id>jar</id>
-                <goals>
-                  <goal>jar</goal>
-                </goals>
-                <phase>package</phase>
-                <configuration>
+                    </execution>
+                    <execution>
+                        <id>jar</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                        <phase>package</phase>
+                        <configuration>
                 </configuration>
-              </execution>
-            </executions>
-          </plugin>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
     <modules>
@@ -153,16 +159,15 @@
                         </reports>
                     </reportSet>
                     <reportSet>
-                      <id>aggregate</id>
-                      <configuration>
+                        <id>aggregate</id>
+                        <configuration>
                       </configuration>
-                      <reports>
-                        <report>aggregate</report>
-                      </reports>
+                        <reports>
+                            <report>aggregate</report>
+                        </reports>
                     </reportSet>
                 </reportSets>
             </plugin>
         </plugins>
     </reporting>
-
 </project>
