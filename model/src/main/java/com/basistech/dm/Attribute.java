@@ -17,8 +17,7 @@ package com.basistech.dm;
 import java.util.Map;
 
 /**
- * Base class for attributes. Note that this class works 'as is' for attributes
- * that simply mark a span of text as having a boolean feature.
+ * Base class for attributes that span a range of text.
   */
 public class Attribute extends BaseAttribute {
     protected final int startOffset;

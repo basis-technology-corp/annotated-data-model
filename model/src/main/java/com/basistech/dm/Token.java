@@ -118,6 +118,9 @@ public class Token extends Attribute {
         return variations;
     }
 
+    /**
+     * Builder for tokens.
+     */
     public static class Builder extends Attribute.Builder {
         private String text;
         private List<String> normalized;

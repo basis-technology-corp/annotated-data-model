@@ -49,7 +49,7 @@ public class BaseAttribute {
     }
 
     @JsonAnySetter
-    void setExtendedProperty(String name, Object value) {
+    public void setExtendedProperty(String name, Object value) {
         /* This is only called in deserialization. So we do something
         * to work around the read-only collection. */
         Map<String, Object> newExtendedProperties = Maps.newHashMap();

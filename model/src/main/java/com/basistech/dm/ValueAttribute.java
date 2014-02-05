@@ -17,8 +17,11 @@ package com.basistech.dm;
 import java.util.Map;
 
 /**
- * An attribute that carries a value. Do we want to use this, or just keep making
- * specific classes? Script regions are a potential use of this.
+ * An attribute that carries a value.
+ * @param <T> the type of the value.
+ *           <br/>
+ * TODO: decide is this is really a good idea. It's used for script regions,
+ * and it might be cleaner to just make a class for them.
  */
 public class ValueAttribute<T> extends Attribute {
     private final T value;

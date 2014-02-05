@@ -24,10 +24,12 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * A container for an ordered collection of attributes of a type.
  * When attributes nest, the outer object has a single attribute
- * that carries the set. The obvious use of this is for an entire
+ * that carries the set. The typical use of this is for an entire
  * {@link Text} to have a set of tokens or named entities or language
  * regions or whatever.
+ * @param <Item> The type of the attributes in the list.
  */
 @JsonSerialize(using = ListAttributeSerializer.class)
 @JsonDeserialize(using = ListAttributeDeserializer.class)
@@ -57,10 +59,17 @@ public class ListAttribute<Item extends BaseAttribute> extends BaseAttribute {
         return itemClass;
     }
 
+    /**
+     * A builder for lists
+     * @param <Item> the type of attribute in the list.
+     */
     public static class Builder<Item extends BaseAttribute> extends BaseAttribute.Builder {
         private Class<Item> itemClass;
         private List<Item> items;
 
+        /**
+         * @param itemClass the class of the attribute items.
+         */
         public Builder(Class<Item> itemClass) {
             this.itemClass = itemClass;
             items = Lists.newArrayList();

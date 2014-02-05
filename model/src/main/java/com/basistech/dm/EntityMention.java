@@ -91,7 +91,7 @@ public class EntityMention extends Attribute {
     }
 
     /**
-     * Fluent builder to deal with all these annoying facts.
+     * A builder for entity mentions.
      */
     public static class Builder extends Attribute.Builder {
         private String entityType;

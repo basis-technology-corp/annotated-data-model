@@ -48,6 +48,9 @@ public class SentenceBoundaries extends BaseAttribute {
         return tokenBoundaries;
     }
 
+    /**
+     * Builder for sentence boundaries.
+     */
     public static class Builder extends BaseAttribute.Builder {
         private int[] charBoundaries;
         private int[] tokenBoundaries;

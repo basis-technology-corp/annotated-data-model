@@ -25,6 +25,11 @@ import java.util.Map;
 
 /**
  * The root of the data model. A blob of text and its attributes.
+ * Text objects implement {@link java.lang.CharSequence}, and to give direct access
+ * to the text. The attributes are available from {@link #getAttributes()}, as well as from
+ * some convenience accessors. Text does not (yet) have a builder, and so is not quite immutable;
+ * applications may add to the attributes.
+ * TODO: make immutable and add a builder.
  */
 public class Text implements CharSequence {
     private static final String SCRIPT_REGION_ATTRIBUTE = "com.basistech.dm.ScriptRegion";

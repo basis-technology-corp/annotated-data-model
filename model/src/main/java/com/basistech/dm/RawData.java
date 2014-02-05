@@ -21,7 +21,8 @@ import java.nio.ByteBuffer;
 import java.util.Map;
 
 /**
- * A stock container for incoming raw data{@link Text} objects don't carry their
+ * A container for incoming raw data.
+ * {@link Text} objects don't carry their
  * original bytes around, so this class provides a standard container.
  */
 public class RawData {
@@ -29,6 +30,10 @@ public class RawData {
     // a compromise between String and Object
     private final Map<String, String[]> metadata;
 
+    /**
+     * @param data the binary data.
+     * @param metadata metadata, such as mime type, creation date, or the like.
+     */
     public RawData(@JsonProperty("data") ByteBuffer data, @JsonProperty("metadata") Map<String, String[]> metadata) {
         this.data = data.asReadOnlyBuffer();
         this.metadata = ImmutableMap.<String, String[]>builder().putAll(metadata).build();

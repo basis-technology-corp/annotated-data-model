@@ -19,7 +19,9 @@ import com.basistech.util.LanguageCode;
 import java.util.Map;
 
 /**
- * A detected language.
+ * The results of running language detection on a region of text.
+ * Typically, there will be multiple of these since detectors
+ * return multiple possible answers.
  */
 public class LanguageDetection extends Attribute {
 
@@ -76,6 +78,9 @@ public class LanguageDetection extends Attribute {
         return detectionResults;
     }
 
+    /**
+     * A builder for language detection results.
+     */
     public static class Builder extends Attribute.Builder {
         private DetectionResult[] detectionResults;
 

@@ -29,6 +29,9 @@ public class BaseNounPhrase extends Attribute {
         super(startOffset, endOffset, extendedProperties);
     }
 
+    /**
+     * Builder for base noun phrase attributes.
+     */
     public static class Builder extends Attribute.Builder {
         public Builder(int startOffset, int endOffset) {
             super(startOffset, endOffset);
