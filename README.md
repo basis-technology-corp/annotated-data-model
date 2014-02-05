@@ -1,10 +1,11 @@
-services-data-model
+annotated-data-model
 ===================
 
-In spite of the content of [my google document](https://docs.google.com/a/basistech.com/document/d/1a3SiHdRjjB1jUWW_orpcnmEQD3KvCqUa9oOQT0u18uA/edit),
-the comments of James and others have convinced me that an annotation model is the wrong place to start. Coding to a pure annotation model is pure
-hell. If we need to layer an abstract data model over the annotation model to get work done, we might as well start with the abstract model. It
-would enable implementation of the web service. Thus, this repo contains a sketch in actual code.
+This project builds a Java class library that represents annotated
+textual data. The primary documentation is the Javadoc; see
+http://git.basistech.net/pages/textanalytics/annotated-data-model/apidocs/index.html.
+What follows are some notes that motivate the design and explore
+outstanding issues. Maybe that all belongs on the wiki.
 
 # Data Model Overview #
 
@@ -18,7 +19,7 @@ with Jackson. Attributes can, as a result have attibutes.
 * RLI attributes: such as overall languages detected and language region boundaries.
 * Tokens: Much of the complexity of all this adheres to the tokens.
 * Named Entities
-* Base Noun Porases
+* Base Noun Phrases
 
 ## Mutability ##
 
