@@ -14,11 +14,11 @@
 
 /**
  * Annotated Data Model.
- * <br/>
+ * This package contains a set of classes that define a data model that represents annotations over text.
+ * The data model is a Java (and Json) representation of some text and some annotations on the text.
  * <h2>Text</h2>
  * <p>
- * This package contains a set of classes that define a data model that represents annotations over text.
- * The root of the model is the {@link com.basistech.dm.Text} class; this implements {@link java.lang.CharSequence}
+  * The root of the model is the {@link com.basistech.dm.Text} class; this implements {@link java.lang.CharSequence}
  * and stores annotations that refer to the characters in the sequence.
  * </p>
  * <h2>Attributes</h2>
@@ -33,7 +33,8 @@
  *     that refer to regions of text inherit from {@code Attribute}.
  * </p>
  * <h2>RawData</h2>
- *     <p>In some cases, applications of this data model may also need to represent initial raw data. The {@link com.basistech.dm.RawData}
+ *     <p>In some cases, applications of this data model may also need to represent initial raw data.
+ *     The {@link com.basistech.dm.RawData}
  *     class supports that usage. {@code RawData} stores a {@link java.nio.ByteBuffer} and a {@code Map<String, String[]>} of
  *     metadata. There is no connection in the code between {@code Text} and {@code RawData}.
  *     </p>
@@ -73,7 +74,8 @@
  * </p>
  * <h2>Serialization</h2>
  * <p>
- *     All of the classes in here support json serialization and deserialization via Jackson 2.3.x. {@link com.basistech.dm.Text#getAttributes()}
+ *     All of the classes in here support json serialization and deserialization via Jackson 2.3.x.
+ *     {@link com.basistech.dm.Text#getAttributes()}
  *     is annotated with {@code @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)} to enable polymorphism. To reduce space and time,
  *     {@link com.basistech.dm.ListAttribute} has a custom serializer/deserializer pair that stores the class of all of the
  *     items in the list, to avoid the usual Jackson approach of writing it, over and over, in each item.
