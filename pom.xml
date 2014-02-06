@@ -80,6 +80,7 @@
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <executions>
                     <execution>
+                        <inherited>false</inherited>
                         <id>aggregate</id>
                         <goals>
                             <goal>aggregate</goal>
