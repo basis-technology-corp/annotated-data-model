@@ -74,25 +74,28 @@ public final class AraDmConverter {
     }
 
     private static void buildSentences(AbstractResultAccess ara, Text text) {
-        SentenceBoundaries.Builder builder = new SentenceBoundaries.Builder();
-        if (ara.getSentenceBoundaries() != null) {
-            builder.tokenBoundaries(ara.getSentenceBoundaries());
+        if (ara.getSentenceBoundaries() != null || ara.getTextBoundaries() != null) {
+            SentenceBoundaries.Builder builder = new SentenceBoundaries.Builder();
+            if (ara.getSentenceBoundaries() != null) {
+                builder.tokenBoundaries(ara.getSentenceBoundaries());
+            }
+            if (ara.getTextBoundaries() != null) {
+                builder.charBoundaries(ara.getTextBoundaries());
+            }
+            text.getAttributes().put(SentenceBoundaries.class.getName(), builder.build());
         }
-        if (ara.getTextBoundaries() != null) {
-            builder.charBoundaries(ara.getTextBoundaries());
-        }
-        text.getAttributes().put(SentenceBoundaries.class.getName(), builder.build());
     }
 
     private static void buildEntities(AbstractResultAccess ara, Text text) {
-        ListAttribute.Builder<EntityMention> entityListBuilder = new ListAttribute.Builder<EntityMention>(EntityMention.class);
         int[] entities = ara.getNamedEntity();
-        int namedEntityCount = entities != null ? entities.length / 3 : 0;
-
-        for (int x = 0; x < namedEntityCount; x++) {
-            entityListBuilder.add(buildOneEntity(ara, x));
+        if (entities != null) {
+            ListAttribute.Builder<EntityMention> entityListBuilder = new ListAttribute.Builder<EntityMention>(EntityMention.class);
+            int namedEntityCount = entities.length / 3;
+            for (int x = 0; x < namedEntityCount; x++) {
+                entityListBuilder.add(buildOneEntity(ara, x));
+            }
+            text.getAttributes().put(EntityMention.class.getName(), entityListBuilder.build());
         }
-        text.getAttributes().put(EntityMention.class.getName(), entityListBuilder.build());
     }
 
     private static EntityMention buildOneEntity(AbstractResultAccess ara, int x) {
@@ -127,13 +130,15 @@ public final class AraDmConverter {
     }
 
     private static void buildTokens(AbstractResultAccess ara, Text text) {
-        ListAttribute.Builder<Token> tokenListBuilder = new ListAttribute.Builder<Token>(Token.class);
-        int tokenCount = ara.getTokens().length;
+        if (ara.getTokens() != null) {
+            ListAttribute.Builder<Token> tokenListBuilder = new ListAttribute.Builder<Token>(Token.class);
+            int tokenCount = ara.getTokens().length;
 
-        for (int x = 0; x < tokenCount; x++) {
-            tokenListBuilder.add(buildOneToken(ara, x));
+            for (int x = 0; x < tokenCount; x++) {
+                tokenListBuilder.add(buildOneToken(ara, x));
+            }
+            text.getAttributes().put(Token.class.getName(), tokenListBuilder.build());
         }
-        text.getAttributes().put(Token.class.getName(), tokenListBuilder.build());
     }
 
     private static Token buildOneToken(AbstractResultAccess ara, int x) {
