@@ -86,7 +86,8 @@ public final class AraDmConverter {
 
     private static void buildEntities(AbstractResultAccess ara, Text text) {
         ListAttribute.Builder<EntityMention> entityListBuilder = new ListAttribute.Builder<EntityMention>(EntityMention.class);
-        int namedEntityCount = ara.getNamedEntitySourceString().length;
+        int[] entities = ara.getNamedEntity();
+        int namedEntityCount = entities != null ? entities.length / 3 : 0;
 
         for (int x = 0; x < namedEntityCount; x++) {
             entityListBuilder.add(buildOneEntity(ara, x));
@@ -97,10 +98,13 @@ public final class AraDmConverter {
     private static EntityMention buildOneEntity(AbstractResultAccess ara, int x) {
         int startToken = ara.getNamedEntity()[x * 3];
         int endToken = ara.getNamedEntity()[(x * 3) + 1];
-        String entityType = ara.getNamedEntityTypeString()[x];
+        // The type string is added by the redactor, so it might be missing depending
+        // on the user's rlp context.
+        String[] typeStrings = ara.getNamedEntityTypeString();
+        String entityType = typeStrings != null ? typeStrings[x] : "NONE";
 
         int start = ara.getTokenOffset()[startToken * 2];
-        int end = ara.getTokenOffset()[(endToken * 2) + 1];
+        int end = ara.getTokenOffset()[(endToken - 1) * 2 + 1];
 
         EntityMention.Builder builder = new EntityMention.Builder(start, end, entityType);
         if (ara.getNamedEntityTokenConfidence() != null) {
