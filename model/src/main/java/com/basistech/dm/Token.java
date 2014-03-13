@@ -26,88 +26,65 @@ import java.util.Map;
 public class Token extends Attribute {
     // we don't want to have to go look at the parent {@link Text}.
     private final String text;
-    private final List<String> normalized;
-    private final List<String> partOfSpeech;
-    private final List<String> lemma;
-    private final List<String> stem;
-    private final List<List<String>> readings;
-    // if components, they are represented as tokens, so that they can have offsets, POS, etc.
-    private final List<List<Token>> components;
+    private final String normalized;
+    private final MorphoAnalysisList analyses;
     private final String source;
     private final List<String> variations;
 
     public Token(int startOffset, int endOffset,
                  String text,
-                 List<String> normalized,
-                 List<String> partOfSpeech,
-                 List<String> lemma,
-                 List<String> stem,
-                 List<List<String>> readings,
-                 List<List<Token>> components,
+                 String normalized,
                  String source,
+                 List<MorphoAnalysis> analyses,
                  List<String> variations) {
         super(startOffset, endOffset);
         this.text = text;
         this.normalized = normalized;
-        this.partOfSpeech = partOfSpeech;
-        this.lemma = lemma;
-        this.stem = stem;
-        this.readings = readings;
-        this.components = components;
         this.source = source;
         this.variations = variations;
+        Class<? extends MorphoAnalysis> analysisClass;
+        if (analyses == null || analyses.size() == 0) {
+            analysisClass = MorphoAnalysis.class;
+            this.analyses = new MorphoAnalysisList(analysisClass, Lists.<MorphoAnalysis>newArrayList());
+        } else {
+            analysisClass = analyses.get(0).getClass();
+            this.analyses = new MorphoAnalysisList(analysisClass, analyses);
+        }
+
     }
 
-    public Token(int startOffset, int endOffset, String text, List<String> normalized, List<String> partOfSpeech, List<String> lemma, List<String> stem, List<List<String>> readings, List<List<Token>> components, String source, List<String> variations, Map<String, Object> extendedProperties) {
+    public Token(int startOffset, int endOffset, String text,
+                 String normalized,
+                 String source,
+                 List<String> variations,
+                 List<MorphoAnalysis> analyses,
+                 Map<String, Object> extendedProperties) {
         super(startOffset, endOffset, extendedProperties);
         this.text = text;
         this.normalized = normalized;
-        this.partOfSpeech = partOfSpeech;
-        this.lemma = lemma;
-        this.stem = stem;
-        this.readings = readings;
-        this.components = components;
-        this.source = source;
         this.variations = variations;
-    }
+        this.source = source;
+        Class<? extends MorphoAnalysis> analysisClass;
+        if (analyses == null || analyses.size() == 0) {
+            analysisClass = MorphoAnalysis.class;
+            this.analyses = new MorphoAnalysisList(analysisClass, Lists.<MorphoAnalysis>newArrayList());
+        } else {
+            analysisClass = analyses.get(0).getClass();
+            this.analyses = new MorphoAnalysisList(analysisClass, analyses);
+        }
 
-    protected Token() {
-        this(0, 0, null, Lists.<String>newArrayList(),
-            Lists.<String>newArrayList(),
-            Lists.<String>newArrayList(),
-            Lists.<String>newArrayList(),
-            Lists.<List<String>>newArrayList(),
-            Lists.<List<Token>>newArrayList(),
-            null,
-            Lists.<String>newArrayList());
     }
 
     public String getText() {
         return text;
     }
 
-    public List<String> getNormalized() {
+    public String getNormalized() {
         return normalized;
     }
 
-    public List<String> getPartOfSpeech() {
-        return partOfSpeech;
-    }
-
-    public List<String> getLemma() {
-        return lemma;
-    }
-
-    public List<String> getStem() {
-        return stem;
-    }
-
-    public List<List<String>> getReadings() {
-        return readings;
-    }
-
-    public List<List<Token>> getComponents() {
-        return components;
+    public List<MorphoAnalysis> getAnalyses() {
+        return analyses.getItems();
     }
 
     public String getSource() {
@@ -123,65 +100,33 @@ public class Token extends Attribute {
      */
     public static class Builder extends Attribute.Builder {
         private String text;
-        private List<String> normalized;
-        private List<String> partOfSpeech;
-        private List<String> lemma;
-        private List<String> stem;
-        private List<List<String>> readings;
-        private List<List<Token>> components;
+        private String normalized;
+        private List<MorphoAnalysis> analyses;
+
         private String source;
         private List<String> variations;
 
         public Builder(int startOffset, int endOffset, String text) {
             super(startOffset, endOffset);
             this.text = text;
-            normalized = Lists.newArrayList();
-            partOfSpeech = Lists.newArrayList();
-            lemma = Lists.newArrayList();
-            stem = Lists.newArrayList();
-            readings = Lists.newArrayList();
-            components = Lists.newArrayList();
+            this.analyses = Lists.newArrayList();
             variations = Lists.newArrayList();
         }
 
         public Builder(Token toCopy) {
             super(toCopy);
             text = toCopy.text;
-            normalized.addAll(toCopy.normalized);
-            partOfSpeech.addAll(toCopy.partOfSpeech);
-            lemma.addAll(toCopy.lemma);
-            stem.addAll(toCopy.stem);
-            readings.addAll(toCopy.readings);
-            components.addAll(toCopy.components);
+            normalized = toCopy.normalized;
             variations.addAll(toCopy.variations);
+            analyses = toCopy.getAnalyses();
         }
 
         public void text(String text) {
             this.text = text;
         }
 
-        public void addNormalized(String normalized) {
-            this.normalized.add(normalized);
-        }
-
-        public void addPartOfSpeech(String partOfSpeech) {
-            this.partOfSpeech.add(partOfSpeech);
-        }
-
-        public void addLemma(String lemma) {
-            this.lemma.add(lemma);
-        }
-
-        public void addStem(String stem) {
-            this.stem.add(stem);
-        }
-
-        public void addReadings(List<String> readings) {
-            this.readings.add(readings);
-        }
-
-        public void addComponents(List<Token> components) {
-            this.components.add(components);
+        public void normalized(String normalized) {
+            this.normalized = normalized;
         }
 
         public void source(String source) {
@@ -192,10 +137,12 @@ public class Token extends Attribute {
             this.variations.add(variation);
         }
 
+        public void addAnalysis(MorphoAnalysis analysis) {
+            this.analyses.add(analysis);
+        }
+
         public Token build() {
-            return new Token(startOffset, endOffset, text, normalized, partOfSpeech, lemma, stem,
-                readings, components, source,
-                variations, extendedProperties);
+            return new Token(startOffset, endOffset, text, normalized, source, variations, analyses, extendedProperties);
         }
     }
 }

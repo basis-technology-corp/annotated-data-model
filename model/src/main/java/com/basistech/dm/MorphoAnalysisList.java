@@ -24,68 +24,56 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * A container for an ordered collection of attributes of a type.
- * The typical use of this is for an entire
- * {@link Text} to have a set of tokens or named entities or language
- * regions. This class declares custom Jackson serialization to
- * avoid redundantly writing out the types of all the items, since
- * all the items will be of the same type.
- * @param <Item> The type of the attributes in the list.
+ * A list of MorphoAnalysis objects that can be serialized and deserialized with
+ * homogeneous polymorphism.
  */
-@JsonSerialize(using = ListAttributeSerializer.class)
-@JsonDeserialize(using = ListAttributeDeserializer.class)
-public class ListAttribute<Item extends BaseAttribute> extends BaseAttribute {
+@JsonSerialize(using = MorphoAnalysisListSerializer.class)
+@JsonDeserialize(using = MorphoAnalysisListDeserializer.class)
+public class MorphoAnalysisList {
 
-    private final List<Item> items;
-    private final Class<Item> itemClass;
+    private final List<MorphoAnalysis> items;
+    private final Class<? extends MorphoAnalysis> itemClass;
 
-    public ListAttribute(Class<Item> itemClass, List<Item> items) {
+    public MorphoAnalysisList(Class<? extends MorphoAnalysis> itemClass, List<MorphoAnalysis> items) {
         this.itemClass = itemClass;
         this.items = Collections.unmodifiableList(items);
     }
 
-    public ListAttribute(Class<Item> itemClass, List<Item> items, Map<String, Object> extendedProperties) {
-        super(extendedProperties);
-        this.items = items;
-        this.itemClass = itemClass;
-    }
-
-    public List<Item> getItems() {
+    public List<MorphoAnalysis> getItems() {
         return items;
     }
 
     // this is only used by the serializer, never let it get processed automatically.
     @JsonIgnore
-    Class<Item> getItemClass() {
+    Class<? extends MorphoAnalysis> getItemClass() {
         return itemClass;
     }
 
     /**
-     * A builder for lists
-     * @param <Item> the type of attribute in the list.
+     * A builder.
      */
-    public static class Builder<Item extends BaseAttribute> extends BaseAttribute.Builder {
-        private Class<Item> itemClass;
-        private List<Item> items;
+    public static class Builder {
+        private Class<? extends MorphoAnalysis> itemClass;
+        private List<MorphoAnalysis> items;
 
         /**
          * @param itemClass the class of the attribute items.
          */
-        public Builder(Class<Item> itemClass) {
+        public Builder(Class<? extends MorphoAnalysis> itemClass) {
             this.itemClass = itemClass;
             items = Lists.newArrayList();
         }
 
-        public void add(Item item) {
+        public void add(MorphoAnalysis item) {
             items.add(item);
         }
 
-        public void setItems(List<Item> items) {
+        public void setItems(List<MorphoAnalysis> items) {
             this.items.addAll(items);
         }
 
-        public ListAttribute<Item> build() {
-            return new ListAttribute<Item>(itemClass, items, extendedProperties);
+        public MorphoAnalysisList build() {
+            return new MorphoAnalysisList(itemClass, items);
         }
     }
 }

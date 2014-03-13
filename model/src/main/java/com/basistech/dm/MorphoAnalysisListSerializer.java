@@ -22,12 +22,13 @@ import com.fasterxml.jackson.databind.jsontype.TypeSerializer;
 import java.io.IOException;
 
 /**
- * Jackson serializer that that handles polymorphism in lists of homogeneous type without
- * writing out the type every time.
+ * Jackson serializer that that handles our slightly manual polymorphism.
+ * Instead of letting Jackson write out the class as an attribute of each list item,
+ * we write it out once.
  */
-public class ListAttributeSerializer extends JsonSerializer<ListAttribute> {
+public class MorphoAnalysisListSerializer extends JsonSerializer<MorphoAnalysisList> {
     @Override
-    public void serialize(ListAttribute value, JsonGenerator jgen, SerializerProvider provider) throws IOException {
+    public void serialize(MorphoAnalysisList value, JsonGenerator jgen, SerializerProvider provider) throws IOException {
         jgen.writeStartObject();
         jgen.writeStringField("itemClass", value.getItemClass().getName());
         jgen.writeObjectField("items", value.getItems());
@@ -35,7 +36,7 @@ public class ListAttributeSerializer extends JsonSerializer<ListAttribute> {
     }
 
     @Override
-    public void serializeWithType(ListAttribute value, JsonGenerator jgen, SerializerProvider provider, TypeSerializer typeSer) throws IOException {
+    public void serializeWithType(MorphoAnalysisList value, JsonGenerator jgen, SerializerProvider provider, TypeSerializer typeSer) throws IOException {
         typeSer.writeTypePrefixForObject(value, jgen);
         jgen.writeStringField("itemClass", value.getItemClass().getName());
         jgen.writeObjectField("items", value.getItems());

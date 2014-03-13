@@ -26,16 +26,20 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Jackson deserializer for ListAttributes that avoids writing out
- * the same type information repeatedly.
+ * Jackson deserialization that handles polymorphism of MorphoAnalysis without writing
+ * out the type in each one.
  */
-public class ListAttributeDeserializer extends JsonDeserializer<ListAttribute> {
+public class MorphoAnalysisListDeserializer extends JsonDeserializer<MorphoAnalysisList> {
+    /*
+     * Note the use of 'unchecked' here. If there's a way to to do this that is
+     * completely OK with the compiler, I don't know what it would be.
+     */
 
     static final SerializedString ITEMS = new SerializedString("items");
 
     @Override
     @SuppressWarnings("unchecked")
-    public ListAttribute deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
+    public MorphoAnalysisList deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
         /*
          * There are two cases. In the 'normal' case, we arrive pointing to START_OBJECT, and expect itemClass: to come next.
          * In the 'polymorphism' case, Jackson has already read the START_OBJECT (and the @class: and the class name) and
@@ -47,16 +51,17 @@ public class ListAttributeDeserializer extends JsonDeserializer<ListAttribute> {
         // Jackson 2.3.0 leaves us pointing to the field name for itemClass.
         jp.nextToken();
         String itemClassName = jp.getText();
-        Class<? extends BaseAttribute> itemClass;
+        Class<? extends MorphoAnalysis> itemClass;
         try {
-            itemClass = (Class<? extends BaseAttribute>) ctxt.findClass(itemClassName);
+            // here is the seemingly unavoidable unchecked cast.
+            itemClass = (Class<? extends MorphoAnalysis>) ctxt.findClass(itemClassName);
         } catch (ClassNotFoundException e) {
             throw new JsonMappingException("Failed to find class " + itemClassName);
         }
         if (!jp.nextFieldName(ITEMS)) {
             throw ctxt.wrongTokenException(jp, JsonToken.FIELD_NAME, "Expected items");
         }
-        List<BaseAttribute> items = Lists.newArrayList();
+        List<MorphoAnalysis> items = Lists.newArrayList();
         if (jp.nextToken() != JsonToken.START_ARRAY) { // what about nothing?
             throw ctxt.wrongTokenException(jp, JsonToken.START_ARRAY, "Expected array of items");
         }
@@ -64,10 +69,10 @@ public class ListAttributeDeserializer extends JsonDeserializer<ListAttribute> {
             items.add(jp.readValueAs(itemClass));
         }
         if (jp.nextToken() != JsonToken.END_OBJECT) {
-            throw ctxt.wrongTokenException(jp, JsonToken.END_OBJECT, "Expected end of ListAttribute object.");
+            throw ctxt.wrongTokenException(jp, JsonToken.END_OBJECT, "Expected end of MorphoAnalysisList object.");
         }
 
-        ListAttribute.Builder<BaseAttribute> builder = new ListAttribute.Builder<BaseAttribute>((Class<BaseAttribute>) itemClass);
+        MorphoAnalysisList.Builder builder = new MorphoAnalysisList.Builder(itemClass);
         builder.setItems(items);
         return builder.build();
     }
