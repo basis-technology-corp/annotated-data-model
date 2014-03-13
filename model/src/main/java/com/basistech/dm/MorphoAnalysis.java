@@ -102,8 +102,8 @@ public class MorphoAnalysis {
             this.raw = raw;
         }
 
-        public void addComponents(Token components) {
-            this.components.add(components);
+        public void addComponent(Token component) {
+            this.components.add(component);
         }
 
         public MorphoAnalysis build() {

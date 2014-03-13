@@ -18,6 +18,7 @@ package com.basistech.dm;
 import com.basistech.rlp.AbstractResultAccess;
 import com.basistech.rlp.ResultAccessDeserializer;
 import com.basistech.rlp.ResultAccessSerializedFormat;
+import com.basistech.util.LanguageCode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.google.common.collect.Lists;
@@ -141,6 +142,125 @@ public final class AraDmConverter {
         }
     }
 
+    private static void buildAnalysisList(AbstractResultAccess ara, int x, Token.Builder builder) {
+        builder.addAnalysis(buildBaseAnalysis(ara, x));
+        if (ara.getAlternativePartsOfSpeech() != null && ara.getAlternativePartsOfSpeech().getStringsForTokenIndex(x).length != 0) {
+            buildAltAnalyses(ara, x, builder);
+        }
+    }
+
+    private static void buildAltAnalyses(AbstractResultAccess ara, int x, Token.Builder builder) {
+        for (int ax = 0; ax < ara.getAlternativePartsOfSpeech().getStringsForTokenIndex(x).length; ax++) {
+            switch (ara.getDetectedLanguage()) {
+            case ARABIC:
+                buildAltArabicAnalysis(ara, x, ax, builder);
+                break;
+            case JAPANESE:
+            case CHINESE:
+            case SIMPLIFIED_CHINESE:
+            case TRADITIONAL_CHINESE:
+                buildAltHanAnalysis(ara, x, ax, builder);
+                break;
+            default:
+                buildAltCommonAnalysis(ara, x, ax, builder);
+                break;
+            }
+        }
+    }
+
+    private static void buildAltCommonAnalysis(AbstractResultAccess ara, int x, int ax, Token.Builder builder) {
+        MorphoAnalysis.Builder anBuilder = new MorphoAnalysis.Builder();
+        setupCommonAltAnalysis(ara, x, ax, anBuilder);
+        builder.addAnalysis(anBuilder.build());
+    }
+
+    private static void buildAltHanAnalysis(AbstractResultAccess ara, int x, int ax, Token.Builder builder) {
+        HanMorphoAnalysis.Builder anBuilder = new HanMorphoAnalysis.Builder();
+        setupCommonAltAnalysis(ara, x, ax, anBuilder);
+        // no such thing as alt readings, so we're done.
+        builder.addAnalysis(anBuilder.build());
+    }
+
+    private static void buildAltArabicAnalysis(AbstractResultAccess ara, int x, int ax, Token.Builder builder) {
+        ArabicMorphoAnalysis.Builder anBuilder = new ArabicMorphoAnalysis.Builder();
+        setupCommonAltAnalysis(ara, x, ax, anBuilder);
+        anBuilder.root(ara.getAlternativeRoots().getStringsForTokenIndex(x)[ax]);
+        // looks like we forgot to do alt-pss. So this is it.
+        builder.addAnalysis(anBuilder.build());
+    }
+
+    private static void setupCommonAltAnalysis(AbstractResultAccess ara, int x, int ax, MorphoAnalysis.Builder anBuilder) {
+        anBuilder.partOfSpeech(ara.getAlternativePartsOfSpeech().getStringsForTokenIndex(x)[ax]);
+        anBuilder.lemma(ara.getAlternativeLemmas().getStringsForTokenIndex(x)[ax]);
+        String[] comps = ara.getAlternativeCompounds().getStringsForTokenIndex(x);
+        // these are delimited. And we don't know the delimiter.
+        String delim = System.getProperty("bt.alt.comp.delim", "\uF8FF");
+        if (comps != null) {
+            String[] compsComps = comps[ax].split(delim);
+            for (String compComp : compsComps) {
+                Token.Builder tokenBuilder = new Token.Builder(0, 0, compComp);
+                anBuilder.addComponent(tokenBuilder.build());
+            }
+        }
+    }
+
+    private static MorphoAnalysis buildBaseAnalysis(AbstractResultAccess ara, int x) {
+        MorphoAnalysis analysis;
+        switch (ara.getDetectedLanguage()) {
+        case ARABIC:
+            analysis = buildBaseArabicAnalysis(ara, x);
+            break;
+        case JAPANESE:
+        case CHINESE:
+        case SIMPLIFIED_CHINESE:
+        case TRADITIONAL_CHINESE:
+            analysis = buildBaseHanAnalysis(ara, x);
+            break;
+        default:
+            analysis = buildCommonAnalysis(ara, x);
+            break;
+        }
+        return analysis;
+    }
+
+    private static MorphoAnalysis buildCommonAnalysis(AbstractResultAccess ara, int x) {
+        MorphoAnalysis.Builder builder = new MorphoAnalysis.Builder();
+        setupCommonBaseAnalysis(ara, x, builder);
+        return builder.build();
+    }
+
+    private static MorphoAnalysis buildBaseHanAnalysis(AbstractResultAccess ara, int x) {
+        HanMorphoAnalysis.Builder builder = new HanMorphoAnalysis.Builder();
+        setupCommonBaseAnalysis(ara, x, builder);
+        String[] readings = ara.getReading().getStringsForTokenIndex(x);
+        if (readings != null) {
+            for (String reading : readings) {
+                builder.addReading(reading);
+            }
+        }
+        return builder.build();
+    }
+
+    private static void setupCommonBaseAnalysis(AbstractResultAccess ara, int x, MorphoAnalysis.Builder builder) {
+        builder.lemma(ara.getLemma()[x]);
+        builder.partOfSpeech(ara.getPartOfSpeech()[x]);
+        String[] comps = ara.getCompound().getStringsForTokenIndex(x);
+        if (comps != null) {
+            for (String comp : comps) {
+                Token.Builder tokenBuilder = new Token.Builder(0, 0, comp);
+                builder.addComponent(tokenBuilder.build());
+            }
+        }
+    }
+
+    private static MorphoAnalysis buildBaseArabicAnalysis(AbstractResultAccess ara, int x) {
+        ArabicMorphoAnalysis.Builder builder = new ArabicMorphoAnalysis.Builder();
+        setupCommonBaseAnalysis(ara, x, builder);
+        builder.lengths(ara.getTokenPrefixStemLength()[x * 2], ara.getTokenPrefixStemLength()[(x * 2) + 1]);
+        builder.root(ara.getRoots()[x]);
+        return builder.build();
+    }
+
     private static Token buildOneToken(AbstractResultAccess ara, int x) {
         int start = ara.getTokenOffset()[x * 2];
         int end = ara.getTokenOffset()[(x * 2) + 1];
@@ -149,86 +269,14 @@ public final class AraDmConverter {
         if (ara.getTokenVariations() != null) {
             String[] variations = ara.getTokenVariations().getStringsForTokenIndex(x);
             if (variations != null) {
+                // no support yet to relocate variations into raw.
                 for (String variation : variations) {
                     builder.addVariation(variation);
                 }
             }
         }
-        if (ara.getPartOfSpeech() != null) {
-            builder.addPartOfSpeech(ara.getPartOfSpeech()[x]);
-        }
 
-        if (ara.getAlternativePartsOfSpeech() != null) {
-            String[] parts = ara.getAlternativePartsOfSpeech().getStringsForTokenIndex(x);
-            if (parts != null) {
-                for (String part : parts) {
-                    builder.addPartOfSpeech(part);
-                }
-            }
-        }
-
-        if (ara.getLemma() != null) {
-            builder.addLemma(ara.getLemma()[x]);
-        }
-        if (ara.getAlternativeLemmas() != null) {
-            String[] lemmas = ara.getAlternativeLemmas().getStringsForTokenIndex(x);
-            if (lemmas != null) {
-                for (String lemma : lemmas) {
-                    builder.addLemma(lemma);
-                }
-            }
-        }
-
-        if (ara.getStem() != null) {
-            builder.addStem(ara.getStem()[x]);
-        }
-        if (ara.getAlternativeStems() != null) {
-            String[] stems = ara.getAlternativeStems().getStringsForTokenIndex(x);
-            if (stems != null) {
-                for (String stem : stems) {
-                    builder.addLemma(stem);
-                }
-            }
-        }
-
-        if (ara.getNormalizedToken() != null) {
-            builder.addNormalized(ara.getNormalizedToken()[x]);
-        }
-        if (ara.getAlternativeNormalizedToken() != null) {
-            String[] norms = ara.getAlternativeNormalizedToken().getStringsForTokenIndex(x);
-            if (norms != null) {
-                for (String norm : norms) {
-                    builder.addNormalized(norm);
-                }
-            }
-        }
-        // TODO: Many-to-One, which may contain redundant data?
-        // TODO: 'roots', not yet allowed for in token?
-        if (ara.getReading() != null) {
-            String[] readings = ara.getReading().getStringsForTokenIndex(x);
-            if (readings != null) {
-                // the ellipsis in newArrayList should accept the String[].
-                List<String> readingsInList = Lists.newArrayList(readings);
-                builder.addReadings(readingsInList);
-            }
-        }
-
-        if (ara.getCompound() != null) {
-            String[] comps = ara.getCompound().getStringsForTokenIndex(x);
-            if (comps != null) {
-                builder.addComponents(buildTokensForComps(comps, start, end));
-            }
-        }
-
-        if (ara.getAlternativeCompounds() != null) {
-            String[] encComps = ara.getAlternativeCompounds().getStringsForTokenIndex(x);
-            if (encComps != null) {
-                List<List<Token>> alts = buildTokensForAltComps(encComps, start, end);
-                for (List<Token> alt : alts) {
-                    builder.addComponents(alt);
-                }
-            }
-        }
+        buildAnalysisList(ara, x, builder);
 
         if (ara.getTokenSourceName() != null) {
             builder.source(ara.getTokenSourceName()[x]);
