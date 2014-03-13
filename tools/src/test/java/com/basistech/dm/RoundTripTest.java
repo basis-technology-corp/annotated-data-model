@@ -56,6 +56,8 @@ public class RoundTripTest extends Assert {
         ObjectWriter writer = mapper.writer().withDefaultPrettyPrinter();
         writer.writeValue(jsonContainer, text);
 
+        //System.out.println(jsonContainer.toString("utf-8"));
+
         ObjectReader reader = mapper.reader(Text.class);
         Text deserializedText = reader.readValue(jsonContainer.toByteArray());
 

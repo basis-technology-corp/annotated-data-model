@@ -244,11 +244,13 @@ public final class AraDmConverter {
     private static void setupCommonBaseAnalysis(AbstractResultAccess ara, int x, MorphoAnalysis.Builder builder) {
         builder.lemma(ara.getLemma()[x]);
         builder.partOfSpeech(ara.getPartOfSpeech()[x]);
-        String[] comps = ara.getCompound().getStringsForTokenIndex(x);
-        if (comps != null) {
-            for (String comp : comps) {
-                Token.Builder tokenBuilder = new Token.Builder(0, 0, comp);
-                builder.addComponent(tokenBuilder.build());
+        if (ara.getCompound() != null) {
+            String[] comps = ara.getCompound().getStringsForTokenIndex(x);
+            if (comps != null) {
+                for (String comp : comps) {
+                    Token.Builder tokenBuilder = new Token.Builder(0, 0, comp);
+                    builder.addComponent(tokenBuilder.build());
+                }
             }
         }
     }

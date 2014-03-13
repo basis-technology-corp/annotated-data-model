@@ -50,7 +50,14 @@ public class Token extends Attribute {
             analysisClass = analyses.get(0).getClass();
             this.analyses = new MorphoAnalysisList(analysisClass, analyses);
         }
+    }
 
+    protected Token() {
+        text = null;
+        normalized = null;
+        analyses = new MorphoAnalysisList(MorphoAnalysis.class, Lists.<MorphoAnalysis>newArrayList());
+        source = null;
+        variations = Lists.newArrayList();
     }
 
     public Token(int startOffset, int endOffset, String text,
@@ -83,8 +90,8 @@ public class Token extends Attribute {
         return normalized;
     }
 
-    public List<MorphoAnalysis> getAnalyses() {
-        return analyses.getItems();
+    public MorphoAnalysisList getAnalyses() {
+        return analyses;
     }
 
     public String getSource() {
@@ -118,7 +125,7 @@ public class Token extends Attribute {
             text = toCopy.text;
             normalized = toCopy.normalized;
             variations.addAll(toCopy.variations);
-            analyses = toCopy.getAnalyses();
+            analyses = toCopy.getAnalyses().getItems();
         }
 
         public void text(String text) {

@@ -54,6 +54,13 @@ public class MorphoAnalysis {
         this.raw = raw;
     }
 
+    protected MorphoAnalysis() {
+        partOfSpeech = null;
+        lemma = null;
+        components = Lists.newArrayList();
+        raw = null;
+    }
+
     public String getPartOfSpeech() {
         return partOfSpeech;
     }

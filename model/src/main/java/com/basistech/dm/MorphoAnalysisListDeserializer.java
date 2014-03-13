@@ -51,6 +51,10 @@ public class MorphoAnalysisListDeserializer extends JsonDeserializer<MorphoAnaly
         // Jackson 2.3.0 leaves us pointing to the field name for itemClass.
         jp.nextToken();
         String itemClassName = jp.getText();
+        if (itemClassName == null || "".equals(itemClassName)) {
+            throw new JsonMappingException("item class name missing");
+        }
+
         Class<? extends MorphoAnalysis> itemClass;
         try {
             // here is the seemingly unavoidable unchecked cast.
