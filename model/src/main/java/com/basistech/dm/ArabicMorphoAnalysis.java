@@ -14,17 +14,20 @@
 
 package com.basistech.dm;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 
 import java.util.List;
 
 /**
- * Arabic morpho analysis.
+ * Arabic morphological analysis.
  */
 public class ArabicMorphoAnalysis extends MorphoAnalysis {
     private final int prefixLength;
     private final int stemLength;
     private final String root;
+    private final boolean definiteArticle;
+    private final boolean strippablePrefix;
 
     private final List<String> prefixes;
     private final List<String> stems;
@@ -36,19 +39,38 @@ public class ArabicMorphoAnalysis extends MorphoAnalysis {
 
     public ArabicMorphoAnalysis(String partOfSpeech, String lemma, List<Token> components, String raw,
                                 int prefixLength, int stemLength,
-                                String root, List<String> prefixes, List<String> stems, List<String> suffixes,
+                                String root,
+                                boolean definiteArticle,
+                                boolean strippablePrefix,
+                                List<String> prefixes, List<String> stems, List<String> suffixes,
                                 List<String> prefixTags, List<String> stemTags,
                                 List<String> suffixTags) {
         super(partOfSpeech, lemma, components, raw);
         this.prefixLength = prefixLength;
         this.stemLength = stemLength;
         this.root = root;
-        this.prefixes = prefixes;
-        this.stems = stems;
-        this.suffixes = suffixes;
-        this.prefixTags = prefixTags;
-        this.stemTags = stemTags;
-        this.suffixTags = suffixTags;
+        this.prefixes = ImmutableList.copyOf(prefixes);
+        this.stems = ImmutableList.copyOf(stems);
+        this.suffixes = ImmutableList.copyOf(suffixes);
+        this.prefixTags = ImmutableList.copyOf(prefixTags);
+        this.stemTags = ImmutableList.copyOf(stemTags);
+        this.suffixTags = ImmutableList.copyOf(suffixTags);
+        this.definiteArticle = definiteArticle;
+        this.strippablePrefix = strippablePrefix;
+    }
+
+    protected ArabicMorphoAnalysis() {
+        this.prefixLength = 0;
+        this.stemLength = 0;
+        this.root = "";
+        this.prefixes = ImmutableList.of();
+        this.stems = ImmutableList.of();
+        this.suffixes = ImmutableList.of();
+        this.prefixTags = ImmutableList.of();
+        this.stemTags = ImmutableList.of();
+        this.suffixTags = ImmutableList.of();
+        this.definiteArticle = false;
+        this.strippablePrefix = false;
     }
 
     public int getPrefixLength() {
@@ -87,10 +109,20 @@ public class ArabicMorphoAnalysis extends MorphoAnalysis {
         return suffixTags;
     }
 
+    public boolean isDefiniteArticle() {
+        return definiteArticle;
+    }
+
+    public boolean isStrippablePrefix() {
+        return strippablePrefix;
+    }
+
     public static class Builder extends MorphoAnalysis.Builder {
         private int prefixLength;
         private int stemLength;
         private String root;
+        private boolean definiteArticle;
+        private boolean strippablePrefix;
 
         private List<String> prefixes;
         private List<String> stems;
@@ -108,6 +140,7 @@ public class ArabicMorphoAnalysis extends MorphoAnalysis {
             prefixTags = Lists.newArrayList();
             stemTags = Lists.newArrayList();
             suffixes = Lists.newArrayList();
+            suffixTags = Lists.newArrayList();
         }
 
         public Builder(ArabicMorphoAnalysis toCopy) {
@@ -129,6 +162,14 @@ public class ArabicMorphoAnalysis extends MorphoAnalysis {
             this.root = root;
         }
 
+        public void definiteArticle(boolean definiteArticle) {
+            this.definiteArticle = definiteArticle;
+        }
+
+        public void strippablePrefix(boolean strippablePrefix) {
+            this.strippablePrefix = strippablePrefix;
+        }
+
         public void addPrefix(String prefix, String prefixTag) {
             prefixes.add(prefix);
             prefixTags.add(prefixTag);
@@ -145,7 +186,7 @@ public class ArabicMorphoAnalysis extends MorphoAnalysis {
         }
 
         public ArabicMorphoAnalysis build() {
-            return new ArabicMorphoAnalysis(partOfSpeech, lemma, components, raw, prefixLength, stemLength, root, prefixes, stems, suffixes, prefixTags, stemTags, suffixTags);
+            return new ArabicMorphoAnalysis(partOfSpeech, lemma, components, raw, prefixLength, stemLength, root, definiteArticle, strippablePrefix, prefixes, stems, suffixes, prefixTags, stemTags, suffixTags);
         }
     }
 

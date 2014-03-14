@@ -14,6 +14,7 @@
 
 package com.basistech.dm;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 
 import java.util.List;
@@ -26,7 +27,11 @@ public class HanMorphoAnalysis extends MorphoAnalysis {
 
     public HanMorphoAnalysis(String partOfSpeech, String lemma, List<Token> components, String raw, List<String> readings) {
         super(partOfSpeech, lemma, components, raw);
-        this.readings = readings;
+        this.readings = ImmutableList.copyOf(readings);
+    }
+
+    protected HanMorphoAnalysis() {
+        readings = ImmutableList.of();
     }
 
     public List<String> getReadings() {

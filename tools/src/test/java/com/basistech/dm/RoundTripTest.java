@@ -63,5 +63,35 @@ public class RoundTripTest extends Assert {
 
         assertEquals(text.length(), deserializedText.length());
         assertTrue(Arrays.equals(text.getData(), deserializedText.getData()));
+        // we need about 1000 additional assertions in here.
+    }
+
+    @Test
+    public void testAraRoundTrip() throws Exception {
+        ResultAccessDeserializer rad = new ResultAccessDeserializer();
+        rad.setFormat(ResultAccessSerializedFormat.JSON);
+        InputStream input = null;
+        AbstractResultAccess ara;
+        try {
+            input = new FileInputStream("../model/data/ara-ara.json");
+            ara = rad.deserializeAbstractResultAccess(input);
+        } finally {
+            IOUtils.closeQuietly(input);
+        }
+        Text text = AraDmConverter.convert(ara);
+
+        ByteArrayOutputStream jsonContainer = new ByteArrayOutputStream();
+
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectWriter writer = mapper.writer().withDefaultPrettyPrinter();
+        writer.writeValue(jsonContainer, text);
+
+        //System.out.println(jsonContainer.toString("utf-8"));
+
+        ObjectReader reader = mapper.reader(Text.class);
+        Text deserializedText = reader.readValue(jsonContainer.toByteArray());
+
+        assertEquals(text.length(), deserializedText.length());
+        assertTrue(Arrays.equals(text.getData(), deserializedText.getData()));
     }
 }

@@ -17,9 +17,9 @@ package com.basistech.dm;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -41,7 +41,7 @@ public class ListAttribute<Item extends BaseAttribute> extends BaseAttribute {
 
     public ListAttribute(Class<Item> itemClass, List<Item> items) {
         this.itemClass = itemClass;
-        this.items = Collections.unmodifiableList(items);
+        this.items = ImmutableList.copyOf(items);
     }
 
     public ListAttribute(Class<Item> itemClass, List<Item> items, Map<String, Object> extendedProperties) {

@@ -14,83 +14,75 @@
 
 package com.basistech.dm;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 
 import java.util.List;
 import java.util.Map;
 
 /**
- * The token. A token carries multiple possible values for a set of
- * analytical attributes.
+ * The token. The token is a word in the language.
  */
 public class Token extends Attribute {
     // we don't want to have to go look at the parent {@link Text}.
     private final String text;
-    private final String normalized;
-    private final MorphoAnalysisList analyses;
+    private final List<String> normalized;
+    @JsonDeserialize(using = MorphoAnalysisListDeserializer.class)
+    private final List<MorphoAnalysis> analyses;
     private final String source;
     private final List<String> variations;
 
     public Token(int startOffset, int endOffset,
                  String text,
-                 String normalized,
+                 List<String> normalized,
                  String source,
                  List<MorphoAnalysis> analyses,
                  List<String> variations) {
         super(startOffset, endOffset);
         this.text = text;
-        this.normalized = normalized;
+        this.normalized = ImmutableList.copyOf(normalized);
         this.source = source;
-        this.variations = variations;
-        Class<? extends MorphoAnalysis> analysisClass;
-        if (analyses == null || analyses.size() == 0) {
-            analysisClass = MorphoAnalysis.class;
-            this.analyses = new MorphoAnalysisList(analysisClass, Lists.<MorphoAnalysis>newArrayList());
-        } else {
-            analysisClass = analyses.get(0).getClass();
-            this.analyses = new MorphoAnalysisList(analysisClass, analyses);
-        }
+        this.variations = ImmutableList.copyOf(variations);
+        this.analyses = ImmutableList.copyOf(analyses);
     }
 
     protected Token() {
         text = null;
         normalized = null;
-        analyses = new MorphoAnalysisList(MorphoAnalysis.class, Lists.<MorphoAnalysis>newArrayList());
+        analyses = ImmutableList.of();
         source = null;
-        variations = Lists.newArrayList();
+        variations = ImmutableList.of();
     }
 
     public Token(int startOffset, int endOffset, String text,
-                 String normalized,
+                 List<String> normalized,
                  String source,
                  List<String> variations,
                  List<MorphoAnalysis> analyses,
                  Map<String, Object> extendedProperties) {
         super(startOffset, endOffset, extendedProperties);
         this.text = text;
-        this.normalized = normalized;
-        this.variations = variations;
+        this.normalized = ImmutableList.copyOf(normalized);
         this.source = source;
-        Class<? extends MorphoAnalysis> analysisClass;
-        if (analyses == null || analyses.size() == 0) {
-            analysisClass = MorphoAnalysis.class;
-            this.analyses = new MorphoAnalysisList(analysisClass, Lists.<MorphoAnalysis>newArrayList());
-        } else {
-            analysisClass = analyses.get(0).getClass();
-            this.analyses = new MorphoAnalysisList(analysisClass, analyses);
-        }
-
+        this.variations = ImmutableList.copyOf(variations);
+        this.analyses = ImmutableList.copyOf(analyses);
     }
 
     public String getText() {
         return text;
     }
 
-    public String getNormalized() {
+    public List<String> getNormalized() {
         return normalized;
     }
 
-    public MorphoAnalysisList getAnalyses() {
+    /**
+     * @return a list of analyses. Note: the items of this list are of the smallest type needed. So, even if the text
+     * is Arabic or Chinese, some of the items in this list may be {@link com.basistech.dm.MorphoAnalysis}, <strong>not</strong>
+     * the corresponding subclass. Callers must use instanceof to check if a particular item is of the subclass.
+     */
+    public List<MorphoAnalysis> getAnalyses() {
         return analyses;
     }
 
@@ -107,7 +99,7 @@ public class Token extends Attribute {
      */
     public static class Builder extends Attribute.Builder {
         private String text;
-        private String normalized;
+        private List<String> normalized;
         private List<MorphoAnalysis> analyses;
 
         private String source;
@@ -118,6 +110,7 @@ public class Token extends Attribute {
             this.text = text;
             this.analyses = Lists.newArrayList();
             variations = Lists.newArrayList();
+            normalized = Lists.newArrayList();
         }
 
         public Builder(Token toCopy) {
@@ -125,15 +118,15 @@ public class Token extends Attribute {
             text = toCopy.text;
             normalized = toCopy.normalized;
             variations.addAll(toCopy.variations);
-            analyses = toCopy.getAnalyses().getItems();
+            analyses = toCopy.getAnalyses();
         }
 
         public void text(String text) {
             this.text = text;
         }
 
-        public void normalized(String normalized) {
-            this.normalized = normalized;
+        public void addNormalized(String normalized) {
+            this.normalized.add(normalized);
         }
 
         public void source(String source) {

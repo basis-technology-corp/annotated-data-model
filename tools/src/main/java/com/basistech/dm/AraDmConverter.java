@@ -18,22 +18,23 @@ package com.basistech.dm;
 import com.basistech.rlp.AbstractResultAccess;
 import com.basistech.rlp.ResultAccessDeserializer;
 import com.basistech.rlp.ResultAccessSerializedFormat;
-import com.basistech.util.LanguageCode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
-import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.apache.commons.io.IOUtils;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.util.List;
 
 /**
  * Convert an {@link com.basistech.rlp.AbstractResultAccess} to a {@link Text}.
  */
 public final class AraDmConverter {
+
+    private static final int ARBL_FEATURE_DEFINITE_ARTICLE = 1 << 1;
+    private static final int ARBL_FEATURE_STRIPPABLE_PREFIX = 1 << 2;
+
     private AraDmConverter() {
         //
     }
@@ -144,7 +145,7 @@ public final class AraDmConverter {
 
     private static void buildAnalysisList(AbstractResultAccess ara, int x, Token.Builder builder) {
         builder.addAnalysis(buildBaseAnalysis(ara, x));
-        if (ara.getAlternativePartsOfSpeech() != null && ara.getAlternativePartsOfSpeech().getStringsForTokenIndex(x).length != 0) {
+        if (ara.getAlternativePartsOfSpeech() != null && ara.getAlternativePartsOfSpeech().getStringsForTokenIndex(x) != null) {
             buildAltAnalyses(ara, x, builder);
         }
     }
@@ -185,21 +186,23 @@ public final class AraDmConverter {
         ArabicMorphoAnalysis.Builder anBuilder = new ArabicMorphoAnalysis.Builder();
         setupCommonAltAnalysis(ara, x, ax, anBuilder);
         anBuilder.root(ara.getAlternativeRoots().getStringsForTokenIndex(x)[ax]);
-        // looks like we forgot to do alt-pss. So this is it.
+        // looks like we forgot to do alternatives for prefix-stem-suffix and for flags. So we're done.
         builder.addAnalysis(anBuilder.build());
     }
 
     private static void setupCommonAltAnalysis(AbstractResultAccess ara, int x, int ax, MorphoAnalysis.Builder anBuilder) {
         anBuilder.partOfSpeech(ara.getAlternativePartsOfSpeech().getStringsForTokenIndex(x)[ax]);
         anBuilder.lemma(ara.getAlternativeLemmas().getStringsForTokenIndex(x)[ax]);
-        String[] comps = ara.getAlternativeCompounds().getStringsForTokenIndex(x);
-        // these are delimited. And we don't know the delimiter.
-        String delim = System.getProperty("bt.alt.comp.delim", "\uF8FF");
-        if (comps != null) {
-            String[] compsComps = comps[ax].split(delim);
-            for (String compComp : compsComps) {
-                Token.Builder tokenBuilder = new Token.Builder(0, 0, compComp);
-                anBuilder.addComponent(tokenBuilder.build());
+        if (ara.getAlternativeCompounds() != null) {
+            String[] comps = ara.getAlternativeCompounds().getStringsForTokenIndex(x);
+            // these are delimited. And we don't know the delimiter.
+            String delim = System.getProperty("bt.alt.comp.delim", "\uF8FF");
+            if (comps != null) {
+                String[] compsComps = comps[ax].split(delim);
+                for (String compComp : compsComps) {
+                    Token.Builder tokenBuilder = new Token.Builder(0, 0, compComp);
+                    anBuilder.addComponent(tokenBuilder.build());
+                }
             }
         }
     }
@@ -260,6 +263,12 @@ public final class AraDmConverter {
         setupCommonBaseAnalysis(ara, x, builder);
         builder.lengths(ara.getTokenPrefixStemLength()[x * 2], ara.getTokenPrefixStemLength()[(x * 2) + 1]);
         builder.root(ara.getRoots()[x]);
+        if (ara.getFlags() != null) {
+            int flags = ara.getFlags()[x];
+            builder.strippablePrefix((flags & ARBL_FEATURE_STRIPPABLE_PREFIX) != 0);
+            builder.definiteArticle((flags & ARBL_FEATURE_DEFINITE_ARTICLE) != 0);
+        }
+
         return builder.build();
     }
 
@@ -278,6 +287,19 @@ public final class AraDmConverter {
             }
         }
 
+        if (ara.getNormalizedToken() != null) {
+            builder.addNormalized(ara.getNormalizedToken()[x]);
+        }
+
+        if (ara.getAlternativeNormalizedToken() != null) {
+            String[] norms = ara.getAlternativeNormalizedToken().getStringsForTokenIndex(x);
+            if (norms != null) {
+                for (String norm : norms) {
+                    builder.addNormalized(norm);
+                }
+            }
+        }
+
         buildAnalysisList(ara, x, builder);
 
         if (ara.getTokenSourceName() != null) {
@@ -286,29 +308,4 @@ public final class AraDmConverter {
 
         return builder.build();
     }
-
-    private static List<List<Token>> buildTokensForAltComps(String[] encComps, int start, int end) {
-        List<List<Token>> tokenSets = Lists.newArrayList();
-        for (String compSet : encComps) {
-            List<Token> tokens = Lists.newArrayList();
-            // hmm, we can't get the delim easily, and this is all for show at this point.
-            String[] comps = compSet.split("\uf8ff");
-            for (String comp : comps) {
-                Token.Builder builder = new Token.Builder(start, end, comp);
-                tokens.add(builder.build());
-            }
-            tokenSets.add(tokens);
-        }
-        return tokenSets;
-    }
-
-    private static List<Token> buildTokensForComps(String[] comps, int start, int end) {
-        List<Token> tokens = Lists.newArrayList();
-        for (String comp : comps) {
-            Token.Builder builder = new Token.Builder(start, end, comp);
-            tokens.add(builder.build());
-        }
-        return tokens;
-    }
-
 }

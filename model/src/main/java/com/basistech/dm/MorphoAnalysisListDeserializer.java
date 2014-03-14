@@ -16,68 +16,62 @@ package com.basistech.dm;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
+import com.fasterxml.jackson.core.TreeNode;
 import com.fasterxml.jackson.core.io.SerializedString;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonMappingException;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Jackson deserialization that handles polymorphism of MorphoAnalysis without writing
  * out the type in each one.
  */
-public class MorphoAnalysisListDeserializer extends JsonDeserializer<MorphoAnalysisList> {
-    /*
-     * Note the use of 'unchecked' here. If there's a way to to do this that is
-     * completely OK with the compiler, I don't know what it would be.
-     */
+public class MorphoAnalysisListDeserializer extends JsonDeserializer<List<MorphoAnalysis>> {
+    private static final Set<String> ARABIC_FIELDS = ImmutableSet.of("prefixLength", "stemLength", "root", "prefixes", "stems", "suffixes");
 
-    static final SerializedString ITEMS = new SerializedString("items");
+    private boolean anyArabicFields(TreeNode treeNode) {
+        Iterator<String> fieldNameIt = treeNode.fieldNames();
+        while (fieldNameIt.hasNext()) {
+            if (ARABIC_FIELDS.contains(fieldNameIt.next())) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     @Override
-    @SuppressWarnings("unchecked")
-    public MorphoAnalysisList deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
+    public List<MorphoAnalysis> deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
         /*
-         * There are two cases. In the 'normal' case, we arrive pointing to START_OBJECT, and expect itemClass: to come next.
-         * In the 'polymorphism' case, Jackson has already read the START_OBJECT (and the @class: and the class name) and
-         * even the "itemClass:" which it looked at to decide where it was.
+         * This will be entered pointing to the array start.
          */
-        if (jp.getCurrentToken() == JsonToken.START_OBJECT) {
-            jp.nextToken();
-        }
-        // Jackson 2.3.0 leaves us pointing to the field name for itemClass.
-        jp.nextToken();
-        String itemClassName = jp.getText();
-        if (itemClassName == null || "".equals(itemClassName)) {
-            throw new JsonMappingException("item class name missing");
-        }
-
-        Class<? extends MorphoAnalysis> itemClass;
-        try {
-            // here is the seemingly unavoidable unchecked cast.
-            itemClass = (Class<? extends MorphoAnalysis>) ctxt.findClass(itemClassName);
-        } catch (ClassNotFoundException e) {
-            throw new JsonMappingException("Failed to find class " + itemClassName);
-        }
-        if (!jp.nextFieldName(ITEMS)) {
-            throw ctxt.wrongTokenException(jp, JsonToken.FIELD_NAME, "Expected items");
-        }
-        List<MorphoAnalysis> items = Lists.newArrayList();
-        if (jp.nextToken() != JsonToken.START_ARRAY) { // what about nothing?
+        if (jp.getCurrentToken() != JsonToken.START_ARRAY) {
             throw ctxt.wrongTokenException(jp, JsonToken.START_ARRAY, "Expected array of items");
         }
-        while (jp.nextToken() != JsonToken.END_ARRAY) {
-            items.add(jp.readValueAs(itemClass));
-        }
-        if (jp.nextToken() != JsonToken.END_OBJECT) {
-            throw ctxt.wrongTokenException(jp, JsonToken.END_OBJECT, "Expected end of MorphoAnalysisList object.");
-        }
 
-        MorphoAnalysisList.Builder builder = new MorphoAnalysisList.Builder(itemClass);
-        builder.setItems(items);
-        return builder.build();
+        List<MorphoAnalysis> result = Lists.newArrayList();
+        while (jp.nextToken() != JsonToken.END_ARRAY) {
+            // pick up the item as a tree.
+            MorphoAnalysis analysis;
+            TreeNode tempTree = jp.readValueAsTree();
+            // and now something that will need cleaning up.
+            if (tempTree.get("readings") != null) {
+                analysis = jp.getCodec().treeToValue(tempTree, HanMorphoAnalysis.class);
+            } else if (anyArabicFields(tempTree)) {
+                analysis = jp.getCodec().treeToValue(tempTree, ArabicMorphoAnalysis.class);
+            } else {
+                analysis = jp.getCodec().treeToValue(tempTree, MorphoAnalysis.class);
+            }
+            result.add(analysis);
+        }
+        return ImmutableList.copyOf(result);
     }
 }
