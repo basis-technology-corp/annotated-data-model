@@ -34,7 +34,7 @@ import java.util.Arrays;
 /**
  * Here's some testing using an ARA as in input.
  */
-public class RoundTripTest extends Assert {
+public class AdmConversionTest extends Assert {
 
     @Test
     public void testEngRoundTrip() throws Exception {
@@ -74,6 +74,35 @@ public class RoundTripTest extends Assert {
         AbstractResultAccess ara;
         try {
             input = new FileInputStream("../model/data/ara-ara.json");
+            ara = rad.deserializeAbstractResultAccess(input);
+        } finally {
+            IOUtils.closeQuietly(input);
+        }
+        Text text = AraDmConverter.convert(ara);
+
+        ByteArrayOutputStream jsonContainer = new ByteArrayOutputStream();
+
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectWriter writer = mapper.writer().withDefaultPrettyPrinter();
+        writer.writeValue(jsonContainer, text);
+
+        //System.out.println(jsonContainer.toString("utf-8"));
+
+        ObjectReader reader = mapper.reader(Text.class);
+        Text deserializedText = reader.readValue(jsonContainer.toByteArray());
+
+        assertEquals(text.length(), deserializedText.length());
+        assertTrue(Arrays.equals(text.getData(), deserializedText.getData()));
+    }
+
+    @Test
+    public void testJpnRoundTrip() throws Exception {
+        ResultAccessDeserializer rad = new ResultAccessDeserializer();
+        rad.setFormat(ResultAccessSerializedFormat.JSON);
+        InputStream input = null;
+        AbstractResultAccess ara;
+        try {
+            input = new FileInputStream("../model/data/jpn-ara.json");
             ara = rad.deserializeAbstractResultAccess(input);
         } finally {
             IOUtils.closeQuietly(input);

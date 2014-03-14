@@ -141,6 +141,7 @@ public class ArabicMorphoAnalysis extends MorphoAnalysis {
             stemTags = Lists.newArrayList();
             suffixes = Lists.newArrayList();
             suffixTags = Lists.newArrayList();
+            root = "";
         }
 
         public Builder(ArabicMorphoAnalysis toCopy) {

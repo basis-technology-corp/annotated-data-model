@@ -55,10 +55,10 @@ public class MorphoAnalysis {
     }
 
     protected MorphoAnalysis() {
-        partOfSpeech = null;
-        lemma = null;
+        partOfSpeech = "";
+        lemma = "";
         components = Lists.newArrayList();
-        raw = null;
+        raw = "";
     }
 
     public String getPartOfSpeech() {
@@ -88,6 +88,9 @@ public class MorphoAnalysis {
 
         public Builder() {
             components = Lists.newArrayList();
+            raw = "";
+            lemma = "";
+            partOfSpeech = "";
         }
 
         public Builder(MorphoAnalysis toCopy) {

@@ -48,10 +48,10 @@ public class Token extends Attribute {
     }
 
     protected Token() {
-        text = null;
-        normalized = null;
+        text = "";
+        normalized = ImmutableList.of();
         analyses = ImmutableList.of();
-        source = null;
+        source = "";
         variations = ImmutableList.of();
     }
 
@@ -109,6 +109,7 @@ public class Token extends Attribute {
             super(startOffset, endOffset);
             this.text = text;
             this.analyses = Lists.newArrayList();
+            this.source = "";
             variations = Lists.newArrayList();
             normalized = Lists.newArrayList();
         }
