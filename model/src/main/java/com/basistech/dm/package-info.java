@@ -19,7 +19,7 @@
  * <h2>Text</h2>
  * <p>
   * The root of the model is the {@link com.basistech.dm.Text} class; this implements {@link java.lang.CharSequence}
- * and stores annotations that refer to the characters in the sequence.
+ * and stores annotations that refer to subsequences.
  * </p>
  * <h2>Attributes</h2>
  * <p>
@@ -30,7 +30,7 @@
  * <p>
  *     Most attribute classes inherit from {@link com.basistech.dm.Attribute}. This class adds a start offset and an end offset.
  *     Thus, attributes that refer to the {@code Text} as a whole inherit from {@code BaseAttribute}, while attributes
- *     that refer to regions of text inherit from {@code Attribute}.
+ *     that refer to subsequences of text inherit from {@code Attribute}.
  * </p>
  * <h2>RawData</h2>
  *     <p>In some cases, applications of this data model may also need to represent initial raw data.
@@ -64,13 +64,13 @@
  *     To mitigate the possible unpleasant consequences resulting from version skew, this model includes an extensibility
  *     mechanism. {@link com.basistech.dm.BaseAttribute} contains a {@code Map<String, Object>}. This allows programs
  *     that have differing sets of annotations to communicate via Json. The {@link com.fasterxml.jackson.annotation.JsonAnySetter}
- *     and {@link com.fasterxml.jackson.annotation.JsonAnyGetter} cause any items in the Json object to be mapped to
+ *     and {@link com.fasterxml.jackson.annotation.JsonAnyGetter} annotations cause any items in the Json object to be mapped to
  *     entries in the map. Entries in the map are serialized as keys in the object. Thus, a program can read in a
  *     serialized {@code Text} that contains attributes with fields that it does not know about.
  * </p>
  * <p>
  *     This scheme does not automatically handle entire new annotations; if the Json object for a {@code Text}
- *     includes an unknown attribute, this will throw. More complex Json management could support this case.
+ *     includes an unknown attribute, the code will throw. More complex Json management could support this case.
  * </p>
  * <h2>Serialization</h2>
  * <p>
@@ -78,7 +78,8 @@
  *     {@link com.basistech.dm.Text#getAttributes()}
  *     is annotated with {@code @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)} to enable polymorphism. To reduce space and time,
  *     {@link com.basistech.dm.ListAttribute} has a custom serializer/deserializer pair that stores the class of all of the
- *     items in the list, to avoid the usual Jackson approach of writing it, over and over, in each item.
+ *     items in the list, to avoid the usual Jackson approach of writing it, over and over, in each item. There is also
+ *     some special serialization for the morphological analyses associated with a token.
  * </p>
  *
  */
