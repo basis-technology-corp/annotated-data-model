@@ -22,9 +22,8 @@ import com.fasterxml.jackson.databind.jsontype.TypeSerializer;
 import java.io.IOException;
 
 /**
- * Jackson serializer that that handles our slightly manual polymorphism.
- * Instead of letting Jackson write out the class as an attribute of each list item,
- * we write it out once.
+ * Jackson serializer that that handles polymorphism in lists of homogeneous type without
+ * writing out the type every time.
  */
 public class ListAttributeSerializer extends JsonSerializer<ListAttribute> {
     @Override

@@ -26,9 +26,8 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Jackson deserialization that handles our slightly manual polymorphism.
- * Note the use of 'unchecked' here. If there's a way to to do this that is
- * completely OK with the compiler, I don't know what it would be.
+ * Jackson deserializer for ListAttributes that avoids writing out
+ * the same type information repeatedly.
  */
 public class ListAttributeDeserializer extends JsonDeserializer<ListAttribute> {
 

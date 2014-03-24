@@ -17,18 +17,19 @@ package com.basistech.dm;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
 /**
  * A container for an ordered collection of attributes of a type.
- * When attributes nest, the outer object has a single attribute
- * that carries the set. The typical use of this is for an entire
+ * The typical use of this is for an entire
  * {@link Text} to have a set of tokens or named entities or language
- * regions or whatever.
+ * regions. This class declares custom Jackson serialization to
+ * avoid redundantly writing out the types of all the items, since
+ * all the items will be of the same type.
  * @param <Item> The type of the attributes in the list.
  */
 @JsonSerialize(using = ListAttributeSerializer.class)
@@ -40,7 +41,7 @@ public class ListAttribute<Item extends BaseAttribute> extends BaseAttribute {
 
     public ListAttribute(Class<Item> itemClass, List<Item> items) {
         this.itemClass = itemClass;
-        this.items = Collections.unmodifiableList(items);
+        this.items = ImmutableList.copyOf(items);
     }
 
     public ListAttribute(Class<Item> itemClass, List<Item> items, Map<String, Object> extendedProperties) {

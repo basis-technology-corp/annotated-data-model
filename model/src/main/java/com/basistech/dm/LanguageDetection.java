@@ -30,8 +30,7 @@ public class LanguageDetection extends Attribute {
         private final String encoding;
         private final double confidence;
 
-        public DetectionResult() {
-            // make Jackson happy
+        protected DetectionResult() {
             language = LanguageCode.UNKNOWN;
             encoding = null;
             confidence = 0.0;
