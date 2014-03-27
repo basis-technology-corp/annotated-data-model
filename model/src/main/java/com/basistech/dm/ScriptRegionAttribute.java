@@ -14,36 +14,27 @@
 
 package com.basistech.dm;
 
+import com.basistech.util.ISO15924;
+
 import java.util.Map;
 
 /**
- * An attribute that carries a value.
- * @param <T> the type of the value.
- *           <br/>
- * TODO: decide is this is really a good idea. It's used for script regions,
- * and it might be cleaner to just make a class for them.
+ * A script region.
  */
-public class ValueAttribute<T> extends Attribute {
-    private final T value;
-    private final String type;
+public class ScriptRegionAttribute extends Attribute {
+    private final ISO15924 value;
 
-    public ValueAttribute(String type, int startOffset, int endOffset, T value) {
+    public ScriptRegionAttribute(int startOffset, int endOffset, ISO15924 value) {
         super(startOffset, endOffset);
-        this.type = type;
         this.value = value;
     }
 
-    public ValueAttribute(int startOffset, int endOffset, T value, String type, Map<String, Object> extendedProperties) {
+    public ScriptRegionAttribute(int startOffset, int endOffset, ISO15924 value, Map<String, Object> extendedProperties) {
         super(startOffset, endOffset, extendedProperties);
         this.value = value;
-        this.type = type;
     }
 
-    public T getValue() {
+    public ISO15924 getValue() {
         return value;
-    }
-
-    public String getType() {
-        return type;
     }
 }

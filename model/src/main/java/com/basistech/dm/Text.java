@@ -14,7 +14,6 @@
 
 package com.basistech.dm;
 
-import com.basistech.util.ISO15924;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -104,8 +103,8 @@ public class Text implements CharSequence {
 
     @JsonIgnore
     @SuppressWarnings("unchecked")
-    public ListAttribute<ValueAttribute<ISO15924>> getScriptRegions() {
-        return (ListAttribute<ValueAttribute<ISO15924>>) attributes.get(SCRIPT_REGION_ATTRIBUTE);
+    public ListAttribute<ScriptRegionAttribute> getScriptRegions() {
+        return (ListAttribute<ScriptRegionAttribute>)attributes.get(SCRIPT_REGION_ATTRIBUTE);
     }
 
     @Override
