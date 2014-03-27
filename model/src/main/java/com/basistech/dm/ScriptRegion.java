@@ -21,15 +21,15 @@ import java.util.Map;
 /**
  * A script region.
  */
-public class ScriptRegionAttribute extends Attribute {
+public class ScriptRegion extends Attribute {
     private final ISO15924 value;
 
-    public ScriptRegionAttribute(int startOffset, int endOffset, ISO15924 value) {
+    public ScriptRegion(int startOffset, int endOffset, ISO15924 value) {
         super(startOffset, endOffset);
         this.value = value;
     }
 
-    public ScriptRegionAttribute(int startOffset, int endOffset, ISO15924 value, Map<String, Object> extendedProperties) {
+    public ScriptRegion(int startOffset, int endOffset, ISO15924 value, Map<String, Object> extendedProperties) {
         super(startOffset, endOffset, extendedProperties);
         this.value = value;
     }

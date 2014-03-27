@@ -103,8 +103,8 @@ public class Text implements CharSequence {
 
     @JsonIgnore
     @SuppressWarnings("unchecked")
-    public ListAttribute<ScriptRegionAttribute> getScriptRegions() {
-        return (ListAttribute<ScriptRegionAttribute>)attributes.get(SCRIPT_REGION_ATTRIBUTE);
+    public ListAttribute<ScriptRegion> getScriptRegions() {
+        return (ListAttribute<ScriptRegion>)attributes.get(SCRIPT_REGION_ATTRIBUTE);
     }
 
     @Override
