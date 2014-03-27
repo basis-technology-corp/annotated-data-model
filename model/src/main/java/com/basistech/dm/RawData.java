@@ -18,6 +18,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.collect.ImmutableMap;
 
 import java.nio.ByteBuffer;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -28,22 +29,22 @@ import java.util.Map;
 public class RawData {
     private final ByteBuffer data;
     // a compromise between String and Object
-    private final Map<String, String[]> metadata;
+    private final Map<String, List<String>> metadata;
 
     /**
      * @param data the binary data.
      * @param metadata metadata, such as mime type, creation date, or the like.
      */
-    public RawData(@JsonProperty("data") ByteBuffer data, @JsonProperty("metadata") Map<String, String[]> metadata) {
+    public RawData(@JsonProperty("data") ByteBuffer data, @JsonProperty("metadata") Map<String, List<String>> metadata) {
         this.data = data.asReadOnlyBuffer();
-        this.metadata = ImmutableMap.<String, String[]>builder().putAll(metadata).build();
+        this.metadata = ImmutableMap.<String, List<String>>builder().putAll(metadata).build();
     }
 
     public ByteBuffer getData() {
         return data;
     }
 
-    public Map<String, String[]> getMetadata() {
+    public Map<String, List<String>> getMetadata() {
         return metadata;
     }
 }
