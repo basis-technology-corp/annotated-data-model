@@ -26,6 +26,7 @@ import org.apache.commons.io.IOUtils;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.util.List;
 
 /**
  * Convert an {@link com.basistech.rlp.AbstractResultAccess} to a {@link Text}.
@@ -40,7 +41,7 @@ public final class AraDmConverter {
     }
 
     public static Text convert(AbstractResultAccess ara) {
-        Text text = new Text(ara.getRawText(), 0, ara.getRawText().length, Maps.<String, String[]>newHashMap());
+        Text text = new Text(new String(ara.getRawText(), 0, ara.getRawText().length), Maps.<String, List<String>>newHashMap());
         // no provisions for original binary data, so no getRawBytes.
         /* an ARA by itself doesn't have language regions or detections;
          * The code for that is just in the RWS, so we'll ignore it at this prototype stage.

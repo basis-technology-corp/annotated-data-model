@@ -62,7 +62,7 @@ public class AdmConversionTest extends Assert {
         Text deserializedText = reader.readValue(jsonContainer.toByteArray());
 
         assertEquals(text.length(), deserializedText.length());
-        assertTrue(Arrays.equals(text.getData(), deserializedText.getData()));
+        assertEquals(text.getData(), deserializedText.getData());
         // we need about 1000 additional assertions in here.
     }
 
@@ -92,7 +92,7 @@ public class AdmConversionTest extends Assert {
         Text deserializedText = reader.readValue(jsonContainer.toByteArray());
 
         assertEquals(text.length(), deserializedText.length());
-        assertTrue(Arrays.equals(text.getData(), deserializedText.getData()));
+        assertEquals(text.getData(), deserializedText.getData());
     }
 
     @Test
@@ -121,6 +121,6 @@ public class AdmConversionTest extends Assert {
         Text deserializedText = reader.readValue(jsonContainer.toByteArray());
 
         assertEquals(text.length(), deserializedText.length());
-        assertTrue(Arrays.equals(text.getData(), deserializedText.getData()));
+        assertEquals(text.getData(), deserializedText.getData());
     }
 }

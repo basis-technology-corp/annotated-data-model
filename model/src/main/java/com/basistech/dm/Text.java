@@ -21,6 +21,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.google.common.collect.Maps;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -34,63 +35,47 @@ import java.util.Map;
 public class Text implements CharSequence {
     private static final String SCRIPT_REGION_ATTRIBUTE = "com.basistech.dm.ScriptRegion";
 
-    private final char[] data;
-    private final int startOffset;
-    private final int endOffset;
+    private final CharSequence data;
     /* The attributes for this text, indexed by type.
      * Only one attribute of a type is permitted, thus the concept
      * of a ListAttribute.
      */
     private final Map<String, BaseAttribute> attributes;
-    private final Map<String, String[]> documentMetadata;
+    private final Map<String, List<String>> documentMetadata;
 
     @JsonCreator
-    public Text(@JsonProperty("data") char[] data,
-                @JsonProperty("startOffset") int startOffset,
-                @JsonProperty("endOffset") int endOffset,
-                @JsonProperty("documentMetadata")Map<String, String[]> documentMetadata) {
+    public Text(@JsonProperty("data") CharSequence data,
+                @JsonProperty("documentMetadata") Map<String, List<String>> documentMetadata) {
         this.data = data;
-        this.startOffset = startOffset;
-        this.endOffset = endOffset;
         attributes = Maps.newHashMap();
         this.documentMetadata = documentMetadata;
     }
 
     public Text(Text copyFrom) {
         this.data = copyFrom.data;
-        this.startOffset = copyFrom.startOffset;
-        this.endOffset = copyFrom.endOffset;
         // the attributes themselves are immutable so we can take them.
         this.attributes = Maps.newHashMap(copyFrom.attributes);
         // same for the metadata.
         this.documentMetadata = Maps.newHashMap(copyFrom.documentMetadata);
     }
 
-    public char[] getData() {
+    public CharSequence getData() {
         return data;
     }
 
-    public int getStartOffset() {
-        return startOffset;
-    }
-
-    public int getEndOffset() {
-        return endOffset;
-    }
-
     public int length() {
-        return endOffset - startOffset;
+        return data.length();
     }
 
     public char charAt(int index) {
-        return data[index + startOffset];
+        return data.charAt(index);
     }
 
     public CharSequence subSequence(int start, int end) {
-        return new String(data, start + startOffset, end - start);
+        return data.subSequence(start, end);
     }
 
-    public Map<String, String[]> getDocumentMetadata() {
+    public Map<String, List<String>> getDocumentMetadata() {
         return documentMetadata;
     }
 
@@ -125,6 +110,6 @@ public class Text implements CharSequence {
 
     @Override
     public String toString() {
-        return new String(data, startOffset, endOffset - startOffset);
+        return data.toString();
     }
 }
