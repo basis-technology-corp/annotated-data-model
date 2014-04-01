@@ -15,18 +15,20 @@
 
 package com.basistech.dm;
 
-import com.basistech.rlp.AbstractResultAccess;
-import com.basistech.rlp.ResultAccessDeserializer;
-import com.basistech.rlp.ResultAccessSerializedFormat;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
-import com.google.common.collect.Maps;
-import org.apache.commons.io.IOUtils;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.List;
+
+import com.basistech.rlp.AbstractResultAccess;
+import com.basistech.rlp.ResultAccessDeserializer;
+import com.basistech.rlp.ResultAccessSerializedFormat;
+import com.basistech.util.ISO15924;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
+import com.google.common.collect.Maps;
+
+import org.apache.commons.io.IOUtils;
 
 /**
  * Convert an {@link com.basistech.rlp.AbstractResultAccess} to a {@link Text}.
@@ -50,8 +52,35 @@ public final class AraDmConverter {
         buildTokens(ara, text);
         buildEntities(ara, text);
         buildSentences(ara, text);
+        buildScriptRegions(ara, text);
+        buildBaseNounPhrase(ara, text);
 
         return text;
+    }
+
+    private static void buildBaseNounPhrase(AbstractResultAccess ara, Text text) {
+        if (ara.getBaseNounPhrase() != null) {
+            ListAttribute.Builder<BaseNounPhrase> builder = new ListAttribute.Builder<BaseNounPhrase>(BaseNounPhrase.class);
+            int[] baseNounPhrase = ara.getBaseNounPhrase();
+            for (int i = 0; i < baseNounPhrase.length; i += 2) {
+                BaseNounPhrase bnp = new BaseNounPhrase(baseNounPhrase[i], baseNounPhrase[i+1]);
+                builder.add(bnp);
+            }
+            text.getAttributes().put(BaseNounPhrase.class.getName(), builder.build());
+        }
+
+    }
+
+    private static void buildScriptRegions(AbstractResultAccess ara, Text text) {
+        if (ara.getScriptRegion() != null) {
+            ListAttribute.Builder<ScriptRegion> builder = new ListAttribute.Builder<ScriptRegion>(ScriptRegion.class);
+            int[] scriptRegion = ara.getScriptRegion();
+            for (int i = 0; i < scriptRegion.length; i += 3) {
+                ScriptRegion sr = new ScriptRegion(scriptRegion[i], scriptRegion[i+1], ISO15924.lookupByNumeric(scriptRegion[i + 2]));
+                builder.add(sr);
+            }
+            text.getAttributes().put(ScriptRegion.class.getName(), builder.build());
+        }
     }
 
     public static void main(String[] args) throws Exception {

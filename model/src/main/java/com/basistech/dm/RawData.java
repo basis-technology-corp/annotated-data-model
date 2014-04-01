@@ -14,12 +14,14 @@
 
 package com.basistech.dm;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.google.common.collect.ImmutableMap;
-
 import java.nio.ByteBuffer;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.common.collect.ImmutableMap;
 
 /**
  * A container for incoming raw data.
@@ -35,9 +37,16 @@ public class RawData {
      * @param data the binary data.
      * @param metadata metadata, such as mime type, creation date, or the like.
      */
+    @JsonCreator
     public RawData(@JsonProperty("data") ByteBuffer data, @JsonProperty("metadata") Map<String, List<String>> metadata) {
         this.data = data.asReadOnlyBuffer();
-        this.metadata = ImmutableMap.<String, List<String>>builder().putAll(metadata).build();
+        Map<String, List<String>> tmpMetaData;
+        if (metadata == null) {
+            tmpMetaData = new HashMap<String, List<String>>();
+        } else {
+            tmpMetaData = metadata;
+        }
+        this.metadata = ImmutableMap.<String, List<String>>builder().putAll(tmpMetaData).build();
     }
 
     public ByteBuffer getData() {
