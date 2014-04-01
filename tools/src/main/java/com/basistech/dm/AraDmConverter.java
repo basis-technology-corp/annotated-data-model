@@ -53,18 +53,34 @@ public final class AraDmConverter {
         buildEntities(ara, text);
         buildSentences(ara, text);
         buildScriptRegions(ara, text);
+        buildBaseNounPhrase(ara, text);
 
         return text;
     }
 
-    private static void buildScriptRegions(AbstractResultAccess ara, Text text) {
-        ListAttribute.Builder builder = new ListAttribute.Builder<ScriptRegion>(ScriptRegion.class);
-        int[] scriptRegion = ara.getScriptRegion();
-        for (int i = 0; i < scriptRegion.length; i += 3) {
-            ScriptRegion sr = new ScriptRegion(scriptRegion[i], scriptRegion[i+1], ISO15924.lookupByNumeric(scriptRegion[i + 2]));
-            builder.add(sr);
+    private static void buildBaseNounPhrase(AbstractResultAccess ara, Text text) {
+        if (ara.getBaseNounPhrase() != null) {
+            ListAttribute.Builder<BaseNounPhrase> builder = new ListAttribute.Builder<BaseNounPhrase>(BaseNounPhrase.class);
+            int[] baseNounPhrase = ara.getBaseNounPhrase();
+            for (int i = 0; i < baseNounPhrase.length; i += 2) {
+                BaseNounPhrase bnp = new BaseNounPhrase(baseNounPhrase[i], baseNounPhrase[i+1]);
+                builder.add(bnp);
+            }
+            text.getAttributes().put(BaseNounPhrase.class.getName(), builder.build());
         }
-        text.getAttributes().put(ScriptRegion.class.getName(), builder.build());
+
+    }
+
+    private static void buildScriptRegions(AbstractResultAccess ara, Text text) {
+        if (ara.getScriptRegion() != null) {
+            ListAttribute.Builder<ScriptRegion> builder = new ListAttribute.Builder<ScriptRegion>(ScriptRegion.class);
+            int[] scriptRegion = ara.getScriptRegion();
+            for (int i = 0; i < scriptRegion.length; i += 3) {
+                ScriptRegion sr = new ScriptRegion(scriptRegion[i], scriptRegion[i+1], ISO15924.lookupByNumeric(scriptRegion[i + 2]));
+                builder.add(sr);
+            }
+            text.getAttributes().put(ScriptRegion.class.getName(), builder.build());
+        }
     }
 
     public static void main(String[] args) throws Exception {

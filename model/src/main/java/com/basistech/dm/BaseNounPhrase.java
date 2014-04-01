@@ -16,17 +16,25 @@ package com.basistech.dm;
 
 import java.util.Map;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * A base noun phrase.
  */
 public class BaseNounPhrase extends Attribute {
 
-    public BaseNounPhrase(int startOffset, int endOffset) {
+    @JsonCreator
+    public BaseNounPhrase(@JsonProperty("startOffset") int startOffset, @JsonProperty("endOffset") int endOffset) {
         super(startOffset, endOffset);
     }
 
     public BaseNounPhrase(int startOffset, int endOffset, Map<String, Object> extendedProperties) {
         super(startOffset, endOffset, extendedProperties);
+    }
+
+    // Make json happy
+    protected BaseNounPhrase() {
     }
 
     /**

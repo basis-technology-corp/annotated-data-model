@@ -26,10 +26,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class ScriptRegion extends Attribute {
     private final ISO15924 value;
 
-    public ScriptRegion() {
-        value = null;
-    }
-
     @JsonCreator
     public ScriptRegion(@JsonProperty("startOffset") int startOffset, @JsonProperty("endOffset") int endOffset, @JsonProperty("value") ISO15924 value) {
         super(startOffset, endOffset);
@@ -43,5 +39,10 @@ public class ScriptRegion extends Attribute {
 
     public ISO15924 getValue() {
         return value;
+    }
+
+    // make Jackson happy.
+    protected ScriptRegion() {
+        value = null;
     }
 }
