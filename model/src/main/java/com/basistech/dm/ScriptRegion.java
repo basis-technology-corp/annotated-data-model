@@ -14,9 +14,11 @@
 
 package com.basistech.dm;
 
-import com.basistech.util.ISO15924;
-
 import java.util.Map;
+
+import com.basistech.util.ISO15924;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * A script region.
@@ -24,7 +26,12 @@ import java.util.Map;
 public class ScriptRegion extends Attribute {
     private final ISO15924 value;
 
-    public ScriptRegion(int startOffset, int endOffset, ISO15924 value) {
+    public ScriptRegion() {
+        value = null;
+    }
+
+    @JsonCreator
+    public ScriptRegion(@JsonProperty("startOffset") int startOffset, @JsonProperty("endOffset") int endOffset, @JsonProperty("value") ISO15924 value) {
         super(startOffset, endOffset);
         this.value = value;
     }
