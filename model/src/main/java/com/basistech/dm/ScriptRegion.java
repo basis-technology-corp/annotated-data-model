@@ -37,12 +37,13 @@ public class ScriptRegion extends Attribute {
         this.value = value;
     }
 
-    public ISO15924 getValue() {
-        return value;
-    }
-
     // make Jackson happy.
     protected ScriptRegion() {
         value = null;
     }
+
+    public ISO15924 getValue() {
+        return value;
+    }
+
 }
