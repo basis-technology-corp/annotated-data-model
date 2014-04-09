@@ -15,7 +15,13 @@
 package com.basistech.dm;
 
 import com.basistech.util.LanguageCode;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.google.common.collect.Lists;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -26,6 +32,7 @@ import java.util.Map;
 public class LanguageDetection extends Attribute {
 
     public static class DetectionResult {
+        @JsonDeserialize(using = LanguageCodeDeserializer.class)
         private final LanguageCode language;
         private final String encoding;
         private final double confidence;
@@ -36,12 +43,20 @@ public class LanguageDetection extends Attribute {
             confidence = 0.0;
         }
 
-        public DetectionResult(LanguageCode language, String encoding, double confidence) {
+        @JsonCreator
+        public DetectionResult(@JsonProperty("language")
+                               @JsonDeserialize(using = LanguageCodeDeserializer.class)
+                               LanguageCode language,
+                               @JsonProperty("encoding")
+                               String encoding,
+                               @JsonProperty("confidence")
+                               double confidence) {
             this.language = language;
             this.encoding = encoding;
             this.confidence = confidence;
         }
 
+        @JsonSerialize(converter = LanguageCodeSerializationConverter.class)
         public LanguageCode getLanguage() {
             return language;
         }
@@ -55,25 +70,25 @@ public class LanguageDetection extends Attribute {
         }
     }
 
-    private final DetectionResult[] detectionResults;
+    private final List<DetectionResult> detectionResults;
 
     public LanguageDetection() {
         // make Jackson happy
         super();
-        this.detectionResults = new DetectionResult[0];
+        this.detectionResults = Lists.newArrayList();
     }
 
-    public LanguageDetection(int startOffset, int endOffset, DetectionResult[] detectionResults) {
+    public LanguageDetection(int startOffset, int endOffset, List<DetectionResult> detectionResults) {
         super(startOffset, endOffset);
         this.detectionResults = detectionResults;
     }
 
-    public LanguageDetection(int startOffset, int endOffset, DetectionResult[] detectionResults, Map<String, Object> extendedProperties) {
+    public LanguageDetection(int startOffset, int endOffset, List<DetectionResult> detectionResults, Map<String, Object> extendedProperties) {
         super(startOffset, endOffset, extendedProperties);
         this.detectionResults = detectionResults;
     }
 
-    public DetectionResult[] getDetectionResults() {
+    public List<DetectionResult> getDetectionResults() {
         return detectionResults;
     }
 
@@ -81,9 +96,9 @@ public class LanguageDetection extends Attribute {
      * A builder for language detection results.
      */
     public static class Builder extends Attribute.Builder {
-        private DetectionResult[] detectionResults;
+        private List<DetectionResult> detectionResults;
 
-        public Builder(int startOffset, int endOffset, DetectionResult[] detectionResults) {
+        public Builder(int startOffset, int endOffset, List<DetectionResult> detectionResults) {
             super(startOffset, endOffset);
             this.detectionResults = detectionResults;
         }
