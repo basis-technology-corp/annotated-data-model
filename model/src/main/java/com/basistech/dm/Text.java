@@ -32,8 +32,6 @@ import java.util.Map;
  * TODO: make immutable and add a builder.
  */
 public class Text implements CharSequence {
-    private static final String SCRIPT_REGION_ATTRIBUTE = "com.basistech.dm.ScriptRegion";
-
     private final CharSequence data;
     /* The attributes for this text, indexed by type.
      * Only one attribute of a type is permitted, thus the concept
@@ -104,7 +102,19 @@ public class Text implements CharSequence {
     @JsonIgnore
     @SuppressWarnings("unchecked")
     public ListAttribute<ScriptRegion> getScriptRegions() {
-        return (ListAttribute<ScriptRegion>)attributes.get(SCRIPT_REGION_ATTRIBUTE);
+        return (ListAttribute<ScriptRegion>)attributes.get(ScriptRegion.class.getName());
+    }
+
+    @JsonIgnore
+    @SuppressWarnings("unchecked")
+    public SentenceBoundaries getSentenceBoundaries() {
+        return (SentenceBoundaries)attributes.get(SentenceBoundaries.class.getName());
+    }
+
+    @JsonIgnore
+    @SuppressWarnings("unchecked")
+    public ListAttribute<BaseNounPhrase> getBaseNounPhrases() {
+        return (ListAttribute<BaseNounPhrase>)attributes.get(BaseNounPhrase.class.getName());
     }
 
     @Override
