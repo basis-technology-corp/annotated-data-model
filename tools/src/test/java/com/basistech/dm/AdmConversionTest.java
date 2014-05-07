@@ -179,13 +179,6 @@ public class AdmConversionTest extends Assert {
         AraDmConverter.convert(ara);
     }
 
-    // TODO: test for missing zero-valued primitives, e.g. coreferenceChainId
-    // startOffset = 0 is also missing from the json, but probably correct
-    // from code.  But coreferenceChainId = 0 is wrong when chaining was
-    // not run.  In general, I think I (joelb) am opposed to the jackson
-    // trick that suppresses default values in the output.  I like to see
-    // them explicitly.  At least in the cases I've seen so far.
-
     @Test
     public void testLanguageDetectionResults() throws IOException {
         AbstractResultAccess ara = deserialize(new File("../model/data/rli-only.json"));

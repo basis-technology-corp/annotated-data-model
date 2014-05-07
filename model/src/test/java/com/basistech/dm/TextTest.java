@@ -112,15 +112,6 @@ public class TextTest {
         assertEquals(10, bnp.getStartOffset());
     }
 
-    // TODO: this fails because indoc chaining was not run, but the default return
-    // value for getCoreferenceChainId() is 0.  That means users would see all mention
-    // chained together!  I suggest a default value of -1 instead.  One caution: I
-    // think XA currently uses negative chainIds for part of its pinning.  I objected
-    // to that, but I think it was put in place.  We might consider using Integer.MIN_VALUE
-    // instead.  I think the RLP ne iterator currently returns the index of the mention
-    // when chaining is off.  We should sync these up.  chainId as mention index is
-    // reasonable, but you can't tell if chaining is on or off.
-    @Ignore
     @Test
     public void testEntityMentionsWithoutChains() {
         //                012345678901234
@@ -139,8 +130,7 @@ public class TextTest {
 
         int chainForBill = text.getEntityMentions().getItems().get(0).getCoreferenceChainId();
         int chainForGeorge = text.getEntityMentions().getItems().get(1).getCoreferenceChainId();
-        if (chainForBill >= 0) {
-            assertNotEquals(chainForBill, chainForGeorge);
-        }
+        assertEquals(-1, chainForBill);
+        assertEquals(-1, chainForGeorge);
     }
 }
