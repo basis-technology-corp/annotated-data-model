@@ -220,14 +220,20 @@ public final class AraDmConverter {
     private static void buildAltArabicAnalysis(AbstractResultAccess ara, int x, int ax, Token.Builder builder) {
         ArabicMorphoAnalysis.Builder anBuilder = new ArabicMorphoAnalysis.Builder();
         setupCommonAltAnalysis(ara, x, ax, anBuilder);
-        anBuilder.root(ara.getAlternativeRoots().getStringsForTokenIndex(x)[ax]);
+        if (ara.getAlternativeRoots() != null && ara.getAlternativeRoots().getStringsForTokenIndex(x) != null) {
+            anBuilder.root(ara.getAlternativeRoots().getStringsForTokenIndex(x)[ax]);
+        }
         // looks like we forgot to do alternatives for prefix-stem-suffix and for flags. So we're done.
         builder.addAnalysis(anBuilder.build());
     }
 
     private static void setupCommonAltAnalysis(AbstractResultAccess ara, int x, int ax, MorphoAnalysis.Builder anBuilder) {
-        anBuilder.partOfSpeech(ara.getAlternativePartsOfSpeech().getStringsForTokenIndex(x)[ax]);
-        anBuilder.lemma(ara.getAlternativeLemmas().getStringsForTokenIndex(x)[ax]);
+        if (ara.getAlternativePartsOfSpeech() != null && ara.getAlternativePartsOfSpeech().getStringsForTokenIndex(x) != null) {
+            anBuilder.partOfSpeech(ara.getAlternativePartsOfSpeech().getStringsForTokenIndex(x)[ax]);
+        }
+        if (ara.getAlternativeLemmas() != null && ara.getAlternativeLemmas().getStringsForTokenIndex(x) != null) {
+            anBuilder.lemma(ara.getAlternativeLemmas().getStringsForTokenIndex(x)[ax]);
+        }
         if (ara.getAlternativeCompounds() != null) {
             String[] comps = ara.getAlternativeCompounds().getStringsForTokenIndex(x);
             // these are delimited. And we don't know the delimiter.
@@ -244,7 +250,11 @@ public final class AraDmConverter {
 
     private static MorphoAnalysis buildBaseAnalysis(AbstractResultAccess ara, int x) {
         MorphoAnalysis analysis;
-        switch (ara.getDetectedLanguage()) {
+        LanguageCode langCode = ara.getDetectedLanguage();
+        if (langCode == null) {
+            langCode = LanguageCode.UNKNOWN;
+        }
+        switch (langCode) {
         case ARABIC:
             analysis = buildBaseArabicAnalysis(ara, x);
             break;
@@ -270,18 +280,24 @@ public final class AraDmConverter {
     private static MorphoAnalysis buildBaseHanAnalysis(AbstractResultAccess ara, int x) {
         HanMorphoAnalysis.Builder builder = new HanMorphoAnalysis.Builder();
         setupCommonBaseAnalysis(ara, x, builder);
-        String[] readings = ara.getReading().getStringsForTokenIndex(x);
-        if (readings != null) {
-            for (String reading : readings) {
-                builder.addReading(reading);
+        if (ara.getReading() != null) {
+            String[] readings = ara.getReading().getStringsForTokenIndex(x);
+            if (readings != null) {
+                for (String reading : readings) {
+                    builder.addReading(reading);
+                }
             }
         }
         return builder.build();
     }
 
     private static void setupCommonBaseAnalysis(AbstractResultAccess ara, int x, MorphoAnalysis.Builder builder) {
-        builder.lemma(ara.getLemma()[x]);
-        builder.partOfSpeech(ara.getPartOfSpeech()[x]);
+        if (ara.getLemma() != null) {
+            builder.lemma(ara.getLemma()[x]);
+        }
+        if (ara.getPartOfSpeech() != null) {
+            builder.partOfSpeech(ara.getPartOfSpeech()[x]);
+        }
         if (ara.getCompound() != null) {
             String[] comps = ara.getCompound().getStringsForTokenIndex(x);
             if (comps != null) {
@@ -297,7 +313,9 @@ public final class AraDmConverter {
         ArabicMorphoAnalysis.Builder builder = new ArabicMorphoAnalysis.Builder();
         setupCommonBaseAnalysis(ara, x, builder);
         builder.lengths(ara.getTokenPrefixStemLength()[x * 2], ara.getTokenPrefixStemLength()[(x * 2) + 1]);
-        builder.root(ara.getRoots()[x]);
+        if (ara.getRoots() != null) {
+            builder.root(ara.getRoots()[x]);
+        }
         if (ara.getFlags() != null) {
             int flags = ara.getFlags()[x];
             builder.strippablePrefix((flags & ARBL_FEATURE_STRIPPABLE_PREFIX) != 0);

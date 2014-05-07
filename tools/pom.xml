@@ -18,7 +18,7 @@
       <dependency>
         <groupId>com.basistech</groupId>
         <artifactId>rlp-java-blackboard</artifactId>
-        <version>12.1-SNAPSHOT</version>
+        <version>12.1</version>
         <exclusions>
           <exclusion>
             <groupId>com.basistech</groupId>

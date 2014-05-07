@@ -17,7 +17,6 @@ package com.basistech.dm;
 import com.basistech.rlp.AbstractResultAccess;
 import com.basistech.rlp.ResultAccessDeserializer;
 import com.basistech.rlp.ResultAccessSerializedFormat;
-import com.basistech.util.ISO15924;
 import com.basistech.util.LanguageCode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
@@ -25,7 +24,6 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import com.google.common.base.Charsets;
 import org.apache.commons.io.IOUtils;
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
@@ -121,7 +119,6 @@ public class AdmConversionTest extends Assert {
         assertEquals(text.getData(), deserializedText.getData());
     }
 
-    @Ignore
     @Test
     public void testMissingDetectedLanguage() throws IOException {
         String json = "{'RawText':'Cambridge, MA',"
@@ -134,6 +131,7 @@ public class AdmConversionTest extends Assert {
         json = json.replace("'", "\"");
         AbstractResultAccess ara = deserialize(json);
         AraDmConverter.convert(ara);
+        // The test is that we don't encounter a RuntimeException.
     }
 
     // The following all come from ARA json files used in RES tests.
@@ -157,35 +155,24 @@ public class AdmConversionTest extends Assert {
         assertEquals(0, text.getTokens().getItems().size());
     }
 
-    @Ignore
-    @Test
-    public void testBadAra0() throws IOException {
-        AbstractResultAccess ara = deserialize(new File("../model/data/adjacent-entity-context-left-overlap.json"));
-        AraDmConverter.convert(ara);
-    }
-
-    @Ignore
     @Test
     public void testBadAra1() throws IOException {
         AbstractResultAccess ara = deserialize(new File("../model/data/bad-and-good-names.json"));
         AraDmConverter.convert(ara);
     }
 
-    @Ignore
     @Test
     public void testBadAra2() throws IOException {
         AbstractResultAccess ara = deserialize(new File("../model/data/no-interesting-entities.json"));
         AraDmConverter.convert(ara);
     }
 
-    @Ignore
     @Test
     public void testBadAra3() throws IOException {
         AbstractResultAccess ara = deserialize(new File("../model/data/shimon-peres-ara.json"));
         AraDmConverter.convert(ara);
     }
 
-    @Ignore
     @Test
     public void testBadAra4() throws IOException {
         AbstractResultAccess ara = deserialize(new File("../model/data/shimon-peres-zho.json"));
