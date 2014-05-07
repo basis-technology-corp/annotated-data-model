@@ -14,15 +14,13 @@
 
 package com.basistech.dm;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import com.google.common.collect.Maps;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -34,15 +32,12 @@ public class TextTest {
     //CHECKSTYLE:OFF
     @SuppressWarnings("PMD")
     private String toJson(Object object) {
-        ObjectMapper mapper = new ObjectMapper();
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        Writer out = new OutputStreamWriter(bytes);
+        ObjectWriter writer = new ObjectMapper().writer();
         try {
-            mapper.writeValue(out, object);
-        } catch (IOException e) {
+            return writer.writeValueAsString(object);
+        } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
-        return bytes.toString();
     }
     //CHECKSTYLE:ON
 

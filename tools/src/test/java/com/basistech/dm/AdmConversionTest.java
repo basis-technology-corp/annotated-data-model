@@ -123,13 +123,6 @@ public class AdmConversionTest extends Assert {
 
     @Ignore
     @Test
-    public void testAraWithFragmentBoundaries() throws IOException {
-        AbstractResultAccess ara = deserialize(new File("../model/data/with-fragment-boundaries.json"));
-        AraDmConverter.convert(ara);
-    }
-
-    @Ignore
-    @Test
     public void testMissingDetectedLanguage() throws IOException {
         String json = "{'RawText':'Cambridge, MA',"
             + "'Tokens':['Cambridge', ',', 'MA'],"
