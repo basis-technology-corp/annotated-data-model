@@ -24,8 +24,10 @@ import com.basistech.rlp.AbstractResultAccess;
 import com.basistech.rlp.ResultAccessDeserializer;
 import com.basistech.rlp.ResultAccessSerializedFormat;
 import com.basistech.util.ISO15924;
+import com.basistech.util.LanguageCode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
 import org.apache.commons.io.IOUtils;
@@ -49,6 +51,7 @@ public final class AraDmConverter {
          * The code for that is just in the RWS, so we'll ignore it at this prototype stage.
          */
 
+        buildLanguageDetections(ara, text);
         buildTokens(ara, text);
         buildEntities(ara, text);
         buildSentences(ara, text);
@@ -56,6 +59,30 @@ public final class AraDmConverter {
         buildBaseNounPhrase(ara, text);
 
         return text;
+    }
+
+    // For now I'm building the RLI detection, not the RLBL multiple detections.
+    // TODO: how will they be combined?  It's possible to have both RLI and RLBL
+    // results in one ara.
+    private static void buildLanguageDetections(AbstractResultAccess ara, Text text) {
+        LanguageCode langCode = ara.getDetectedLanguage();
+        String encoding = ara.getDetectedEncoding();
+        ISO15924 scriptCode = ara.getDetectedScript();
+        if (langCode != null || encoding != null || scriptCode != null) {
+            ListAttribute.Builder<LanguageDetection> attrBuilder = new ListAttribute.Builder<LanguageDetection>(
+                LanguageDetection.class);
+            int startOffset = 0;
+            int endOffset = text.length();
+            // TODO: we don't have a confidence from RLI/RLP.  RLI-JE calculates one,
+            // and we could port that to RLP, but for now, I'm reporting 0.0.
+            double confidence = 0.0;
+            LanguageDetection.DetectionResult result = new LanguageDetection.DetectionResult(
+                langCode, encoding, confidence);
+            List<LanguageDetection.DetectionResult> results = Lists.newArrayList(result);
+            LanguageDetection.Builder builder = new LanguageDetection.Builder(startOffset, endOffset, results);
+            attrBuilder.add(builder.build());
+            text.getAttributes().put(LanguageDetection.class.getName(), attrBuilder.build());
+        }
     }
 
     private static void buildBaseNounPhrase(AbstractResultAccess ara, Text text) {
@@ -81,28 +108,6 @@ public final class AraDmConverter {
             }
             text.getAttributes().put(ScriptRegion.class.getName(), builder.build());
         }
-    }
-
-    public static void main(String[] args) throws Exception {
-        if (args.length != 2) {
-            System.err.println("Usage: AraDmConverter ara.json dm.json");
-            return;
-        }
-
-        ResultAccessDeserializer rad = new ResultAccessDeserializer();
-        rad.setFormat(ResultAccessSerializedFormat.JSON);
-        InputStream input = null;
-        AbstractResultAccess ara;
-        try {
-            input = new FileInputStream(args[0]);
-            ara = rad.deserializeAbstractResultAccess(input);
-        } finally {
-            IOUtils.closeQuietly(input);
-        }
-
-        ObjectMapper mapper = new ObjectMapper();
-        ObjectWriter writer = mapper.writer().withDefaultPrettyPrinter();
-        writer.writeValue(new File(args[1]), convert(ara));
     }
 
     private static void buildSentences(AbstractResultAccess ara, Text text) {
@@ -337,5 +342,27 @@ public final class AraDmConverter {
         }
 
         return builder.build();
+    }
+
+    public static void main(String[] args) throws Exception {
+        if (args.length != 2) {
+            System.err.println("Usage: AraDmConverter ara.json dm.json");
+            return;
+        }
+
+        ResultAccessDeserializer rad = new ResultAccessDeserializer();
+        rad.setFormat(ResultAccessSerializedFormat.JSON);
+        InputStream input = null;
+        AbstractResultAccess ara;
+        try {
+            input = new FileInputStream(args[0]);
+            ara = rad.deserializeAbstractResultAccess(input);
+        } finally {
+            IOUtils.closeQuietly(input);
+        }
+
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectWriter writer = mapper.writer().withDefaultPrettyPrinter();
+        writer.writeValue(new File(args[1]), convert(ara));
     }
 }

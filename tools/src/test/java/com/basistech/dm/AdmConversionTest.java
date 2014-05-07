@@ -17,6 +17,8 @@ package com.basistech.dm;
 import com.basistech.rlp.AbstractResultAccess;
 import com.basistech.rlp.ResultAccessDeserializer;
 import com.basistech.rlp.ResultAccessSerializedFormat;
+import com.basistech.util.ISO15924;
+import com.basistech.util.LanguageCode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.databind.ObjectWriter;
@@ -204,8 +206,20 @@ public class AdmConversionTest extends Assert {
     // trick that suppresses default values in the output.  I like to see
     // them explicitly.  At least in the cases I've seen so far.
 
-    // TODO: test for missing RLI result; I expect lang, encoding, script for
-    // the single best RLI result.
+    @Test
+    public void testLanguageDetectionResults() throws IOException {
+        AbstractResultAccess ara = deserialize(new File("../model/data/rli-only.json"));
+        Text text = AraDmConverter.convert(ara);
+        LanguageDetection result = text.getLanguageDetections().getItems().get(0);
+        assertEquals(0, result.getStartOffset());
+        assertEquals(text.length(), result.getEndOffset());
+
+        assertEquals(1, result.getDetectionResults().size());
+        assertEquals(LanguageCode.ENGLISH, result.getDetectionResults().get(0).getLanguage());
+        // TODO: no slot for script yet!
+        //assertEquals(ISO15924.Latn, result.getDetectionResults().get(0).getScript());
+        assertEquals(0.0, result.getDetectionResults().get(0).getConfidence(), 0.000001);
+    }
 
     // TODO: I think we should be storing token indexes in addition to char offsets
     // in the EntityMention.
