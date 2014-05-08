@@ -61,27 +61,56 @@ public final class AraDmConverter {
         return text;
     }
 
-    // For now I'm building the RLI detection, not the RLBL multiple detections.
-    // TODO: how will they be combined?  It's possible to have both RLI and RLBL
-    // results in one ara.
+    // An ARA can have results from RLP/RLI and RLBL.  If we have an RLI result
+    // for the whole doc, it is always the first region.
     private static void buildLanguageDetections(AbstractResultAccess ara, Text text) {
+        ListAttribute.Builder<LanguageDetection> attrBuilder =
+            new ListAttribute.Builder<LanguageDetection>(LanguageDetection.class);
+        addRLIResults(ara, text, attrBuilder);
+        addRLBLResults(ara, text, attrBuilder);
+        text.getAttributes().put(LanguageDetection.class.getName(), attrBuilder.build());
+    }
+
+    private static void addRLIResults(AbstractResultAccess ara, Text text,
+                                      ListAttribute.Builder<LanguageDetection> attrBuilder) {
         LanguageCode langCode = ara.getDetectedLanguage();
         String encoding = ara.getDetectedEncoding();
         ISO15924 scriptCode = ara.getDetectedScript();
         if (langCode != null || encoding != null || scriptCode != null) {
-            ListAttribute.Builder<LanguageDetection> attrBuilder = new ListAttribute.Builder<LanguageDetection>(
-                LanguageDetection.class);
             int startOffset = 0;
             int endOffset = text.length();
-            // TODO: we don't have a confidence from RLI/RLP.  RLI-JE calculates one,
-            // and we could port that to RLP, but for now, I'm reporting 0.0.
-            double confidence = 0.0;
+            double confidence = 0.0;  // RLP/RLI doesn't report this
             LanguageDetection.DetectionResult result = new LanguageDetection.DetectionResult(
                 langCode, encoding, scriptCode, confidence);
             List<LanguageDetection.DetectionResult> results = Lists.newArrayList(result);
             LanguageDetection.Builder builder = new LanguageDetection.Builder(startOffset, endOffset, results);
             attrBuilder.add(builder.build());
-            text.getAttributes().put(LanguageDetection.class.getName(), attrBuilder.build());
+        }
+    }
+
+    private static void addRLBLResults(AbstractResultAccess ara, Text text,
+                                       ListAttribute.Builder<LanguageDetection> attrBuilder) {
+        // Each region contain 6 integers:
+        // 0: start
+        // 1: end
+        // 2: level     // reserved
+        // 3: type      // reserved
+        // 4: script    // reserved
+        // 5: language
+        int[] regions = ara.getLanguageRegion();
+        if (regions != null) {
+            for (int i = 0; i < regions.length / 6; i++) {
+                int startOffset = regions[6 * i];
+                int endOffset = regions[6 * i + 1];
+                ISO15924 scriptCode = ISO15924.Zyyy;
+                LanguageCode langCode = LanguageCode.lookupByLanguageID(regions[6 * i + 5]);
+                double confidence = 0.0;  // RLBL doesn't report this
+                LanguageDetection.DetectionResult result = new LanguageDetection.DetectionResult(
+                    langCode, "UTF-16", scriptCode, confidence);
+                List<LanguageDetection.DetectionResult> results = Lists.newArrayList(result);
+                LanguageDetection.Builder builder = new LanguageDetection.Builder(startOffset, endOffset, results);
+                attrBuilder.add(builder.build());
+            }
         }
     }
 

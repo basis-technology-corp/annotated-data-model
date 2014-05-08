@@ -194,6 +194,36 @@ public class AdmConversionTest extends Assert {
         assertEquals(0.0, result.getDetectionResults().get(0).getConfidence(), 0.000001);
     }
 
+    @Test
+    public void testLanguageDetectionResultsWithRLBL() throws IOException {
+        // This file contains the results of running RLP/RLI and RLBL.  The
+        // full doc is detected as Chinese.  The first region is English,
+        // (but detected as Catalan) and the second is Chinese.  We expect 3
+        // results, where the first represents the full document.
+        AbstractResultAccess ara = deserialize(new File("../model/data/rli-and-rlbl.json"));
+        Text text = AraDmConverter.convert(ara);
+        assertEquals(3, text.getLanguageDetections().getItems().size());
+
+        LanguageDetection.DetectionResult result;
+        int fullLength = text.getLanguageDetections().getItems().get(0).getEndOffset() -
+            text.getLanguageDetections().getItems().get(0).getStartOffset();
+        result = text.getLanguageDetections().getItems().get(0).getDetectionResults().get(0);
+        assertEquals(LanguageCode.SIMPLIFIED_CHINESE, result.getLanguage());
+        assertEquals(ISO15924.Hans, result.getScript());
+
+        int length0 = text.getLanguageDetections().getItems().get(1).getEndOffset() -
+            text.getLanguageDetections().getItems().get(1).getStartOffset();
+        result = text.getLanguageDetections().getItems().get(1).getDetectionResults().get(0);
+        assertEquals(LanguageCode.CATALAN, result.getLanguage());
+
+        int length1 = text.getLanguageDetections().getItems().get(2).getEndOffset() -
+            text.getLanguageDetections().getItems().get(2).getStartOffset();
+        result = text.getLanguageDetections().getItems().get(2).getDetectionResults().get(0);
+        assertEquals(LanguageCode.SIMPLIFIED_CHINESE, result.getLanguage());
+
+        assertEquals(fullLength, length0 + length1);
+    }
+
     // TODO: remove default value compression?  too confusing for non-jackson deserialers,
     // e.g. when called from python.
 
@@ -201,6 +231,4 @@ public class AdmConversionTest extends Assert {
 
     // TODO: some kind of helper that exposes token indexes?  wait to see if really needed.
     // RES could use this, but maybe we could recode RES instead?
-
-    // TODO: RLI/RLP vs. RLBL
 }

@@ -14,6 +14,9 @@
 
 package com.basistech.dm;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Map;
 
 /**
@@ -24,7 +27,9 @@ public class SentenceBoundaries extends BaseAttribute {
     private final int[] charBoundaries;
     private final int[] tokenBoundaries;
 
-    public SentenceBoundaries(int [] charBoundaries, int[] tokenBoundaries) {
+    @JsonCreator
+    public SentenceBoundaries(@JsonProperty("charBoundaries") int[] charBoundaries,
+                              @JsonProperty("tokenBoundaries") int[] tokenBoundaries) {
         this.charBoundaries = charBoundaries;
         this.tokenBoundaries = tokenBoundaries;
     }
