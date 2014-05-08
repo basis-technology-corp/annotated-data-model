@@ -17,6 +17,7 @@ package com.basistech.dm;
 import com.basistech.rlp.AbstractResultAccess;
 import com.basistech.rlp.ResultAccessDeserializer;
 import com.basistech.rlp.ResultAccessSerializedFormat;
+import com.basistech.util.ISO15924;
 import com.basistech.util.LanguageCode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
@@ -189,11 +190,17 @@ public class AdmConversionTest extends Assert {
 
         assertEquals(1, result.getDetectionResults().size());
         assertEquals(LanguageCode.ENGLISH, result.getDetectionResults().get(0).getLanguage());
-        // TODO: no slot for script yet!
-        //assertEquals(ISO15924.Latn, result.getDetectionResults().get(0).getScript());
+        assertEquals(ISO15924.Latn, result.getDetectionResults().get(0).getScript());
         assertEquals(0.0, result.getDetectionResults().get(0).getConfidence(), 0.000001);
     }
 
-    // TODO: I think we should be storing token indexes in addition to char offsets
-    // in the EntityMention.
+    // TODO: remove default value compression?  too confusing for non-jackson deserialers,
+    // e.g. when called from python.
+
+    // TODO: SentenceBoundary exposes internal arrays; api change?
+
+    // TODO: some kind of helper that exposes token indexes?  wait to see if really needed.
+    // RES could use this, but maybe we could recode RES instead?
+
+    // TODO: RLI/RLP vs. RLBL
 }

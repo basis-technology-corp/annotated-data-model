@@ -24,7 +24,6 @@ import org.junit.Test;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 
 public class TextTest {
     // I like to use this while debugging, but checkstyle and pmd flag as
@@ -84,32 +83,29 @@ public class TextTest {
         assertEquals(6, sentenceBoundaries.getCharBoundaries()[0]);
     }
 
-    // TODO: this fails because the bnp builder expects a raw bnp array such as
-    // the one in ara.getBaseNounPhrase().  That array contains token indexes
-    // but they are treated here as character offsets.
-    @Ignore
     @Test
     public void testBaseNounPhrases() {
         //                012345678901
         String rawText = "Dog.  Book.";
         // The ARA gives bnp values in terms of token indexes.
-        int[] rawBNP = {0, 1, 2, 3};
+        int[] bnpFromARA = {0, 1, 2, 3};
+        int[] tokenOffsets = {0, 3, 3, 4, 6, 10, 10, 11};
         Text text = new Text(rawText, Maps.<String, List<String>>newHashMap());
-        ListAttribute.Builder<BaseNounPhrase> builder = new ListAttribute.Builder<BaseNounPhrase>(BaseNounPhrase.class);
-        for (int i = 0; i < rawBNP.length; i += 2) {
-            BaseNounPhrase bnp = new BaseNounPhrase(rawBNP[i], rawBNP[i + 1]);
-            builder.add(bnp);
+        ListAttribute.Builder<BaseNounPhrase> attrBuilder = new ListAttribute.Builder<BaseNounPhrase>(BaseNounPhrase.class);
+        for (int i = 0; i < bnpFromARA.length; i += 2) {
+            BaseNounPhrase.Builder builder = new BaseNounPhrase.Builder(tokenOffsets, bnpFromARA[i], bnpFromARA[i + 1]);
+            attrBuilder.add(builder.build());
         }
-        text.getAttributes().put(BaseNounPhrase.class.getName(), builder.build());
+        text.getAttributes().put(BaseNounPhrase.class.getName(), attrBuilder.build());
 
         BaseNounPhrase bnp;
         assertEquals(2, text.getBaseNounPhrases().getItems().size());
         bnp = text.getBaseNounPhrases().getItems().get(0);
         assertEquals(0, bnp.getStartOffset());
-        assertEquals(3, bnp.getStartOffset());
+        assertEquals(3, bnp.getEndOffset());
         bnp = text.getBaseNounPhrases().getItems().get(1);
         assertEquals(6, bnp.getStartOffset());
-        assertEquals(10, bnp.getStartOffset());
+        assertEquals(10, bnp.getEndOffset());
     }
 
     @Test

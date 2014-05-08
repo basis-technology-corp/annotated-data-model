@@ -77,7 +77,7 @@ public final class AraDmConverter {
             // and we could port that to RLP, but for now, I'm reporting 0.0.
             double confidence = 0.0;
             LanguageDetection.DetectionResult result = new LanguageDetection.DetectionResult(
-                langCode, encoding, confidence);
+                langCode, encoding, scriptCode, confidence);
             List<LanguageDetection.DetectionResult> results = Lists.newArrayList(result);
             LanguageDetection.Builder builder = new LanguageDetection.Builder(startOffset, endOffset, results);
             attrBuilder.add(builder.build());
@@ -87,15 +87,15 @@ public final class AraDmConverter {
 
     private static void buildBaseNounPhrase(AbstractResultAccess ara, Text text) {
         if (ara.getBaseNounPhrase() != null) {
-            ListAttribute.Builder<BaseNounPhrase> builder = new ListAttribute.Builder<BaseNounPhrase>(BaseNounPhrase.class);
+            ListAttribute.Builder<BaseNounPhrase> attrBuilder = new ListAttribute.Builder<BaseNounPhrase>(BaseNounPhrase.class);
             int[] baseNounPhrase = ara.getBaseNounPhrase();
+            int[] tokenOffsets = ara.getTokenOffset();
             for (int i = 0; i < baseNounPhrase.length; i += 2) {
-                BaseNounPhrase bnp = new BaseNounPhrase(baseNounPhrase[i], baseNounPhrase[i + 1]);
-                builder.add(bnp);
+                BaseNounPhrase.Builder builder = new BaseNounPhrase.Builder(tokenOffsets, baseNounPhrase[i], baseNounPhrase[i + 1]);
+                attrBuilder.add(builder.build());
             }
-            text.getAttributes().put(BaseNounPhrase.class.getName(), builder.build());
+            text.getAttributes().put(BaseNounPhrase.class.getName(), attrBuilder.build());
         }
-
     }
 
     private static void buildScriptRegions(AbstractResultAccess ara, Text text) {

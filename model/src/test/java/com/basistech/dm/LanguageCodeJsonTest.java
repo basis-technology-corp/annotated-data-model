@@ -14,6 +14,7 @@
 
 package com.basistech.dm;
 
+import com.basistech.util.ISO15924;
 import com.basistech.util.LanguageCode;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -33,7 +34,8 @@ public class LanguageCodeJsonTest extends Assert {
     public void testRoundTrip() throws Exception {
 
         List<LanguageDetection.DetectionResult> detectionResults = Lists.newArrayList();
-        LanguageDetection.DetectionResult detectionResult = new LanguageDetection.DetectionResult(LanguageCode.KOREAN, "uff-8", 1.0);
+        LanguageDetection.DetectionResult detectionResult = new LanguageDetection.DetectionResult(LanguageCode.KOREAN,
+            "uff-8", ISO15924.Hang, 1.0);
         detectionResults.add(detectionResult);
         LanguageDetection.Builder builder = new LanguageDetection.Builder(0, 100, detectionResults);
         LanguageDetection languageDetection = builder.build();
@@ -46,6 +48,7 @@ public class LanguageCodeJsonTest extends Assert {
         ArrayNode resultArray = (ArrayNode) resultsNode;
         ObjectNode detectionNode = (ObjectNode) resultArray.get(0);
         assertEquals("kor", detectionNode.get("language").textValue());
+        assertEquals("Hang", detectionNode.get("script").textValue());
 
         languageDetection = mapper.readValue(bytes, LanguageDetection.class);
         assertSame(LanguageCode.KOREAN, languageDetection.getDetectionResults().get(0).getLanguage());
