@@ -1,0 +1,34 @@
+{
+  "DetectedScript": "Hans",
+  "DetectedLanguage": "zhs",
+  "DetectedEncoding": "UTF8",
+  "ScriptRegion": [
+    0,
+    27,
+    215,
+    27,
+    42,
+    500
+  ],
+  "LanguageRegion": [
+    0,
+    27,
+    0,
+    0,
+    0,
+    5,
+    27,
+    42,
+    0,
+    0,
+    0,
+    43
+  ],
+  "TextBoundaries": [
+    27,
+    42
+  ],
+  "RawText": "Shimon Peres Shimon Peres. 希蒙・佩雷斯 希蒙・佩雷斯.\n",
+  "RawData": "U2hpbW9uIFBlcmVzIFNoaW1vbiBQZXJlcy4g5biM6JKZ44O75L2p6Zu35pavIOW4jOiSmeODu+S9qembt+aWry4K",
+  "Pathname": "in.txt"
+}

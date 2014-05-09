@@ -14,6 +14,7 @@
 
 package com.basistech.dm;
 
+import com.basistech.util.ISO15924;
 import com.basistech.util.LanguageCode;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -35,11 +36,13 @@ public class LanguageDetection extends Attribute {
         @JsonDeserialize(using = LanguageCodeDeserializer.class)
         private final LanguageCode language;
         private final String encoding;
+        private final ISO15924 script;
         private final double confidence;
 
         protected DetectionResult() {
             language = LanguageCode.UNKNOWN;
             encoding = null;
+            script = ISO15924.Zyyy;
             confidence = 0.0;
         }
 
@@ -49,10 +52,13 @@ public class LanguageDetection extends Attribute {
                                LanguageCode language,
                                @JsonProperty("encoding")
                                String encoding,
+                               @JsonProperty("script")
+                               ISO15924 script,
                                @JsonProperty("confidence")
                                double confidence) {
             this.language = language;
             this.encoding = encoding;
+            this.script = script;
             this.confidence = confidence;
         }
 
@@ -63,6 +69,10 @@ public class LanguageDetection extends Attribute {
 
         public String getEncoding() {
             return encoding;
+        }
+
+        public ISO15924 getScript() {
+            return script;
         }
 
         public double getConfidence() {

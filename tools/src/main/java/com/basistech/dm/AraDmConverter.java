@@ -24,8 +24,10 @@ import com.basistech.rlp.AbstractResultAccess;
 import com.basistech.rlp.ResultAccessDeserializer;
 import com.basistech.rlp.ResultAccessSerializedFormat;
 import com.basistech.util.ISO15924;
+import com.basistech.util.LanguageCode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
 import org.apache.commons.io.IOUtils;
@@ -49,6 +51,7 @@ public final class AraDmConverter {
          * The code for that is just in the RWS, so we'll ignore it at this prototype stage.
          */
 
+        buildLanguageDetections(ara, text);
         buildTokens(ara, text);
         buildEntities(ara, text);
         buildSentences(ara, text);
@@ -58,17 +61,70 @@ public final class AraDmConverter {
         return text;
     }
 
+    // An ARA can have results from RLP/RLI and RLBL.  If we have an RLI result
+    // for the whole doc, it is always the first region.
+    private static void buildLanguageDetections(AbstractResultAccess ara, Text text) {
+        ListAttribute.Builder<LanguageDetection> attrBuilder =
+            new ListAttribute.Builder<LanguageDetection>(LanguageDetection.class);
+        addRLIResults(ara, text, attrBuilder);
+        addRLBLResults(ara, text, attrBuilder);
+        text.getAttributes().put(LanguageDetection.class.getName(), attrBuilder.build());
+    }
+
+    private static void addRLIResults(AbstractResultAccess ara, Text text,
+                                      ListAttribute.Builder<LanguageDetection> attrBuilder) {
+        LanguageCode langCode = ara.getDetectedLanguage();
+        String encoding = ara.getDetectedEncoding();
+        ISO15924 scriptCode = ara.getDetectedScript();
+        if (langCode != null || encoding != null || scriptCode != null) {
+            int startOffset = 0;
+            int endOffset = text.length();
+            double confidence = 0.0;  // RLP/RLI doesn't report this
+            LanguageDetection.DetectionResult result = new LanguageDetection.DetectionResult(
+                langCode, encoding, scriptCode, confidence);
+            List<LanguageDetection.DetectionResult> results = Lists.newArrayList(result);
+            LanguageDetection.Builder builder = new LanguageDetection.Builder(startOffset, endOffset, results);
+            attrBuilder.add(builder.build());
+        }
+    }
+
+    private static void addRLBLResults(AbstractResultAccess ara, Text text,
+                                       ListAttribute.Builder<LanguageDetection> attrBuilder) {
+        // Each region contain 6 integers:
+        // 0: start
+        // 1: end
+        // 2: level     // reserved
+        // 3: type      // reserved
+        // 4: script    // reserved
+        // 5: language
+        int[] regions = ara.getLanguageRegion();
+        if (regions != null) {
+            for (int i = 0; i < regions.length / 6; i++) {
+                int startOffset = regions[6 * i];
+                int endOffset = regions[6 * i + 1];
+                ISO15924 scriptCode = ISO15924.Zyyy;
+                LanguageCode langCode = LanguageCode.lookupByLanguageID(regions[6 * i + 5]);
+                double confidence = 0.0;  // RLBL doesn't report this
+                LanguageDetection.DetectionResult result = new LanguageDetection.DetectionResult(
+                    langCode, "UTF-16", scriptCode, confidence);
+                List<LanguageDetection.DetectionResult> results = Lists.newArrayList(result);
+                LanguageDetection.Builder builder = new LanguageDetection.Builder(startOffset, endOffset, results);
+                attrBuilder.add(builder.build());
+            }
+        }
+    }
+
     private static void buildBaseNounPhrase(AbstractResultAccess ara, Text text) {
         if (ara.getBaseNounPhrase() != null) {
-            ListAttribute.Builder<BaseNounPhrase> builder = new ListAttribute.Builder<BaseNounPhrase>(BaseNounPhrase.class);
+            ListAttribute.Builder<BaseNounPhrase> attrBuilder = new ListAttribute.Builder<BaseNounPhrase>(BaseNounPhrase.class);
             int[] baseNounPhrase = ara.getBaseNounPhrase();
+            int[] tokenOffsets = ara.getTokenOffset();
             for (int i = 0; i < baseNounPhrase.length; i += 2) {
-                BaseNounPhrase bnp = new BaseNounPhrase(baseNounPhrase[i], baseNounPhrase[i + 1]);
-                builder.add(bnp);
+                BaseNounPhrase.Builder builder = new BaseNounPhrase.Builder(tokenOffsets, baseNounPhrase[i], baseNounPhrase[i + 1]);
+                attrBuilder.add(builder.build());
             }
-            text.getAttributes().put(BaseNounPhrase.class.getName(), builder.build());
+            text.getAttributes().put(BaseNounPhrase.class.getName(), attrBuilder.build());
         }
-
     }
 
     private static void buildScriptRegions(AbstractResultAccess ara, Text text) {
@@ -81,28 +137,6 @@ public final class AraDmConverter {
             }
             text.getAttributes().put(ScriptRegion.class.getName(), builder.build());
         }
-    }
-
-    public static void main(String[] args) throws Exception {
-        if (args.length != 2) {
-            System.err.println("Usage: AraDmConverter ara.json dm.json");
-            return;
-        }
-
-        ResultAccessDeserializer rad = new ResultAccessDeserializer();
-        rad.setFormat(ResultAccessSerializedFormat.JSON);
-        InputStream input = null;
-        AbstractResultAccess ara;
-        try {
-            input = new FileInputStream(args[0]);
-            ara = rad.deserializeAbstractResultAccess(input);
-        } finally {
-            IOUtils.closeQuietly(input);
-        }
-
-        ObjectMapper mapper = new ObjectMapper();
-        ObjectWriter writer = mapper.writer().withDefaultPrettyPrinter();
-        writer.writeValue(new File(args[1]), convert(ara));
     }
 
     private static void buildSentences(AbstractResultAccess ara, Text text) {
@@ -215,14 +249,20 @@ public final class AraDmConverter {
     private static void buildAltArabicAnalysis(AbstractResultAccess ara, int x, int ax, Token.Builder builder) {
         ArabicMorphoAnalysis.Builder anBuilder = new ArabicMorphoAnalysis.Builder();
         setupCommonAltAnalysis(ara, x, ax, anBuilder);
-        anBuilder.root(ara.getAlternativeRoots().getStringsForTokenIndex(x)[ax]);
+        if (ara.getAlternativeRoots() != null && ara.getAlternativeRoots().getStringsForTokenIndex(x) != null) {
+            anBuilder.root(ara.getAlternativeRoots().getStringsForTokenIndex(x)[ax]);
+        }
         // looks like we forgot to do alternatives for prefix-stem-suffix and for flags. So we're done.
         builder.addAnalysis(anBuilder.build());
     }
 
     private static void setupCommonAltAnalysis(AbstractResultAccess ara, int x, int ax, MorphoAnalysis.Builder anBuilder) {
-        anBuilder.partOfSpeech(ara.getAlternativePartsOfSpeech().getStringsForTokenIndex(x)[ax]);
-        anBuilder.lemma(ara.getAlternativeLemmas().getStringsForTokenIndex(x)[ax]);
+        if (ara.getAlternativePartsOfSpeech() != null && ara.getAlternativePartsOfSpeech().getStringsForTokenIndex(x) != null) {
+            anBuilder.partOfSpeech(ara.getAlternativePartsOfSpeech().getStringsForTokenIndex(x)[ax]);
+        }
+        if (ara.getAlternativeLemmas() != null && ara.getAlternativeLemmas().getStringsForTokenIndex(x) != null) {
+            anBuilder.lemma(ara.getAlternativeLemmas().getStringsForTokenIndex(x)[ax]);
+        }
         if (ara.getAlternativeCompounds() != null) {
             String[] comps = ara.getAlternativeCompounds().getStringsForTokenIndex(x);
             // these are delimited. And we don't know the delimiter.
@@ -239,7 +279,11 @@ public final class AraDmConverter {
 
     private static MorphoAnalysis buildBaseAnalysis(AbstractResultAccess ara, int x) {
         MorphoAnalysis analysis;
-        switch (ara.getDetectedLanguage()) {
+        LanguageCode langCode = ara.getDetectedLanguage();
+        if (langCode == null) {
+            langCode = LanguageCode.UNKNOWN;
+        }
+        switch (langCode) {
         case ARABIC:
             analysis = buildBaseArabicAnalysis(ara, x);
             break;
@@ -265,18 +309,24 @@ public final class AraDmConverter {
     private static MorphoAnalysis buildBaseHanAnalysis(AbstractResultAccess ara, int x) {
         HanMorphoAnalysis.Builder builder = new HanMorphoAnalysis.Builder();
         setupCommonBaseAnalysis(ara, x, builder);
-        String[] readings = ara.getReading().getStringsForTokenIndex(x);
-        if (readings != null) {
-            for (String reading : readings) {
-                builder.addReading(reading);
+        if (ara.getReading() != null) {
+            String[] readings = ara.getReading().getStringsForTokenIndex(x);
+            if (readings != null) {
+                for (String reading : readings) {
+                    builder.addReading(reading);
+                }
             }
         }
         return builder.build();
     }
 
     private static void setupCommonBaseAnalysis(AbstractResultAccess ara, int x, MorphoAnalysis.Builder builder) {
-        builder.lemma(ara.getLemma()[x]);
-        builder.partOfSpeech(ara.getPartOfSpeech()[x]);
+        if (ara.getLemma() != null) {
+            builder.lemma(ara.getLemma()[x]);
+        }
+        if (ara.getPartOfSpeech() != null) {
+            builder.partOfSpeech(ara.getPartOfSpeech()[x]);
+        }
         if (ara.getCompound() != null) {
             String[] comps = ara.getCompound().getStringsForTokenIndex(x);
             if (comps != null) {
@@ -292,7 +342,9 @@ public final class AraDmConverter {
         ArabicMorphoAnalysis.Builder builder = new ArabicMorphoAnalysis.Builder();
         setupCommonBaseAnalysis(ara, x, builder);
         builder.lengths(ara.getTokenPrefixStemLength()[x * 2], ara.getTokenPrefixStemLength()[(x * 2) + 1]);
-        builder.root(ara.getRoots()[x]);
+        if (ara.getRoots() != null) {
+            builder.root(ara.getRoots()[x]);
+        }
         if (ara.getFlags() != null) {
             int flags = ara.getFlags()[x];
             builder.strippablePrefix((flags & ARBL_FEATURE_STRIPPABLE_PREFIX) != 0);
@@ -337,5 +389,27 @@ public final class AraDmConverter {
         }
 
         return builder.build();
+    }
+
+    public static void main(String[] args) throws Exception {
+        if (args.length != 2) {
+            System.err.println("Usage: AraDmConverter ara.json dm.json");
+            return;
+        }
+
+        ResultAccessDeserializer rad = new ResultAccessDeserializer();
+        rad.setFormat(ResultAccessSerializedFormat.JSON);
+        InputStream input = null;
+        AbstractResultAccess ara;
+        try {
+            input = new FileInputStream(args[0]);
+            ara = rad.deserializeAbstractResultAccess(input);
+        } finally {
+            IOUtils.closeQuietly(input);
+        }
+
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectWriter writer = mapper.writer().withDefaultPrettyPrinter();
+        writer.writeValue(new File(args[1]), convert(ara));
     }
 }

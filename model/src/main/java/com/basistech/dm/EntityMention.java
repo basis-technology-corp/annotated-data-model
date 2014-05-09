@@ -60,7 +60,7 @@ public class EntityMention extends Attribute {
         // make jackson happy.
         entityType = null;
         confidence = 0.0;
-        coreferenceChainId = 0;
+        coreferenceChainId = -1;
         flags = 0;
         source = null;
         normalized = null;
@@ -96,7 +96,7 @@ public class EntityMention extends Attribute {
     public static class Builder extends Attribute.Builder {
         private String entityType;
         private double confidence;
-        private int coreferenceChainId;
+        private int coreferenceChainId = -1;
         private int flags;
         private String source;
         private String normalized;

@@ -1,0 +1,63 @@
+{
+    "DetectedEncoding": "UTF-8",
+    "DetectedLanguage": "HEBREW",
+    "DetectedScript": "Hebr",
+    "NamedEntity": [
+        0,
+        2,
+        65536,
+        3,
+        5,
+        65536
+    ],
+    "NamedEntityChainId": [
+        0,
+        1
+    ],
+    "NamedEntitySource": [
+        16777216,
+        16777216
+    ],
+    "NamedEntityTypeString": [
+        "PERSON",
+        "PERSON"
+    ],
+    "NormalizedNamedEntity": [
+        "שמעון הפרס",
+        "Shimon Peres"
+    ],
+    "RawText": "שמעון הפרס is Shimon Peres\n",
+    "ScriptRegion": [
+        0,
+        11,
+        125,
+        11,
+        27,
+        215
+    ],
+    "SentenceBoundaries": [
+        5
+    ],
+    "TextBoundaries": [
+        27
+    ],
+    "TokenOffset": [
+        0,
+        5,
+        6,
+        10,
+        11,
+        13,
+        14,
+        20,
+        21,
+        26
+    ],
+    "Tokens": [
+        "שמעון",
+        "הפרס",
+        "is",
+        "Shimon",
+        "Peres"
+    ]
+}

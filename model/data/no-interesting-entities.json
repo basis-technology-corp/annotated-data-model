@@ -1,0 +1,40 @@
+{
+    "DetectedLanguage": "ENGLISH", 
+    "Lemma": [
+        "abc", 
+        "@", 
+        "foo.com"
+    ], 
+    "NamedEntity": [
+        0, 
+        3, 
+        589825
+    ], 
+    "NamedEntityChainId": [
+        0
+    ], 
+    "NamedEntitySource": [
+        50331649
+    ], 
+    "RawText": "abc@foo.com\n", 
+    "SentenceBoundaries": [
+        3
+    ], 
+    "Stopword": [], 
+    "TextBoundaries": [
+        12
+    ], 
+    "TokenOffset": [
+        0, 
+        3, 
+        3, 
+        4, 
+        4, 
+        11
+    ], 
+    "Tokens": [
+        "abc", 
+        "@", 
+        "foo.com"
+    ]
+}

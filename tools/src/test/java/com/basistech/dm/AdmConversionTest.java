@@ -17,9 +17,12 @@ package com.basistech.dm;
 import com.basistech.rlp.AbstractResultAccess;
 import com.basistech.rlp.ResultAccessDeserializer;
 import com.basistech.rlp.ResultAccessSerializedFormat;
+import com.basistech.util.ISO15924;
+import com.basistech.util.LanguageCode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import com.google.common.base.Charsets;
 import org.apache.commons.io.IOUtils;
 import org.junit.Assert;
 import org.junit.Test;
@@ -28,26 +31,36 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
-import java.util.Arrays;
 
 /**
  * Here's some testing using an ARA as in input.
  */
 public class AdmConversionTest extends Assert {
+    private AbstractResultAccess deserialize(File file) throws IOException {
+        ResultAccessDeserializer deserializer = new ResultAccessDeserializer();
+        deserializer.setFormat(ResultAccessSerializedFormat.JSON);
+        InputStream in = new FileInputStream(file);
+        AbstractResultAccess results;
+        try {
+            results = deserializer.deserializeAbstractResultAccess(in);
+        } finally {
+            IOUtils.closeQuietly(in);
+        }
+        return results;
+    }
+
+    private AbstractResultAccess deserialize(String s) throws IOException {
+        ResultAccessDeserializer deserializer = new ResultAccessDeserializer();
+        deserializer.setFormat(ResultAccessSerializedFormat.JSON);
+        return deserializer.deserializeAbstractResultAccess(new ByteArrayInputStream(
+            s.getBytes(Charsets.UTF_8)));
+    }
 
     @Test
     public void testEngRoundTrip() throws Exception {
-        ResultAccessDeserializer rad = new ResultAccessDeserializer();
-        rad.setFormat(ResultAccessSerializedFormat.JSON);
-        InputStream input = null;
-        AbstractResultAccess ara;
-        try {
-            input = new FileInputStream("../model/data/eng-ara.json");
-            ara = rad.deserializeAbstractResultAccess(input);
-        } finally {
-            IOUtils.closeQuietly(input);
-        }
+        AbstractResultAccess ara = deserialize(new File("../model/data/eng-ara.json"));
         Text text = AraDmConverter.convert(ara);
 
         ByteArrayOutputStream jsonContainer = new ByteArrayOutputStream();
@@ -68,16 +81,7 @@ public class AdmConversionTest extends Assert {
 
     @Test
     public void testAraRoundTrip() throws Exception {
-        ResultAccessDeserializer rad = new ResultAccessDeserializer();
-        rad.setFormat(ResultAccessSerializedFormat.JSON);
-        InputStream input = null;
-        AbstractResultAccess ara;
-        try {
-            input = new FileInputStream("../model/data/ara-ara.json");
-            ara = rad.deserializeAbstractResultAccess(input);
-        } finally {
-            IOUtils.closeQuietly(input);
-        }
+        AbstractResultAccess ara = deserialize(new File("../model/data/ara-ara.json"));
         Text text = AraDmConverter.convert(ara);
 
         ByteArrayOutputStream jsonContainer = new ByteArrayOutputStream();
@@ -97,16 +101,8 @@ public class AdmConversionTest extends Assert {
 
     @Test
     public void testJpnRoundTrip() throws Exception {
-        ResultAccessDeserializer rad = new ResultAccessDeserializer();
-        rad.setFormat(ResultAccessSerializedFormat.JSON);
-        InputStream input = null;
-        AbstractResultAccess ara;
-        try {
-            input = new FileInputStream("../model/data/jpn-ara.json");
-            ara = rad.deserializeAbstractResultAccess(input);
-        } finally {
-            IOUtils.closeQuietly(input);
-        }
+        AbstractResultAccess ara = deserialize(new File("../model/data/jpn-ara.json"));
+
         Text text = AraDmConverter.convert(ara);
 
         ByteArrayOutputStream jsonContainer = new ByteArrayOutputStream();
@@ -123,4 +119,116 @@ public class AdmConversionTest extends Assert {
         assertEquals(text.length(), deserializedText.length());
         assertEquals(text.getData(), deserializedText.getData());
     }
+
+    @Test
+    public void testMissingDetectedLanguage() throws IOException {
+        String json = "{'RawText':'Cambridge, MA',"
+            + "'Tokens':['Cambridge', ',', 'MA'],"
+            + "'TokenOffset':[0,9,9,10,11,13],"
+            + "'Lemma':['Cambridge',',','MA'],"
+            + "'NamedEntity':[0,3,196608],'NamedEntityChainId':[0],'NormalizedNamedEntity':['Cambridge, MA'],"
+            + "'SentenceBoundaries':[3]"
+            + "}";
+        json = json.replace("'", "\"");
+        AbstractResultAccess ara = deserialize(json);
+        AraDmConverter.convert(ara);
+        // The test is that we don't encounter a RuntimeException.
+    }
+
+    // The following all come from ARA json files used in RES tests.
+    // TODO: once the issues are examined, consider renaming the files and
+    // tests, and adding appropriate asserts.  Currently they fail because
+    // they throw exceptions.
+
+    @Test
+    public void testEmptyString() throws IOException {
+        AbstractResultAccess ara = deserialize(new File("../model/data/empty.json"));
+        Text text = AraDmConverter.convert(ara);
+        assertEquals(0, text.length());
+        assertEquals(0, text.getTokens().getItems().size());
+    }
+
+    @Test
+    public void testWhitespace() throws IOException {
+        AbstractResultAccess ara = deserialize(new File("../model/data/whitespace.json"));
+        Text text = AraDmConverter.convert(ara);
+        assertTrue(text.length() > 0);
+        assertEquals(0, text.getTokens().getItems().size());
+    }
+
+    @Test
+    public void testBadAra1() throws IOException {
+        AbstractResultAccess ara = deserialize(new File("../model/data/bad-and-good-names.json"));
+        AraDmConverter.convert(ara);
+    }
+
+    @Test
+    public void testBadAra2() throws IOException {
+        AbstractResultAccess ara = deserialize(new File("../model/data/no-interesting-entities.json"));
+        AraDmConverter.convert(ara);
+    }
+
+    @Test
+    public void testBadAra3() throws IOException {
+        AbstractResultAccess ara = deserialize(new File("../model/data/shimon-peres-ara.json"));
+        AraDmConverter.convert(ara);
+    }
+
+    @Test
+    public void testBadAra4() throws IOException {
+        AbstractResultAccess ara = deserialize(new File("../model/data/shimon-peres-zho.json"));
+        AraDmConverter.convert(ara);
+    }
+
+    @Test
+    public void testLanguageDetectionResults() throws IOException {
+        AbstractResultAccess ara = deserialize(new File("../model/data/rli-only.json"));
+        Text text = AraDmConverter.convert(ara);
+        LanguageDetection result = text.getLanguageDetections().getItems().get(0);
+        assertEquals(0, result.getStartOffset());
+        assertEquals(text.length(), result.getEndOffset());
+
+        assertEquals(1, result.getDetectionResults().size());
+        assertEquals(LanguageCode.ENGLISH, result.getDetectionResults().get(0).getLanguage());
+        assertEquals(ISO15924.Latn, result.getDetectionResults().get(0).getScript());
+        assertEquals(0.0, result.getDetectionResults().get(0).getConfidence(), 0.000001);
+    }
+
+    @Test
+    public void testLanguageDetectionResultsWithRLBL() throws IOException {
+        // This file contains the results of running RLP/RLI and RLBL.  The
+        // full doc is detected as Chinese.  The first region is English,
+        // (but detected as Catalan) and the second is Chinese.  We expect 3
+        // results, where the first represents the full document.
+        AbstractResultAccess ara = deserialize(new File("../model/data/rli-and-rlbl.json"));
+        Text text = AraDmConverter.convert(ara);
+        assertEquals(3, text.getLanguageDetections().getItems().size());
+
+        LanguageDetection.DetectionResult result;
+        int fullLength = text.getLanguageDetections().getItems().get(0).getEndOffset() -
+            text.getLanguageDetections().getItems().get(0).getStartOffset();
+        result = text.getLanguageDetections().getItems().get(0).getDetectionResults().get(0);
+        assertEquals(LanguageCode.SIMPLIFIED_CHINESE, result.getLanguage());
+        assertEquals(ISO15924.Hans, result.getScript());
+
+        int length0 = text.getLanguageDetections().getItems().get(1).getEndOffset() -
+            text.getLanguageDetections().getItems().get(1).getStartOffset();
+        result = text.getLanguageDetections().getItems().get(1).getDetectionResults().get(0);
+        assertEquals(LanguageCode.CATALAN, result.getLanguage());
+
+        int length1 = text.getLanguageDetections().getItems().get(2).getEndOffset() -
+            text.getLanguageDetections().getItems().get(2).getStartOffset();
+        result = text.getLanguageDetections().getItems().get(2).getDetectionResults().get(0);
+        assertEquals(LanguageCode.SIMPLIFIED_CHINESE, result.getLanguage());
+
+        assertEquals(fullLength, length0 + length1);
+    }
+
+    // TODO: remove default value compression?  too confusing for non-jackson deserialers,
+    // e.g. when called from python.
+
+    // TODO: SentenceBoundary exposes internal arrays; api change?
+
+    // TODO: some kind of helper that exposes token indexes?  wait to see if really needed.
+    // RES could use this, but maybe we could recode RES instead?
 }

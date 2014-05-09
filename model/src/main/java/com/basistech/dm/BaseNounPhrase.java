@@ -45,6 +45,10 @@ public class BaseNounPhrase extends Attribute {
             super(startOffset, endOffset);
         }
 
+        public Builder(int[] tokenOffsets, int tokenStartIndex, int tokenEndIndex) {
+            this(tokenOffsets[2 * tokenStartIndex], tokenOffsets[2 * (tokenEndIndex - 1) + 1]);
+        }
+
         public Builder(BaseNounPhrase toCopy) {
             super(toCopy);
         }
