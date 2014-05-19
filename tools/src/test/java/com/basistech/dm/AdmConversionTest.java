@@ -224,9 +224,6 @@ public class AdmConversionTest extends Assert {
         assertEquals(fullLength, length0 + length1);
     }
 
-    // TODO: remove default value compression?  too confusing for non-jackson deserialers,
-    // e.g. when called from python.
-
     // TODO: SentenceBoundary exposes internal arrays; api change?
 
     // TODO: some kind of helper that exposes token indexes?  wait to see if really needed.
