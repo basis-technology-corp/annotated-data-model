@@ -26,7 +26,7 @@ import java.util.Map;
 /**
  * The simplest possible attribute.
  */
-@JsonInclude(JsonInclude.Include.NON_DEFAULT)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class BaseAttribute {
     protected Map<String, Object> extendedProperties;
 

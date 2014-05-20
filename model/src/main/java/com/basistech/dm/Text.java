@@ -24,8 +24,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * The root of the data model. A blob of text and its attributes.
- * Text objects implement {@link java.lang.CharSequence}, and to give direct access
+ * The root of the annotated data model: A blob of text and its attributes.
+ * Text objects implement {@link java.lang.CharSequence}, to give direct access
  * to the text. The attributes are available from {@link #getAttributes()}, as well as from
  * some convenience accessors. Text does not (yet) have a builder, and so is not quite immutable;
  * applications may add to the attributes.
@@ -46,6 +46,10 @@ public class Text implements CharSequence {
         this.data = data;
         attributes = Maps.newHashMap();
         this.documentMetadata = documentMetadata;
+    }
+
+    public Text(CharSequence data) {
+        this(data, Maps.<String, List<String>>newHashMap());
     }
 
     public Text(Text copyFrom) {
