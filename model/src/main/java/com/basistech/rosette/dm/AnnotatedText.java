@@ -14,10 +14,11 @@
 
 package com.basistech.rosette.dm;
 
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -40,8 +41,8 @@ public class AnnotatedText implements CharSequence {
                   Map<String, BaseAttribute> attributes,
                   Map<String, List<String>> documentMetadata) {
         this.data = data;
-        this.attributes = Collections.unmodifiableMap(attributes);
-        this.documentMetadata = Collections.unmodifiableMap(documentMetadata);
+        this.attributes = ImmutableMap.copyOf(attributes);
+        this.documentMetadata = ImmutableMap.copyOf(documentMetadata);
     }
 
     /**
@@ -315,7 +316,7 @@ public class AnnotatedText implements CharSequence {
          * @return this
          */
         public Builder documentMetadata(String key, List<String> value) {
-            documentMetadata.put(key, Collections.unmodifiableList(value));
+            documentMetadata.put(key, ImmutableList.copyOf(value));
             return this;
         }
 

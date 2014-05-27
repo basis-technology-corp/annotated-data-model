@@ -18,12 +18,10 @@ import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 
-import java.util.Collections;
 import java.util.Map;
 
 /**
  * The simplest possible attribute.
- * TODO: make not abstract, so that unknowns can be mapped here.
  */
 public abstract class BaseAttribute {
     protected Map<String, Object> extendedProperties;
@@ -51,7 +49,7 @@ public abstract class BaseAttribute {
         Map<String, Object> newExtendedProperties = Maps.newHashMap();
         newExtendedProperties.putAll(extendedProperties);
         newExtendedProperties.put(name, value);
-        extendedProperties = Collections.unmodifiableMap(newExtendedProperties);
+        extendedProperties = ImmutableMap.copyOf(newExtendedProperties);
     }
 
     @Override
