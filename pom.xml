@@ -17,7 +17,7 @@
     </prerequisites>
     <inceptionYear>2013</inceptionYear>
     <properties>
-        <jackson-2-version>2.3.1</jackson-2-version>
+        <jackson-2-version>2.4.0-rc3</jackson-2-version>
     </properties>
     <url>http://git.basistech.net/pages/textanalytics/annotated-data-model</url>
     <scm>
@@ -33,7 +33,10 @@
     </distributionManagement>
     <modules>
         <module>model</module>
+        <module>json</module>
         <module>tools</module>
+        <module>shaded</module>
+        <module>shaded-test</module>
     </modules>
     <dependencyManagement>
         <dependencies>
@@ -75,4 +78,17 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+    <build>
+      <pluginManagement>
+        <plugins>
+          <plugin>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <configuration>
+              <failOnError>true</failOnError>
+            </configuration>
+          </plugin>
+        </plugins>
+      </pluginManagement>
+    </build>
+
 </project>

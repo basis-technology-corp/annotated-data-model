@@ -1,14 +1,45 @@
 <?xml version="1.0"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>adm-tools</artifactId>
-    <name>adm-tools</name>
+    <artifactId>adm-shaded</artifactId>
+    <name>adm-shaded</name>
     <version>1.7-SNAPSHOT</version>
     <parent>
         <groupId>com.basistech</groupId>
         <artifactId>annotated-data-model</artifactId>
         <version>1.7-SNAPSHOT</version>
     </parent>
+ <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>2.3</version>
+        <configuration>
+          <minimizeJar>true</minimizeJar>
+          <shadedArtifactAttached>false</shadedArtifactAttached>
+          <relocations>
+                <relocation>
+                  <pattern>com.google</pattern>
+                  <shadedPattern>com.basistech.com.google</shadedPattern>
+                </relocation>
+                <relocation>
+                  <pattern>com.fasterxml</pattern>
+                  <shadedPattern>org.fasterxml</shadedPattern>
+                </relocation>
+              </relocations>
+        </configuration>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
@@ -20,24 +51,10 @@
             <artifactId>adm-json</artifactId>
             <version>${project.version}</version>
         </dependency>
-      <dependency>
-        <groupId>com.basistech</groupId>
-        <artifactId>rlp-java-blackboard</artifactId>
-        <version>12.1</version>
-        <exclusions>
-          <exclusion>
-            <groupId>com.basistech</groupId>
-            <artifactId>rlp-save-results</artifactId>
-          </exclusion>
-        </exclusions>
-      </dependency>
         <dependency>
-            <groupId>com.basistech</groupId>
-            <artifactId>common</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>adm-tools</artifactId>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
