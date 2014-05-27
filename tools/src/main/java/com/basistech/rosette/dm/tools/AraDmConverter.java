@@ -150,13 +150,31 @@ public final class AraDmConverter {
     }
 
     private static void buildSentences(AbstractResultAccess ara, AnnotatedText.Builder builder) {
-        // NOTE: this insists on text boundaries. What if they disagreed?
-        if (ara.getTextBoundaries() != null) {
+        // If token-level sentences exist, we use them by mapping back to offsets.
+        // Otherwise we fallback to text boundaries.  If we have both, there is no
+        // attempt to make sure they are aligned.
+        if (ara.getSentenceBoundaries() != null) {
+            int[] tokenOffsets = ara.getTokenOffset();
             ListAttribute.Builder<Sentence> sentListBuilder = new ListAttribute.Builder<Sentence>(Sentence.class);
-            int cur = 0;
-            for (int end : ara.getTextBoundaries()) {
-                Sentence.Builder sentBuilder = new Sentence.Builder(cur, end);
+            int start = 0;
+            for (int endToken : ara.getSentenceBoundaries()) {
+                // This is the start character of the token that begins the next sentence.
+                // That's correct since sentence boundaries are supposed to include trailing
+                // whitespace, per Unicode TR#29.
+                int end = (endToken < tokenOffsets.length / 2)
+                    ? tokenOffsets[2 * endToken] : ara.getRawText().length;
+                Sentence.Builder sentBuilder = new Sentence.Builder(start, end);
                 sentListBuilder.add(sentBuilder.build());
+                start = end;
+            }
+            builder.sentences(sentListBuilder.build());
+        } else if (ara.getTextBoundaries() != null) {
+            ListAttribute.Builder<Sentence> sentListBuilder = new ListAttribute.Builder<Sentence>(Sentence.class);
+            int start = 0;
+            for (int end : ara.getTextBoundaries()) {
+                Sentence.Builder sentBuilder = new Sentence.Builder(start, end);
+                sentListBuilder.add(sentBuilder.build());
+                start = end;
             }
             builder.sentences(sentListBuilder.build());
         }

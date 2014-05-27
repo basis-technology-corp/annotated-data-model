@@ -238,7 +238,40 @@ public class AdmConversionTest extends Assert {
         assertEquals(fullLength, length0 + length1);
     }
 
-    // TODO: SentenceBoundary exposes internal arrays; api change?
+    @Test
+    public void testSentencesFromSentenceNotice() throws IOException {
+        //                         012345678901234
+        String json = "{'RawText':'Hello.  World ',"
+            + "'TokenOffset':[0,5,5,6,8,13],"
+            + "'SentenceBoundaries':[2,3]"
+            + "}";
+        json = json.replace("'", "\"");
+        AbstractResultAccess ara = deserialize(json);
+        AnnotatedText text = AraDmConverter.convert(ara);
+        assertEquals(2, text.getSentences().size());
+        assertEquals(0, text.getSentences().get(0).getStartOffset());
+        assertEquals(8, text.getSentences().get(0).getEndOffset());
+        assertEquals(8, text.getSentences().get(1).getStartOffset());
+        assertEquals(14, text.getSentences().get(1).getEndOffset());
+    }
+
+    @Test
+    public void testSentencesFromTextNotice() throws IOException {
+        //                         012345678901234
+        String json = "{'RawText':'Hello.  World ',"
+            + "'TokenOffset':[0,5,5,6,8,13],"
+            + "'TextBoundaries':[8,14]"
+            + "}";
+        json = json.replace("'", "\"");
+        AbstractResultAccess ara = deserialize(json);
+        AnnotatedText text = AraDmConverter.convert(ara);
+        assertEquals(2, text.getSentences().size());
+        assertEquals(0, text.getSentences().get(0).getStartOffset());
+        assertEquals(8, text.getSentences().get(0).getEndOffset());
+        assertEquals(8, text.getSentences().get(1).getStartOffset());
+        assertEquals(14, text.getSentences().get(1).getEndOffset());
+    }
+
 
     // TODO: some kind of helper that exposes token indexes?  wait to see if really needed.
     // RES could use this, but maybe we could recode RES instead?
