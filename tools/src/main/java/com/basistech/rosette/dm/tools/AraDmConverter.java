@@ -476,6 +476,7 @@ public final class AraDmConverter {
         ObjectWriter writer = mapper.writer().withDefaultPrettyPrinter();
 
         for (File input : inputs) {
+            System.out.println("Processing " + input.getAbsolutePath());
             File output = new File(outputDirectory, input.getName());
             InputStream inputStream = null;
             AbstractResultAccess ara;
