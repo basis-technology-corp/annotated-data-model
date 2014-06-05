@@ -33,7 +33,10 @@ import java.util.Map;
  * Json (or XML or other representations) by applying a reflection-based toolkit 'as-is'.
  * For Json, the 'adm-json' module provides
  * {@linkplain com.basistech.rosette.dm.AnnotatedDataModelModule#setupObjectMapper(com.fasterxml.jackson.databind.ObjectMapper)},
- * to set up customized support.
+ * to set up customized support.  For example:
+ * <pre>
+ * ObjectMapper mapper = AnnotatedDataModelModule.setupObjectMapper(new ObjectMapper());
+ * </pre>
  */
 public class AnnotatedText implements CharSequence {
     private final CharSequence data;
