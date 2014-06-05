@@ -74,13 +74,12 @@
  * </p>
  * <h2>Serialization</h2>
  * <p>
- *     All of the classes in here support json serialization and deserialization via Jackson 2.4.x.
- *     {@link com.basistech.rosette.dm.AnnotatedText#getAttributes()}
- *     is annotated with {@code @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)} to enable polymorphism. To reduce space and time,
- *     {@link com.basistech.rosette.dm.ListAttribute} has a custom serializer/deserializer pair that stores the class of all of the
- *     items in the list, to avoid the usual Jackson approach of writing it, over and over, in each item. There is also
- *     some special serialization for the morphological analyses associated with a token.
+ *     All of the classes in here support json serialization and deserialization via Jackson 2.4.x. However, they require
+ *     some customization to get a correct and efficient representation.
+ *     This customization is provided in a separate module: adm-json.
+ *     Application should call
+ *     {@link com.basistech.rosette.dm.AnnotatedDataModelModule#setupObjectMapper(com.fasterxml.jackson.databind.ObjectMapper)}
+ *     to configure a Jackson {@link com.fasterxml.jackson.databind.ObjectMapper} to use these customizations.
  * </p>
- *
  */
 package com.basistech.rosette.dm;
