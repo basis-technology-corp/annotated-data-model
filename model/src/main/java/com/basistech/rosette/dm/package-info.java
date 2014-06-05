@@ -80,6 +80,8 @@
  *     Application should call
  *     {@link com.basistech.rosette.dm.AnnotatedDataModelModule#setupObjectMapper(com.fasterxml.jackson.databind.ObjectMapper)}
  *     to configure a Jackson {@link com.fasterxml.jackson.databind.ObjectMapper} to use these customizations.
+ *     Note that the customizations are designed to support serializing and deserializing entire {@link com.basistech.rosette.dm.AnnotatedText}
+ *     object, not any of the interior classes.
  * </p>
  */
 package com.basistech.rosette.dm;
