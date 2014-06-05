@@ -51,6 +51,10 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
         </dependency>
+        <dependency>
+          <groupId>args4j</groupId>
+          <artifactId>args4j</artifactId>
+        </dependency>
     </dependencies>
     <build>
       <plugins>
