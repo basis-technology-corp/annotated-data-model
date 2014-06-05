@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>adm-script</artifactId>
+  <name>script</name>
+  <version>1.9.101-SNAPSHOT</version>
+  <parent>
+    <groupId>com.basistech</groupId>
+    <artifactId>annotated-data-model</artifactId>
+    <version>1.9.101-SNAPSHOT</version>
+  </parent>
+  <build>
+    <plugins>
+      <plugin>
+	<!-- This pom exists only to run the dependency plugin to
+	     generate a target/classpath.txt file, which is used by
+	     the run-java.sh script.
+	-->
+	<artifactId>maven-dependency-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </build>
+  <dependencies>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>adm-model</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>adm-json</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>adm-tools</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+  </dependencies>
+</project>
