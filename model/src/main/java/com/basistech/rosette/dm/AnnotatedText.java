@@ -27,6 +27,13 @@ import java.util.Map;
  * AnnotatedText objects implement {@link java.lang.CharSequence}, to give direct access
  * to the text. The attributes are available from {@link #getAttributes()}, as well as from
  * some convenience accessors.
+ * <br/>
+ * A note on serialization: due to the internal structure of this class and the classes
+ * that make up the model, we do not recommend that applications serialize this to
+ * Json (or XML or other representations) by applying a reflection-based toolkit 'as-is'.
+ * For Json, the 'adm-json' module provides
+ * {@linkplain com.basistech.rosette.dm.AnnotatedDataModelModule#setupObjectMapper(com.fasterxml.jackson.databind.ObjectMapper)},
+ * to set up customized support.
  */
 public class AnnotatedText implements CharSequence {
     private final CharSequence data;
