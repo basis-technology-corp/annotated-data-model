@@ -52,4 +52,34 @@
             <artifactId>junit</artifactId>
         </dependency>
     </dependencies>
+    <build>
+      <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>appassembler-maven-plugin</artifactId>
+                <version>1.8</version>
+                <executions>
+                    <execution>
+                        <id>commands</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>assemble</goal>
+                        </goals>
+                        <configuration>
+                            <!-- an extra copy of some of the jars -->
+                            <repositoryName>lib</repositoryName>
+                            <repositoryLayout>flat</repositoryLayout>
+                            <programs>
+                                <program>
+                                    <mainClass>com.basistech.rosette.dm.tools.AraDmConverter</mainClass>
+                                    <id>ara-dm-converter</id>
+                                </program>
+                            </programs>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+      </plugins>
+    </build>
+    
 </project>

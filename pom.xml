@@ -37,6 +37,7 @@
         <module>tools</module>
         <module>shaded</module>
         <module>shaded-test</module>
+        <module>script</module>
     </modules>
     <dependencyManagement>
         <dependencies>
@@ -87,6 +88,22 @@
               <failOnError>true</failOnError>
             </configuration>
           </plugin>
+	  <plugin>
+	    <groupId>org.apache.maven.plugins</groupId>
+	    <artifactId>maven-dependency-plugin</artifactId>
+	    <executions>
+              <execution>
+		<id>build-classpath</id>
+		<phase>generate-sources</phase>
+		<goals>
+		  <goal>build-classpath</goal>
+		</goals>
+		<configuration>
+		  <outputFile>${project.build.directory}/classpath.txt</outputFile>
+		</configuration>
+              </execution>
+	    </executions>
+	  </plugin>
         </plugins>
       </pluginManagement>
     </build>
