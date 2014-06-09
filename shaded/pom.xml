@@ -24,8 +24,12 @@
                   <shadedPattern>com.basistech.com.google</shadedPattern>
                 </relocation>
                 <relocation>
+                  <pattern>org.fasterxml</pattern>
+                  <shadedPattern>com.basistech.org.fasterxml</shadedPattern>
+                </relocation>
+                <relocation>
                   <pattern>com.fasterxml</pattern>
-                  <shadedPattern>org.fasterxml</shadedPattern>
+                  <shadedPattern>com.basistech.com.fasterxml</shadedPattern>
                 </relocation>
               </relocations>
         </configuration>

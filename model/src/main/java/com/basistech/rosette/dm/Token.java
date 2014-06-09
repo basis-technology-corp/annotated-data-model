@@ -57,7 +57,7 @@ public class Token extends Attribute {
     }
 
     // Do not include extendedProperties in creator; leave that for the special annotations
-    // in the base lass.
+    // in the base class.
     Token(int startOffset,
           int endOffset,
           String text,

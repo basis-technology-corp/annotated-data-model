@@ -51,6 +51,10 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
         </dependency>
+        <dependency>
+          <groupId>args4j</groupId>
+          <artifactId>args4j</artifactId>
+        </dependency>
     </dependencies>
     <build>
       <plugins>
@@ -66,7 +70,6 @@
                             <goal>assemble</goal>
                         </goals>
                         <configuration>
-                            <!-- an extra copy of some of the jars -->
                             <repositoryName>lib</repositoryName>
                             <repositoryLayout>flat</repositoryLayout>
                             <programs>
@@ -78,6 +81,27 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+              <artifactId>maven-assembly-plugin</artifactId>
+              <version>2.4</version>
+              <configuration>
+                <descriptors>
+                  <descriptor>src/main/assembly/converter.xml</descriptor>
+                </descriptors>
+                <formats>
+                  <format>tar.gz</format>
+                </formats>
+              </configuration>
+              <executions>
+                <execution>
+                <id>make-assembly</id>
+                <phase>package</phase>
+                <goals>
+                  <goal>single</goal>
+                </goals>
+              </execution>
+              </executions>
             </plugin>
       </plugins>
     </build>
