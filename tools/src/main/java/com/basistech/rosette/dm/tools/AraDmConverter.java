@@ -437,7 +437,7 @@ public final class AraDmConverter {
         AraDmConverter that = new AraDmConverter();
         CmdLineParser parser = new CmdLineParser(that);
         try {
-            if (args.length == 0) {
+            if (args.length == 0 || args.length == 1) {
                 System.err.println("ara-dm-converter INPUT OUTPUT");
                 System.err.println(" - or -");
                 System.err.println("ara-dm-converter -outputDirectory OUTPUT_DIR Input1 ... InputN");
@@ -458,10 +458,14 @@ public final class AraDmConverter {
 
     private void process() throws IOException {
 
+        File twoArgOutput = null; // non-null implies two-arg case.
+
+
         if (outputDirectory == null) {
             if (inputs.size() == 2) {
                 // support simple usage model.
-                outputDirectory = inputs.get(1).getParentFile();
+                twoArgOutput = inputs.get(1);
+                outputDirectory = null;
                 inputs.remove(1); // get rid of the output
             } else {
                 System.err.println("More than two inputs but no -outputDirectory.");
@@ -477,7 +481,12 @@ public final class AraDmConverter {
 
         for (File input : inputs) {
             System.out.println("Processing " + input.getAbsolutePath());
-            File output = new File(outputDirectory, input.getName());
+            File output;
+            if (twoArgOutput != null) {
+                output = twoArgOutput;
+            } else {
+                output = new File(outputDirectory, input.getName());
+            }
             InputStream inputStream = null;
             AbstractResultAccess ara;
             try {
