@@ -35,6 +35,8 @@ public class ListAttributeDeserializer extends JsonDeserializer<ListAttribute> {
     @Override
     @SuppressWarnings("unchecked")
     public ListAttribute deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
+        ListAttribute.Builder<BaseAttribute> builder;
+
         /*
          * There are two cases. In the 'normal' case, we arrive pointing to START_OBJECT, and expect itemClass: to come next.
          * In the 'polymorphism' case, Jackson has already read the START_OBJECT (and the @class: and the class name) and
@@ -52,10 +54,12 @@ public class ListAttributeDeserializer extends JsonDeserializer<ListAttribute> {
         }
 
         Class<? extends BaseAttribute> itemClass = attribute.attributeClass();
+        builder = new ListAttribute.Builder<BaseAttribute>(attribute.attributeClass());
 
         if (!jp.nextFieldName(ITEMS)) {
             throw ctxt.wrongTokenException(jp, JsonToken.FIELD_NAME, "Expected items");
         }
+
         List<BaseAttribute> items = Lists.newArrayList();
         JsonToken nextToken = jp.nextToken();
         if (nextToken == JsonToken.VALUE_EMBEDDED_OBJECT) {
@@ -74,11 +78,24 @@ public class ListAttributeDeserializer extends JsonDeserializer<ListAttribute> {
                 items.add(jp.readValueAs(itemClass));
             }
         }
-        if (jp.nextToken() != JsonToken.END_OBJECT) {
-            throw ctxt.wrongTokenException(jp, JsonToken.END_OBJECT, "Expected end of ListAttribute object.");
+
+       // everything else is extended properties, if there's anything else.
+
+        while ((nextToken = jp.nextToken()) != JsonToken.END_OBJECT) {
+            if (nextToken != JsonToken.FIELD_NAME) {
+                throw ctxt.wrongTokenException(jp, JsonToken.END_OBJECT, "Expected end of ListAttribute object.");
+            }
+            String extKeyName = jp.getText();
+            nextToken = jp.nextToken();
+            Object value;
+            if (nextToken == JsonToken.VALUE_EMBEDDED_OBJECT) {
+                value = jp.getEmbeddedObject();
+            } else {
+                value = jp.readValueAs(Object.class);
+            }
+            builder.extendedProperty(extKeyName, value);
         }
 
-        ListAttribute.Builder<BaseAttribute> builder = new ListAttribute.Builder<BaseAttribute>(attribute.attributeClass());
         builder.setItems(items);
         return builder.build();
     }
