@@ -17,10 +17,11 @@ package com.basistech.rosette.dm;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.databind.ObjectWriter;
-import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
+import java.io.StringWriter;
+import java.io.Writer;
 
 /**
  * See if the extension mechanism works round-trip.
@@ -44,5 +45,47 @@ public class ExtendedPropertyTest extends AdmAssert {
         assertEquals(0, token2.getStartOffset());
         assertEquals(5, token2.getEndOffset());
         assertEquals("raptor", token2.getExtendedProperties().get("veloci"));
+    }
+
+    @Test
+    public void testExtendedPropertyOnAttribute() throws Exception {
+        //                012345678901234567890
+        String rawText = "Cuthbert Girdlestone";
+        AnnotatedText.Builder builder = new AnnotatedText.Builder().data(rawText);
+        ListAttribute.Builder<EntityMention> entityListBuilder = new ListAttribute.Builder<EntityMention>(EntityMention.class);
+        EntityMention.Builder emBuilder = new EntityMention.Builder(0, 20, "PERSON");
+        emBuilder.extendedProperty("extra_key", "extra_value");
+        entityListBuilder.add(emBuilder.build());
+        builder.entityMentions(entityListBuilder.build());
+        AnnotatedText text = builder.build();
+
+        ObjectMapper mapper = AnnotatedDataModelModule.setupObjectMapper(new ObjectMapper());
+        ObjectWriter objectWriter = mapper.writerWithDefaultPrettyPrinter();
+        Writer sw = new StringWriter();
+        objectWriter.writeValue(sw, text);
+        ObjectReader reader = mapper.reader(AnnotatedText.class);
+        AnnotatedText deserialized = reader.readValue(sw.toString());
+        assertEquals("extra_value", deserialized.getEntityMentions().get(0).getExtendedProperties().get("extra_key"));
+    }
+
+    @Test
+    public void testExtendedPropertyOnListAttribute() throws Exception {
+        //                012345678901234567890
+        String rawText = "Cuthbert Girdlestone";
+        AnnotatedText.Builder builder = new AnnotatedText.Builder().data(rawText);
+        ListAttribute.Builder<EntityMention> entityListBuilder = new ListAttribute.Builder<EntityMention>(EntityMention.class);
+        EntityMention.Builder emBuilder = new EntityMention.Builder(0, 20, "PERSON");
+        entityListBuilder.extendedProperty("extra_key", "extra_value");
+        entityListBuilder.add(emBuilder.build());
+        builder.entityMentions(entityListBuilder.build());
+        AnnotatedText text = builder.build();
+
+        ObjectMapper mapper = AnnotatedDataModelModule.setupObjectMapper(new ObjectMapper());
+        ObjectWriter objectWriter = mapper.writerWithDefaultPrettyPrinter();
+        Writer sw = new StringWriter();
+        objectWriter.writeValue(sw, text);
+        ObjectReader reader = mapper.reader(AnnotatedText.class);
+        AnnotatedText deserialized = reader.readValue(sw.toString());
+        assertEquals("extra_value", deserialized.getEntityMentions().getExtendedProperties().get("extra_key"));
     }
 }

@@ -20,6 +20,7 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.jsontype.TypeSerializer;
 
 import java.io.IOException;
+import java.util.Map;
 
 /**
  * Jackson serializer that that handles polymorphism in lists of homogeneous type without
@@ -29,16 +30,29 @@ public class ListAttributeSerializer extends JsonSerializer<ListAttribute> {
     @Override
     public void serialize(ListAttribute value, JsonGenerator jgen, SerializerProvider provider) throws IOException {
         jgen.writeStartObject();
+
         jgen.writeStringField("itemType", KnownAttribute.getAttributeForClass(value.getItemClass()).key());
         jgen.writeObjectField("items", value.getItems());
+        writeExtendedProperties(value, jgen);
         jgen.writeEndObject();
+    }
+
+    private void writeExtendedProperties(ListAttribute value, JsonGenerator jgen) throws IOException {
+        Map<String, Object> extendedProperties = value.getExtendedProperties();
+        if (extendedProperties != null && !extendedProperties.isEmpty()) {
+            for (Map.Entry<String, Object> entry : extendedProperties.entrySet()) {
+                jgen.writeObjectField(entry.getKey(), entry.getValue());
+            }
+        }
     }
 
     @Override
     public void serializeWithType(ListAttribute value, JsonGenerator jgen, SerializerProvider provider, TypeSerializer typeSer) throws IOException {
         typeSer.writeTypePrefixForObject(value, jgen);
+
         jgen.writeStringField("itemType", KnownAttribute.getAttributeForClass(value.getItemClass()).key());
         jgen.writeObjectField("items", value.getItems());
+        writeExtendedProperties(value, jgen);
         typeSer.writeTypeSuffixForObject(value, jgen);
     }
 }
