@@ -28,6 +28,7 @@ import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.google.common.base.Charsets;
 import com.google.common.io.Closeables;
+import com.google.common.io.Resources;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -38,6 +39,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 
 /**
  * Here's some testing using an ARA as in input.
@@ -67,8 +69,16 @@ public class AdmConversionTest extends Assert {
     private AbstractResultAccess deserialize(String s) throws IOException {
         ResultAccessDeserializer deserializer = new ResultAccessDeserializer();
         deserializer.setFormat(ResultAccessSerializedFormat.JSON);
-        return deserializer.deserializeAbstractResultAccess(new ByteArrayInputStream(
-            s.getBytes(Charsets.UTF_8)));
+        return deserializer.deserializeAbstractResultAccess(new ByteArrayInputStream(s.getBytes(Charsets.UTF_8)));
+    }
+
+    @Test
+    public void sentenceEndOffset() throws Exception {
+        URL tcUrl = Resources.getResource(getClass(), "token_offset_crash.json");
+        String tcJson = Resources.toString(tcUrl, Charsets.UTF_8);
+        AbstractResultAccess tc = deserialize(tcJson);
+        AnnotatedText text = AraDmConverter.convert(tc);
+        assertEquals(12, text.getSentences().get(0).getEndOffset());
     }
 
     @Test
