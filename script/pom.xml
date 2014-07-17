@@ -3,11 +3,11 @@
   <modelVersion>4.0.0</modelVersion>
   <artifactId>adm-script</artifactId>
   <name>script</name>
-  <version>1.9.103-SNAPSHOT</version>
+  <version>1.9.103</version>
   <parent>
     <groupId>com.basistech</groupId>
     <artifactId>annotated-data-model</artifactId>
-    <version>1.9.103-SNAPSHOT</version>
+    <version>1.9.103</version>
   </parent>
   <build>
     <plugins>
