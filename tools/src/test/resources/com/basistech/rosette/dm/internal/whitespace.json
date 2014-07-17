@@ -1,0 +1,21 @@
+{
+  "NormalizedNamedEntity": [],
+  "NamedEntityTypeString": [],
+  "Tokens": [],
+  "SentenceBoundaries": [],
+  "DetectedEncoding": "UTF-16",
+  "NamedEntitySource": [],
+  "NamedEntitySourceString": [],
+  "TextBoundaries": [
+    5
+  ],
+  "ScriptRegion": [
+    0,
+    5,
+    998
+  ],
+  "RawText": "    \n",
+  "TokenOffset": [],
+  "NamedEntity": [],
+  "DetectedLanguage": "xxx"
+}
