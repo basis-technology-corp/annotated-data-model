@@ -52,11 +52,11 @@ public class ExtendedPropertyTest extends AdmAssert {
         //                012345678901234567890
         String rawText = "Cuthbert Girdlestone";
         AnnotatedText.Builder builder = new AnnotatedText.Builder().data(rawText);
-        ListAttribute.Builder<EntityMention> entityListBuilder = new ListAttribute.Builder<EntityMention>(EntityMention.class);
+        ListAttribute.Builder<EntityMention> emListBuilder = new ListAttribute.Builder<EntityMention>(EntityMention.class);
         EntityMention.Builder emBuilder = new EntityMention.Builder(0, 20, "PERSON");
         emBuilder.extendedProperty("extra_key", "extra_value");
-        entityListBuilder.add(emBuilder.build());
-        builder.entityMentions(entityListBuilder.build());
+        emListBuilder.add(emBuilder.build());
+        builder.entityMentions(emListBuilder.build());
         AnnotatedText text = builder.build();
 
         ObjectMapper mapper = AnnotatedDataModelModule.setupObjectMapper(new ObjectMapper());
@@ -73,11 +73,11 @@ public class ExtendedPropertyTest extends AdmAssert {
         //                012345678901234567890
         String rawText = "Cuthbert Girdlestone";
         AnnotatedText.Builder builder = new AnnotatedText.Builder().data(rawText);
-        ListAttribute.Builder<EntityMention> entityListBuilder = new ListAttribute.Builder<EntityMention>(EntityMention.class);
+        ListAttribute.Builder<EntityMention> emListBuilder = new ListAttribute.Builder<EntityMention>(EntityMention.class);
         EntityMention.Builder emBuilder = new EntityMention.Builder(0, 20, "PERSON");
-        entityListBuilder.extendedProperty("extra_key", "extra_value");
-        entityListBuilder.add(emBuilder.build());
-        builder.entityMentions(entityListBuilder.build());
+        emListBuilder.extendedProperty("extra_key", "extra_value");
+        emListBuilder.add(emBuilder.build());
+        builder.entityMentions(emListBuilder.build());
         AnnotatedText text = builder.build();
 
         ObjectMapper mapper = AnnotatedDataModelModule.setupObjectMapper(new ObjectMapper());

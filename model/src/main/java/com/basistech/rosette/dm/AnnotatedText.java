@@ -140,6 +140,14 @@ public class AnnotatedText implements CharSequence {
     }
 
     /**
+     * @return the list of entities.
+     */
+    @SuppressWarnings("unchecked")
+    public ListAttribute<Entity> getEntities() {
+        return (ListAttribute<Entity>) attributes.get(AttributeKey.ENTITY.key());
+    }
+
+    /**
      * @return the list of script regions.
      */
     @SuppressWarnings("unchecked")
@@ -232,6 +240,16 @@ public class AnnotatedText implements CharSequence {
          */
         public Builder entityMentions(ListAttribute<EntityMention> entityMentions) {
             attributes.put(AttributeKey.ENTITY_MENTION.key(), entityMentions);
+            return this;
+        }
+
+        /**
+         * Attach a list of entities.
+         * @param entities the entities
+         * @return this
+         */
+        public Builder entities(ListAttribute<Entity> entities) {
+            attributes.put(AttributeKey.ENTITY.key(), entities);
             return this;
         }
 

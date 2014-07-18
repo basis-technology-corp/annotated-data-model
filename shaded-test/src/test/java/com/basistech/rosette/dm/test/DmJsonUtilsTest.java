@@ -19,6 +19,7 @@ import com.basistech.rosette.dm.ArabicMorphoAnalysis;
 import com.basistech.rosette.dm.BaseNounPhrase;
 import com.basistech.rosette.dm.DmJsonUtils;
 import com.basistech.rosette.dm.EntityMention;
+import com.basistech.rosette.dm.Entity;
 import com.basistech.rosette.dm.HanMorphoAnalysis;
 import com.basistech.rosette.dm.LanguageDetection;
 import com.basistech.rosette.dm.ListAttribute;
@@ -44,6 +45,7 @@ public class DmJsonUtilsTest extends Assert {
     public static final String THIS_IS_THE_TERRIER_SHOT_TO_BOSTON = "This is the terrier shot to Boston.";
     private BaseNounPhrase baseNounPhrase;
     private EntityMention entityMention;
+    private Entity entity;
     private LanguageDetection languageDetection;
     private ListAttribute<LanguageDetection> languageDetectionRegions;
     private LanguageDetection languageDetectionRegion;
@@ -76,6 +78,17 @@ public class DmJsonUtilsTest extends Assert {
         entityMention = emBuilder.build();
         emListBuilder.add(entityMention);
         builder.entityMentions(emListBuilder.build());
+
+        ListAttribute.Builder<Entity> entityListBuilder = new ListAttribute.Builder<Entity>(Entity.class);
+        Entity.Builder entityBuilder = new Entity.Builder(27, 33, "place");
+        entityBuilder.entityId("Q100");
+        entityBuilder.coreferenceChainId(43);
+        entityBuilder.confidence(1.0);
+        entityBuilder.error(false);
+        entityBuilder.extendedProperty("entity-ex", "entity-ex-val");
+        entity = entityBuilder.build();
+        entityListBuilder.add(entity);
+        builder.entities(entityListBuilder.build());
 
         ListAttribute.Builder<LanguageDetection> ldListBuilder = new ListAttribute.Builder<LanguageDetection>(LanguageDetection.class);
         List<LanguageDetection.DetectionResult> dets = new ArrayList<LanguageDetection.DetectionResult>();
@@ -168,6 +181,12 @@ public class DmJsonUtilsTest extends Assert {
         assertEquals(1, emList.size());
         EntityMention em = emList.get(0);
         assertEquals(entityMention, em);
+
+        ListAttribute<Entity> entityList = read.getEntities();
+        assertNotNull(entityList);
+        assertEquals(1, entityList.size());
+        Entity e = entityList.get(0);
+        assertEquals(entity, e);
 
         ListAttribute<LanguageDetection> languageDetectionList = read.getLanguageDetectionRegions();
         assertNotNull(languageDetectionList);

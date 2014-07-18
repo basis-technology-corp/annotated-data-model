@@ -14,7 +14,6 @@
 
 package com.basistech.rosette.dm;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -94,4 +93,31 @@ public class AnnotatedTextTest {
         assertEquals(-1, chainForBill);
         assertEquals(-1, chainForGeorge);
     }
+
+    @Test
+    public void testEntities() {
+        String rawText = "from Boston and Chicago";
+        int[] tokenOffsets = {0, 4, 5, 11, 12, 15, 16, 23};
+        AnnotatedText.Builder builder = new AnnotatedText.Builder().data(rawText);
+        ListAttribute.Builder<Entity> entityListBuilder = new ListAttribute.Builder<Entity>(Entity.class);
+
+        Entity.Builder entity1Builder = new Entity.Builder(5, 11, "Q100");
+        entityListBuilder.add(entity1Builder.build());
+
+        Entity.Builder entity2Builder = new Entity.Builder(16, 23, "Q1297");
+        entityListBuilder.add(entity2Builder.build());
+
+        builder.entities(entityListBuilder.build());
+        AnnotatedText text = builder.build();
+
+        Entity entity;
+        assertEquals(2, text.getEntities().size());
+        entity = text.getEntities().get(0);
+        assertEquals(5, entity.getStartOffset());
+        assertEquals(11, entity.getEndOffset());
+        entity = text.getEntities().get(1);
+        assertEquals(16, entity.getStartOffset());
+        assertEquals(23, entity.getEndOffset());
+    }
+
 }
