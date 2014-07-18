@@ -20,6 +20,7 @@ import java.util.Map;
 
 public class Entity extends Attribute {
     private final String entityId;
+    //I prefer 'chainId' over 'coreferenceChainId' but picked the latter to make it consistent with EntityMention
     private final int coreferenceChainId;
     private final double confidence;
     private final boolean error;

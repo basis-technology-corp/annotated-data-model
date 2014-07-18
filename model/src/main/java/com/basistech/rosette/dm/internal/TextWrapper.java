@@ -17,6 +17,7 @@ package com.basistech.rosette.dm.internal;
 import com.basistech.rosette.RosetteRuntimeException;
 import com.basistech.rosette.dm.AnnotatedText;
 import com.basistech.rosette.dm.EntityMention;
+import com.basistech.rosette.dm.Entity;
 import com.basistech.rosette.dm.LanguageDetection;
 import com.basistech.rosette.dm.ListAttribute;
 import com.basistech.rosette.dm.Sentence;
@@ -48,18 +49,20 @@ public class TextWrapper {
     }
 
     protected final AnnotatedText text;
-    protected final Map<Integer, TokenIndexPair> entityIndexToTokenIndexes;
+    protected final Map<Integer, TokenIndexPair> entityMentionIndexToTokenIndexes;
     protected final Map<Integer, Mention> tokenIndexToMention;
     protected final int[] sentenceTokenEnds;
     protected final int maxChainId;
     protected final List<Mention> mentions;
-    protected final Map<Integer, List<Integer>> chainIdToEntityIndexes;
+    protected final Map<Integer, List<Integer>> chainIdToEntityMentionIndexes;
+    protected final Map<Integer, Entity> chainIdToEntity;
 
     public TextWrapper(AnnotatedText text) {
         this.text = text;
-        entityIndexToTokenIndexes = Maps.newHashMap();
+        entityMentionIndexToTokenIndexes = Maps.newHashMap();
         tokenIndexToMention = Maps.newHashMap();
-        chainIdToEntityIndexes = Maps.newHashMap();
+        chainIdToEntityMentionIndexes = Maps.newHashMap();
+        chainIdToEntity = Maps.newHashMap();
         mentions = Mention.getMentions(this);
 
         Map<Integer, Integer> startCharOffsetToTokenIndex = Maps.newHashMap();
@@ -81,13 +84,14 @@ public class TextWrapper {
         } else {
             sentenceTokenEnds = new int[0];
         }
+
         int maxMentionChainId = -1;
         if (text.getEntityMentions() != null) {
             for (int i = 0; i < text.getEntityMentions().size(); i++) {
                 EntityMention mention = text.getEntityMentions().get(i);
                 int startTokenIndex = startCharOffsetToTokenIndex.get(mention.getStartOffset());
                 int endTokenIndex = 1 + endCharOffsetToTokenIndex.get(mention.getEndOffset());
-                entityIndexToTokenIndexes.put(i, new TokenIndexPair(startTokenIndex, endTokenIndex));
+                entityMentionIndexToTokenIndexes.put(i, new TokenIndexPair(startTokenIndex, endTokenIndex));
                 for (int tokenIndex = startTokenIndex; tokenIndex < endTokenIndex; tokenIndex++) {
                     tokenIndexToMention.put(tokenIndex, getMention(i));
                 }
@@ -95,14 +99,21 @@ public class TextWrapper {
                     maxMentionChainId = mention.getCoreferenceChainId();
                 }
                 int chainId = mention.getCoreferenceChainId();
-                List<Integer> entityIndexes = chainIdToEntityIndexes.get(chainId);
+                List<Integer> entityIndexes = chainIdToEntityMentionIndexes.get(chainId);
                 if (entityIndexes == null) {
                     entityIndexes = Lists.newArrayList();
-                    chainIdToEntityIndexes.put(chainId, entityIndexes);
+                    chainIdToEntityMentionIndexes.put(chainId, entityIndexes);
                 }
                 entityIndexes.add(i);
             }
         }
+
+        if (text.getEntities() != null) {
+            for (Entity entity : text.getEntities()) {
+                chainIdToEntity.put(entity.getCoreferenceChainId(), entity);
+            }
+        }
+
         this.maxChainId = maxMentionChainId;
     }
 
@@ -111,11 +122,11 @@ public class TextWrapper {
     }
 
     public int getMentionStartTokenIndex(int i) {
-        return entityIndexToTokenIndexes.get(i).startIndex;
+        return entityMentionIndexToTokenIndexes.get(i).startIndex;
     }
 
     public int getMentionEndTokenIndex(int i) {
-        return entityIndexToTokenIndexes.get(i).endIndex;
+        return entityMentionIndexToTokenIndexes.get(i).endIndex;
     }
 
     public int getMaxChainId() {
@@ -195,6 +206,17 @@ public class TextWrapper {
      */
     public final Mention getMention(int entityIndex) {
         return mentions.get(entityIndex);
+    }
+
+    /**
+     * Returns the {@link Entity} for the given chain ID.
+     *
+     * @param chainId the coreference chain ID of the entity
+     * @return the entity with the given chain ID, or {@code null} if
+     *         there's no entity associated with the chain ID
+     */
+    public final Entity getEntity(int chainId) {
+        return chainIdToEntity.get(chainId);
     }
 
     /**
@@ -361,7 +383,7 @@ public class TextWrapper {
     public List<Mention> getChainForMention(Mention mention, boolean excludeHead) {
         List<Mention> result = Lists.newArrayList();
         int chainId = mention.getIndocChainId();
-        List<Integer> indexes = chainIdToEntityIndexes.get(chainId);
+        List<Integer> indexes = chainIdToEntityMentionIndexes.get(chainId);
         if (indexes != null) {
             for (int i : indexes) {
                 Mention m = mentions.get(i);
