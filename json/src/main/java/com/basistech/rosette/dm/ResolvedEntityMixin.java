@@ -18,16 +18,15 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * {@link com.basistech.rosette.dm.Entity}
+ * {@link ResolvedEntity}
  */
-public abstract class EntityMixin {
+public abstract class ResolvedEntityMixin {
     @JsonCreator
-    EntityMixin(@JsonProperty("startOffset") int startOffset,
-                       @JsonProperty("endOffset") int endOffset,
-                       @JsonProperty("entityId") String entityId,
-                       @JsonProperty("coreferenceChainId") int coreferenceChainId,
-                       @JsonProperty("confidence") double confidence,
-                       @JsonProperty("error") boolean error) {
+    ResolvedEntityMixin(@JsonProperty("startOffset") int startOffset,
+                        @JsonProperty("endOffset") int endOffset,
+                        @JsonProperty("entityId") String entityId,
+                        @JsonProperty("coreferenceChainId") int coreferenceChainId,
+                        @JsonProperty("confidence") double confidence) {
         //
     }
 }

@@ -78,14 +78,14 @@ public class AnnotatedTextTest {
         AnnotatedText.Builder builder = new AnnotatedText.Builder().data(rawText);
         int[] entities = {0, 1, 65536, 2, 3, 65536};
         int[] tokenOffsets = {0, 3, 7, 13};
-        ListAttribute.Builder<EntityMention> entityListBuilder = new ListAttribute.Builder<EntityMention>(EntityMention.class);
+        ListAttribute.Builder<EntityMention> emListBuilder = new ListAttribute.Builder<EntityMention>(EntityMention.class);
         for (int i = 0; i < entities.length / 3; i++) {
             int startOffset = tokenOffsets[i * 2];
             int endOffset = tokenOffsets[i * 2 + 1];
             EntityMention.Builder emBuilder = new EntityMention.Builder(startOffset, endOffset, "PERSON");
-            entityListBuilder.add(emBuilder.build());
+            emListBuilder.add(emBuilder.build());
         }
-        builder.entityMentions(entityListBuilder.build());
+        builder.entityMentions(emListBuilder.build());
         AnnotatedText text = builder.build();
 
         int chainForBill = text.getEntityMentions().get(0).getCoreferenceChainId();
@@ -95,29 +95,29 @@ public class AnnotatedTextTest {
     }
 
     @Test
-    public void testEntities() {
+    public void testResolvedEntities() {
         String rawText = "from Boston and Chicago";
         int[] tokenOffsets = {0, 4, 5, 11, 12, 15, 16, 23};
         AnnotatedText.Builder builder = new AnnotatedText.Builder().data(rawText);
-        ListAttribute.Builder<Entity> entityListBuilder = new ListAttribute.Builder<Entity>(Entity.class);
+        ListAttribute.Builder<ResolvedEntity> reListBuilder = new ListAttribute.Builder<ResolvedEntity>(ResolvedEntity.class);
 
-        Entity.Builder entity1Builder = new Entity.Builder(5, 11, "Q100");
-        entityListBuilder.add(entity1Builder.build());
+        ResolvedEntity.Builder re1Builder = new ResolvedEntity.Builder(5, 11, "Q100");
+        reListBuilder.add(re1Builder.build());
 
-        Entity.Builder entity2Builder = new Entity.Builder(16, 23, "Q1297");
-        entityListBuilder.add(entity2Builder.build());
+        ResolvedEntity.Builder re2Builder = new ResolvedEntity.Builder(16, 23, "Q1297");
+        reListBuilder.add(re2Builder.build());
 
-        builder.entities(entityListBuilder.build());
+        builder.resolvedEntities(reListBuilder.build());
         AnnotatedText text = builder.build();
 
-        Entity entity;
-        assertEquals(2, text.getEntities().size());
-        entity = text.getEntities().get(0);
-        assertEquals(5, entity.getStartOffset());
-        assertEquals(11, entity.getEndOffset());
-        entity = text.getEntities().get(1);
-        assertEquals(16, entity.getStartOffset());
-        assertEquals(23, entity.getEndOffset());
+        ResolvedEntity resolvedEntity;
+        assertEquals(2, text.getResolvedEntities().size());
+        resolvedEntity = text.getResolvedEntities().get(0);
+        assertEquals(5, resolvedEntity.getStartOffset());
+        assertEquals(11, resolvedEntity.getEndOffset());
+        resolvedEntity = text.getResolvedEntities().get(1);
+        assertEquals(16, resolvedEntity.getStartOffset());
+        assertEquals(23, resolvedEntity.getEndOffset());
     }
 
 }

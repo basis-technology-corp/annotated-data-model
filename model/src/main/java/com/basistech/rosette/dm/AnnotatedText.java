@@ -140,11 +140,11 @@ public class AnnotatedText implements CharSequence {
     }
 
     /**
-     * @return the list of entities.
+     * @return the list of resolved entities.
      */
     @SuppressWarnings("unchecked")
-    public ListAttribute<Entity> getEntities() {
-        return (ListAttribute<Entity>) attributes.get(AttributeKey.ENTITY.key());
+    public ListAttribute<ResolvedEntity> getResolvedEntities() {
+        return (ListAttribute<ResolvedEntity>) attributes.get(AttributeKey.RESOLVED_ENTITY.key());
     }
 
     /**
@@ -244,12 +244,12 @@ public class AnnotatedText implements CharSequence {
         }
 
         /**
-         * Attach a list of entities.
-         * @param entities the entities
+         * Attach a list of resolved entities.
+         * @param resolvedEntities the resolved entities
          * @return this
          */
-        public Builder entities(ListAttribute<Entity> entities) {
-            attributes.put(AttributeKey.ENTITY.key(), entities);
+        public Builder resolvedEntities(ListAttribute<ResolvedEntity> resolvedEntities) {
+            attributes.put(AttributeKey.RESOLVED_ENTITY.key(), resolvedEntities);
             return this;
         }
 

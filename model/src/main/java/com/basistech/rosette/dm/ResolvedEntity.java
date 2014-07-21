@@ -18,30 +18,30 @@ import com.google.common.base.Objects;
 
 import java.util.Map;
 
-public class Entity extends Attribute {
+public class ResolvedEntity extends Attribute {
     private final String entityId;
     //I prefer 'chainId' over 'coreferenceChainId' but picked the latter to make it consistent with EntityMention
     private final int coreferenceChainId;
     private final double confidence;
 
-    Entity(int startOffset, int endOffset, String entityId,
-           int coreferenceChainId, double confidence,
-           Map<String, Object> extendedProperties) {
+    ResolvedEntity(int startOffset, int endOffset, String entityId,
+                   int coreferenceChainId, double confidence,
+                   Map<String, Object> extendedProperties) {
         super(startOffset, endOffset, extendedProperties);
         this.entityId = entityId;
         this.coreferenceChainId = coreferenceChainId;
         this.confidence = confidence;
     }
 
-    Entity(int startOffset, int endOffset, String entityId,
-           int coreferenceChainId, double confidence) {
+    ResolvedEntity(int startOffset, int endOffset, String entityId,
+                   int coreferenceChainId, double confidence) {
         super(startOffset, endOffset);
         this.entityId = entityId;
         this.coreferenceChainId = coreferenceChainId;
         this.confidence = confidence;
     }
 
-    protected Entity() {
+    protected ResolvedEntity() {
         // make jackson happy.
         entityId = null;
         confidence = 0.0;
@@ -72,7 +72,7 @@ public class Entity extends Attribute {
             return false;
         }
 
-        Entity that = (Entity) o;
+        ResolvedEntity that = (ResolvedEntity) o;
 
         if (!entityId.equals(that.entityId)) {
             return false;
@@ -119,7 +119,7 @@ public class Entity extends Attribute {
             this.entityId = entityId;
         }
 
-        public Builder(Entity toCopy) {
+        public Builder(ResolvedEntity toCopy) {
             super(toCopy);
             this.entityId = toCopy.entityId;
             this.confidence = toCopy.confidence;
@@ -138,8 +138,8 @@ public class Entity extends Attribute {
             this.coreferenceChainId = coreferenceChainId;
         }
 
-        public Entity build() {
-            return new Entity(startOffset, endOffset, entityId, coreferenceChainId, confidence, extendedProperties);
+        public ResolvedEntity build() {
+            return new ResolvedEntity(startOffset, endOffset, entityId, coreferenceChainId, confidence, extendedProperties);
         }
     }
 

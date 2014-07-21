@@ -17,7 +17,7 @@ package com.basistech.rosette.dm.internal;
 import com.basistech.rosette.RosetteRuntimeException;
 import com.basistech.rosette.dm.AnnotatedText;
 import com.basistech.rosette.dm.EntityMention;
-import com.basistech.rosette.dm.Entity;
+import com.basistech.rosette.dm.ResolvedEntity;
 import com.basistech.rosette.dm.LanguageDetection;
 import com.basistech.rosette.dm.ListAttribute;
 import com.basistech.rosette.dm.Sentence;
@@ -55,14 +55,14 @@ public class TextWrapper {
     protected final int maxChainId;
     protected final List<Mention> mentions;
     protected final Map<Integer, List<Integer>> chainIdToEntityMentionIndexes;
-    protected final Map<Integer, Entity> chainIdToEntity;
+    protected final Map<Integer, ResolvedEntity> chainIdToResolvedEntity;
 
     public TextWrapper(AnnotatedText text) {
         this.text = text;
         entityMentionIndexToTokenIndexes = Maps.newHashMap();
         tokenIndexToMention = Maps.newHashMap();
         chainIdToEntityMentionIndexes = Maps.newHashMap();
-        chainIdToEntity = Maps.newHashMap();
+        chainIdToResolvedEntity = Maps.newHashMap();
         mentions = Mention.getMentions(this);
 
         Map<Integer, Integer> startCharOffsetToTokenIndex = Maps.newHashMap();
@@ -108,9 +108,9 @@ public class TextWrapper {
             }
         }
 
-        if (text.getEntities() != null) {
-            for (Entity entity : text.getEntities()) {
-                chainIdToEntity.put(entity.getCoreferenceChainId(), entity);
+        if (text.getResolvedEntities() != null) {
+            for (ResolvedEntity resolvedEntity : text.getResolvedEntities()) {
+                chainIdToResolvedEntity.put(resolvedEntity.getCoreferenceChainId(), resolvedEntity);
             }
         }
 
@@ -209,14 +209,14 @@ public class TextWrapper {
     }
 
     /**
-     * Returns the {@link Entity} for the given chain ID.
+     * Returns the {@link com.basistech.rosette.dm.ResolvedEntity} for the given chain ID.
      *
      * @param chainId the coreference chain ID of the entity
-     * @return the entity with the given chain ID, or {@code null} if
-     *         there's no entity associated with the chain ID
+     * @return the resolved entity with the given chain ID, or {@code null} if
+     *         there's no resolved entity associated with the chain ID
      */
-    public final Entity getEntity(int chainId) {
-        return chainIdToEntity.get(chainId);
+    public final ResolvedEntity getResolvedEntity(int chainId) {
+        return chainIdToResolvedEntity.get(chainId);
     }
 
     /**
