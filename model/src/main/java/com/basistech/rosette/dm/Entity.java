@@ -23,26 +23,22 @@ public class Entity extends Attribute {
     //I prefer 'chainId' over 'coreferenceChainId' but picked the latter to make it consistent with EntityMention
     private final int coreferenceChainId;
     private final double confidence;
-    private final boolean error;
 
     Entity(int startOffset, int endOffset, String entityId,
-           int coreferenceChainId, double confidence, boolean error,
+           int coreferenceChainId, double confidence,
            Map<String, Object> extendedProperties) {
         super(startOffset, endOffset, extendedProperties);
         this.entityId = entityId;
         this.coreferenceChainId = coreferenceChainId;
         this.confidence = confidence;
-        this.error = error;
     }
 
     Entity(int startOffset, int endOffset, String entityId,
-           int coreferenceChainId, double confidence,
-           boolean error) {
+           int coreferenceChainId, double confidence) {
         super(startOffset, endOffset);
         this.entityId = entityId;
         this.coreferenceChainId = coreferenceChainId;
         this.confidence = confidence;
-        this.error = error;
     }
 
     protected Entity() {
@@ -50,7 +46,6 @@ public class Entity extends Attribute {
         entityId = null;
         confidence = 0.0;
         coreferenceChainId = -1;
-        error = true;
     }
 
     public String getEntityId() {
@@ -63,10 +58,6 @@ public class Entity extends Attribute {
 
     public double getConfidence() {
         return confidence;
-    }
-
-    public boolean isError() {
-        return error;
     }
 
     @Override
@@ -92,9 +83,6 @@ public class Entity extends Attribute {
         if (coreferenceChainId != that.coreferenceChainId) {
             return false;
         }
-        if (error != that.error) {
-            return false;
-        }
 
         return true;
     }
@@ -107,7 +95,6 @@ public class Entity extends Attribute {
         temp = Double.doubleToLongBits(confidence);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         result = 31 * result + coreferenceChainId;
-        result = 31 * result + (error ? 1 : 0);
         return result;
     }
 
@@ -116,8 +103,7 @@ public class Entity extends Attribute {
         return super.toStringHelper()
                 .add("entityId", entityId)
                 .add("confidence", confidence)
-                .add("coreferenceChainId", coreferenceChainId)
-                .add("error", error);
+                .add("coreferenceChainId", coreferenceChainId);
     }
 
     /**
@@ -127,7 +113,6 @@ public class Entity extends Attribute {
         private String entityId;
         private double confidence;
         private int coreferenceChainId = -1;
-        private boolean error;
 
         public Builder(int startOffset, int endOffset, String entityId) {
             super(startOffset, endOffset);
@@ -139,7 +124,6 @@ public class Entity extends Attribute {
             this.entityId = toCopy.entityId;
             this.confidence = toCopy.confidence;
             this.coreferenceChainId = toCopy.coreferenceChainId;
-            this.error = toCopy.error;
         }
 
         public void entityId(String entityId) {
@@ -154,12 +138,8 @@ public class Entity extends Attribute {
             this.coreferenceChainId = coreferenceChainId;
         }
 
-        public void error(boolean error) {
-            this.error = error;
-        }
-
         public Entity build() {
-            return new Entity(startOffset, endOffset, entityId, coreferenceChainId, confidence, error, extendedProperties);
+            return new Entity(startOffset, endOffset, entityId, coreferenceChainId, confidence, extendedProperties);
         }
     }
 

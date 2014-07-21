@@ -75,7 +75,6 @@ public class JsonTest extends AdmAssert {
         entityBuilder.entityId("Q100");
         entityBuilder.coreferenceChainId(43);
         entityBuilder.confidence(1.0);
-        entityBuilder.error(false);
         entityBuilder.extendedProperty("entity-ex", "entity-ex-val");
         entity = entityBuilder.build();
         entityListBuilder.add(entity);
