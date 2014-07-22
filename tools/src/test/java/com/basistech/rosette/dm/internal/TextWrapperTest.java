@@ -138,8 +138,9 @@ public class TextWrapperTest {
 
     @Test
     public void testGetResolvedEntityForChainId() throws IOException {
+        //                012345678901234567890123
         String rawText = "from Boston and Chicago";
-        int[] tokenOffsets = {0, 4, 5, 11, 12, 15, 16, 23};
+        //int[] tokenOffsets = {0, 4, 5, 11, 12, 15, 16, 23};
         AnnotatedText.Builder builder = new AnnotatedText.Builder().data(rawText);
         ListAttribute.Builder<ResolvedEntity> reListBuilder = new ListAttribute.Builder<ResolvedEntity>(ResolvedEntity.class);
 

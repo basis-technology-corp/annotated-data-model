@@ -107,7 +107,7 @@ public class ResolvedEntity extends Attribute {
     }
 
     /**
-     * A builder for entity.
+     * A builder for resolved entities.
      */
     public static class Builder extends Attribute.Builder {
         private String entityId;

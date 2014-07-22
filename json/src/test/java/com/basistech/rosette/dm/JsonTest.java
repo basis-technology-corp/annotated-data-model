@@ -71,8 +71,7 @@ public class JsonTest extends AdmAssert {
         builder.entityMentions(emListBuilder.build());
 
         ListAttribute.Builder<ResolvedEntity> reListBuilder = new ListAttribute.Builder<ResolvedEntity>(ResolvedEntity.class);
-        ResolvedEntity.Builder reBuilder = new ResolvedEntity.Builder(27, 33, "place");
-        reBuilder.entityId("Q100");
+        ResolvedEntity.Builder reBuilder = new ResolvedEntity.Builder(27, 33, "Q100");
         reBuilder.coreferenceChainId(43);
         reBuilder.confidence(1.0);
         reBuilder.extendedProperty("re-ex", "re-ex-val");
