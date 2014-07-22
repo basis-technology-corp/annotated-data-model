@@ -22,6 +22,7 @@ package com.basistech.rosette.dm;
 enum KnownAttribute {
     BASE_NOUN_PHRASE("baseNounPhrases", BaseNounPhrase.class),
     ENTITY_MENTION("entityMentions", EntityMention.class),
+    RESOLVED_ENTITY("resolvedEntities", ResolvedEntity.class),
     LANGUAGE_DETECTION("languageDetection", LanguageDetection.class),
     SCRIPT_REGION("scriptRegion", ScriptRegion.class),
     SENTENCE("sentence", Sentence.class),

@@ -18,6 +18,9 @@ import com.basistech.rlp.AbstractResultAccess;
 import com.basistech.rlp.ResultAccessDeserializer;
 import com.basistech.rlp.ResultAccessSerializedFormat;
 import com.basistech.rosette.RosetteRuntimeException;
+import com.basistech.rosette.dm.AnnotatedText;
+import com.basistech.rosette.dm.ResolvedEntity;
+import com.basistech.rosette.dm.ListAttribute;
 import com.basistech.rosette.dm.tools.AraDmConverter;
 import com.google.common.collect.Lists;
 import com.google.common.primitives.Ints;
@@ -131,6 +134,30 @@ public class TextWrapperTest {
         assertNull(tw.getMentionForToken(2));
         assertEquals(1, tw.getMentionForToken(5).getEntityIndex());
         assertNull(tw.getMentionForToken(6));
+    }
+
+    @Test
+    public void testGetResolvedEntityForChainId() throws IOException {
+        //                012345678901234567890123
+        String rawText = "from Boston and Chicago";
+        //int[] tokenOffsets = {0, 4, 5, 11, 12, 15, 16, 23};
+        AnnotatedText.Builder builder = new AnnotatedText.Builder().data(rawText);
+        ListAttribute.Builder<ResolvedEntity> reListBuilder = new ListAttribute.Builder<ResolvedEntity>(ResolvedEntity.class);
+
+        ResolvedEntity.Builder re1Builder = new ResolvedEntity.Builder(5, 11, "Q100");
+        re1Builder.coreferenceChainId(0);
+        reListBuilder.add(re1Builder.build());
+        ResolvedEntity.Builder re2Builder = new ResolvedEntity.Builder(16, 23, "Q1297");
+        re2Builder.coreferenceChainId(1);
+        reListBuilder.add(re2Builder.build());
+
+        builder.resolvedEntities(reListBuilder.build());
+        AnnotatedText annotatedText = builder.build();
+        TextWrapper tw = new TextWrapper(annotatedText);
+
+        assertEquals("Q100", tw.getResolvedEntity(0).getEntityId());
+        assertEquals("Q1297", tw.getResolvedEntity(1).getEntityId());
+        assertNull(tw.getResolvedEntity(2));
     }
 
     @Test

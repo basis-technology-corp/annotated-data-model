@@ -20,7 +20,6 @@ import com.basistech.rlp.ResultAccessSerializedFormat;
 import com.basistech.rosette.dm.AnnotatedDataModelModule;
 import com.basistech.rosette.dm.AnnotatedText;
 import com.basistech.rosette.dm.LanguageDetection;
-import com.basistech.rosette.dm.tools.AraDmConverter;
 import com.basistech.util.ISO15924;
 import com.basistech.util.LanguageCode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -187,7 +186,7 @@ public class AdmConversionTest extends Assert {
 
     @Test
     public void testBadAra2() throws IOException {
-        AbstractResultAccess ara = deserialize(new File("../model/data/no-interesting-entities.json"));
+        AbstractResultAccess ara = deserialize(new File("../model/data/no-interesting-mentions.json"));
         AraDmConverter.convert(ara);
     }
 

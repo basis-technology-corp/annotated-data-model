@@ -37,6 +37,7 @@ public class JsonTest extends AdmAssert {
     public static final String THIS_IS_THE_TERRIER_SHOT_TO_BOSTON = "This is the terrier shot to Boston.";
     private BaseNounPhrase baseNounPhrase;
     private EntityMention entityMention;
+    private ResolvedEntity resolvedEntity;
     private LanguageDetection languageDetectionRegion;
     private LanguageDetection languageDetection;
     private ScriptRegion scriptRegion;
@@ -68,6 +69,15 @@ public class JsonTest extends AdmAssert {
         entityMention = emBuilder.build();
         emListBuilder.add(entityMention);
         builder.entityMentions(emListBuilder.build());
+
+        ListAttribute.Builder<ResolvedEntity> reListBuilder = new ListAttribute.Builder<ResolvedEntity>(ResolvedEntity.class);
+        ResolvedEntity.Builder reBuilder = new ResolvedEntity.Builder(27, 33, "Q100");
+        reBuilder.coreferenceChainId(43);
+        reBuilder.confidence(1.0);
+        reBuilder.extendedProperty("re-ex", "re-ex-val");
+        resolvedEntity = reBuilder.build();
+        reListBuilder.add(resolvedEntity);
+        builder.resolvedEntities(reListBuilder.build());
 
         ListAttribute.Builder<LanguageDetection> ldListBuilder = new ListAttribute.Builder<LanguageDetection>(LanguageDetection.class);
         List<LanguageDetection.DetectionResult> dets = Lists.newArrayList();
@@ -146,8 +156,6 @@ public class JsonTest extends AdmAssert {
         ObjectWriter objectWriter = mapper.writer().withDefaultPrettyPrinter();
         objectWriter.writeValue(writer, referenceText);
 
-        //System.out.print(writer.toString());
-
         ObjectReader reader = mapper.reader(AnnotatedText.class);
         AnnotatedText read = reader.readValue(writer.toString());
 
@@ -162,6 +170,12 @@ public class JsonTest extends AdmAssert {
         assertEquals(1, emList.size());
         EntityMention em = emList.get(0);
         assertEquals(entityMention, em);
+
+        ListAttribute<ResolvedEntity> resolvedEntityList = read.getResolvedEntities();
+        assertNotNull(resolvedEntityList);
+        assertEquals(1, resolvedEntityList.size());
+        ResolvedEntity e = resolvedEntityList.get(0);
+        assertEquals(resolvedEntity, e);
 
         ListAttribute<LanguageDetection> languageDetectionList = read.getLanguageDetectionRegions();
         assertNotNull(languageDetectionList);

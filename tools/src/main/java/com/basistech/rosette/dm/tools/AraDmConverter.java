@@ -15,12 +15,6 @@
 
 package com.basistech.rosette.dm.tools;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.List;
-
 import com.basistech.rlp.AbstractResultAccess;
 import com.basistech.rlp.ResultAccessDeserializer;
 import com.basistech.rlp.ResultAccessSerializedFormat;
@@ -41,13 +35,17 @@ import com.basistech.util.LanguageCode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.google.common.collect.Lists;
-
 import com.google.common.io.Closeables;
-
 import org.kohsuke.args4j.Argument;
 import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.CmdLineParser;
 import org.kohsuke.args4j.Option;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
 
 /**
  * Convert an {@link com.basistech.rlp.AbstractResultAccess} to a {@link com.basistech.rosette.dm.AnnotatedText}.
@@ -78,7 +76,7 @@ public final class AraDmConverter {
 
         buildLanguageDetections(ara, builder);
         buildTokens(ara, builder);
-        buildEntities(ara, builder);
+        buildEntityMentions(ara, builder);
         buildSentences(ara, builder);
         buildScriptRegions(ara, builder);
         buildBaseNounPhrase(ara, builder);
@@ -193,19 +191,19 @@ public final class AraDmConverter {
         }
     }
 
-    private static void buildEntities(AbstractResultAccess ara, AnnotatedText.Builder builder) {
+    private static void buildEntityMentions(AbstractResultAccess ara, AnnotatedText.Builder builder) {
         int[] entities = ara.getNamedEntity();
         if (entities != null) {
-            ListAttribute.Builder<EntityMention> entityListBuilder = new ListAttribute.Builder<EntityMention>(EntityMention.class);
+            ListAttribute.Builder<EntityMention> emListBuilder = new ListAttribute.Builder<EntityMention>(EntityMention.class);
             int namedEntityCount = entities.length / 3;
             for (int x = 0; x < namedEntityCount; x++) {
-                entityListBuilder.add(buildOneEntity(ara, x));
+                emListBuilder.add(buildOneEntityMention(ara, x));
             }
-            builder.entityMentions(entityListBuilder.build());
+            builder.entityMentions(emListBuilder.build());
         }
     }
 
-    private static EntityMention buildOneEntity(AbstractResultAccess ara, int x) {
+    private static EntityMention buildOneEntityMention(AbstractResultAccess ara, int x) {
         int startToken = ara.getNamedEntity()[x * 3];
         int endToken = ara.getNamedEntity()[(x * 3) + 1];
         // The type string is added by the redactor, so it might be missing depending
