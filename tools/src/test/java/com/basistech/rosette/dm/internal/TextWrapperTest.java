@@ -19,8 +19,10 @@ import com.basistech.rlp.ResultAccessDeserializer;
 import com.basistech.rlp.ResultAccessSerializedFormat;
 import com.basistech.rosette.RosetteRuntimeException;
 import com.basistech.rosette.dm.AnnotatedText;
+import com.basistech.rosette.dm.EntityMention;
 import com.basistech.rosette.dm.ResolvedEntity;
 import com.basistech.rosette.dm.ListAttribute;
+import com.basistech.rosette.dm.Token;
 import com.basistech.rosette.dm.tools.AraDmConverter;
 import com.google.common.collect.Lists;
 import com.google.common.primitives.Ints;
@@ -180,5 +182,26 @@ public class TextWrapperTest {
         chain = tw.getChainForMention(tw.getMention(3), true);
         assertEquals(1, chain.size());
         assertEquals(3, chain.get(0).getEntityIndex());
+    }
+
+    @Test
+    public void testMentionWithoutSentence() throws Exception {
+        // RLP does not produce mentions without sentences, but a generic data model
+        // could.  MutableResultAccess in RES *does* require correct operation
+        // with missing sentences.
+        AnnotatedText.Builder builder = new AnnotatedText.Builder().data("Bill");
+        ListAttribute.Builder<Token> tokenListBuilder = new ListAttribute.Builder<Token>(Token.class);
+        tokenListBuilder.add(new Token.Builder(0, 4, "Bill").build());
+        builder.tokens(tokenListBuilder.build());
+        ListAttribute.Builder<EntityMention> emListBuilder = new ListAttribute.Builder<EntityMention>(EntityMention.class);
+        EntityMention.Builder emBuilder = new EntityMention.Builder(0, 4, "PERSON");
+        emBuilder.normalized("Bill");
+        emListBuilder.add(emBuilder.build());
+        builder.entityMentions(emListBuilder.build());
+        AnnotatedText text = builder.build();
+
+        TextWrapper wrapper = new TextWrapper(text);
+        Mention mention = wrapper.getMention(0);
+        assertEquals("Bill", mention.getNormalizedText());
     }
 }

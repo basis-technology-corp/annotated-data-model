@@ -68,15 +68,21 @@ public class TextWrapper {
         Map<Integer, Integer> startCharOffsetToTokenIndex = Maps.newHashMap();
         Map<Integer, Integer> endCharOffsetToTokenIndex = Maps.newHashMap();
         ListAttribute<Token> tokens = text.getTokens();
+
+        if (tokens != null) {
+            for (int i = 0; i < tokens.size(); i++) {
+                Token token = tokens.get(i);
+                startCharOffsetToTokenIndex.put(token.getStartOffset(), i);
+                endCharOffsetToTokenIndex.put(token.getEndOffset(), i);
+            }
+        }
+
         if (text.getSentences() != null) {
             sentenceTokenEnds = new int[text.getSentences().size()];
             int tokenIndex = 0;
             for (int sentIndex = 0; sentIndex < sentenceTokenEnds.length; sentIndex++) {
                 Sentence sentence = text.getSentences().get(sentIndex);
                 while (tokenIndex < tokens.size() && tokens.get(tokenIndex).getEndOffset() <= sentence.getEndOffset()) {
-                    Token token = text.getTokens().get(tokenIndex);
-                    startCharOffsetToTokenIndex.put(token.getStartOffset(), tokenIndex);
-                    endCharOffsetToTokenIndex.put(token.getEndOffset(), tokenIndex);
                     tokenIndex++;
                 }
                 sentenceTokenEnds[sentIndex] = tokenIndex;
