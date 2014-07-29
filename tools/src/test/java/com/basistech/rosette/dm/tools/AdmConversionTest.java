@@ -281,7 +281,19 @@ public class AdmConversionTest extends Assert {
         assertEquals(14, text.getSentences().get(1).getEndOffset());
     }
 
-
-    // TODO: some kind of helper that exposes token indexes?  wait to see if really needed.
-    // RES could use this, but maybe we could recode RES instead?
+    @Test
+    public void testNamedEntityTokenConfidences() throws IOException {
+        // The reported confidence should be the minimum confidence of the tokens
+        // that make up the mention.
+        String json = "{'RawText':'Cambridge, MA',"
+            + "'Tokens':['Cambridge', ',', 'MA'],"
+            + "'TokenOffset':[0,9,9,10,11,13],"
+            + "'NamedEntity':[0,3,196608],'NamedEntityChainId':[0],'NormalizedNamedEntity':['Cambridge, MA'],"
+            + "'NamedEntityTokenConfidence':[0.4,0.2,0.3]"
+            + "}";
+        json = json.replace("'", "\"");
+        AbstractResultAccess ara = deserialize(json);
+        AnnotatedText text = AraDmConverter.convert(ara);
+        assertEquals(0.2, text.getEntityMentions().get(0).getConfidence(), 0.00001);
+    }
 }

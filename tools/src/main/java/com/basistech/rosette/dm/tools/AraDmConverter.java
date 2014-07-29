@@ -217,7 +217,7 @@ public final class AraDmConverter {
         EntityMention.Builder builder = new EntityMention.Builder(start, end, entityType);
         if (ara.getNamedEntityTokenConfidence() != null) {
             double confidence = Double.POSITIVE_INFINITY;
-            for (int tx = start; tx < end; tx++) {
+            for (int tx = startToken; tx < endToken; tx++) {
                 confidence = Math.min(confidence, ara.getNamedEntityTokenConfidence()[tx]);
             }
             builder.confidence(confidence);
