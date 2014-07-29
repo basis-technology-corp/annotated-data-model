@@ -43,10 +43,16 @@ public abstract class Attribute extends BaseAttribute {
         endOffset = 0;
     }
 
+    /**
+     * @return the start offset in characters.
+     */
     public int getStartOffset() {
         return startOffset;
     }
 
+    /**
+     * @return the end offset in characters.
+     */
     public int getEndOffset() {
         return endOffset;
     }
@@ -90,28 +96,52 @@ public abstract class Attribute extends BaseAttribute {
         return result;
     }
 
+    /**
+     * Base class for builders for attributes that inherit from {@link com.basistech.rosette.dm.Attribute}.
+     */
     public abstract static class Builder extends BaseAttribute.Builder {
         protected int startOffset;
         protected int endOffset;
 
+        /**
+         * Construct a builder with offsets.
+         * @param startOffset start offset in characters.
+         * @param endOffset end offset in characters.
+         */
         public Builder(int startOffset, int endOffset) {
             super();
             this.startOffset = startOffset;
             this.endOffset = endOffset;
         }
 
+        /**
+         * Construct a builder by copying values from an existing object.
+         * @param toCopy the object to copy.
+         */
         public Builder(Attribute toCopy) {
             super(toCopy);
             this.startOffset = toCopy.startOffset;
             this.endOffset = toCopy.endOffset;
         }
 
-        public void startOffset(int startOffset) {
+        /**
+         * specify the start offset.
+         * @param startOffset the start offset.
+         * @return this
+         */
+        public Builder startOffset(int startOffset) {
             this.startOffset = startOffset;
+            return this;
         }
 
-        public void setEndOffset(int endOffset) {
+        /**
+         * specify the end offset.
+         * @param endOffset the end offset.
+         * @return this
+         */
+        public Builder setEndOffset(int endOffset) {
             this.endOffset = endOffset;
+            return this;
         }
     }
 }

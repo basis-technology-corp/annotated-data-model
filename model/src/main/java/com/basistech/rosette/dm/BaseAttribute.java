@@ -21,7 +21,7 @@ import com.google.common.collect.Maps;
 import java.util.Map;
 
 /**
- * The simplest possible attribute.
+ * The base of the object hierarchy of attributes that annotate text.
  */
 public abstract class BaseAttribute {
     protected Map<String, Object> extendedProperties;
@@ -36,14 +36,15 @@ public abstract class BaseAttribute {
     }
 
     /**
-     * All attributes allow for properties that aren't in the data model yet.
-     * @return home for wayward properties.
+     * All attributes store a map of extended properties. This mechanism is available
+     * to add additional data to attributes.
+     * @return the map of extended properties.
      */
     public Map<String, Object> getExtendedProperties() {
         return extendedProperties;
     }
 
-    public void setExtendedProperty(String name, Object value) {
+    protected void setExtendedProperty(String name, Object value) {
         /* This is only called in deserialization. So we do something
         * to work around the read-only collection. */
         Map<String, Object> newExtendedProperties = Maps.newHashMap();
@@ -85,20 +86,36 @@ public abstract class BaseAttribute {
         return extendedProperties.hashCode();
     }
 
+    /**
+     * Base class for builders for the subclasses of {@link com.basistech.rosette.dm.BaseAttribute}.
+     */
     public abstract static class Builder {
         protected final Map<String, Object> extendedProperties;
 
+        /**
+         * Construct a builder with no data.
+         */
         protected Builder() {
             this.extendedProperties = Maps.newHashMap();
         }
 
+        /**
+         * Construct a builder with values derived from an existing object.
+         * @param toCopy the object to copy.
+         */
         protected Builder(BaseAttribute toCopy) {
             this.extendedProperties = Maps.newHashMap();
             this.extendedProperties.putAll(toCopy.extendedProperties);
         }
 
-        public void extendedProperty(String key, Object value) {
+        /**
+         * Add an extended value key-value pair.
+         * @param key the key.
+         * @param value the value.
+         */
+        public Builder extendedProperty(String key, Object value) {
             this.extendedProperties.put(key, value);
+            return this;
         }
     }
 }

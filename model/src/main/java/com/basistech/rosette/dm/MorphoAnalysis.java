@@ -24,12 +24,10 @@ import java.util.List;
  * This data model assumes that, presented with a token, an analyzer will produce one or more analyses,
  * where each analysis is a coordinated collection of attributes. The simplest example is a part of speech tag
  * and a lemma, but some languages yield more data.
- * <br/>
+ * <p/>
  * This one class contains the basic attributes that are more or less common to the languages supported by
- * Rosette Base Linguistics. There are subclasses for some specific languages. This class does not declare
- * Jackson polymorhphism directly; since all of the analyses of a token will be for the same language,
- * there is custom support for the list of them in the token to avoid redundantly storing the information.
- * <br/>
+ * Rosette Base Linguistics. There are subclasses for some specific languages.
+ * <p/>
  * In some languages, words are decompounded into pieces that can, themselves, be analyzed.
  */
 
@@ -64,18 +62,31 @@ public class MorphoAnalysis {
         raw = "";
     }
 
+    /**
+     * @return the part of speech.
+     */
     public String getPartOfSpeech() {
         return partOfSpeech;
     }
 
+    /**
+     * @return the lemma.
+     */
     public String getLemma() {
         return lemma;
     }
 
+    /**
+     * @return the compound components.
+     */
     public List<Token> getComponents() {
         return components;
     }
 
+    /**
+     * the 'raw' analysis is a language and analyzer-specific string.
+     * @return the raw analysis.
+     */
     public String getRaw() {
         return raw;
     }
@@ -138,6 +149,9 @@ public class MorphoAnalysis {
         protected List<Token> components;
         protected String raw;
 
+        /**
+         * Construct a builder with default values.
+         */
         public Builder() {
             components = Lists.newArrayList();
             raw = "";
@@ -145,6 +159,10 @@ public class MorphoAnalysis {
             partOfSpeech = "";
         }
 
+        /**
+         * Construct a builder from an existing analysis.
+         * @param toCopy the object to copy.
+         */
         public Builder(MorphoAnalysis toCopy) {
             this();
             partOfSpeech = toCopy.partOfSpeech;
@@ -152,22 +170,50 @@ public class MorphoAnalysis {
             components.addAll(toCopy.components);
         }
 
-        public void partOfSpeech(String partOfSpeech) {
+        /**
+         * Specify the part of speech.
+         * @param partOfSpeech the part of speech.
+         * @return this.
+         */
+        public Builder partOfSpeech(String partOfSpeech) {
             this.partOfSpeech = partOfSpeech;
+            return this;
         }
 
-        public void lemma(String lemma) {
+        /**
+         * Specify the lemma.
+         * @param lemma the lemma.
+         * @return this.
+         */
+        public Builder lemma(String lemma) {
             this.lemma = lemma;
+            return this;
         }
 
-        public void raw(String raw) {
+        /**
+         * Specify the raw analysis.
+         * @param raw the raw analysis.
+         * @return this
+         */
+        public Builder raw(String raw) {
             this.raw = raw;
+            return this;
         }
 
-        public void addComponent(Token component) {
+        /**
+         * Add a compound component.
+         * @param component the component.
+         * @return this.
+         */
+        public Builder addComponent(Token component) {
             this.components.add(component);
+            return this;
         }
 
+        /**
+         * Build a new immutable morpho analysis from the current state of the builder.
+         * @return the new analysis.
+         */
         public MorphoAnalysis build() {
             return new MorphoAnalysis(partOfSpeech, lemma, components, raw);
         }

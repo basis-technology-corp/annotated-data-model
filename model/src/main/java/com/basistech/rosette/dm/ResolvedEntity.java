@@ -18,6 +18,11 @@ import com.google.common.base.Objects;
 
 import java.util.Map;
 
+/**
+ * A named entity resolved to an entity 'in the world'.
+ * Generally, resolved entities correspond to {@link com.basistech.rosette.dm.EntityMention}s,
+ * but the data model allows for the alternative.
+ */
 public class ResolvedEntity extends Attribute {
     private final String entityId;
     //I prefer 'chainId' over 'coreferenceChainId' but picked the latter to make it consistent with EntityMention
@@ -48,14 +53,23 @@ public class ResolvedEntity extends Attribute {
         coreferenceChainId = -1;
     }
 
+    /**
+     * @return the unique identifier of this entity.
+     */
     public String getEntityId() {
         return entityId;
     }
 
+    /**
+     * @return the in-document coreference chain ID for this entity, or -1 if there is none.
+     */
     public int getCoreferenceChainId() {
         return coreferenceChainId;
     }
 
+    /**
+     * @return the confidence for this resolved entity.
+     */
     public double getConfidence() {
         return confidence;
     }
@@ -111,14 +125,24 @@ public class ResolvedEntity extends Attribute {
      */
     public static class Builder extends Attribute.Builder {
         private String entityId;
-        private double confidence;
+        private double confidence; // NAN?
         private int coreferenceChainId = -1;
 
+        /**
+         * Construct a builder from the required values.
+         * @param startOffset the start offset in characters.
+         * @param endOffset the end offset in character.
+         * @param entityId the entity ID.
+         */
         public Builder(int startOffset, int endOffset, String entityId) {
             super(startOffset, endOffset);
             this.entityId = entityId;
         }
 
+        /**
+         * Construct a builder by copying values from an existing resolved entity.
+         * @param toCopy the object to create.
+         */
         public Builder(ResolvedEntity toCopy) {
             super(toCopy);
             this.entityId = toCopy.entityId;
@@ -126,18 +150,39 @@ public class ResolvedEntity extends Attribute {
             this.coreferenceChainId = toCopy.coreferenceChainId;
         }
 
-        public void entityId(String entityId) {
+        /**
+         * Specify the entity unique ID.
+         * @param entityId the ID.
+         */
+        public Builder entityId(String entityId) {
             this.entityId = entityId;
+            return this;
         }
 
-        public void confidence(double confidence) {
+        /**
+         * Specify the confidence value.
+         * @param confidence the confidence value.
+         * @return this.
+         */
+        public Builder confidence(double confidence) {
             this.confidence = confidence;
+            return this;
         }
 
-        public void coreferenceChainId(int coreferenceChainId) {
+        /**
+         * Specify the coreference chain id.
+         * @param coreferenceChainId the chain id.
+         * @return this.
+         */
+        public Builder coreferenceChainId(int coreferenceChainId) {
             this.coreferenceChainId = coreferenceChainId;
+            return this;
         }
 
+        /**
+         * Return an immutable resolved entity from the current state of the builder.
+         * @return the new resolved entity.
+         */
         public ResolvedEntity build() {
             return new ResolvedEntity(startOffset, endOffset, entityId, coreferenceChainId, confidence, extendedProperties);
         }

@@ -21,7 +21,9 @@ import com.google.common.collect.Lists;
 import java.util.List;
 
 /**
- * Chinese and Japanese share the addition of readings to the basic MorphoAnalysis data model.
+ * Morphological analysis objects for Chinese and Japanese.
+ * Chinese and Japanese share the addition of readings
+ * to {@link com.basistech.rosette.dm.MorphoAnalysis}.
  */
 public class HanMorphoAnalysis extends MorphoAnalysis {
     private final List<String> readings;
@@ -39,6 +41,9 @@ public class HanMorphoAnalysis extends MorphoAnalysis {
         readings = ImmutableList.of();
     }
 
+    /**
+     * @return the readings.
+     */
     public List<String> getReadings() {
         return readings;
     }
@@ -77,18 +82,45 @@ public class HanMorphoAnalysis extends MorphoAnalysis {
                 .add("readings", readings);
     }
 
+    /**
+     * A builder for {@link com.basistech.rosette.dm.HanMorphoAnalysis}.
+     */
     public static class Builder extends MorphoAnalysis.Builder {
         private List<String> readings;
 
+        /**
+         * Construct a builder with default values.
+         */
         public Builder() {
             super();
             readings = Lists.newArrayList();
         }
 
-        public void addReading(String reading) {
-            readings.add(reading);
+        /**
+         * Construct a builder initialized from an existing analysis.
+         * @param tocopy the analysis to copy.
+         */
+        public Builder(HanMorphoAnalysis tocopy) {
+            super(tocopy);
+            for (String reading : tocopy.getReadings()) {
+                addReading(reading);
+            }
         }
 
+        /**
+         * Add a reading.
+         * @param reading the reading.
+         * @return this
+         */
+        public Builder addReading(String reading) {
+            readings.add(reading);
+            return this;
+        }
+
+        /**
+         * Build an immutable analysis object from the current state of this builder.
+         * @return the analysis.
+         */
         public HanMorphoAnalysis build() {
             return new HanMorphoAnalysis(partOfSpeech, lemma, components, raw, readings);
         }

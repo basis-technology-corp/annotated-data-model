@@ -20,28 +20,32 @@ import com.basistech.util.ISO15924;
 import com.google.common.base.Objects;
 
 /**
- * A script region.
+ * A script region. Script regions describe text as spans defined by
+ * ISO-15924.
  */
 public class ScriptRegion extends Attribute {
-    private final ISO15924 value;
+    private final ISO15924 script;
 
-    ScriptRegion(int startOffset, int endOffset, ISO15924 value) {
+    ScriptRegion(int startOffset, int endOffset, ISO15924 script) {
         super(startOffset, endOffset);
-        this.value = value;
+        this.script = script;
     }
 
-    ScriptRegion(int startOffset, int endOffset, ISO15924 value, Map<String, Object> extendedProperties) {
+    ScriptRegion(int startOffset, int endOffset, ISO15924 script, Map<String, Object> extendedProperties) {
         super(startOffset, endOffset, extendedProperties);
-        this.value = value;
+        this.script = script;
     }
 
     // make Jackson happy.
     protected ScriptRegion() {
-        value = null;
+        script = null;
     }
 
-    public ISO15924 getValue() {
-        return value;
+    /**
+     * @return the script for this region.
+     */
+    public ISO15924 getScript() {
+        return script;
     }
 
     @Override
@@ -58,7 +62,7 @@ public class ScriptRegion extends Attribute {
 
         ScriptRegion that = (ScriptRegion) o;
 
-        if (value != that.value) {
+        if (script != that.script) {
             return false;
         }
 
@@ -68,27 +72,37 @@ public class ScriptRegion extends Attribute {
     @Override
     public int hashCode() {
         int result = super.hashCode();
-        result = 31 * result + value.hashCode();
+        result = 31 * result + script.hashCode();
         return result;
     }
 
     @Override
     protected Objects.ToStringHelper toStringHelper() {
         return Objects.toStringHelper(this)
-                .add("value", value);
+                .add("script", script);
     }
 
     /**
-     * Builder for ScriptRegion.
+     * Builder for script regions..
      */
     public static class Builder extends Attribute.Builder {
         private ISO15924 script;
 
+        /**
+         * Construct a script region builder from the required values.
+         * @param startOffset the start offset in characters.
+         * @param endOffset the end offset in characters.
+         * @param script the script.
+         */
         public Builder(int startOffset, int endOffset, ISO15924 script) {
             super(startOffset, endOffset);
             this.script = script;
         }
 
+        /**
+         * Build an immutable script region from the current state of this builder.
+         * @return the new region.
+         */
         public ScriptRegion build() {
             return new ScriptRegion(startOffset, endOffset, script, extendedProperties);
         }

@@ -22,7 +22,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * The token. The token is a word in the language.
+ * The token. The definition of a token can vary by language, but
+ * generally a token corresponds to a word.
  */
 public class Token extends Attribute {
     // we don't want to have to go look at the parent {@link AnnotatedText}.
@@ -56,8 +57,6 @@ public class Token extends Attribute {
         variations = ImmutableList.of();
     }
 
-    // Do not include extendedProperties in creator; leave that for the special annotations
-    // in the base class.
     Token(int startOffset,
           int endOffset,
           String text,
@@ -73,10 +72,18 @@ public class Token extends Attribute {
         this.analyses = ImmutableList.copyOf(analyses);
     }
 
+    /**
+     * @return the text of the token.
+     * Note that, in some languages, the text may <strong>not</strong> be a substring of
+     * the character data stored in the {@link com.basistech.rosette.dm.AnnotatedText}.
+     */
     public String getText() {
         return text;
     }
 
+    /**
+     * @return the normalized forms of the token.
+     */
     public List<String> getNormalized() {
         return normalized;
     }
@@ -90,10 +97,16 @@ public class Token extends Attribute {
         return analyses;
     }
 
+    /**
+     * @return the source of this token; this identifies the component that performed the tokenization.
+     */
     public String getSource() {
         return source;
     }
 
+    /**
+     * @return variant forms of the token.
+     */
     public List<String> getVariations() {
         return variations;
     }
@@ -163,6 +176,12 @@ public class Token extends Attribute {
         private String source;
         private List<String> variations;
 
+        /**
+         * Construct a builder from the required properties.
+         * @param startOffset the start offset in characters.
+         * @param endOffset the end offset in characters.
+         * @param text the text of the token.
+         */
         public Builder(int startOffset, int endOffset, String text) {
             super(startOffset, endOffset);
             this.text = text;
@@ -172,6 +191,10 @@ public class Token extends Attribute {
             normalized = Lists.newArrayList();
         }
 
+        /**
+         * Create a builder from the values of an existing token.
+         * @param toCopy existing token to copy.
+         */
         public Builder(Token toCopy) {
             super(toCopy);
             text = toCopy.text;
@@ -180,26 +203,58 @@ public class Token extends Attribute {
             analyses = toCopy.getAnalyses();
         }
 
-        public void text(String text) {
+        /**
+         * Specify the text.
+         * @param text the text.
+         * @return this.
+         */
+        public Builder text(String text) {
             this.text = text;
+            return this;
         }
 
-        public void addNormalized(String normalized) {
+        /**
+         * Add a normalized form.
+         * @param normalized the normalized form.
+         * @return this
+         */
+        public Builder addNormalized(String normalized) {
             this.normalized.add(normalized);
+            return this;
         }
 
-        public void source(String source) {
+        /**
+         * Specify the source of this token.
+         * @param source the source.
+         */
+        public Builder source(String source) {
             this.source = source;
+            return this;
         }
 
-        public void addVariation(String variation) {
+        /**
+         * Add a variant form.
+         * @param variation the variant form.
+         */
+        public Builder addVariation(String variation) {
             this.variations.add(variation);
+            return this;
         }
 
-        public void addAnalysis(MorphoAnalysis analysis) {
+        /**
+         * Add an analysis.
+         * @param analysis the analysis.
+         * @return this
+         */
+        public Builder addAnalysis(MorphoAnalysis analysis) {
             this.analyses.add(analysis);
+            return this;
         }
 
+        /**
+         * Create a new immutable Token object from the current state of the builder.
+         * @return the new token.
+         */
         public Token build() {
             return new Token(startOffset, endOffset, text, normalized, source, variations, analyses, extendedProperties);
         }

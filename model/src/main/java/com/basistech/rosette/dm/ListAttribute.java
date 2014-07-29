@@ -26,11 +26,8 @@ import java.util.Map;
 
 /**
  * A container for an ordered collection of attributes of a type.
- * The typical use of this is for an entire
- * {@link AnnotatedText} to have a set of tokens or named entities or language
- * regions. This class declares custom Jackson serialization to
- * avoid redundantly writing out the types of all the items, since
- * all the items will be of the same type.
+ * Like all other attributes, it stores extended properties.
+ * It is immutable and throws for attempts to use methods that would modify it.
  * @param <Item> The type of the attributes in the list.
  */
 public class ListAttribute<Item extends BaseAttribute> extends BaseAttribute implements List<Item> {
@@ -188,7 +185,7 @@ public class ListAttribute<Item extends BaseAttribute> extends BaseAttribute imp
     }
 
     /**
-     * A builder for lists
+     * A builder for lists.
      * @param <Item> the type of attribute in the list.
      */
     public static class Builder<Item extends BaseAttribute> extends BaseAttribute.Builder {
@@ -196,6 +193,7 @@ public class ListAttribute<Item extends BaseAttribute> extends BaseAttribute imp
         private List<Item> items;
 
         /**
+         * Construct an empty builder.
          * @param itemClass the class for the items to be stored in the list.
          */
         public Builder(Class<? extends BaseAttribute> itemClass) {
@@ -203,14 +201,30 @@ public class ListAttribute<Item extends BaseAttribute> extends BaseAttribute imp
             items = Lists.newArrayList();
         }
 
-        public void add(Item item) {
+        /**
+         * Add one item to the list.
+         * @param item the item to add.
+         * @return this
+         */
+        public Builder add(Item item) {
             items.add(item);
+            return this;
         }
 
-        public void setItems(List<Item> items) {
+        /**
+         * specify the complete list of items.
+         * @param items all the items.
+         * @return this
+         */
+        public Builder setItems(List<Item> items) {
             this.items.addAll(items);
+            return this;
         }
 
+        /**
+         * Construct an immutable list from the current state of the builder.
+         * @return the new list.
+         */
         public ListAttribute<Item> build() {
             return new ListAttribute<Item>(itemClass, items, extendedProperties);
         }

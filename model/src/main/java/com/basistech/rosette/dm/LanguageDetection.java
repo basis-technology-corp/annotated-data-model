@@ -24,8 +24,8 @@ import java.util.Map;
 
 /**
  * The results of running language detection on a region of text.
- * Typically, there will be multiple of these since detectors
- * return multiple possible answers.
+ * The results are composed as a list of {@link com.basistech.rosette.dm.LanguageDetection.DetectionResult},
+ * to reflect the multiple alternatives produced by language detectors.
  */
 public class LanguageDetection extends Attribute {
 
@@ -42,6 +42,10 @@ public class LanguageDetection extends Attribute {
             confidence = 0.0;
         }
 
+        /**
+         * @deprecated this will be deprecated in a future version. Use the builder.
+         */
+        @Deprecated
         public DetectionResult(LanguageCode language,
                                String encoding,
                                ISO15924 script,
@@ -52,18 +56,31 @@ public class LanguageDetection extends Attribute {
             this.confidence = confidence;
         }
 
+        /**
+         * @return the detected language.
+         */
         public LanguageCode getLanguage() {
             return language;
         }
 
+        /**
+         * @return the detected encoding, or null if none was detected.
+         */
         public String getEncoding() {
             return encoding;
         }
 
+        /**
+         * @return the script, or null of none was detected.
+         */
         public ISO15924 getScript() {
             return script;
         }
 
+        /**
+         * @return the confidence of this detection alternative, or
+         * {@link Double#NaN} if not available.
+         */
         public double getConfidence() {
             return confidence;
         }
@@ -116,6 +133,87 @@ public class LanguageDetection extends Attribute {
                     .add("confidence", confidence)
                     .toString();
         }
+
+        /**
+         * Builder class for {@link com.basistech.rosette.dm.LanguageDetection.DetectionResult}.
+         */
+        public static class Builder {
+            private LanguageCode language;
+            private String encoding;
+            private ISO15924 script;
+            private double confidence;
+
+            /**
+             * Construct a builder with default values.
+             * @param language the detected language.
+             */
+            public Builder(LanguageCode language) {
+                this.language = language;
+                encoding = null;
+                script = ISO15924.Zyyy;
+                confidence = Double.NaN;
+            }
+
+            /**
+             * Construct a builder initialized from an existing detection result.
+             * @param tocopy the item to copy.
+             */
+            public Builder(DetectionResult tocopy) {
+                language = tocopy.getLanguage();
+                encoding = tocopy.getEncoding();
+                script = tocopy.getScript();
+                confidence = tocopy.getConfidence();
+            }
+
+            /**
+             * Set the language.
+             * @param language the language.
+             * @return this.
+             */
+            public Builder language(LanguageCode language) {
+                this.language = language;
+                return this;
+            }
+
+            /**
+             * Specify the encoding.
+             * @param encoding the encoding.
+             * @return this.
+             */
+            public Builder encoding(String encoding) {
+                this.encoding = encoding;
+                return this;
+            }
+
+            /**
+             * Specify the script.
+             * @param script the script.
+             * @return this
+             */
+            public Builder script(ISO15924 script) {
+                this.script = script;
+                return this;
+            }
+
+            /**
+             * Specify the confidence.
+             * @param confidence the confidence.
+             * @return this.
+             */
+            public Builder confidence(double confidence) {
+                this.confidence = confidence;
+                return this;
+            }
+
+            /**
+             * Build an immutable detection results from the current state of the builder.
+             * @return the detection result.
+             */
+            @SuppressWarnings("deprecation")
+            public DetectionResult build() {
+                return new DetectionResult(language, encoding, script, confidence);
+            }
+        }
     }
 
     private final List<DetectionResult> detectionResults;
@@ -138,6 +236,9 @@ public class LanguageDetection extends Attribute {
         this.detectionResults = detectionResults;
     }
 
+    /**
+     * @return the detection results, in order from best to worst confidence.
+     */
     public List<DetectionResult> getDetectionResults() {
         return detectionResults;
     }
@@ -182,16 +283,30 @@ public class LanguageDetection extends Attribute {
     public static class Builder extends Attribute.Builder {
         private List<DetectionResult> detectionResults;
 
+        /**
+         * Construct a builder from the required properties.
+         * @param startOffset the start offset of the region in characters.
+         * @param endOffset the end offset of the region in characters.
+         * @param detectionResults the list of detection results.
+         */
         public Builder(int startOffset, int endOffset, List<DetectionResult> detectionResults) {
             super(startOffset, endOffset);
             this.detectionResults = detectionResults;
         }
 
+        /**
+         * Construct a builder by copying the values from an existing language detection.
+         * @param toCopy the object to copy.
+         */
         public Builder(LanguageDetection toCopy) {
             super(toCopy);
             this.detectionResults = toCopy.detectionResults;
         }
 
+        /**
+         * Construct an immutable language detection result from the current state of the builder.
+         * @return the new language detection.
+         */
         public LanguageDetection build() {
             return new LanguageDetection(startOffset, endOffset, detectionResults, extendedProperties);
         }
