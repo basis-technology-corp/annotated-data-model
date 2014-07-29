@@ -23,4 +23,24 @@
             <artifactId>junit</artifactId>
         </dependency>
     </dependencies>
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <configuration>
+                      <!-- There is a custom tag used to note that
+                           some things don't get seen by codegen. -->
+                        <tags>
+                            <tag>
+                                <name>adm.ignore</name>
+                                <placement>X</placement>
+                            </tag>
+                        </tags>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
 </project>

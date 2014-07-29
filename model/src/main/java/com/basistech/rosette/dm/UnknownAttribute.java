@@ -17,6 +17,7 @@ package com.basistech.rosette.dm;
 /**
  * Class used for future-proof representation of attributes in json that we
  * don't have classes for.
+ * @adm.ignore
  */
 class UnknownAttribute extends BaseAttribute {
     //

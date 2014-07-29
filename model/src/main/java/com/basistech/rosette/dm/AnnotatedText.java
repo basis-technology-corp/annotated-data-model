@@ -27,11 +27,11 @@ import java.util.Map;
  * AnnotatedText objects implement {@link java.lang.CharSequence}, to give direct access
  * to the text. The attributes are available from {@link #getAttributes()}, as well as from
  * some convenience accessors.
- * <br/>
+ * <p/>
  * A note on serialization: due to the internal structure of this class and the classes
  * that make up the model, we do not recommend that applications serialize this to
  * Json (or XML or other representations) by applying a reflection-based toolkit 'as-is'.
- * For Json, the 'adm-json' module provides
+ * For Json, and Java, the 'adm-json' module provides
  * {@linkplain com.basistech.rosette.dm.AnnotatedDataModelModule#setupObjectMapper(com.fasterxml.jackson.databind.ObjectMapper)},
  * to set up customized support.  For example:
  * <pre>
@@ -57,6 +57,7 @@ public class AnnotatedText implements CharSequence {
 
     /**
      * @return the character data for this text.
+     * @adm.ignore
      */
     public CharSequence getData() {
         return data;
@@ -93,6 +94,7 @@ public class AnnotatedText implements CharSequence {
 
     /**
      * @return an immutable map of metadata associated with the text.
+     * @adm.ignore
      */
     public Map<String, List<String>> getDocumentMetadata() {
         return documentMetadata;
@@ -103,6 +105,7 @@ public class AnnotatedText implements CharSequence {
      * the keys will be values from {@link AttributeKey#key()}. The values
      * are polymorphic; the subclass of {@link BaseAttribute} depends
      * on the attribute.
+     * @adm.ignore
      */
     public Map<String, BaseAttribute> getAttributes() {
         return attributes;

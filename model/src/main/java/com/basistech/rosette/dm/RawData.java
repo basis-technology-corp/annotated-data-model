@@ -25,6 +25,7 @@ import com.google.common.collect.ImmutableMap;
  * A container for incoming raw data.
  * {@link com.basistech.rosette.dm.AnnotatedText} does not store bytes; this class
  * serves components that consume bytes.
+ * @adm.ignore
  */
 public class RawData {
     private final ByteBuffer data;
