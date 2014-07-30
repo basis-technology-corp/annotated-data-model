@@ -39,7 +39,7 @@ import java.util.Set;
  * character offsets.
  */
 public class TextWrapper {
-    protected static class TokenIndexPair {
+    private static class TokenIndexPair {
         int startIndex;
         int endIndex;
         TokenIndexPair(int startIndex, int endIndex) {
@@ -57,6 +57,11 @@ public class TextWrapper {
     protected final Map<Integer, List<Integer>> chainIdToEntityMentionIndexes;
     protected final Map<Integer, ResolvedEntity> chainIdToResolvedEntity;
 
+    /**
+     * Constructs from <code>AnnotatedText</code>.
+     *
+     * @param text text object to wrap
+     */
     public TextWrapper(AnnotatedText text) {
         this.text = text;
         entityMentionIndexToTokenIndexes = Maps.newHashMap();
@@ -123,18 +128,41 @@ public class TextWrapper {
         this.maxChainId = maxMentionChainId;
     }
 
+    /**
+     * Returns a reference to the wrapped text object.
+     *
+     * @return reference to the wrapped text object
+     */
     public AnnotatedText getText() {
         return text;
     }
 
+    /**
+     * Returns the start token index of a mention.
+     *
+     * @param i index of the mention
+     * @return start token index of the mention
+     */
     public int getMentionStartTokenIndex(int i) {
         return entityMentionIndexToTokenIndexes.get(i).startIndex;
     }
 
+    /**
+     * Returns the end token index (exclusive) of a mention.
+     *
+     * @param i index of the mention
+     * @return end token index (exclusive) of the mention
+     */
     public int getMentionEndTokenIndex(int i) {
         return entityMentionIndexToTokenIndexes.get(i).endIndex;
     }
 
+    /**
+     * Returns the maximum chain id.  Returns -1 if chaining has not been
+     * performed.
+     *
+     * @return maximum chain id, or -1 if chaining has not been performed
+     */
     public int getMaxChainId() {
         return maxChainId;
     }
@@ -386,6 +414,13 @@ public class TextWrapper {
         return attr != null ? attr.size() : 0;
     }
 
+    /**
+     * Returns a list of mentions chained with the given mention.
+     *
+     * @param mention mention to query for chains
+     * @param excludeHead if true, the head mention will be omitted from results
+     * @return list of mentions chained with the given mention
+     */
     public List<Mention> getChainForMention(Mention mention, boolean excludeHead) {
         List<Mention> result = Lists.newArrayList();
         int chainId = mention.getIndocChainId();

@@ -21,7 +21,10 @@ import com.google.common.collect.Lists;
 import java.util.List;
 
 /**
- * Arabic morphological analysis.
+ * Arabic morphological analysis.  An Arabic token is analyzed into a prefix,
+ * a stem, and a suffix, where any of these components could be empty.  This
+ * class stores the prefix length and the stem length.  The suffix length can
+ * be deduced from these and the length of the original token.
  */
 public class ArabicMorphoAnalysis extends MorphoAnalysis {
     private final int prefixLength;
@@ -82,27 +85,35 @@ public class ArabicMorphoAnalysis extends MorphoAnalysis {
     }
 
     /**
-     * @return how many characters are attributed to prefixes.
+     * Returns the number of characters in the prefix.
+     *
+     * @return the number of characters in the prefix
      */
     public int getPrefixLength() {
         return prefixLength;
     }
 
     /**
-     * @return how many characters are attributes to stems.
+     * Returns the number of characters in the stem.
+     *
+     * @return the number of characters in the stem.
      */
     public int getStemLength() {
         return stemLength;
     }
 
     /**
-     * @return the root, according to semitic linguistics.
+     * Returns the root, according to semitic linguistics.
+     *
+     * @return the root, according to semitic linguistics
      */
     public String getRoot() {
         return root;
     }
 
     /**
+     * Returns the prefixes, if any.
+     *
      * @return the prefixes, if any.
      */
     public List<String> getPrefixes() {
@@ -110,49 +121,63 @@ public class ArabicMorphoAnalysis extends MorphoAnalysis {
     }
 
     /**
-     * @return the stems.
+     * Returns the stems.
+     *
+     * @return the stems
      */
     public List<String> getStems() {
         return stems;
     }
 
     /**
-     * @return the suffixes, if any.
+     * Returns the suffixes, if any.
+     *
+     * @return the suffixes, if any
      */
     public List<String> getSuffixes() {
         return suffixes;
     }
 
     /**
-     * @return the part of speech tags for prefixes.
+     * Returns the part of speech tags for prefixes.
+     *
+     * @return the part of speech tags for prefixes
      */
     public List<String> getPrefixTags() {
         return prefixTags;
     }
 
     /**
-     * @return the part of speech tags for stems.
+     * Returns the part of speech tags for stems.
+     *
+     * @return the part of speech tags for stems
      */
     public List<String> getStemTags() {
         return stemTags;
     }
 
     /**
-     * @return the part of speech tags for suffixes.
+     * Returns the part of speech tags for suffixes.
+     *
+     * @return the part of speech tags for suffixes
      */
     public List<String> getSuffixTags() {
         return suffixTags;
     }
 
     /**
-     * @return true if this word has an attached definite article.
+     * Returns true if this word has an attached definite article.
+     *
+     * @return true if this word has an attached definite article
      */
     public boolean isDefiniteArticle() {
         return definiteArticle;
     }
 
     /**
-     * @return true if the prefixes of this word can be stripped (e.g. prepositions).
+     * Returns true if the prefixes of this word can be stripped (e.g. prepositions).
+     *
+     * @return true if the prefixes of this word can be stripped (e.g. prepositions)
      */
     public boolean isStrippablePrefix() {
         return strippablePrefix;
@@ -261,7 +286,7 @@ public class ArabicMorphoAnalysis extends MorphoAnalysis {
         private List<String> suffixTags;
 
         /**
-         * Construct an empty builds.
+         * Constructs an empty builder.
          */
         public Builder() {
             super();
@@ -276,7 +301,8 @@ public class ArabicMorphoAnalysis extends MorphoAnalysis {
         }
 
         /**
-         * Construct a builder from an existing analysis.
+         * Constructs a builder from an existing analysis.
+         *
          * @param toCopy the analysis to copy.
          * @adm.ignore
          */
@@ -291,9 +317,11 @@ public class ArabicMorphoAnalysis extends MorphoAnalysis {
         }
 
         /**
-         * Set the decomposition lengths.
-         * @param prefixLength the number of characters that are attributed to prefixes.
-         * @param stemLength the number of characters that are attributed to stems.
+         * Sets the decomposition lengths.  The suffix length is implied by the
+         * other two.
+         *
+         * @param prefixLength the number of characters in the prefix
+         * @param stemLength the number of characters in the stem
          */
         public Builder lengths(int prefixLength, int stemLength) {
             this.prefixLength = prefixLength;
@@ -302,8 +330,9 @@ public class ArabicMorphoAnalysis extends MorphoAnalysis {
         }
 
         /**
-         * Set the root for the word.
-         * @param root the root, according to semitic linguistics.
+         * Sets the root for the word.
+         *
+         * @param root the root, according to semitic linguistics
          */
         public Builder root(String root) {
             this.root = root;
@@ -311,8 +340,9 @@ public class ArabicMorphoAnalysis extends MorphoAnalysis {
         }
 
         /**
-         * Specify whether the word has an attached definite article.
-         * @param definiteArticle true for a definite article.
+         * Specifies whether the word has an attached definite article.
+         *
+         * @param definiteArticle true for a definite article
          */
         public Builder definiteArticle(boolean definiteArticle) {
             this.definiteArticle = definiteArticle;
@@ -320,8 +350,9 @@ public class ArabicMorphoAnalysis extends MorphoAnalysis {
         }
 
         /**
-         * Specify whether the prefixes are strippable (e.g. prepositions).
-         * @param strippablePrefix true if strippable.
+         * Specifies whether the prefixes are strippable (e.g. prepositions).
+         *
+         * @param strippablePrefix true if strippable
          */
         public Builder strippablePrefix(boolean strippablePrefix) {
             this.strippablePrefix = strippablePrefix;
@@ -329,9 +360,10 @@ public class ArabicMorphoAnalysis extends MorphoAnalysis {
         }
 
         /**
-         * Add a prefix.
-         * @param prefix the prefix.
-         * @param prefixTag the part of speech for the prefix.
+         * Adds a prefix.
+         *
+         * @param prefix the prefix
+         * @param prefixTag the part of speech for the prefix
          */
         public Builder addPrefix(String prefix, String prefixTag) {
             prefixes.add(prefix);
@@ -340,9 +372,10 @@ public class ArabicMorphoAnalysis extends MorphoAnalysis {
         }
 
         /**
-         * Add a stem.
-         * @param stem the stem.
-         * @param stemTag the part of speech for the stem.
+         * Adds a stem.
+         *
+         * @param stem the stem
+         * @param stemTag the part of speech for the stem
          */
         public Builder addStem(String stem, String stemTag) {
             stems.add(stem);
@@ -351,9 +384,10 @@ public class ArabicMorphoAnalysis extends MorphoAnalysis {
         }
 
         /**
-         * Add a suffix.
-         * @param suffix the suffix.
-         * @param suffixTag the part of speech for the suffix.
+         * Adds a suffix.
+         *
+         * @param suffix the suffix
+         * @param suffixTag the part of speech for the suffix
          */
         public Builder addSuffix(String suffix, String suffixTag) {
             suffixes.add(suffix);
@@ -362,12 +396,15 @@ public class ArabicMorphoAnalysis extends MorphoAnalysis {
         }
 
         /**
-         * Construct the immutable analysis object from the current state of the builder.
-         * @return the new analysis object.
+         * Constructs the immutable analysis object from the current state of the builder.
+         *
+         * @return the new analysis object
          */
         public ArabicMorphoAnalysis build() {
-            return new ArabicMorphoAnalysis(partOfSpeech, lemma, components, raw, prefixLength, stemLength, root, definiteArticle, strippablePrefix, prefixes, stems, suffixes, prefixTags, stemTags, suffixTags);
+            return new ArabicMorphoAnalysis(partOfSpeech, lemma, components,
+                raw, prefixLength, stemLength, root, definiteArticle,
+                strippablePrefix, prefixes, stems, suffixes, prefixTags,
+                stemTags, suffixTags);
         }
     }
-
 }
