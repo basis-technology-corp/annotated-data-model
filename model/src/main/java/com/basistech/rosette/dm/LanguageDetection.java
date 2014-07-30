@@ -29,6 +29,11 @@ import java.util.Map;
  */
 public class LanguageDetection extends Attribute {
 
+    /**
+     * A single result from language detection.
+     * Typically, the language identifier produces multiple results with
+     * different confidence values.
+     */
     public static class DetectionResult {
         private final LanguageCode language;
         private final String encoding;
