@@ -66,6 +66,7 @@ public class Sentence extends Attribute {
          * @param tokenOffsets array of token start/end offsets.
          * @param tokenStartIndex token offset of the sentence start.
          * @param tokenEndIndex token offset of the end offset.
+         * @adm.ignore
          */
         public Builder(int[] tokenOffsets, int tokenStartIndex, int tokenEndIndex) {
             this(tokenOffsets[2 * tokenStartIndex], tokenOffsets[2 * (tokenEndIndex - 1) + 1]);
@@ -74,6 +75,7 @@ public class Sentence extends Attribute {
         /**
          * Construct a builder from the contents of an existing sentence.
          * @param toCopy the object to copy.
+         * @adm.ignore
          */
         public Builder(Sentence toCopy) {
             super(toCopy);

@@ -278,6 +278,7 @@ public class ArabicMorphoAnalysis extends MorphoAnalysis {
         /**
          * Construct a builder from an existing analysis.
          * @param toCopy the analysis to copy.
+         * @adm.ignore
          */
         public Builder(ArabicMorphoAnalysis toCopy) {
             super(toCopy);

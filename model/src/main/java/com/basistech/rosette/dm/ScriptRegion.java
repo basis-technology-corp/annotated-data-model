@@ -100,6 +100,16 @@ public class ScriptRegion extends Attribute {
         }
 
         /**
+         * Construct a builder from an existing script region.
+         * @param toCopy the object to copy.
+         * @adm.ignore
+         */
+        public Builder(ScriptRegion toCopy) {
+            super(toCopy);
+            this.script = toCopy.script;
+        }
+
+        /**
          * Build an immutable script region from the current state of this builder.
          * @return the new region.
          */

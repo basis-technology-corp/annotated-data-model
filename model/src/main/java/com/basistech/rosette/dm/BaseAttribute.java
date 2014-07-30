@@ -22,6 +22,7 @@ import java.util.Map;
 
 /**
  * The base of the object hierarchy of attributes that annotate text.
+ * @adm.ignore
  */
 public abstract class BaseAttribute {
     protected Map<String, Object> extendedProperties;

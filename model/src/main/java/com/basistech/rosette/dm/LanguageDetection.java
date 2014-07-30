@@ -140,7 +140,7 @@ public class LanguageDetection extends Attribute {
         }
 
         /**
-         * Builder class for {@link com.basistech.rosette.dm.LanguageDetection.DetectionResult}.
+         * Builder for detection results.
          */
         public static class Builder {
             private LanguageCode language;
@@ -161,13 +161,14 @@ public class LanguageDetection extends Attribute {
 
             /**
              * Construct a builder initialized from an existing detection result.
-             * @param tocopy the item to copy.
+             * @param toCopy the item to copy.
+             * @adm.ignore
              */
-            public Builder(DetectionResult tocopy) {
-                language = tocopy.getLanguage();
-                encoding = tocopy.getEncoding();
-                script = tocopy.getScript();
-                confidence = tocopy.getConfidence();
+            public Builder(DetectionResult toCopy) {
+                language = toCopy.getLanguage();
+                encoding = toCopy.getEncoding();
+                script = toCopy.getScript();
+                confidence = toCopy.getConfidence();
             }
 
             /**

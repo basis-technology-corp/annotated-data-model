@@ -194,6 +194,7 @@ public class Token extends Attribute {
         /**
          * Create a builder from the values of an existing token.
          * @param toCopy existing token to copy.
+         * @adm.ignore
          */
         public Builder(Token toCopy) {
             super(toCopy);

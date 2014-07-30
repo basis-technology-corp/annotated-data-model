@@ -98,11 +98,12 @@ public class HanMorphoAnalysis extends MorphoAnalysis {
 
         /**
          * Construct a builder initialized from an existing analysis.
-         * @param tocopy the analysis to copy.
+         * @param toCopy the analysis to copy.
+         * @adm.ignore
          */
-        public Builder(HanMorphoAnalysis tocopy) {
-            super(tocopy);
-            for (String reading : tocopy.getReadings()) {
+        public Builder(HanMorphoAnalysis toCopy) {
+            super(toCopy);
+            for (String reading : toCopy.getReadings()) {
                 addReading(reading);
             }
         }
