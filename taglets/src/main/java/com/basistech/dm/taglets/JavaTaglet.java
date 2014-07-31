@@ -67,7 +67,8 @@ public class JavaTaglet implements Taglet {
 
     /**
      * Register this Taglet.
-     * @param tagletMap  the map to register this tag to.
+     *
+     * @param tagletMap  the map to register this tag to
      */
     public static void register(Map<String, Taglet> tagletMap) {
         JavaTaglet tag = new JavaTaglet();
