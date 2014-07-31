@@ -38,6 +38,16 @@
                                 <placement>X</placement>
                             </tag>
                         </tags>
+                        <taglets>
+                          <taglet>
+                            <tagletClass>com.basistech.dm.taglets.JavaTaglet</tagletClass>
+                          </taglet>
+                        </taglets>
+                        <tagletArtifact>
+                          <groupId>${project.groupId}</groupId>
+                          <artifactId>adm-taglets</artifactId>
+                          <version>${project.version}</version>
+                        </tagletArtifact>
                     </configuration>
                 </plugin>
             </plugins>

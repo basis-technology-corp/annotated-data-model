@@ -39,12 +39,7 @@ import java.util.Map;
  * A note on serialization: due to the internal structure of this class and the classes
  * that make up the model, we do not recommend that applications serialize this to
  * Json (or XML or other representations) by applying a reflection-based toolkit 'as-is'.
- * For Json, and Java, the 'adm-json' module provides
- * {@linkplain com.basistech.rosette.dm.AnnotatedDataModelModule#setupObjectMapper(com.fasterxml.jackson.databind.ObjectMapper)},
- * to set up customized support.  For example:
- * <pre>
- * ObjectMapper mapper = AnnotatedDataModelModule.setupObjectMapper(new ObjectMapper());
- * </pre>
+ * For Json, and Java, the 'adm-json' module provides the supported serialization.
  */
 public class AnnotatedText implements CharSequence {
     private final CharSequence data;

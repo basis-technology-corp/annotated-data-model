@@ -22,6 +22,7 @@ import com.basistech.rosette.RosetteException;
  * base noun phrases, and entity mentions.  A single annotator operates in one
  * language; while the Annotated Data Model supports multi-language texts, this
  * interface does not (yet) provide support.
+ * @adm.ignore
  */
 public interface Annotator {
     /**
