@@ -34,7 +34,7 @@ public class LanguageDetection extends Attribute {
      * Typically, the language identifier produces multiple results with
      * different confidence values.
      */
-    public static class DetectionResult {
+    public static class DetectionResult extends BaseAttribute {
         private final LanguageCode language;
         private final String encoding;
         private final ISO15924 script;
@@ -45,6 +45,18 @@ public class LanguageDetection extends Attribute {
             encoding = null;
             script = ISO15924.Zyyy;
             confidence = 0.0;
+        }
+
+        protected DetectionResult(LanguageCode language,
+                                   String encoding,
+                                   ISO15924 script,
+                                   double confidence,
+                                   Map<String, Object> extendedProperties) {
+            super(extendedProperties);
+            this.language = language;
+            this.encoding = encoding;
+            this.script = script;
+            this.confidence = confidence;
         }
 
         /**
@@ -130,19 +142,18 @@ public class LanguageDetection extends Attribute {
         }
 
         @Override
-        public String toString() {
-            return Objects.toStringHelper(this)
+        protected Objects.ToStringHelper toStringHelper() {
+            return super.toStringHelper()
                     .add("language", language)
                     .add("encoding", encoding)
                     .add("script", script)
-                    .add("confidence", confidence)
-                    .toString();
+                    .add("confidence", confidence);
         }
 
         /**
          * Builder for detection results.
          */
-        public static class Builder {
+        public static class Builder extends BaseAttribute.Builder {
             private LanguageCode language;
             private String encoding;
             private ISO15924 script;
@@ -165,6 +176,7 @@ public class LanguageDetection extends Attribute {
              * @adm.ignore
              */
             public Builder(DetectionResult toCopy) {
+                super(toCopy);
                 language = toCopy.getLanguage();
                 encoding = toCopy.getEncoding();
                 script = toCopy.getScript();
