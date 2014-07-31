@@ -33,9 +33,10 @@ public class RawData {
     private final Map<String, List<String>> metadata;
 
     /**
-     * Construct from a buffer of data and some metadata.
-     * @param data the binary data.
-     * @param metadata metadata, such as mime type, creation date, or the like.
+     * Constructs from a buffer of data and some metadata.
+     *
+     * @param data the binary data
+     * @param metadata metadata, such as mime type, creation date, or the like
      */
     public RawData(ByteBuffer data, Map<String, List<String>> metadata) {
         this.data = data.asReadOnlyBuffer();
@@ -49,14 +50,18 @@ public class RawData {
     }
 
     /**
-     * @return the raw data.
+     * Returns the raw data.
+     *
+     * @return the raw data
      */
     public ByteBuffer getData() {
         return data;
     }
 
     /**
-     * @return the metadata.
+     * Returns the metadata.
+     *
+     * @return the metadata
      */
     public Map<String, List<String>> getMetadata() {
         return metadata;

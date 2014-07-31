@@ -28,6 +28,14 @@ import java.util.Map;
  * to the text. The attributes are available from {@link #getAttributes()}, as well as from
  * some convenience accessors.
  * <p/>
+ * Generally, offsets used in the data model are character offsets into the
+ * original text.  Offset ranges are always half-open.  For example:
+ * <pre>
+ * 012345678901
+ * Hello world
+ * </pre>
+ * The token "Hello" has start offset 0 and end offset 5.
+ * </p>
  * A note on serialization: due to the internal structure of this class and the classes
  * that make up the model, we do not recommend that applications serialize this to
  * Json (or XML or other representations) by applying a reflection-based toolkit 'as-is'.

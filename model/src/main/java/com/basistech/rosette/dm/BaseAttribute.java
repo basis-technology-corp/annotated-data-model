@@ -21,7 +21,10 @@ import com.google.common.collect.Maps;
 import java.util.Map;
 
 /**
- * The base of the object hierarchy of attributes that annotate text.
+ * Base class for attributes that annotate text.  Each attribute contains
+ * an extended properties map of String to Object to hold optional
+ * "user-defined" elements.
+ *
  * @adm.ignore
  */
 public abstract class BaseAttribute {
@@ -37,9 +40,11 @@ public abstract class BaseAttribute {
     }
 
     /**
-     * All attributes store a map of extended properties. This mechanism is available
-     * to add additional data to attributes.
-     * @return the map of extended properties.
+     * Returns the extended properties.  All attributes store a map of extended
+     * properties. This mechanism is available to add additional data to
+     * attributes.
+     *
+     * @return the map of extended properties
      */
     public Map<String, Object> getExtendedProperties() {
         return extendedProperties;
@@ -94,15 +99,16 @@ public abstract class BaseAttribute {
         protected final Map<String, Object> extendedProperties;
 
         /**
-         * Construct a builder with no data.
+         * Constructs a builder with no data.
          */
         protected Builder() {
             this.extendedProperties = Maps.newHashMap();
         }
 
         /**
-         * Construct a builder with values derived from an existing object.
-         * @param toCopy the object to copy.
+         * Constructs a builder with values derived from an existing object.
+         *
+         * @param toCopy the object to copy
          */
         protected Builder(BaseAttribute toCopy) {
             this.extendedProperties = Maps.newHashMap();
@@ -110,9 +116,10 @@ public abstract class BaseAttribute {
         }
 
         /**
-         * Add an extended value key-value pair.
-         * @param key the key.
-         * @param value the value.
+         * Adds an extended value key-value pair.
+         *
+         * @param key the key
+         * @param value the value
          */
         public Builder extendedProperty(String key, Object value) {
             this.extendedProperties.put(key, value);

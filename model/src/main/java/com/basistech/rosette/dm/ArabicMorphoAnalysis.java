@@ -396,7 +396,7 @@ public class ArabicMorphoAnalysis extends MorphoAnalysis {
         }
 
         /**
-         * Constructs the immutable analysis object from the current state of the builder.
+         * Constructs the analysis from the current state of the builder.
          *
          * @return the new analysis object
          */

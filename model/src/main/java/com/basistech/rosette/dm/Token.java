@@ -73,39 +73,53 @@ public class Token extends Attribute {
     }
 
     /**
-     * @return the text of the token.
+     * Returns the text of the token.
      * Note that, in some languages, the text may <strong>not</strong> be a substring of
      * the character data stored in the {@link com.basistech.rosette.dm.AnnotatedText}.
+     * For example, a Chinese token could start at the end of a line and continue
+     * to the next line.  The raw text would include the newline character, but
+     * the token would not.
+     *
+     * @return the text of the token
      */
     public String getText() {
         return text;
     }
 
     /**
-     * @return the normalized forms of the token.
+     * Returns the normalized form of the token.
+     *
+     * @return the normalized form of the token
      */
     public List<String> getNormalized() {
         return normalized;
     }
 
     /**
-     * @return a list of analyses. Note: the items of this list are of the smallest type needed. So, even if the text
+     * Returns the list of analyses. Note: the items of this list are of the smallest type needed. So, even if the text
      * is Arabic or Chinese, some of the items in this list may be {@link com.basistech.rosette.dm.MorphoAnalysis}, <strong>not</strong>
      * the corresponding subclass. Callers must use instanceof to check if a particular item is of the subclass.
+     *
+     * @eturn the list of analyses
      */
     public List<MorphoAnalysis> getAnalyses() {
         return analyses;
     }
 
     /**
-     * @return the source of this token; this identifies the component that performed the tokenization.
+     * Returns the source of this token.
+     * This identifies the component that performed the tokenization.
+     *
+     * @return the source of this token
      */
     public String getSource() {
         return source;
     }
 
     /**
-     * @return variant forms of the token.
+     * Returns variant forms of the token.
+     *
+     * @return variant forms of the token
      */
     public List<String> getVariations() {
         return variations;
@@ -177,10 +191,11 @@ public class Token extends Attribute {
         private List<String> variations;
 
         /**
-         * Construct a builder from the required properties.
-         * @param startOffset the start offset in characters.
-         * @param endOffset the end offset in characters.
-         * @param text the text of the token.
+         * Constructs a builder from the required properties.
+         *
+         * @param startOffset the start offset in characters
+         * @param endOffset the end offset in characters
+         * @param text the text of the token
          */
         public Builder(int startOffset, int endOffset, String text) {
             super(startOffset, endOffset);
@@ -192,8 +207,9 @@ public class Token extends Attribute {
         }
 
         /**
-         * Create a builder from the values of an existing token.
-         * @param toCopy existing token to copy.
+         * Constructs a builder from the values of an existing token.
+         *
+         * @param toCopy existing token to copy
          * @adm.ignore
          */
         public Builder(Token toCopy) {
@@ -205,9 +221,10 @@ public class Token extends Attribute {
         }
 
         /**
-         * Specify the text.
-         * @param text the text.
-         * @return this.
+         * Specifies the text.
+         *
+         * @param text the text
+         * @return this
          */
         public Builder text(String text) {
             this.text = text;
@@ -215,8 +232,9 @@ public class Token extends Attribute {
         }
 
         /**
-         * Add a normalized form.
-         * @param normalized the normalized form.
+         * Adds a normalized form.
+         *
+         * @param normalized the normalized form
          * @return this
          */
         public Builder addNormalized(String normalized) {
@@ -225,8 +243,9 @@ public class Token extends Attribute {
         }
 
         /**
-         * Specify the source of this token.
-         * @param source the source.
+         * Specifies the source of this token.
+         *
+         * @param source the source
          */
         public Builder source(String source) {
             this.source = source;
@@ -234,8 +253,9 @@ public class Token extends Attribute {
         }
 
         /**
-         * Add a variant form.
-         * @param variation the variant form.
+         * Adds a variant form.
+         *
+         * @param variation the variant form
          */
         public Builder addVariation(String variation) {
             this.variations.add(variation);
@@ -243,8 +263,9 @@ public class Token extends Attribute {
         }
 
         /**
-         * Add an analysis.
-         * @param analysis the analysis.
+         * Adds an analysis.
+         *
+         * @param analysis the analysis
          * @return this
          */
         public Builder addAnalysis(MorphoAnalysis analysis) {
@@ -253,8 +274,9 @@ public class Token extends Attribute {
         }
 
         /**
-         * Create a new immutable Token object from the current state of the builder.
-         * @return the new token.
+         * Creates a new immutable Token object from the current state of the builder.
+         *
+         * @return the new token
          */
         public Token build() {
             return new Token(startOffset, endOffset, text, normalized, source, variations, analyses, extendedProperties);

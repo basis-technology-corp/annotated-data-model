@@ -19,7 +19,7 @@ import com.google.common.base.Objects;
 import java.util.Map;
 
 /**
- * A mention, in the text, of a named entity.
+ * A mention of a named entity in the text.
  */
 public class EntityMention extends Attribute {
     private final String entityType;
@@ -72,45 +72,65 @@ public class EntityMention extends Attribute {
     }
 
     /**
-     * @return the type of entity (e.g. PERSON).
+     * Returns the type of the entity.  For example, "PERSON", "LOCATION",
+     * "ORGANIZATION".
+     *
+     * @return the type of entity
      */
     public String getEntityType() {
         return entityType;
     }
 
     /**
-     * @return the confidence of the entity extractor in identifying this entity.
+     * Returns the confidence of the entity extractor in identifying this mention.
+     *
+     * @return the confidence of the entity extractor in identifying this mention
      */
     public double getConfidence() {
         return confidence;
     }
 
     /**
-     * @return a number that links together entity mentions that refer to the
+     * Returns a chain id that links together entity mentions that refer to the
      * same entity as determined by in-document analysis. -1 if no in-document
-     * coreference information is available.
+     * coreference information is available.  Currently, the chain id is the
+     * index (into the {@code EntityMention} list) of the head mention of the
+     * chain.  The head mention is the (first) longest mention in the chain.
+     *
+     * @return the coreference chain id, or -1 if chaining has not been applied
      */
     public int getCoreferenceChainId() {
         return coreferenceChainId;
     }
 
     /**
-     * @return arbitrary flags associated with an entity; interpretation varies
+     * Returns flags associated with a mention. Interpretation of the flags varies
      * by extractor and language.
+     *
+     * @return flags associated with the mention
      */
     public int getFlags() {
         return flags;
     }
 
     /**
-     * @return what entity extraction source produced this entity.
+     * Returns the entity extraction source that produced this entity.  For
+     * example, "statistical", "regex", "gazetteer".
+     *
+     * @return the entity extraction source
      */
     public String getSource() {
         return source;
     }
 
     /**
-     * @return the normalized form of the entity. For example, this may omit prefixes.
+     * Returns the normalized form of the mention.  This form typically
+     * normalizes spaces spaces and removes embedded newlines.  It may omit
+     * prefixes in languages like Arabic.  This is not a canonical way to
+     * refer to the entity (see {@link com.basistech.rosette.dm.ResolvedEntity})
+     * but rather a simplified form of this particular mention text.
+     *
+     * @return the normalized form of the mention
      */
     public String getNormalized() {
         return normalized;
@@ -189,10 +209,11 @@ public class EntityMention extends Attribute {
         private String normalized;
 
         /**
-         * Construct a builder with the minimal required information for an entity mention.
-         * @param startOffset the start offset in the text, in characters.
-         * @param endOffset the end offset in the text, in characters.
-         * @param entityType the type of entity (e.g. PERSON).
+         * Constructs a builder with the minimal required information for an entity mention.
+         *
+         * @param startOffset the start offset in the text, in characters
+         * @param endOffset the end offset in the text, in characters
+         * @param entityType the type of entity (e.g. "PERSON").
          */
         public Builder(int startOffset, int endOffset, String entityType) {
             super(startOffset, endOffset);
@@ -200,7 +221,8 @@ public class EntityMention extends Attribute {
         }
 
         /**
-         * Construct a builder initialized with information from an existing entity mention.
+         * Constructs a builder initialized with information from an existing entity mention.
+         *
          * @param toCopy the mention to copy.
          * @adm.ignore
          */
@@ -215,8 +237,9 @@ public class EntityMention extends Attribute {
         }
 
         /**
-         * Specify the entity type.
-         * @param entityType the entity type.
+         * Specifies the entity type.
+         *
+         * @param entityType the entity type
          * @return this
          */
         public Builder entityType(String entityType) {
@@ -225,8 +248,9 @@ public class EntityMention extends Attribute {
         }
 
         /**
-         * Specify the confidence.
-         * @param confidence the confidence.
+         * Specifies the confidence.
+         *
+         * @param confidence the confidence
          * @return this
          */
         public Builder confidence(double confidence) {
@@ -235,8 +259,9 @@ public class EntityMention extends Attribute {
         }
 
         /**
-         * Specify the coreference chain identifier. See {@link com.basistech.rosette.dm.EntityMention#getCoreferenceChainId()}.
-         * @param coreferenceChainId the chain identifier, or -1 for a mention that is not linked.
+         * Specifies the coreference chain identifier. See {@link com.basistech.rosette.dm.EntityMention#getCoreferenceChainId()}.
+         *
+         * @param coreferenceChainId the chain identifier, or -1 for a mention that is not linked
          * @return this
          */
         public Builder coreferenceChainId(int coreferenceChainId) {
@@ -245,8 +270,9 @@ public class EntityMention extends Attribute {
         }
 
         /**
-         * Specify flags.
-         * @param flags    flags value.
+         * Specifies the flags.
+         *
+         * @param flags    flags value
          * @return this
          */
         public Builder flags(int flags) {
@@ -255,8 +281,9 @@ public class EntityMention extends Attribute {
         }
 
         /**
-         * Specify the source of this mention.
-         * @param source the source.
+         * Specifies the source of this mention.
+         *
+         * @param source the source
          * @return this
          */
         public Builder source(String source) {
@@ -265,8 +292,9 @@ public class EntityMention extends Attribute {
         }
 
         /**
-         * Specify the normalized form of this mention.
-         * @param normalized the normalized form.
+         * Specifies the normalized form of this mention.
+         *
+         * @param normalized the normalized form
          * @return this
          */
         public Builder normalized(String normalized) {
@@ -275,8 +303,9 @@ public class EntityMention extends Attribute {
         }
 
         /**
-         * Build the immutable mention.
-         * @return the mention.
+         * Builds the immutable mention.
+         *
+         * @return the mention
          */
         public EntityMention build() {
             return new EntityMention(startOffset, endOffset, entityType, coreferenceChainId, confidence, flags, source,

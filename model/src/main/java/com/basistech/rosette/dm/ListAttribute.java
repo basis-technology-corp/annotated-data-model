@@ -28,6 +28,7 @@ import java.util.Map;
  * A container for an ordered collection of attributes of a type.
  * Like all other attributes, it stores extended properties.
  * It is immutable and throws for attempts to use methods that would modify it.
+ *
  * @param <Item> The type of the attributes in the list.
  */
 public class ListAttribute<Item extends BaseAttribute> extends BaseAttribute implements List<Item> {
@@ -186,15 +187,17 @@ public class ListAttribute<Item extends BaseAttribute> extends BaseAttribute imp
 
     /**
      * A builder for lists.
-     * @param <Item> the type of attribute in the list.
+     *
+     * @param <Item> the type of attribute in the list
      */
     public static class Builder<Item extends BaseAttribute> extends BaseAttribute.Builder {
         private Class<? extends BaseAttribute> itemClass;
         private List<Item> items;
 
         /**
-         * Construct an empty builder.
-         * @param itemClass the class for the items to be stored in the list.
+         * Constructs an empty builder.
+         *
+         * @param itemClass the class for the items to be stored in the list
          */
         public Builder(Class<? extends BaseAttribute> itemClass) {
             this.itemClass = itemClass;
@@ -202,8 +205,9 @@ public class ListAttribute<Item extends BaseAttribute> extends BaseAttribute imp
         }
 
         /**
-         * Add one item to the list.
-         * @param item the item to add.
+         * Adds one item to the list.
+         *
+         * @param item the item to add
          * @return this
          */
         public Builder add(Item item) {
@@ -212,8 +216,9 @@ public class ListAttribute<Item extends BaseAttribute> extends BaseAttribute imp
         }
 
         /**
-         * specify the complete list of items.
-         * @param items all the items.
+         * Specifies the complete list of items.
+         *
+         * @param items all the items
          * @return this
          */
         public Builder setItems(List<Item> items) {
@@ -222,8 +227,9 @@ public class ListAttribute<Item extends BaseAttribute> extends BaseAttribute imp
         }
 
         /**
-         * Construct an immutable list from the current state of the builder.
-         * @return the new list.
+         * Constructs an immutable list from the current state of the builder.
+         *
+         * @return the new list
          */
         public ListAttribute<Item> build() {
             return new ListAttribute<Item>(itemClass, items, extendedProperties);

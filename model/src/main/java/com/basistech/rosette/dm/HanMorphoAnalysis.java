@@ -22,8 +22,11 @@ import java.util.List;
 
 /**
  * Morphological analysis objects for Chinese and Japanese.
- * Chinese and Japanese share the addition of readings
- * to {@link com.basistech.rosette.dm.MorphoAnalysis}.
+ * Chinese and Japanese add the concept of readings
+ * to {@link com.basistech.rosette.dm.MorphoAnalysis}.  Readings provide
+ * the pronunciation of ideographic strings.  They are typically written in
+ * Pinyin for Chinese and Hiragana for Japanese.  A single surface form may have
+ * multiple possible readings.
  */
 public class HanMorphoAnalysis extends MorphoAnalysis {
     private final List<String> readings;
@@ -42,7 +45,9 @@ public class HanMorphoAnalysis extends MorphoAnalysis {
     }
 
     /**
-     * @return the readings.
+     * Returns the readings.
+     *
+     * @return the readings
      */
     public List<String> getReadings() {
         return readings;
@@ -89,7 +94,7 @@ public class HanMorphoAnalysis extends MorphoAnalysis {
         private List<String> readings;
 
         /**
-         * Construct a builder with default values.
+         * Constructs a builder with default values.
          */
         public Builder() {
             super();
@@ -97,8 +102,9 @@ public class HanMorphoAnalysis extends MorphoAnalysis {
         }
 
         /**
-         * Construct a builder initialized from an existing analysis.
-         * @param toCopy the analysis to copy.
+         * Constructs a builder initialized from an existing analysis.
+         *
+         * @param toCopy the analysis to copy
          * @adm.ignore
          */
         public Builder(HanMorphoAnalysis toCopy) {
@@ -109,8 +115,9 @@ public class HanMorphoAnalysis extends MorphoAnalysis {
         }
 
         /**
-         * Add a reading.
-         * @param reading the reading.
+         * Adds a reading.
+         *
+         * @param reading the reading
          * @return this
          */
         public Builder addReading(String reading) {
@@ -119,8 +126,9 @@ public class HanMorphoAnalysis extends MorphoAnalysis {
         }
 
         /**
-         * Build an immutable analysis object from the current state of this builder.
-         * @return the analysis.
+         * Builds an immutable analysis object from the current state of this builder.
+         *
+         * @return the analysis
          */
         public HanMorphoAnalysis build() {
             return new HanMorphoAnalysis(partOfSpeech, lemma, components, raw, readings);

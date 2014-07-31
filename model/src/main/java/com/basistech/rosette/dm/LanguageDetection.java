@@ -60,7 +60,7 @@ public class LanguageDetection extends Attribute {
         }
 
         /**
-         * @deprecated this will be deprecated in a future version. Use the builder.
+         * @deprecated this will be removed in a future version. Use {@link com.basistech.rosette.dm.LanguageDetection.DetectionResult.Builder}.
          */
         @Deprecated
         public DetectionResult(LanguageCode language,
@@ -74,27 +74,35 @@ public class LanguageDetection extends Attribute {
         }
 
         /**
-         * @return the detected language.
+         * Returns the detected language.
+         *
+         * @return the detected language
          */
         public LanguageCode getLanguage() {
             return language;
         }
 
         /**
-         * @return the detected encoding, or null if none was detected.
+         * Returns the detected encoding.
+         *
+         * @return the detected encoding, or null if none was detected
          */
         public String getEncoding() {
             return encoding;
         }
 
         /**
-         * @return the script, or null of none was detected.
+         * Returns the script.
+         *
+         * @return the script, or null of none was detected
          */
         public ISO15924 getScript() {
             return script;
         }
 
         /**
+         * Returns the confidence of this detection.
+         *
          * @return the confidence of this detection alternative, or
          * Not-a-Number if not available.
          */
@@ -160,8 +168,9 @@ public class LanguageDetection extends Attribute {
             private double confidence;
 
             /**
-             * Construct a builder with default values.
-             * @param language the detected language.
+             * Constructs a builder with default values.
+             *
+             * @param language the detected language
              */
             public Builder(LanguageCode language) {
                 this.language = language;
@@ -171,8 +180,9 @@ public class LanguageDetection extends Attribute {
             }
 
             /**
-             * Construct a builder initialized from an existing detection result.
-             * @param toCopy the item to copy.
+             * Constructs a builder initialized from an existing detection result.
+             *
+             * @param toCopy the item to copy
              * @adm.ignore
              */
             public Builder(DetectionResult toCopy) {
@@ -184,9 +194,10 @@ public class LanguageDetection extends Attribute {
             }
 
             /**
-             * Set the language.
-             * @param language the language.
-             * @return this.
+             * Specifies the language.
+             *
+             * @param language the language
+             * @return this
              */
             public Builder language(LanguageCode language) {
                 this.language = language;
@@ -194,9 +205,10 @@ public class LanguageDetection extends Attribute {
             }
 
             /**
-             * Specify the encoding.
-             * @param encoding the encoding.
-             * @return this.
+             * Specifies the encoding.
+             *
+             * @param encoding the encoding
+             * @return this
              */
             public Builder encoding(String encoding) {
                 this.encoding = encoding;
@@ -204,8 +216,9 @@ public class LanguageDetection extends Attribute {
             }
 
             /**
-             * Specify the script.
-             * @param script the script.
+             * Specifies the script.
+             *
+             * @param script the script
              * @return this
              */
             public Builder script(ISO15924 script) {
@@ -214,8 +227,9 @@ public class LanguageDetection extends Attribute {
             }
 
             /**
-             * Specify the confidence.
-             * @param confidence the confidence.
+             * Specifies the confidence.
+             *
+             * @param confidence the confidence
              * @return this.
              */
             public Builder confidence(double confidence) {
@@ -224,8 +238,9 @@ public class LanguageDetection extends Attribute {
             }
 
             /**
-             * Build an immutable detection results from the current state of the builder.
-             * @return the detection result.
+             * Build an immutable detection result from the current state of the builder.
+             *
+             * @return the detection result
              */
             @SuppressWarnings("deprecation")
             public DetectionResult build() {
@@ -255,7 +270,9 @@ public class LanguageDetection extends Attribute {
     }
 
     /**
-     * @return the detection results, in order from best to worst confidence.
+     * Returns the detection results, in order from best to worst confidence.
+     *
+     * @return the detection results, in order from best to worst confidence
      */
     public List<DetectionResult> getDetectionResults() {
         return detectionResults;
@@ -302,10 +319,11 @@ public class LanguageDetection extends Attribute {
         private List<DetectionResult> detectionResults;
 
         /**
-         * Construct a builder from the required properties.
-         * @param startOffset the start offset of the region in characters.
-         * @param endOffset the end offset of the region in characters.
-         * @param detectionResults the list of detection results.
+         * Constructs a builder from the required properties.
+         *
+         * @param startOffset the start offset of the region in characters
+         * @param endOffset the end offset of the region in characters
+         * @param detectionResults the list of detection results
          */
         public Builder(int startOffset, int endOffset, List<DetectionResult> detectionResults) {
             super(startOffset, endOffset);
@@ -313,8 +331,9 @@ public class LanguageDetection extends Attribute {
         }
 
         /**
-         * Construct a builder by copying the values from an existing language detection.
-         * @param toCopy the object to copy.
+         * Constructs a builder by copying the values from an existing language detection.
+         *
+         * @param toCopy the object to copy
          */
         public Builder(LanguageDetection toCopy) {
             super(toCopy);
@@ -322,8 +341,9 @@ public class LanguageDetection extends Attribute {
         }
 
         /**
-         * Construct an immutable language detection result from the current state of the builder.
-         * @return the new language detection.
+         * Constructs an immutable language detection result from the current state of the builder.
+         *
+         * @return the new language detection
          */
         public LanguageDetection build() {
             return new LanguageDetection(startOffset, endOffset, detectionResults, extendedProperties);

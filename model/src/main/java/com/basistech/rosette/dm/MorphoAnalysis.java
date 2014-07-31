@@ -31,7 +31,6 @@ import java.util.Map;
  * <p/>
  * In some languages, words are decompounded into pieces that can, themselves, be analyzed.
  */
-
 public class MorphoAnalysis extends BaseAttribute {
     // every language we support has part of speech and lemma
     private final String partOfSpeech;
@@ -41,11 +40,12 @@ public class MorphoAnalysis extends BaseAttribute {
     private final String raw; // raw representation of the analysis; interpretation depends on the language and implementation.
 
     /**
-     * Create an analysis.
+     * Creates an analysis.
+     *
      * @param partOfSpeech  part of speech
      * @param lemma lemma
-     * @param components components.
-     * @param raw the raw analysis.
+     * @param components components
+     * @param raw the raw analysis
      */
     MorphoAnalysis(String partOfSpeech,
                    String lemma,
@@ -58,12 +58,13 @@ public class MorphoAnalysis extends BaseAttribute {
     }
 
     /**
-     * Create an analysis.
+     * Creates an analysis.
+     *
      * @param partOfSpeech part of speech
-     * @param lemma the lemma.
-     * @param components compound components.
+     * @param lemma the lemma
+     * @param components compound components
      * @param raw raw analysis
-     * @param extendedProperties extended properties.
+     * @param extendedProperties extended properties
      */
     MorphoAnalysis(String partOfSpeech,
                    String lemma,
@@ -85,29 +86,39 @@ public class MorphoAnalysis extends BaseAttribute {
     }
 
     /**
-     * @return the part of speech.
+     * Returns the part of speech.
+     *
+     * @return the part of speech
      */
     public String getPartOfSpeech() {
         return partOfSpeech;
     }
 
     /**
-     * @return the lemma.
+     * Returns the lemma.
+     *
+     * @return the lemma
      */
     public String getLemma() {
         return lemma;
     }
 
     /**
-     * @return the compound components.
+     * Returns the compound components.
+     *
+     * @return the compound components
      */
     public List<Token> getComponents() {
         return components;
     }
 
     /**
-     * the 'raw' analysis is a language and analyzer-specific string.
-     * @return the raw analysis.
+     * Returns the raw analysis.
+     * The raw analysis is a language and analyzer-specific string, typically
+     * used to convey debug-level information.  Applications should usually not
+     * depend on the raw analysis.
+     *
+     * @return the raw analysis
      */
     public String getRaw() {
         return raw;
@@ -163,7 +174,7 @@ public class MorphoAnalysis extends BaseAttribute {
     }
 
     /**
-     * Builder for MorphoAnalysis.
+     * Builder for {@link com.basistech.rosette.dm.MorphoAnalysis}.
      */
     public static class Builder extends BaseAttribute.Builder {
         protected String partOfSpeech;
@@ -172,7 +183,7 @@ public class MorphoAnalysis extends BaseAttribute {
         protected String raw;
 
         /**
-         * Construct a builder with default values.
+         * Constructs a builder with default values.
          */
         public Builder() {
             super();
@@ -183,8 +194,9 @@ public class MorphoAnalysis extends BaseAttribute {
         }
 
         /**
-         * Construct a builder from an existing analysis.
-         * @param toCopy the object to copy.
+         * Constructs a builder from an existing analysis.
+         *
+         * @param toCopy the object to copy
          * @adm.ignore
          */
         public Builder(MorphoAnalysis toCopy) {
@@ -196,9 +208,10 @@ public class MorphoAnalysis extends BaseAttribute {
         }
 
         /**
-         * Specify the part of speech.
-         * @param partOfSpeech the part of speech.
-         * @return this.
+         * Specifies the part of speech.
+         *
+         * @param partOfSpeech the part of speech
+         * @return this
          */
         public Builder partOfSpeech(String partOfSpeech) {
             this.partOfSpeech = partOfSpeech;
@@ -206,9 +219,10 @@ public class MorphoAnalysis extends BaseAttribute {
         }
 
         /**
-         * Specify the lemma.
-         * @param lemma the lemma.
-         * @return this.
+         * Specifies the lemma.
+         *
+         * @param lemma the lemma
+         * @return this
          */
         public Builder lemma(String lemma) {
             this.lemma = lemma;
@@ -216,8 +230,9 @@ public class MorphoAnalysis extends BaseAttribute {
         }
 
         /**
-         * Specify the raw analysis.
-         * @param raw the raw analysis.
+         * Specifies the raw analysis.
+         *
+         * @param raw the raw analysis
          * @return this
          */
         public Builder raw(String raw) {
@@ -226,9 +241,10 @@ public class MorphoAnalysis extends BaseAttribute {
         }
 
         /**
-         * Add a compound component.
-         * @param component the component.
-         * @return this.
+         * Adds a compound component.
+         *
+         * @param component the component
+         * @return this
          */
         public Builder addComponent(Token component) {
             this.components.add(component);
@@ -236,8 +252,9 @@ public class MorphoAnalysis extends BaseAttribute {
         }
 
         /**
-         * Build a new immutable morpho analysis from the current state of the builder.
-         * @return the new analysis.
+         * Builds a new immutable morpho analysis from the current state of the builder.
+         *
+         * @return the new analysis
          */
         public MorphoAnalysis build() {
             return new MorphoAnalysis(partOfSpeech, lemma, components, raw);

@@ -38,23 +38,23 @@ public class BaseNounPhrase extends Attribute {
      */
     public static class Builder extends Attribute.Builder {
         /**
-         * Construct a builder from the required properties.
-         * @param startOffset start offset in characters.
-         * @param endOffset end offset in characters.
+         * Constructs a builder from the required properties.
+         *
+         * @param startOffset start offset in characters
+         * @param endOffset end offset in characters
          */
         public Builder(int startOffset, int endOffset) {
             super(startOffset, endOffset);
         }
 
         /**
-         * Construct a builder from the 'traditional Rosette' data structure; an int[]
-         * in which the even-numbered items are token start offsets, and the odd numbered
-         * items are token end offsets. This constructor accept token indices for
-         * beginning and end of a sentence, token and obtains the character offsets from
-         * the token offsets.
-         * @param tokenOffsets array of token start/end offsets.
-         * @param tokenStartIndex token offset of the sentence start.
-         * @param tokenEndIndex token offset of the end offset.
+         * Constructs a builder from the 'traditional Rosette' data structure.
+         * That data structure is an int[] in which the even-numbered items are token
+         * start offsets, and the odd-numbered items are token end offsets.
+         *
+         * @param tokenOffsets array of token start/end offsets
+         * @param tokenStartIndex index in tokenOffsets for the start of the phrase
+         * @param tokenEndIndex index in tokenOffsets for the end of the phrase
          * @adm.ignore
          */
         public Builder(int[] tokenOffsets, int tokenStartIndex, int tokenEndIndex) {
@@ -62,14 +62,20 @@ public class BaseNounPhrase extends Attribute {
         }
 
         /**
-         * Construct a builder from an existing BaseNounPhrase.
-         * @param toCopy the object to copy.
+         * Constructs a builder from an existing BaseNounPhrase.
+         *
+         * @param toCopy the object to copy
          * @adm.ignore
          */
         public Builder(BaseNounPhrase toCopy) {
             super(toCopy);
         }
 
+        /**
+         * Constructs the base noun phrase from the current state of the builder.
+         *
+         * @return the new analysis object
+        */
         public BaseNounPhrase build() {
             return new BaseNounPhrase(startOffset, endOffset, extendedProperties);
         }

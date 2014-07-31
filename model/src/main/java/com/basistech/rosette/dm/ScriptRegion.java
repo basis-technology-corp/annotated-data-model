@@ -42,7 +42,9 @@ public class ScriptRegion extends Attribute {
     }
 
     /**
-     * @return the script for this region.
+     * Returns the script for this region.
+     *
+     * @return the script for this region
      */
     public ISO15924 getScript() {
         return script;
@@ -89,10 +91,11 @@ public class ScriptRegion extends Attribute {
         private ISO15924 script;
 
         /**
-         * Construct a script region builder from the required values.
-         * @param startOffset the start offset in characters.
-         * @param endOffset the end offset in characters.
-         * @param script the script.
+         * Constructs a script region builder from the required values.
+         *
+         * @param startOffset the start offset in characters
+         * @param endOffset the end offset in characters
+         * @param script the script
          */
         public Builder(int startOffset, int endOffset, ISO15924 script) {
             super(startOffset, endOffset);
@@ -100,8 +103,9 @@ public class ScriptRegion extends Attribute {
         }
 
         /**
-         * Construct a builder from an existing script region.
-         * @param toCopy the object to copy.
+         * Constructs a builder from an existing script region.
+         *
+         * @param toCopy the object to copy
          * @adm.ignore
          */
         public Builder(ScriptRegion toCopy) {
@@ -110,8 +114,9 @@ public class ScriptRegion extends Attribute {
         }
 
         /**
-         * Build an immutable script region from the current state of this builder.
-         * @return the new region.
+         * Builds an immutable script region from the current state of this builder.
+         *
+         * @return the new region
          */
         public ScriptRegion build() {
             return new ScriptRegion(startOffset, endOffset, script, extendedProperties);
