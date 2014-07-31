@@ -26,7 +26,7 @@ import com.basistech.rosette.RosetteException;
  */
 public interface Annotator {
     /**
-     * Annotates raw text with attributes.  For example, as a base linguistics
+     * Annotates raw text with attributes.  For example, a base linguistics
      * annotator may accept raw text and annotate it with token attributes.
      *
      * @param input data to process
