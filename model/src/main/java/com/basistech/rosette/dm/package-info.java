@@ -18,8 +18,8 @@
  * The data model is a Java (and Json) representation of some text and some annotations on the text.
  * <h2>AnnotatedText</h2>
  * <p>
-  * The root of the model is the {@link com.basistech.rosette.dm.AnnotatedText} class.
- *  {@adm.java}this implements {@link java.lang.CharSequence}
+ *  The root of the model is the {@link com.basistech.rosette.dm.AnnotatedText} class.
+ *  {@adm.java}This implements {@link java.lang.CharSequence}
  *  and stores annotations that refer to subsequences.{@adm.java}
  * </p>
  * <h2>KnownAttribute</h2>
@@ -65,8 +65,8 @@
  * <p>
  *     To mitigate the possible unpleasant consequences resulting from version skew, this model includes an extensibility
  *     mechanism. {@link com.basistech.rosette.dm.BaseAttribute} contains a {@code Map<String, Object>}. This allows programs
- *     that have differing sets of annotations to communicate via Json. The {@link com.fasterxml.jackson.annotation.JsonAnySetter}
- *     and {@link com.fasterxml.jackson.annotation.JsonAnyGetter} annotations cause any items in the Json object to be mapped to
+ *     that have differing sets of annotations to communicate via Json. The {@code JsonAnySetter}
+ *     and {@code JsonAnyGetter} annotations cause any items in the Json object to be mapped to
  *     entries in the map. Entries in the map are serialized as keys in the object. Thus, a program can read in a
  *     serialized {@code AnnotatedText} that contains attributes with fields that it does not know about.
  * </p>
