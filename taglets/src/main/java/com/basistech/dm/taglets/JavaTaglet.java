@@ -71,10 +71,7 @@ public class JavaTaglet implements Taglet {
      */
     public static void register(Map<String, Taglet> tagletMap) {
         JavaTaglet tag = new JavaTaglet();
-        Taglet t = tagletMap.get(tag.getName());
-        if (t != null) {
-            tagletMap.remove(tag.getName());
-        }
+        tagletMap.remove(tag.getName());
         tagletMap.put(tag.getName(), tag);
     }
 
