@@ -19,6 +19,10 @@ import com.google.common.collect.Lists;
 
 import java.util.List;
 
+/**
+ * <code>Mention</code> class for internal use only.  Not to be confused
+ * with the public <code>EntityMention</code> class.
+ */
 public class Mention {
     private final TextWrapper textWrapper;
     private final int entityIndex;

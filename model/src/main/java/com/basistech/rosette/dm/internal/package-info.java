@@ -12,13 +12,10 @@
  ** 7-104.9(a).
  ******************************************************************************/
 
-package com.basistech.rosette.dm;
-
 /**
- * Class used for future-proof representation of attributes in json that we
- * don't have classes for.
- * @adm.ignore
+ * Internal classes.
+ *
+ * This package contains internal, though public, classes that are not meant to
+ * be used by clients of the ADM.  Use at your peril - they may change at will.
  */
-class UnknownAttribute extends BaseAttribute {
-    //
-}
+package com.basistech.rosette.dm.internal;

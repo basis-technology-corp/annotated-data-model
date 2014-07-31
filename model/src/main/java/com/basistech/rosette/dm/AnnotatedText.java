@@ -23,15 +23,23 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * The root of the  data model. A AnnotatedText is blob of text and its attributes.
- * AnnotatedText objects implement {@link java.lang.CharSequence}, to give direct access
+ * The root of the data model. An {@code AnnotatedText} is blob of text and its attributes.
+ * {@code AnnotatedText} objects implement {@link java.lang.CharSequence}, to give direct access
  * to the text. The attributes are available from {@link #getAttributes()}, as well as from
  * some convenience accessors.
- * <br/>
+ * <p/>
+ * Generally, offsets used in the data model are character offsets into the
+ * original text.  Offset ranges are always half-open.  For example:
+ * <pre>
+ * 012345678901
+ * Hello world
+ * </pre>
+ * The token "Hello" has start offset 0 and end offset 5.
+ * </p>
  * A note on serialization: due to the internal structure of this class and the classes
  * that make up the model, we do not recommend that applications serialize this to
  * Json (or XML or other representations) by applying a reflection-based toolkit 'as-is'.
- * For Json, the 'adm-json' module provides
+ * For Json, and Java, the 'adm-json' module provides
  * {@linkplain com.basistech.rosette.dm.AnnotatedDataModelModule#setupObjectMapper(com.fasterxml.jackson.databind.ObjectMapper)},
  * to set up customized support.  For example:
  * <pre>
@@ -56,14 +64,19 @@ public class AnnotatedText implements CharSequence {
     }
 
     /**
-     * @return the character data for this text.
+     * Returns the character data for this text.
+     *
+     * @return the character data for this text
+     * @adm.ignore
      */
     public CharSequence getData() {
         return data;
     }
 
     /**
-     * @return the length.
+     * Returns the length of the character data for this text.
+     *
+     * @return the length of the character data for this text.
      * @see CharSequence#length()
      */
     public int length() {
@@ -71,8 +84,9 @@ public class AnnotatedText implements CharSequence {
     }
 
     /**
-     * Return one character.
-     * @param index the index.
+     * Returns the character at the given index.
+     *
+     * @param index the index
      * @return the character
      * @see CharSequence#charAt(int)
      */
@@ -81,10 +95,11 @@ public class AnnotatedText implements CharSequence {
     }
 
     /**
-     * Return a sub-sequence of the text.
-     * @param start start index.
-     * @param end end index.
-     * @return the sub-sequence.
+     * Returns a sub-sequence of the text.
+     *
+     * @param start start index
+     * @param end end index
+     * @return the sub-sequence
      * @see CharSequence#subSequence(int, int)
      */
     public CharSequence subSequence(int start, int end) {
@@ -92,24 +107,33 @@ public class AnnotatedText implements CharSequence {
     }
 
     /**
-     * @return an immutable map of metadata associated with the text.
+     * Returns document-level metadata.  Metadata keys are simple strings;
+     * values are lists of strings.
+     *
+     * @return map of metadata associated with the document
+     * @adm.ignore
      */
     public Map<String, List<String>> getDocumentMetadata() {
         return documentMetadata;
     }
 
     /**
-     * @return all of the annotations on this text. For the defined attributes,
+     * Returns all of the annotations on this text. For the defined attributes,
      * the keys will be values from {@link AttributeKey#key()}. The values
      * are polymorphic; the subclass of {@link BaseAttribute} depends
      * on the attribute.
+     *
+     * @return all of the annotations on this text
+     * @adm.ignore
      */
     public Map<String, BaseAttribute> getAttributes() {
         return attributes;
     }
 
     /**
-     * @return the list of tokens.
+     * Returns the list of tokens.
+     *
+     * @return the list of tokens
      */
     @SuppressWarnings("unchecked")
     public ListAttribute<Token> getTokens() {
@@ -117,7 +141,9 @@ public class AnnotatedText implements CharSequence {
     }
 
     /**
-     * @return a list of language detections for regions of the text.
+     * Returns the list of language regions.
+     *
+     * @return the list of language regions
      */
     @SuppressWarnings("unchecked")
     public ListAttribute<LanguageDetection> getLanguageDetectionRegions() {
@@ -125,14 +151,18 @@ public class AnnotatedText implements CharSequence {
     }
 
     /**
-     * @return a language detection result for the entire text.
+     * Returns the language for the entire text.
+     *
+     * @return the language for the entire text
      */
     public LanguageDetection getWholeTextLanguageDetection() {
         return (LanguageDetection)attributes.get(AttributeKey.LANGUAGE_DETECTION.key());
     }
 
     /**
-     * @return the list of entity mentions.
+     * Returns the list of entity mentions.
+     *
+     * @return the list of entity mentions
      */
     @SuppressWarnings("unchecked")
     public ListAttribute<EntityMention> getEntityMentions() {
@@ -140,7 +170,9 @@ public class AnnotatedText implements CharSequence {
     }
 
     /**
-     * @return the list of resolved entities.
+     * Returns the list of resolved entities.
+     *
+     * @return the list of resolved entities
      */
     @SuppressWarnings("unchecked")
     public ListAttribute<ResolvedEntity> getResolvedEntities() {
@@ -148,7 +180,9 @@ public class AnnotatedText implements CharSequence {
     }
 
     /**
-     * @return the list of script regions.
+     * Returns the list of script regions.
+     *
+     * @return the list of script regions
      */
     @SuppressWarnings("unchecked")
     public ListAttribute<ScriptRegion> getScriptRegions() {
@@ -156,7 +190,9 @@ public class AnnotatedText implements CharSequence {
     }
 
     /**
-     * @return the list of sentences.
+     * Returns the list of sentences.
+     *
+     * @return the list of sentences
      */
     @SuppressWarnings("unchecked")
     public ListAttribute<Sentence> getSentences() {
@@ -164,7 +200,9 @@ public class AnnotatedText implements CharSequence {
     }
 
     /**
-     * @return the list of base noun phrases.
+     * Returns the list of base noun phrases.
+     *
+     * @return the list of base noun phrases
      */
     @SuppressWarnings("unchecked")
     public ListAttribute<BaseNounPhrase> getBaseNounPhrases() {
@@ -172,7 +210,9 @@ public class AnnotatedText implements CharSequence {
     }
 
     /**
-     * @return the textual data as a string.
+     * Returns the textual data as a string.
+     *
+     * @return the textual data as a string
      * @see CharSequence#toString()
      */
     @Override
@@ -188,14 +228,17 @@ public class AnnotatedText implements CharSequence {
         private final Map<String, BaseAttribute> attributes = Maps.newHashMap();
         private final Map<String, List<String>> documentMetadata = Maps.newHashMap();
 
+        /**
+         * Constructs a builder.  The initial data is the empty string.
+         */
         public Builder() {
-            data = ""; // default to an empty string.
+            data = "";
         }
 
         /**
-         * Create a builder from an existing {@link com.basistech.rosette.dm.AnnotatedText}.
+         * Constructs a builder from an existing {@link com.basistech.rosette.dm.AnnotatedText}.
          *
-         * @param startingPoint source object to copy.
+         * @param startingPoint source object to copy
          */
         public Builder(AnnotatedText startingPoint) {
             this.data = startingPoint.data;
@@ -203,9 +246,8 @@ public class AnnotatedText implements CharSequence {
             this.documentMetadata.putAll(startingPoint.documentMetadata);
         }
 
-
         /**
-         * Create a builder over some character data.
+         * Constructs a builder over some character data.
          *
          * @param data the data. This replaces and previous setting.
          * @return this
@@ -215,16 +257,18 @@ public class AnnotatedText implements CharSequence {
             return this;
         }
 
-
         /**
-         * @return the current data.
+         * Returns the current character data.
+         *
+         * @return the current character data
          */
         public CharSequence data() {
             return data;
         }
 
         /**
-         * Attach a list of base noun phrases.
+         * Attaches a list of base noun phrases.
+         *
          * @param baseNounPhrases the base noun phrases
          * @return this
          */
@@ -234,7 +278,8 @@ public class AnnotatedText implements CharSequence {
         }
 
         /**
-         * Attach a list of entity mentions.
+         * Attaches a list of entity mentions.
+         *
          * @param entityMentions the entity mentions
          * @return this
          */
@@ -244,7 +289,8 @@ public class AnnotatedText implements CharSequence {
         }
 
         /**
-         * Attach a list of resolved entities.
+         * Attaches a list of resolved entities.
+         *
          * @param resolvedEntities the resolved entities
          * @return this
          */
@@ -254,8 +300,9 @@ public class AnnotatedText implements CharSequence {
         }
 
         /**
-         * Attach a list of language detections.
-         * @param languageDetectionRegions the language detection regions.
+         * Attaches a list of language detections.
+         *
+         * @param languageDetectionRegions the language detections
          * @return this
          */
         public Builder languageDetectionRegions(ListAttribute<LanguageDetection> languageDetectionRegions) {
@@ -264,7 +311,8 @@ public class AnnotatedText implements CharSequence {
         }
 
         /**
-         * Attach a whole-document language detection
+         * Attaches a whole-document language detection.
+         *
          * @param languageDetection the language detection
          * @return this
          */
@@ -274,7 +322,8 @@ public class AnnotatedText implements CharSequence {
         }
 
         /**
-         * Attach a list of script regions
+         * Attaches a list of script regions.
+         *
          * @param scriptRegions the script regions
          * @return this
          */
@@ -284,7 +333,8 @@ public class AnnotatedText implements CharSequence {
         }
 
         /**
-         * Attach a list of sentences
+         * Attaches a list of sentences.
+         *
          * @param sentences the sentences
          * @return this
          */
@@ -294,7 +344,8 @@ public class AnnotatedText implements CharSequence {
         }
 
         /**
-         * Attach a list of tokens
+         * Attaches a list of tokens.
+         *
          * @param tokens the tokens
          * @return this
          */
@@ -304,7 +355,7 @@ public class AnnotatedText implements CharSequence {
         }
 
         /**
-         * Add an attribute.
+         * Adds an attribute.
          *
          * @param key       the attribute key. See {@link AttributeKey}.
          * @param attribute the attribute. Replaces any previous value for this key.
@@ -316,7 +367,7 @@ public class AnnotatedText implements CharSequence {
         }
 
         /**
-         * Add an attribute.
+         * Adds an attribute.
          *
          * @param key       the attribute key.
          * @param attribute the attribute. Replaces any previous value for this key.
@@ -327,17 +378,17 @@ public class AnnotatedText implements CharSequence {
             return this;
         }
 
-
-
         /**
-         * @return the current set of attributes.
+         * Returns the current attributes.
+         *
+         * @return the current attributes
          */
         public Map<String, BaseAttribute> attributes() {
             return attributes;
         }
 
         /**
-         * Add an entry to the document metadata. Replaces any previous value for this key.
+         * Adds an entry to the document metadata. Replaces any previous value for this key.
          *
          * @param key key
          * @param value value
@@ -349,12 +400,12 @@ public class AnnotatedText implements CharSequence {
         }
 
         /**
-         * Add an entry to the document metadata. Replaces any previous value for this key.
+         * Adds an entry to the document metadata. Replaces any previous value for this key.
          *
          * @param key   key
          * @param value A single string value. The result of this call is to store a list containing this value
          *              as the value for this key.
-         * @return this.
+         * @return this
          */
         public Builder documentMetadata(String key, String value) {
             documentMetadata.put(key, Lists.newArrayList(value));
@@ -362,16 +413,18 @@ public class AnnotatedText implements CharSequence {
         }
 
         /**
-         * @return the current set of documentMetadata.
+         * Returns the current document metadata.
+         *
+         * @return the current document metadata
          */
         public Map<String, List<String>> documentMetadata() {
             return documentMetadata;
         }
 
         /**
-         * Construct a {@link AnnotatedText} object from the settings in this builder.
+         * Constructs a {@link AnnotatedText} object from the settings in this builder.
          *
-         * @return the new object.
+         * @return the new object
          */
         public AnnotatedText build() {
             return new AnnotatedText(data, attributes, documentMetadata);

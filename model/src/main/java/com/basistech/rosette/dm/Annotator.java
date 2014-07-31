@@ -17,25 +17,31 @@ package com.basistech.rosette.dm;
 import com.basistech.rosette.RosetteException;
 
 /**
- * An Annotator accepts a buffer of text and returns an Annotated Data model
- * that describes the scripts, tokens, and morphological analyses of the data.
- * A single annotator operates in one language; while the Annotated Data Model
- * supports multi-language texts, this interface does not (yet) provide support.
+ * An {@code Annotator} annotates text with attributes.  Typical annotations
+ * are tokens, script/language regions, morphological analyses, sentences,
+ * base noun phrases, and entity mentions.  A single annotator operates in one
+ * language; while the Annotated Data Model supports multi-language texts, this
+ * interface does not (yet) provide support.
  */
 public interface Annotator {
     /**
-     * Accept text, return annotated data model.
-     * @param input data to process.
-     * @return annotated data model that annotates the text.
+     * Annotates raw text with attributes.  For example, as a base linguistics
+     * annotator may accept raw text and annotate it with token attributes.
+     *
+     * @param input data to process
+     * @return annotated data
      * @throws RosetteException
      */
     AnnotatedText annotate(CharSequence input) throws RosetteException;
 
     /**
-     * Accept an Annotated Data Model text object, processes it, returns
-     * a new Annotated Data Model with information from Base Linguistics.
-     * @param input the input data.
-     * @return annotated data model that annotates the text.
+     * Annotates an existing text object with additional attributes.
+     * For example, an entity annotator may take the output of a base
+     * linguistics annotator (which has token annotations) and add additional
+     * entity mention attributes.
+     *
+     * @param input data to process
+     * @return annotated data
      * @throws RosetteException
      */
     AnnotatedText annotate(AnnotatedText input) throws RosetteException;

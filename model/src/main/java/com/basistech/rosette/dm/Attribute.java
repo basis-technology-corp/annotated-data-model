@@ -19,8 +19,9 @@ import com.google.common.base.Objects;
 import java.util.Map;
 
 /**
- * Base class for attributes that span a range of text.
-  */
+ * Base class for attributes that span a range of text.  These attributes
+ * have a start and end offset.
+ */
 public abstract class Attribute extends BaseAttribute {
     protected final int startOffset;
     protected final int endOffset;
@@ -43,10 +44,20 @@ public abstract class Attribute extends BaseAttribute {
         endOffset = 0;
     }
 
+    /**
+     * Returns the start character offset.
+     *
+     * @return the start character offset
+     */
     public int getStartOffset() {
         return startOffset;
     }
 
+    /**
+     * Return the end character offset.
+     *
+     * @return the end character offset
+     */
     public int getEndOffset() {
         return endOffset;
     }
@@ -90,28 +101,57 @@ public abstract class Attribute extends BaseAttribute {
         return result;
     }
 
+    /**
+     * Base class for builders for attributes that inherit from {@link com.basistech.rosette.dm.Attribute}.
+     */
     public abstract static class Builder extends BaseAttribute.Builder {
         protected int startOffset;
         protected int endOffset;
 
+        /**
+         * Constructs a builder with offsets.
+         *
+         * @param startOffset start characters offset
+         * @param endOffset end character offset
+         */
         public Builder(int startOffset, int endOffset) {
             super();
             this.startOffset = startOffset;
             this.endOffset = endOffset;
         }
 
+        /**
+         * Constructs a builder by copying values from an existing object.
+         *
+         * @param toCopy the object to copy
+         * @adm.ignore
+         */
         public Builder(Attribute toCopy) {
             super(toCopy);
             this.startOffset = toCopy.startOffset;
             this.endOffset = toCopy.endOffset;
         }
 
-        public void startOffset(int startOffset) {
+        /**
+         * Specifies the start character offset.
+         *
+         * @param startOffset the start character offset
+         * @return this
+         */
+        public Builder startOffset(int startOffset) {
             this.startOffset = startOffset;
+            return this;
         }
 
-        public void setEndOffset(int endOffset) {
+        /**
+         * Specifies the end character offset.
+         *
+         * @param endOffset the end offset
+         * @return this
+         */
+        public Builder setEndOffset(int endOffset) {
             this.endOffset = endOffset;
+            return this;
         }
     }
 }

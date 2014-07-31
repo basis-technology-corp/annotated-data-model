@@ -21,7 +21,12 @@ import com.google.common.collect.Lists;
 import java.util.List;
 
 /**
- * Chinese and Japanese share the addition of readings to the basic MorphoAnalysis data model.
+ * Morphological analysis objects for Chinese and Japanese.
+ * Chinese and Japanese add the concept of readings
+ * to {@link com.basistech.rosette.dm.MorphoAnalysis}.  Readings provide
+ * the pronunciation of ideographic strings.  They are typically written in
+ * Pinyin for Chinese and Hiragana for Japanese.  A single surface form may have
+ * multiple possible readings.
  */
 public class HanMorphoAnalysis extends MorphoAnalysis {
     private final List<String> readings;
@@ -39,6 +44,11 @@ public class HanMorphoAnalysis extends MorphoAnalysis {
         readings = ImmutableList.of();
     }
 
+    /**
+     * Returns the readings.
+     *
+     * @return the readings
+     */
     public List<String> getReadings() {
         return readings;
     }
@@ -77,18 +87,49 @@ public class HanMorphoAnalysis extends MorphoAnalysis {
                 .add("readings", readings);
     }
 
+    /**
+     * A builder for {@link com.basistech.rosette.dm.HanMorphoAnalysis}.
+     */
     public static class Builder extends MorphoAnalysis.Builder {
         private List<String> readings;
 
+        /**
+         * Constructs a builder with default values.
+         */
         public Builder() {
             super();
             readings = Lists.newArrayList();
         }
 
-        public void addReading(String reading) {
-            readings.add(reading);
+        /**
+         * Constructs a builder initialized from an existing analysis.
+         *
+         * @param toCopy the analysis to copy
+         * @adm.ignore
+         */
+        public Builder(HanMorphoAnalysis toCopy) {
+            super(toCopy);
+            for (String reading : toCopy.getReadings()) {
+                addReading(reading);
+            }
         }
 
+        /**
+         * Adds a reading.
+         *
+         * @param reading the reading
+         * @return this
+         */
+        public Builder addReading(String reading) {
+            readings.add(reading);
+            return this;
+        }
+
+        /**
+         * Builds an immutable analysis object from the current state of this builder.
+         *
+         * @return the analysis
+         */
         public HanMorphoAnalysis build() {
             return new HanMorphoAnalysis(partOfSpeech, lemma, components, raw, readings);
         }
