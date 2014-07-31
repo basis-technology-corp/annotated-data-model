@@ -30,7 +30,8 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-javadoc-plugin</artifactId>
                     <configuration>
-                      <!-- There is a custom tag used to note that
+                      <show>public</show>
+                      <!-- adm.ignore is a custom tag used to note that
                            some things don't get seen by codegen. -->
                         <tags>
                             <tag>
@@ -38,6 +39,16 @@
                                 <placement>X</placement>
                             </tag>
                         </tags>
+                        <taglets>
+                          <taglet>
+                            <tagletClass>com.basistech.dm.taglets.JavaTaglet</tagletClass>
+                          </taglet>
+                        </taglets>
+                        <tagletArtifact>
+                          <groupId>${project.groupId}</groupId>
+                          <artifactId>adm-taglets</artifactId>
+                          <version>${project.version}</version>
+                        </tagletArtifact>
                     </configuration>
                 </plugin>
             </plugins>

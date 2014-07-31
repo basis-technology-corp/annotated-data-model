@@ -100,7 +100,7 @@ public class Token extends Attribute {
      * is Arabic or Chinese, some of the items in this list may be {@link com.basistech.rosette.dm.MorphoAnalysis}, <strong>not</strong>
      * the corresponding subclass. Callers must use instanceof to check if a particular item is of the subclass.
      *
-     * @eturn the list of analyses
+     * @return the list of analyses
      */
     public List<MorphoAnalysis> getAnalyses() {
         return analyses;

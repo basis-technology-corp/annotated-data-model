@@ -18,8 +18,9 @@
  * The data model is a Java (and Json) representation of some text and some annotations on the text.
  * <h2>AnnotatedText</h2>
  * <p>
-  * The root of the model is the {@link com.basistech.rosette.dm.AnnotatedText} class; this implements {@link java.lang.CharSequence}
- * and stores annotations that refer to subsequences.
+ *  The root of the model is the {@link com.basistech.rosette.dm.AnnotatedText} class.
+ *  {@adm.java}This implements {@link java.lang.CharSequence}
+ *  and stores annotations that refer to subsequences.{@adm.java}
  * </p>
  * <h2>KnownAttribute</h2>
  * <p>
@@ -32,13 +33,14 @@
  *     Thus, attributes that refer to the {@code AnnotatedText} as a whole inherit from {@code BaseAttribute}, while attributes
  *     that refer to subsequences of text inherit from {@code Attribute}.
  * </p>
+ * {@adm.java}
  * <h2>RawData</h2>
  *     <p>In some cases, applications of this data model may also need to represent initial raw data.
  *     The {@link com.basistech.rosette.dm.RawData}
  *     class supports that usage. {@code RawData} stores a {@link java.nio.ByteBuffer} and a {@code Map<String, <List<String>>} of
  *     metadata. There is no connection in the code between {@code AnnotatedText} and {@code RawData}.
  *     </p>
- * </h2>
+ *     {@adm.java}
  * <h2>Immutability</h2>
  * <p>
  *     All of the classes in this package are immutable. If a program needs to modify, it needs to construct new classes.
@@ -51,6 +53,7 @@
  *     Because these classes are immutable, they have many arguments to their constructors. Each class has a
  *     nested {@code Builder} class to avoid this inconvenience; the constructors are thus not public.
  * </p>
+ * {@adm.java}
  * <h2>Extensibility Model</h2>
  * <p>
  *     We could have designed this data model to defer all the binding until runtime -- essentially, a giant
@@ -62,30 +65,27 @@
  * <p>
  *     To mitigate the possible unpleasant consequences resulting from version skew, this model includes an extensibility
  *     mechanism. {@link com.basistech.rosette.dm.BaseAttribute} contains a {@code Map<String, Object>}. This allows programs
- *     that have differing sets of annotations to communicate via Json. The {@link com.fasterxml.jackson.annotation.JsonAnySetter}
- *     and {@link com.fasterxml.jackson.annotation.JsonAnyGetter} annotations cause any items in the Json object to be mapped to
+ *     that have differing sets of annotations to communicate via Json. The {@code JsonAnySetter}
+ *     and {@code JsonAnyGetter} annotations cause any items in the Json object to be mapped to
  *     entries in the map. Entries in the map are serialized as keys in the object. Thus, a program can read in a
  *     serialized {@code AnnotatedText} that contains attributes with fields that it does not know about.
  * </p>
- * <p>
- *     This scheme also handles 'future-proofing' for new attributes. If the deserialization process encounters an attribute
- *     it does not know, it creates an instance of a non-public class that extends {@link com.basistech.rosette.dm.BaseAttribute}.
- *     All of the information for the attribute is delivered to the extended properties of this object.
- * </p>
+ *
  * <h2>Serialization</h2>
  * <p>
  *     All of the classes in here support json serialization and deserialization via Jackson 2.4.x. However, they require
  *     some customization to get a correct and efficient representation.
  *     This customization is provided in a separate module: adm-json.
- *     Applications should call
- *     {@link com.basistech.rosette.dm.AnnotatedDataModelModule#setupObjectMapper(com.fasterxml.jackson.databind.ObjectMapper)}
- *     to configure a Jackson {@link com.fasterxml.jackson.databind.ObjectMapper} to use these customizations.
- *     For example:
- *     <pre>
- *     ObjectMapper mapper = AnnotatedDataModelModule.setupObjectMapper(new ObjectMapper());
- *     </pre>
- *     Note that the customizations are designed to support serializing and deserializing entire {@link com.basistech.rosette.dm.AnnotatedText}
- *     object, not any of the interior classes.
  * </p>
+ * {@adm.java}
  */
 package com.basistech.rosette.dm;
+
+/*
+The following is not true (yet) but is preserved here for future work.
+<p>
+ *     This scheme also handles 'future-proofing' for new attributes. If the deserialization process encounters an attribute
+ *     it does not know, it creates an instance of a non-public class that extends {@link com.basistech.rosette.dm.BaseAttribute}.
+ *     All of the information for the attribute is delivered to the extended properties of this object.
+ * </p>
+ */

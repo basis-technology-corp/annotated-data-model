@@ -21,5 +21,10 @@
  * {@link com.basistech.rosette.dm.AnnotatedDataModelModule#setupObjectMapper(com.fasterxml.jackson.databind.ObjectMapper)}
  * to apply the module to an {@link com.fasterxml.jackson.databind.ObjectMapper}. Note that this module
  * depends on functionality that was introduced into Jackson at version 2.4.0.
+ *
+ * For example:
+ * <pre>
+ * ObjectMapper mapper = AnnotatedDataModelModule.setupObjectMapper(new ObjectMapper());
+ * </pre>
  */
 package com.basistech.rosette.dm;
