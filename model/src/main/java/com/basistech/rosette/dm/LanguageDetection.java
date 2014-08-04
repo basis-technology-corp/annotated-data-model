@@ -280,7 +280,7 @@ public class LanguageDetection extends Attribute {
 
     @Override
     protected Objects.ToStringHelper toStringHelper() {
-        return Objects.toStringHelper(this)
+        return super.toStringHelper()
                 .add("detectionResults", detectionResults);
     }
 
