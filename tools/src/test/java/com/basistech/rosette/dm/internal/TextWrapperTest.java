@@ -204,4 +204,28 @@ public class TextWrapperTest {
         Mention mention = wrapper.getMention(0);
         assertEquals("Bill", mention.getNormalizedText());
     }
+
+    @Test
+    public void testSentDetection() {
+        int [] sentenceBoundaries = {29, 40, 66, 95, 108, 133, 150, 208, 234};
+        assertEquals(0, TextWrapper.sentDetectionUsingBinarySearch(sentenceBoundaries, 0));
+        assertEquals(0, TextWrapper.sentDetectionUsingBinarySearch(sentenceBoundaries, -10));
+        assertEquals(1, TextWrapper.sentDetectionUsingBinarySearch(sentenceBoundaries, 29));
+        assertEquals(7, TextWrapper.sentDetectionUsingBinarySearch(sentenceBoundaries, 163));
+        assertEquals(8, TextWrapper.sentDetectionUsingBinarySearch(sentenceBoundaries, 233));
+        assertEquals(9, TextWrapper.sentDetectionUsingBinarySearch(sentenceBoundaries, 500));
+    }
+
+    @Test
+    public void testGetSentenceForToken() throws IOException {
+        // Bill Clinton was the 42nd president.  Clinton's wife Hillary is
+        // currently Secretary of State.  Hillary Clinton ran for president
+        // unsuccessfully.
+        AbstractResultAccess resultAccess = getResults("simple_doc0.json");
+        TextWrapper tw = new TextWrapper(AraDmConverter.convert(resultAccess));
+        assertEquals(0, tw.getSentenceForToken(0));
+        assertEquals(0, tw.getSentenceForToken(6));
+        assertEquals(1, tw.getSentenceForToken(7));
+        assertEquals(tw.getText().getSentences().size(), tw.getSentenceForToken(100));
+    }
 }

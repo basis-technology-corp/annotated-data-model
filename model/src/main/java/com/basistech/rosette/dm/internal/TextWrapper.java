@@ -435,4 +435,44 @@ public class TextWrapper {
         }
         return result;
     }
+
+    /**
+     * Returns the sentence number containing the token.
+     *
+     * @param tokenIndex token index
+     * @return sentence number of token. This is guaranteed to be >= 0.
+     */
+    public int getSentenceForToken(int tokenIndex) {
+        return sentDetectionUsingBinarySearch(sentenceTokenEnds, tokenIndex);
+    }
+
+    /**
+     * Provides a fast way to get a sentence number for a given index. For example,
+     * if sentenceBounderies = {5, 11, 20} then for the token in index 12 the method returns 2
+     * (i.e., the third sentence).
+     * @param sentenceBoundaries
+     * @param tokenIndex
+     * @return The index in sentenceBoundaries that refers to the first token of tokenIndex's next sentence
+     * (which we refer to as sentence number). Note that the method returns sentenceBoundaries.length if tokenIndex
+     * is greater than the last index.
+     */
+    static int sentDetectionUsingBinarySearch(int[] sentenceBoundaries, int tokenIndex) {
+        int low = 0;
+        int high = sentenceBoundaries.length - 1;
+        int mid;
+
+        while (low <= high) {
+            mid = (low + high) / 2;
+
+            if (sentenceBoundaries[mid] < tokenIndex) {
+                low = mid + 1;
+            } else if (sentenceBoundaries[mid] > tokenIndex) {
+                high = mid - 1;
+            } else { //exact match
+                return mid + 1; //plus one since each sentence boundary refers to the next sentence
+            }
+        }
+
+        return high < 0 ? 0 : low;
+    }
 }
