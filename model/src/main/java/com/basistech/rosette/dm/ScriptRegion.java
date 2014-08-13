@@ -80,7 +80,7 @@ public class ScriptRegion extends Attribute {
 
     @Override
     protected Objects.ToStringHelper toStringHelper() {
-        return Objects.toStringHelper(this)
+        return super.toStringHelper()
                 .add("script", script);
     }
 
