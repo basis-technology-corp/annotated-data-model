@@ -61,6 +61,8 @@ public class TextWrapper {
      * Constructs from <code>AnnotatedText</code>.
      *
      * @param text text object to wrap
+     * @throws java.lang.IllegalArgumentException if the text object contains entity
+     * mentions but no tokens
      */
     public TextWrapper(AnnotatedText text) {
         this.text = text;
@@ -98,6 +100,9 @@ public class TextWrapper {
 
         int maxMentionChainId = -1;
         if (text.getEntityMentions() != null) {
+            if (text.getEntityMentions().size() > 0 && (text.getTokens() == null || text.getTokens().isEmpty())) {
+                throw new IllegalArgumentException("If text has entityMentions it must also have tokens.");
+            }
             for (int i = 0; i < text.getEntityMentions().size(); i++) {
                 EntityMention mention = text.getEntityMentions().get(i);
                 int startTokenIndex = startCharOffsetToTokenIndex.get(mention.getStartOffset());

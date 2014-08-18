@@ -228,4 +228,17 @@ public class TextWrapperTest {
         assertEquals(1, tw.getSentenceForToken(7));
         assertEquals(tw.getText().getSentences().size(), tw.getSentenceForToken(100));
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testEntitiesWithoutTokens() throws Exception {
+        AnnotatedText.Builder builder = new AnnotatedText.Builder();
+        //            012345678901234567890123456789012345678901234567890
+        builder.data("George Washington, John Adams. Hello there George.");
+        ListAttribute.Builder<EntityMention> emListBuilder = new ListAttribute.Builder<EntityMention>(EntityMention.class);
+        emListBuilder.add(new EntityMention.Builder(0, 17, "PERSON").build());
+        emListBuilder.add(new EntityMention.Builder(19, 29, "PERSON").build());
+        emListBuilder.add(new EntityMention.Builder(43, 49, "PERSON").build());
+        builder.entityMentions(emListBuilder.build());
+        new TextWrapper(builder.build());
+    }
 }
