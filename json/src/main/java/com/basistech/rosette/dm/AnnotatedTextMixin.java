@@ -18,6 +18,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.annotation.JsonTypeIdResolver;
 
 import java.util.List;
@@ -26,6 +27,7 @@ import java.util.Map;
 /**
  * {@link com.basistech.rosette.dm.AnnotatedText}.
  */
+@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public abstract class AnnotatedTextMixin {
 
     @JsonCreator
