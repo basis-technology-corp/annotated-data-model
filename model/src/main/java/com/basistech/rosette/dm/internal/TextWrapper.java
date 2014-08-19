@@ -85,6 +85,11 @@ public class TextWrapper {
         }
 
         if (text.getSentences() != null) {
+            if (text.getTokens() == null) {
+                // I think a whitespace doc could produce a sentence with zero tokens
+                // so we only check null, not empty.
+                throw new IllegalArgumentException("If text has sentences it must also have tokens.");
+            }
             sentenceTokenEnds = new int[text.getSentences().size()];
             int tokenIndex = 0;
             for (int sentIndex = 0; sentIndex < sentenceTokenEnds.length; sentIndex++) {
@@ -100,7 +105,7 @@ public class TextWrapper {
 
         int maxMentionChainId = -1;
         if (text.getEntityMentions() != null) {
-            if (text.getEntityMentions().size() > 0 && (text.getTokens() == null || text.getTokens().isEmpty())) {
+            if (!text.getEntityMentions().isEmpty() && (text.getTokens() == null || text.getTokens().isEmpty())) {
                 throw new IllegalArgumentException("If text has entityMentions it must also have tokens.");
             }
             for (int i = 0; i < text.getEntityMentions().size(); i++) {

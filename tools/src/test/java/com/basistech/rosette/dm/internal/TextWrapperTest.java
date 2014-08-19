@@ -22,6 +22,7 @@ import com.basistech.rosette.dm.AnnotatedText;
 import com.basistech.rosette.dm.EntityMention;
 import com.basistech.rosette.dm.ResolvedEntity;
 import com.basistech.rosette.dm.ListAttribute;
+import com.basistech.rosette.dm.Sentence;
 import com.basistech.rosette.dm.Token;
 import com.basistech.rosette.dm.tools.AraDmConverter;
 import com.google.common.collect.Lists;
@@ -239,6 +240,17 @@ public class TextWrapperTest {
         emListBuilder.add(new EntityMention.Builder(19, 29, "PERSON").build());
         emListBuilder.add(new EntityMention.Builder(43, 49, "PERSON").build());
         builder.entityMentions(emListBuilder.build());
+        new TextWrapper(builder.build());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testSentencesWithoutTokens() throws Exception {
+        AnnotatedText.Builder builder = new AnnotatedText.Builder();
+        builder.data("foo");
+        ListAttribute.Builder<Sentence> sentListBuilder = new ListAttribute.Builder<Sentence>(Sentence.class);
+        sentListBuilder.add(new Sentence.Builder(0, 3).build());
+        builder.sentences(sentListBuilder.build());
+        builder.build();
         new TextWrapper(builder.build());
     }
 }
