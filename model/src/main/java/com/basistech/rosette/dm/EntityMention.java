@@ -23,16 +23,16 @@ import java.util.Map;
  */
 public class EntityMention extends Attribute {
     private final String entityType;
-    private final double confidence;
-    private final int coreferenceChainId;
-    private final int flags;
+    private final Double confidence;
+    private final Integer coreferenceChainId;
+    private final Integer flags; // allow to be null if none!
     private final String source;
     private final String normalized;
 
     EntityMention(int startOffset, int endOffset,
                   String entityType,
-                  int coreferenceChainId,
-                  double confidence, int flags,
+                  Integer coreferenceChainId,
+                  Double confidence, Integer flags,
                   String source, String normalized,
                   Map<String, Object> extendedProperties) {
         super(startOffset, endOffset, extendedProperties);
@@ -47,9 +47,9 @@ public class EntityMention extends Attribute {
     EntityMention(int startOffset,
                   int endOffset,
                   String entityType,
-                  int coreferenceChainId,
-                  double confidence,
-                  int flags,
+                  Integer coreferenceChainId,
+                  Double confidence,
+                  Integer flags,
                   String source,
                   String normalized) {
         super(startOffset, endOffset);
@@ -64,9 +64,9 @@ public class EntityMention extends Attribute {
     protected EntityMention() {
         // make jackson happy.
         entityType = null;
-        confidence = 0.0;
-        coreferenceChainId = -1;
-        flags = 0;
+        confidence = null;
+        coreferenceChainId = null;
+        flags = null;
         source = null;
         normalized = null;
     }
@@ -84,9 +84,10 @@ public class EntityMention extends Attribute {
     /**
      * Returns the confidence of the entity extractor in identifying this mention.
      *
-     * @return the confidence of the entity extractor in identifying this mention
+     * @return the confidence of the entity extractor in identifying this mention.
+     * This value will be null if there is no calculated confidence value.
      */
-    public double getConfidence() {
+    public Double getConfidence() {
         return confidence;
     }
 
@@ -97,9 +98,9 @@ public class EntityMention extends Attribute {
      * index (into the {@code EntityMention} list) of the head mention of the
      * chain.  The head mention is the (first) longest mention in the chain.
      *
-     * @return the coreference chain id, or -1 if chaining has not been applied
+     * @return the coreference chain id, or null if chaining has not been applied
      */
-    public int getCoreferenceChainId() {
+    public Integer getCoreferenceChainId() {
         return coreferenceChainId;
     }
 
@@ -107,9 +108,10 @@ public class EntityMention extends Attribute {
      * Returns flags associated with a mention. Interpretation of the flags varies
      * by extractor and language.
      *
-     * @return flags associated with the mention
+     * @return flags associated with the mention. These may be null
+     * (rather than 0) if there are no flags.
      */
-    public int getFlags() {
+    public Integer getFlags() {
         return flags;
     }
 
@@ -202,9 +204,9 @@ public class EntityMention extends Attribute {
      */
     public static class Builder extends Attribute.Builder {
         private String entityType;
-        private double confidence;
-        private int coreferenceChainId = -1;
-        private int flags;
+        private Double confidence;
+        private Integer coreferenceChainId;
+        private Integer flags;
         private String source;
         private String normalized;
 
@@ -250,10 +252,10 @@ public class EntityMention extends Attribute {
         /**
          * Specifies the confidence.
          *
-         * @param confidence the confidence
+         * @param confidence the confidence, or null to indicate that no confidence is available.
          * @return this
          */
-        public Builder confidence(double confidence) {
+        public Builder confidence(Double confidence) {
             this.confidence = confidence;
             return this;
         }
@@ -261,10 +263,10 @@ public class EntityMention extends Attribute {
         /**
          * Specifies the coreference chain identifier. See {@link com.basistech.rosette.dm.EntityMention#getCoreferenceChainId()}.
          *
-         * @param coreferenceChainId the chain identifier, or -1 for a mention that is not linked
+         * @param coreferenceChainId the chain identifier, or null for a mention that is not linked.
          * @return this
          */
-        public Builder coreferenceChainId(int coreferenceChainId) {
+        public Builder coreferenceChainId(Integer coreferenceChainId) {
             this.coreferenceChainId = coreferenceChainId;
             return this;
         }
