@@ -43,10 +43,27 @@ public class Token extends Attribute {
           Map<String, Object> extendedProperties) {
         super(startOffset, endOffset, extendedProperties);
         this.text = text;
-        this.normalized = ImmutableList.copyOf(normalized);
+
+        if (normalized != null) {
+            this.normalized = ImmutableList.copyOf(normalized);
+        } else {
+            this.normalized = null;
+        }
+
         this.source = source;
-        this.variations = ImmutableList.copyOf(variations);
-        this.analyses = ImmutableList.copyOf(analyses);
+
+        if (variations != null) {
+            this.variations = ImmutableList.copyOf(variations);
+        } else {
+            this.variations = null;
+        }
+
+        if (analyses != null) {
+            this.analyses = ImmutableList.copyOf(analyses);
+        } else {
+            this.analyses = null;
+        }
+
     }
 
     protected Token() {
@@ -66,10 +83,26 @@ public class Token extends Attribute {
           List<MorphoAnalysis> analyses) {
         super(startOffset, endOffset);
         this.text = text;
-        this.normalized = ImmutableList.copyOf(normalized);
+
+        if (normalized != null) {
+            this.normalized = ImmutableList.copyOf(normalized);
+        } else {
+            this.normalized = null;
+        }
+
         this.source = source;
-        this.variations = ImmutableList.copyOf(variations);
-        this.analyses = ImmutableList.copyOf(analyses);
+
+        if (variations != null) {
+            this.variations = ImmutableList.copyOf(variations);
+        } else {
+            this.variations = null;
+        }
+
+        if (analyses != null) {
+            this.analyses = ImmutableList.copyOf(analyses);
+        } else {
+            this.analyses = null;
+        }
     }
 
     /**
@@ -201,7 +234,7 @@ public class Token extends Attribute {
             super(startOffset, endOffset);
             this.text = text;
             this.analyses = Lists.newArrayList();
-            this.source = "";
+            this.source = null;
             variations = Lists.newArrayList();
             normalized = Lists.newArrayList();
         }
@@ -279,7 +312,23 @@ public class Token extends Attribute {
          * @return the new token
          */
         public Token build() {
-            return new Token(startOffset, endOffset, text, normalized, source, variations, analyses, extendedProperties);
+            // we do not want to build the token with empty lists.
+            List<String> actualNormalized = null;
+            if (normalized.size() > 0) {
+                actualNormalized = normalized;
+            }
+
+            List<MorphoAnalysis> actualAnalyses = null;
+            if (analyses.size() != 0) {
+                actualAnalyses = analyses;
+            }
+
+            List<String> actualVariations = null;
+            if (variations.size() != 0) {
+                actualVariations = variations;
+            }
+
+            return new Token(startOffset, endOffset, text, actualNormalized, source, actualVariations, actualAnalyses, extendedProperties);
         }
     }
 }

@@ -19,6 +19,7 @@ import com.basistech.rlp.ResultAccessDeserializer;
 import com.basistech.rlp.ResultAccessSerializedFormat;
 import com.basistech.rosette.dm.AnnotatedDataModelModule;
 import com.basistech.rosette.dm.AnnotatedText;
+import com.basistech.rosette.dm.EntityMention;
 import com.basistech.rosette.dm.LanguageDetection;
 import com.basistech.util.ISO15924;
 import com.basistech.util.LanguageCode;
@@ -213,7 +214,7 @@ public class AdmConversionTest extends Assert {
         assertEquals(1, result.getDetectionResults().size());
         assertEquals(LanguageCode.ENGLISH, result.getDetectionResults().get(0).getLanguage());
         assertEquals(ISO15924.Latn, result.getDetectionResults().get(0).getScript());
-        assertEquals(0.0, result.getDetectionResults().get(0).getConfidence(), 0.000001);
+        assertNull(result.getDetectionResults().get(0).getConfidence());
     }
 
     @Test
@@ -295,5 +296,60 @@ public class AdmConversionTest extends Assert {
         AbstractResultAccess ara = deserialize(json);
         AnnotatedText text = AraDmConverter.convert(ara);
         assertEquals(0.2, text.getEntityMentions().get(0).getConfidence(), 0.00001);
+    }
+
+    @Test
+    public void testNamedEntitySourceAndSubsource() throws IOException {
+        EntityMention entityMentionWithSourceAndSubsource = testNamedEntitySourceAndSubsourceHelper("x:y");
+        assertEquals(entityMentionWithSourceAndSubsource.getSource(), "x");
+        assertEquals(entityMentionWithSourceAndSubsource.getSubsource(), "y");
+
+        EntityMention entityMentionWithOnlySource = testNamedEntitySourceAndSubsourceHelper("x");
+        assertEquals(entityMentionWithOnlySource.getSource(), "x");
+        assertNull(entityMentionWithOnlySource.getSubsource());
+
+        EntityMention weirdoSubsource1 = testNamedEntitySourceAndSubsourceHelper("x:");
+        assertEquals("x", weirdoSubsource1.getSource());
+        assertTrue(weirdoSubsource1.getSubsource().isEmpty());
+        EntityMention weirdoSubsource2 = testNamedEntitySourceAndSubsourceHelper("x:y:z");
+        assertEquals("x", weirdoSubsource2.getSource());
+        assertEquals("y:z", weirdoSubsource2.getSubsource());
+    }
+
+    private EntityMention testNamedEntitySourceAndSubsourceHelper(String namedEntitySourceString) throws IOException {
+        String json = "{" +
+                "  'NamedEntitySourceString': [" +
+                "  '" + namedEntitySourceString + "'" +
+                "  ]," +
+                "  'NormalizedNamedEntity': [" +
+                "    'Arlington'" +
+                "  ]," +
+                "  'NamedEntityTypeString': [" +
+                "    'LOCATION'" +
+                "  ]," +
+                "  'TokenOffset': [" +
+                "    0," +
+                "    2," +
+                "    3," +
+                "    12" +
+                "  ]," +
+                "  'NamedEntity': [" +
+                "    1," +
+                "    2," +
+                "    196608" +
+                "  ]," +
+                "  'Tokens': [" +
+                "    'In'," +
+                "    'Arlington'" +
+                "  ]," +
+                "  'RawText': 'In Arlington'," +
+                "  'NamedEntitySource': [" +
+                "    33554436" +
+                "  ]" +
+                "}";
+        json = json.replace("'", "\"");
+        AbstractResultAccess ara = deserialize(json);
+        AnnotatedText text = AraDmConverter.convert(ara);
+        return text.getEntityMentions().get(0);
     }
 }

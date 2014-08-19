@@ -90,7 +90,7 @@ public class DmJsonUtilsTest extends Assert {
 
         ListAttribute.Builder<LanguageDetection> ldListBuilder = new ListAttribute.Builder<LanguageDetection>(LanguageDetection.class);
         List<LanguageDetection.DetectionResult> dets = new ArrayList<LanguageDetection.DetectionResult>();
-        dets.add(new LanguageDetection.DetectionResult(LanguageCode.ENGLISH, "utf-8", ISO15924.Latn, 1.0));
+        dets.add(new LanguageDetection.DetectionResult.Builder(LanguageCode.ENGLISH).encoding("utf-8").script(ISO15924.Latn).confidence(1.0).build());
         LanguageDetection.Builder ldBuilder = new LanguageDetection.Builder(0, builder.data().length(), dets);
         ldBuilder.extendedProperty("ldr-ex", "ldr-ex-val");
         languageDetectionRegion = ldBuilder.build();
@@ -99,7 +99,7 @@ public class DmJsonUtilsTest extends Assert {
         builder.languageDetectionRegions(languageDetectionRegions);
 
         dets = new ArrayList<LanguageDetection.DetectionResult>();
-        dets.add(new LanguageDetection.DetectionResult(LanguageCode.FRENCH, "utf-8", ISO15924.Latn, 1.0));
+        dets.add(new LanguageDetection.DetectionResult.Builder(LanguageCode.FRENCH).encoding("utf-8").script(ISO15924.Latn).confidence(1.0).build());
         ldBuilder = new LanguageDetection.Builder(0, builder.data().length(), dets);
         ldBuilder.extendedProperty("ld-ex", "ld-ex-val");
         languageDetection = ldBuilder.build();
