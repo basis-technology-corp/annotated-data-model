@@ -53,7 +53,7 @@ public class MorphoAnalysis extends BaseAttribute {
                    String raw) {
         this.partOfSpeech = partOfSpeech;
         this.lemma = lemma;
-        this.components = components == null ? Lists.<Token>newArrayList() : components;
+        this.components = components;
         this.raw = raw;
     }
 
@@ -74,7 +74,7 @@ public class MorphoAnalysis extends BaseAttribute {
         super(extendedProperties);
         this.partOfSpeech = partOfSpeech;
         this.lemma = lemma;
-        this.components = components == null ? Lists.<Token>newArrayList() : components;
+        this.components = components;
         this.raw = raw;
     }
 
@@ -188,9 +188,9 @@ public class MorphoAnalysis extends BaseAttribute {
         public Builder() {
             super();
             components = Lists.newArrayList();
-            raw = "";
-            lemma = "";
-            partOfSpeech = "";
+            raw = null;
+            lemma = null;
+            partOfSpeech = null;
         }
 
         /**
@@ -257,7 +257,12 @@ public class MorphoAnalysis extends BaseAttribute {
          * @return the new analysis
          */
         public MorphoAnalysis build() {
-            return new MorphoAnalysis(partOfSpeech, lemma, components, raw);
+            List<Token> actualComponents = null;
+            if (components.size() != 0) {
+                actualComponents = components;
+            }
+
+            return new MorphoAnalysis(partOfSpeech, lemma, actualComponents, raw);
         }
     }
 }

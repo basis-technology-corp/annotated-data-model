@@ -15,6 +15,7 @@
 package com.basistech.rosette.dm;
 
 import com.basistech.util.LanguageCode;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
@@ -32,7 +33,6 @@ public class AnnotatedDataModelModule extends SimpleModule {
 
     public void setupModule(SetupContext context) {
         context.setMixInAnnotations(LanguageCode.class, LanguageCodeMixin.class);
-
         context.setMixInAnnotations(AnnotatedText.class, AnnotatedTextMixin.class);
         context.setMixInAnnotations(ArabicMorphoAnalysis.class, ArabicMorphoAnalysisMixin.class);
         context.setMixInAnnotations(BaseAttribute.class, BaseAttributeMixin.class);
@@ -55,6 +55,7 @@ public class AnnotatedDataModelModule extends SimpleModule {
      * @return the same mapper, for convenience.
      */
     public static ObjectMapper setupObjectMapper(ObjectMapper mapper) {
+        mapper.getSerializationConfig().withSerializationInclusion(JsonInclude.Include.NON_NULL);
         final AnnotatedDataModelModule module = new AnnotatedDataModelModule();
         mapper.registerModule(module);
         return mapper;

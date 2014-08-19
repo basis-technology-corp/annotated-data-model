@@ -38,35 +38,21 @@ public class LanguageDetection extends Attribute {
         private final LanguageCode language;
         private final String encoding;
         private final ISO15924 script;
-        private final double confidence;
+        private final Double confidence;
 
         protected DetectionResult() {
             language = LanguageCode.UNKNOWN;
             encoding = null;
             script = ISO15924.Zyyy;
-            confidence = 0.0;
+            confidence = null;
         }
 
         protected DetectionResult(LanguageCode language,
                                    String encoding,
                                    ISO15924 script,
-                                   double confidence,
+                                   Double confidence,
                                    Map<String, Object> extendedProperties) {
             super(extendedProperties);
-            this.language = language;
-            this.encoding = encoding;
-            this.script = script;
-            this.confidence = confidence;
-        }
-
-        /**
-         * @deprecated this will be removed in a future version. Use {@link com.basistech.rosette.dm.LanguageDetection.DetectionResult.Builder}.
-         */
-        @Deprecated
-        public DetectionResult(LanguageCode language,
-                               String encoding,
-                               ISO15924 script,
-                               double confidence) {
             this.language = language;
             this.encoding = encoding;
             this.script = script;
@@ -106,7 +92,7 @@ public class LanguageDetection extends Attribute {
          * @return the confidence of this detection alternative, or
          * Not-a-Number if not available.
          */
-        public double getConfidence() {
+        public Double getConfidence() {
             return confidence;
         }
 
@@ -165,7 +151,7 @@ public class LanguageDetection extends Attribute {
             private LanguageCode language;
             private String encoding;
             private ISO15924 script;
-            private double confidence;
+            private Double confidence;
 
             /**
              * Constructs a builder with default values.
@@ -174,9 +160,7 @@ public class LanguageDetection extends Attribute {
              */
             public Builder(LanguageCode language) {
                 this.language = language;
-                encoding = null;
                 script = ISO15924.Zyyy;
-                confidence = Double.NaN;
             }
 
             /**
@@ -229,10 +213,10 @@ public class LanguageDetection extends Attribute {
             /**
              * Specifies the confidence.
              *
-             * @param confidence the confidence
+             * @param confidence the confidence; null if no confidence is available.
              * @return this.
              */
-            public Builder confidence(double confidence) {
+            public Builder confidence(Double confidence) {
                 this.confidence = confidence;
                 return this;
             }
@@ -242,9 +226,8 @@ public class LanguageDetection extends Attribute {
              *
              * @return the detection result
              */
-            @SuppressWarnings("deprecation")
             public DetectionResult build() {
-                return new DetectionResult(language, encoding, script, confidence);
+                return new DetectionResult(language, encoding, script, confidence, extendedProperties);
             }
         }
     }

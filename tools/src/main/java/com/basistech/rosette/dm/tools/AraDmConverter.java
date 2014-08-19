@@ -100,9 +100,7 @@ public final class AraDmConverter {
         if (langCode != null || encoding != null || scriptCode != null) {
             int startOffset = 0;
             int endOffset = builder.data().length();
-            double confidence = 0.0;  // RLP/RLI doesn't report this
-            LanguageDetection.DetectionResult result = new LanguageDetection.DetectionResult(
-                langCode, encoding, scriptCode, confidence);
+            LanguageDetection.DetectionResult result = new LanguageDetection.DetectionResult.Builder(langCode).encoding(encoding).script(scriptCode).build();
             List<LanguageDetection.DetectionResult> results = Lists.newArrayList(result);
             LanguageDetection.Builder ldBuilder = new LanguageDetection.Builder(startOffset, endOffset, results);
             builder.wholeDocumentLanguageDetection(ldBuilder.build());
@@ -125,9 +123,8 @@ public final class AraDmConverter {
                 int endOffset = regions[6 * i + 1];
                 ISO15924 scriptCode = ISO15924.Zyyy;
                 LanguageCode langCode = LanguageCode.lookupByLanguageID(regions[6 * i + 5]);
-                double confidence = 0.0;  // RLBL doesn't report this
-                LanguageDetection.DetectionResult result = new LanguageDetection.DetectionResult(
-                    langCode, "UTF-16", scriptCode, confidence);
+                LanguageDetection.DetectionResult result = new LanguageDetection.DetectionResult
+                        .Builder(langCode).encoding("UTF-16").script(scriptCode).build();
                 List<LanguageDetection.DetectionResult> results = Lists.newArrayList(result);
                 LanguageDetection.Builder ldBuilder = new LanguageDetection.Builder(startOffset, endOffset, results);
                 attrBuilder.add(ldBuilder.build());

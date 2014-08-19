@@ -214,7 +214,7 @@ public class AdmConversionTest extends Assert {
         assertEquals(1, result.getDetectionResults().size());
         assertEquals(LanguageCode.ENGLISH, result.getDetectionResults().get(0).getLanguage());
         assertEquals(ISO15924.Latn, result.getDetectionResults().get(0).getScript());
-        assertEquals(0.0, result.getDetectionResults().get(0).getConfidence(), 0.000001);
+        assertNull(result.getDetectionResults().get(0).getConfidence());
     }
 
     @Test

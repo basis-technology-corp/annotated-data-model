@@ -34,8 +34,8 @@ public class LanguageCodeJsonTest extends AdmAssert {
     public void testRoundTrip() throws Exception {
 
         List<LanguageDetection.DetectionResult> detectionResults = Lists.newArrayList();
-        LanguageDetection.DetectionResult detectionResult = new LanguageDetection.DetectionResult(LanguageCode.KOREAN,
-            "uff-8", ISO15924.Hang, 1.0);
+        LanguageDetection.DetectionResult detectionResult = new LanguageDetection.DetectionResult.Builder(LanguageCode.KOREAN)
+                .encoding("uff-8").script(ISO15924.Hang).confidence(1.0).build();
         detectionResults.add(detectionResult);
         LanguageDetection.Builder builder = new LanguageDetection.Builder(0, 100, detectionResults);
         LanguageDetection languageDetection = builder.build();

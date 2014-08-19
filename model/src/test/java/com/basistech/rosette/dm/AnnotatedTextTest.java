@@ -17,6 +17,7 @@ package com.basistech.rosette.dm;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 public class AnnotatedTextTest {
 
@@ -88,10 +89,10 @@ public class AnnotatedTextTest {
         builder.entityMentions(emListBuilder.build());
         AnnotatedText text = builder.build();
 
-        int chainForBill = text.getEntityMentions().get(0).getCoreferenceChainId();
-        int chainForGeorge = text.getEntityMentions().get(1).getCoreferenceChainId();
-        assertEquals(-1, chainForBill);
-        assertEquals(-1, chainForGeorge);
+        Integer chainForBill = text.getEntityMentions().get(0).getCoreferenceChainId();
+        Integer chainForGeorge = text.getEntityMentions().get(1).getCoreferenceChainId();
+        assertNull(chainForBill);
+        assertNull(chainForGeorge);
     }
 
     @Test

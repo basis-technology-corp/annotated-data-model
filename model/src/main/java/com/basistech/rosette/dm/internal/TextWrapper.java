@@ -116,10 +116,17 @@ public class TextWrapper {
                 for (int tokenIndex = startTokenIndex; tokenIndex < endTokenIndex; tokenIndex++) {
                     tokenIndexToMention.put(tokenIndex, getMention(i));
                 }
-                if (mention.getCoreferenceChainId() > maxMentionChainId) {
+
+                Integer corefId = mention.getCoreferenceChainId();
+                if (corefId != null && corefId > maxMentionChainId) {
                     maxMentionChainId = mention.getCoreferenceChainId();
                 }
-                int chainId = mention.getCoreferenceChainId();
+
+                Integer chainId = mention.getCoreferenceChainId();
+                if (chainId == null) {
+                    chainId = -1; // use old convention.
+                }
+
                 List<Integer> entityIndexes = chainIdToEntityMentionIndexes.get(chainId);
                 if (entityIndexes == null) {
                     entityIndexes = Lists.newArrayList();
