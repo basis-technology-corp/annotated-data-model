@@ -62,7 +62,7 @@ public class TextWrapper {
      *
      * @param text text object to wrap
      * @throws java.lang.IllegalArgumentException if the text object contains entity
-     * mentions but no tokens
+     * mentions or sentences but no tokens
      */
     public TextWrapper(AnnotatedText text) {
         this.text = text;
