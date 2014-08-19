@@ -309,42 +309,41 @@ public class AdmConversionTest extends Assert {
         assertNull(entityMentionWithOnlySource.getSubsource());
 
         EntityMention weirdoSubsource1 = testNamedEntitySourceAndSubsourceHelper("x:");
-        assertEquals(weirdoSubsource1.getSource(), "x");
-        assertNull(weirdoSubsource1.getSubsource());
+        assertEquals("x", weirdoSubsource1.getSource());
+        assertTrue(weirdoSubsource1.getSubsource().isEmpty());
         EntityMention weirdoSubsource2 = testNamedEntitySourceAndSubsourceHelper("x:y:z");
-        assertEquals(weirdoSubsource2.getSource(), "x");
-        assertEquals(weirdoSubsource2.getSubsource(), "y");
-
+        assertEquals("x", weirdoSubsource2.getSource());
+        assertEquals("y:z", weirdoSubsource2.getSubsource());
     }
 
     private EntityMention testNamedEntitySourceAndSubsourceHelper(String namedEntitySourceString) throws IOException {
         String json = "{" +
-                "  \"NamedEntitySourceString\": [" +
-                "  \"" + namedEntitySourceString + "\"" +
+                "  'NamedEntitySourceString': [" +
+                "  '" + namedEntitySourceString + "'" +
                 "  ]," +
-                "  \"NormalizedNamedEntity\": [" +
-                "    \"Arlington\"" +
+                "  'NormalizedNamedEntity': [" +
+                "    'Arlington'" +
                 "  ]," +
-                "  \"NamedEntityTypeString\": [" +
-                "    \"LOCATION\"" +
+                "  'NamedEntityTypeString': [" +
+                "    'LOCATION'" +
                 "  ]," +
-                "  \"TokenOffset\": [" +
+                "  'TokenOffset': [" +
                 "    0," +
                 "    2," +
                 "    3," +
                 "    12" +
                 "  ]," +
-                "  \"NamedEntity\": [" +
+                "  'NamedEntity': [" +
                 "    1," +
                 "    2," +
                 "    196608" +
                 "  ]," +
-                "  \"Tokens\": [" +
-                "    \"In\"," +
-                "    \"Arlington\"" +
+                "  'Tokens': [" +
+                "    'In'," +
+                "    'Arlington'" +
                 "  ]," +
-                "  \"RawText\": \"In Arlington\"," +
-                "  \"NamedEntitySource\": [" +
+                "  'RawText': 'In Arlington'," +
+                "  'NamedEntitySource': [" +
                 "    33554436" +
                 "  ]" +
                 "}";
@@ -353,6 +352,4 @@ public class AdmConversionTest extends Assert {
         AnnotatedText text = AraDmConverter.convert(ara);
         return text.getEntityMentions().get(0);
     }
-
-
 }

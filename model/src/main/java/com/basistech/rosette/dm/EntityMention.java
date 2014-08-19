@@ -317,7 +317,7 @@ public class EntityMention extends Attribute {
         /**
          * Specifies the subsource of this mention.
          *
-         * @param subsource the source
+         * @param subsource the subsource
          * @return this
          */
         public Builder subsource(String subsource) {
