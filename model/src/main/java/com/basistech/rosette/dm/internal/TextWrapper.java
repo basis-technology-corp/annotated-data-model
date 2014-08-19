@@ -61,6 +61,8 @@ public class TextWrapper {
      * Constructs from <code>AnnotatedText</code>.
      *
      * @param text text object to wrap
+     * @throws java.lang.IllegalArgumentException if the text object contains entity
+     * mentions or sentences but no tokens
      */
     public TextWrapper(AnnotatedText text) {
         this.text = text;
@@ -83,6 +85,11 @@ public class TextWrapper {
         }
 
         if (text.getSentences() != null) {
+            if (text.getTokens() == null) {
+                // I think a whitespace doc could produce a sentence with zero tokens
+                // so we only check null, not empty.
+                throw new IllegalArgumentException("If text has sentences it must also have tokens.");
+            }
             sentenceTokenEnds = new int[text.getSentences().size()];
             int tokenIndex = 0;
             for (int sentIndex = 0; sentIndex < sentenceTokenEnds.length; sentIndex++) {
@@ -98,6 +105,9 @@ public class TextWrapper {
 
         int maxMentionChainId = -1;
         if (text.getEntityMentions() != null) {
+            if (!text.getEntityMentions().isEmpty() && (text.getTokens() == null || text.getTokens().isEmpty())) {
+                throw new IllegalArgumentException("If text has entityMentions it must also have tokens.");
+            }
             for (int i = 0; i < text.getEntityMentions().size(); i++) {
                 EntityMention mention = text.getEntityMentions().get(i);
                 int startTokenIndex = startCharOffsetToTokenIndex.get(mention.getStartOffset());
