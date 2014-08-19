@@ -62,7 +62,8 @@ public class JsonTest extends AdmAssert {
         EntityMention.Builder emBuilder = new EntityMention.Builder(27, 33, "place");
         emBuilder.flags(42);
         emBuilder.normalized("bahston");
-        emBuilder.source("test");
+        emBuilder.source("testsource");
+        emBuilder.subsource("testsubsource");
         emBuilder.confidence(1.0);
         emBuilder.coreferenceChainId(43);
         emBuilder.extendedProperty("em-ex", "em-ex-val");

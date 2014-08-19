@@ -229,7 +229,11 @@ public final class AraDmConverter {
             builder.normalized(ara.getNormalizedNamedEntity()[x]);
         }
         if (ara.getNamedEntitySourceString() != null) {
-            builder.source(ara.getNamedEntitySourceString()[x]);
+            String[] split = ara.getNamedEntitySourceString()[x].split(":", 2);
+            builder.source(split[0]);
+            if (split.length > 1) {
+                builder.subsource(split[1]);
+            }
         }
         return builder.build();
     }

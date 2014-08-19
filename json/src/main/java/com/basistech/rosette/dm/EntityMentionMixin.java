@@ -29,6 +29,7 @@ public abstract class EntityMentionMixin {
                        @JsonProperty("confidence") double confidence,
                        @JsonProperty("flags") int flags,
                        @JsonProperty("source") String source,
+                       @JsonProperty("subsource") String subsource,
                        @JsonProperty("normalized") String normalized) {
         //
     }
