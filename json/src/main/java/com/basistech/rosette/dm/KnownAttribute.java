@@ -27,6 +27,8 @@ enum KnownAttribute {
     SCRIPT_REGION("scriptRegion", ScriptRegion.class),
     SENTENCE("sentence", Sentence.class),
     TOKEN("token", Token.class),
+    TRANSLATED_DATA("translatedData", TranslatedData.class),
+    TRANSLATED_TOKENS("translatedTokens", TranslatedTokens.class),
     LIST("list", ListAttribute.class),
     UNKNOWN("unknown", UnknownAttribute.class);
 

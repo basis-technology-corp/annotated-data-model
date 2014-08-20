@@ -34,8 +34,8 @@ enum AttributeKey {
     SCRIPT_REGION("scriptRegion"),
     SENTENCE("sentence"),
     TOKEN("token"),
-    TRANSLATED_TOKENS("translatedTokens"),
-    TRANSLATED_DATA("translatedData");
+    TRANSLATED_DATA("translatedData"),
+    TRANSLATED_TOKENS("translatedTokens");
 
     private final String key;
 
