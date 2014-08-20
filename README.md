@@ -1,3 +1,4 @@
+
 # Annotated Data Model #
 
 The Annotated Data Model (ADM) is a family of Java classes that represent a text and a set of annotations
@@ -88,7 +89,17 @@ Whitespace at the end of each sentences is incorporated into that sentence.
 ### TOKEN ###
 
 The token annotations identify the tokens of the text and annotate them with the results of 
-Rosette Base Linguistics. 
+Rosette Base Linguistics.
+ 
+### TRANSLATED_DATA ###
+ 
+This annotation provides a translation for the entire text into a language and script specified by the domain.
+
+### TRANSLATED_TOKENS ###
+
+The translated tokens annotations provides a list of translations for each of the tokens in the text.  Each annotation
+contains a domain identifying the language and script of the translations and a list of translations corresponding to
+the tokens of the text.
 
 ## Class-Level Documentation ##
 
