@@ -33,7 +33,6 @@ public abstract class TokenMixin {
                @JsonProperty("text") String text,
                @JsonProperty("normalized") List<String> normalized,
                @JsonProperty("source") String source,
-               @JsonProperty("variations") List<String> variations,
                @JsonProperty("analyses") List<MorphoAnalysis> analyses) {
         //
     }

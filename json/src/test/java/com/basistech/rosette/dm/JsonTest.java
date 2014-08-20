@@ -114,7 +114,6 @@ public class JsonTest extends AdmAssert {
         Token.Builder tokenBuilder = new Token.Builder(0, 4, "This");
         tokenBuilder.source("test");
         tokenBuilder.addNormalized("abnormal");
-        tokenBuilder.addVariation("different");
         tokenBuilder.extendedProperty("tok-ex", "tok-ex-val");
 
         MorphoAnalysis.Builder maBuilder = new MorphoAnalysis.Builder();
