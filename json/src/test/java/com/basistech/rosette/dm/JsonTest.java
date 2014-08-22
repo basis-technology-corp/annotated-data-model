@@ -163,21 +163,19 @@ public class JsonTest extends AdmAssert {
         ListAttribute.Builder<TranslatedTokens> translatedTokensListBuilder =
             new ListAttribute.Builder<TranslatedTokens>(TranslatedTokens.class);
 
-        List<String> germanTranslations = Lists.newArrayList();
-        germanTranslations.add("Ein");
-        germanTranslations.add(".");
-        germanTranslations.add("Zwei");
-        germanTranslations.add(".");
-        TranslatedTokens.Builder ttBuilder = new TranslatedTokens.Builder(germanDomain, germanTranslations);
+        TranslatedTokens.Builder ttBuilder = new TranslatedTokens.Builder(germanDomain);
+        ttBuilder.addTranslatedToken("Ein");
+        ttBuilder.addTranslatedToken(".");
+        ttBuilder.addTranslatedToken("Zwei");
+        ttBuilder.addTranslatedToken(".");
         germanTranslation = ttBuilder.build();
         translatedTokensListBuilder.add(germanTranslation);
         spanishDomain = new TextDomain(ISO15924.Latn, LanguageCode.SPANISH, TransliterationScheme.NATIVE);
-        List<String> spanishTranslations = Lists.newArrayList();
-        spanishTranslations.add("Uno");
-        spanishTranslations.add(".");
-        spanishTranslations.add("Dos");
-        spanishTranslations.add(".");
-        ttBuilder = new TranslatedTokens.Builder(spanishDomain, spanishTranslations);
+        ttBuilder = new TranslatedTokens.Builder(spanishDomain);
+        ttBuilder.addTranslatedToken("Uno");
+        ttBuilder.addTranslatedToken(".");
+        ttBuilder.addTranslatedToken("Dos");
+        ttBuilder.addTranslatedToken(".");
         spanishTranslation = ttBuilder.build();
         translatedTokensListBuilder.add(spanishTranslation);
         builder.translatedTokens(translatedTokensListBuilder.build());

@@ -18,7 +18,6 @@ import com.basistech.util.ISO15924;
 import com.basistech.util.LanguageCode;
 import com.basistech.util.TextDomain;
 import com.basistech.util.TransliterationScheme;
-import com.google.common.collect.Lists;
 import org.junit.Test;
 
 import java.util.List;
@@ -99,20 +98,18 @@ public class AnnotatedTextTest {
             new ListAttribute.Builder<TranslatedTokens>(TranslatedTokens.class);
 
         TextDomain domain = new TextDomain(ISO15924.Latn, LanguageCode.GERMAN, TransliterationScheme.NATIVE);
-        List<String> germanTranslations = Lists.newArrayList();
-        germanTranslations.add("Ein");
-        germanTranslations.add(".");
-        germanTranslations.add("Zwei");
-        germanTranslations.add(".");
-        TranslatedTokens.Builder ttBuilder = new TranslatedTokens.Builder(domain, germanTranslations);
+        TranslatedTokens.Builder ttBuilder = new TranslatedTokens.Builder(domain);
+        ttBuilder.addTranslatedToken("Ein");
+        ttBuilder.addTranslatedToken(".");
+        ttBuilder.addTranslatedToken("Zwei");
+        ttBuilder.addTranslatedToken(".");
         translatedTokensListBuilder.add(ttBuilder.build());
         domain = new TextDomain(ISO15924.Latn, LanguageCode.SPANISH, TransliterationScheme.NATIVE);
-        List<String> spanishTranslations = Lists.newArrayList();
-        spanishTranslations.add("Uno");
-        spanishTranslations.add(".");
-        spanishTranslations.add("Dos");
-        spanishTranslations.add(".");
-        ttBuilder = new TranslatedTokens.Builder(domain, spanishTranslations);
+        ttBuilder = new TranslatedTokens.Builder(domain);
+        ttBuilder.addTranslatedToken("Uno");
+        ttBuilder.addTranslatedToken(".");
+        ttBuilder.addTranslatedToken("Dos");
+        ttBuilder.addTranslatedToken(".");
         translatedTokensListBuilder.add(ttBuilder.build());
 
         builder.translatedTokens(translatedTokensListBuilder.build());

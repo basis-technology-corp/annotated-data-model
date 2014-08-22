@@ -136,11 +136,10 @@ public class TranslatedTokens extends BaseAttribute {
          * Constructs a builder from the required properties
          *
          * @param domain specifies the language and script of the translation
-         * @param translations a list of translations, one for each token
          */
-        public Builder(TextDomain domain, List<String> translations) {
+        public Builder(TextDomain domain) {
             this.domain = domain;
-            this.translations = translations;
+            this.translations = Lists.newArrayList();
         }
 
         /**
@@ -155,12 +154,23 @@ public class TranslatedTokens extends BaseAttribute {
         }
 
         /**
+         * Adds the translation of one token to the list of translations.
+         *
+         * @param translatedToken the translation for one token
+         * @return
+         */
+        public Builder addTranslatedToken(String translatedToken) {
+            this.translations.add(translatedToken);
+            return this;
+        }
+
+        /**
          * Adds an extended value key-value pair.
          *
          * @param key the key
          * @param value the value
          */
-        public Builder extendedProperty(String key, Object value) {
+        public Builder addExtendedProperty(String key, Object value) {
             super.extendedProperties.put(key, value);
             return this;
         }
