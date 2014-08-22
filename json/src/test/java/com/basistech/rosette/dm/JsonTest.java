@@ -16,6 +16,8 @@ package com.basistech.rosette.dm;
 
 import com.basistech.util.ISO15924;
 import com.basistech.util.LanguageCode;
+import com.basistech.util.TextDomain;
+import com.basistech.util.TransliterationScheme;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
@@ -43,7 +45,12 @@ public class JsonTest extends AdmAssert {
     private ScriptRegion scriptRegion;
     private Sentence sentence;
     private MorphoAnalysis morphoAnalysis;
+    private TextDomain germanDomain;
+    private TextDomain spanishDomain;
     private Token token;
+    private TranslatedData translatedData;
+    private TranslatedTokens germanTranslation;
+    private TranslatedTokens spanishTranslation;
     private AnnotatedText referenceText;
 
     @Before
@@ -146,6 +153,35 @@ public class JsonTest extends AdmAssert {
         token = tokenBuilder.build();
         tokenListBuilder.add(token);
         builder.tokens(tokenListBuilder.build());
+
+        germanDomain = new TextDomain(ISO15924.Latn, LanguageCode.GERMAN, TransliterationScheme.NATIVE);
+        String translatedText = "Ein.  Zwei.";
+        TranslatedData.Builder tdBuilder = new TranslatedData.Builder(germanDomain, translatedText);
+        translatedData = tdBuilder.build();
+        builder.translatedData(translatedData);
+
+        ListAttribute.Builder<TranslatedTokens> translatedTokensListBuilder =
+            new ListAttribute.Builder<TranslatedTokens>(TranslatedTokens.class);
+
+        List<String> germanTranslations = Lists.newArrayList();
+        germanTranslations.add("Ein");
+        germanTranslations.add(".");
+        germanTranslations.add("Zwei");
+        germanTranslations.add(".");
+        TranslatedTokens.Builder ttBuilder = new TranslatedTokens.Builder(germanDomain, germanTranslations);
+        germanTranslation = ttBuilder.build();
+        translatedTokensListBuilder.add(germanTranslation);
+        spanishDomain = new TextDomain(ISO15924.Latn, LanguageCode.SPANISH, TransliterationScheme.NATIVE);
+        List<String> spanishTranslations = Lists.newArrayList();
+        spanishTranslations.add("Uno");
+        spanishTranslations.add(".");
+        spanishTranslations.add("Dos");
+        spanishTranslations.add(".");
+        ttBuilder = new TranslatedTokens.Builder(spanishDomain, spanishTranslations);
+        spanishTranslation = ttBuilder.build();
+        translatedTokensListBuilder.add(spanishTranslation);
+        builder.translatedTokens(translatedTokensListBuilder.build());
+
         referenceText = builder.build();
     }
 
@@ -195,10 +231,16 @@ public class JsonTest extends AdmAssert {
 
         assertEquals(sentence, sentences.get(0));
 
-        ListAttribute<Token> tokenList = referenceText.getTokens();
+        ListAttribute<Token> tokenList = read.getTokens();
         assertNotNull(tokenList);
         assertEquals(1, tokenList.size());
         assertEquals(token, tokenList.get(0));
+
+        assertEquals(read.getTranslatedData(), translatedData);
+
+        ListAttribute<TranslatedTokens> translatedTokens = read.getTranslatedTokens();
+        assertEquals(germanTranslation, translatedTokens.get(0));
+        assertEquals(spanishTranslation, translatedTokens.get(1));
     }
 
     @Test

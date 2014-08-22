@@ -14,7 +14,14 @@
 
 package com.basistech.rosette.dm;
 
+import com.basistech.util.ISO15924;
+import com.basistech.util.LanguageCode;
+import com.basistech.util.TextDomain;
+import com.basistech.util.TransliterationScheme;
+import com.google.common.collect.Lists;
 import org.junit.Test;
+
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -43,6 +50,103 @@ public class AnnotatedTextTest {
         assertEquals(6, sents.get(1).getStartOffset());
         assertEquals(12, sents.get(1).getEndOffset());
 
+    }
+
+    @Test
+    public void testTranslatedData() {
+	String rawText = "One.  Two.";
+        String translatedText = "Ein.  Zwei.";
+        AnnotatedText.Builder builder = new AnnotatedText.Builder().data(rawText);
+
+        TextDomain domain = new TextDomain(ISO15924.Latn, LanguageCode.GERMAN, TransliterationScheme.NATIVE);
+        TranslatedData.Builder tdBuilder = new TranslatedData.Builder(domain, translatedText);
+
+        builder.translatedData(tdBuilder.build());
+        AnnotatedText text = builder.build();
+
+        TranslatedData data = text.getTranslatedData();
+        TextDomain dataDomain = data.getDomain();
+        ISO15924 script = dataDomain.getScript();
+        LanguageCode language = dataDomain.getLanguage();
+        TransliterationScheme scheme = dataDomain.getTransliterationScheme();
+        String translation = data.getTranslation();
+
+        assertEquals(script, ISO15924.Latn);
+        assertEquals(language, LanguageCode.GERMAN);
+        assertEquals(scheme, TransliterationScheme.NATIVE);
+        assertEquals(translation, translatedText);
+    }
+
+    @Test
+    public void testTranslatedTokens() {
+        //                0123456789012
+        String rawText = "One.  Two.  ";
+        AnnotatedText.Builder builder = new AnnotatedText.Builder().data(rawText);
+
+        ListAttribute.Builder<Token> tokenListBuilder = new ListAttribute.Builder<Token>(Token.class);
+        Token.Builder tbBuilder = new Token.Builder(0, 3, "One");
+        tokenListBuilder.add(tbBuilder.build());
+        tbBuilder = new Token.Builder(3, 4, ".");
+        tokenListBuilder.add(tbBuilder.build());
+        tbBuilder = new Token.Builder(6, 9, "Two");
+        tokenListBuilder.add(tbBuilder.build());
+        tbBuilder = new Token.Builder(9, 10, ".");
+        tokenListBuilder.add(tbBuilder.build());
+
+        builder.tokens(tokenListBuilder.build());
+
+        ListAttribute.Builder<TranslatedTokens> translatedTokensListBuilder = 
+            new ListAttribute.Builder<TranslatedTokens>(TranslatedTokens.class);
+
+        TextDomain domain = new TextDomain(ISO15924.Latn, LanguageCode.GERMAN, TransliterationScheme.NATIVE);
+        List<String> germanTranslations = Lists.newArrayList();
+        germanTranslations.add("Ein");
+        germanTranslations.add(".");
+        germanTranslations.add("Zwei");
+        germanTranslations.add(".");
+        TranslatedTokens.Builder ttBuilder = new TranslatedTokens.Builder(domain, germanTranslations);
+        translatedTokensListBuilder.add(ttBuilder.build());
+        domain = new TextDomain(ISO15924.Latn, LanguageCode.SPANISH, TransliterationScheme.NATIVE);
+        List<String> spanishTranslations = Lists.newArrayList();
+        spanishTranslations.add("Uno");
+        spanishTranslations.add(".");
+        spanishTranslations.add("Dos");
+        spanishTranslations.add(".");
+        ttBuilder = new TranslatedTokens.Builder(domain, spanishTranslations);
+        translatedTokensListBuilder.add(ttBuilder.build());
+
+        builder.translatedTokens(translatedTokensListBuilder.build());
+        AnnotatedText text = builder.build();
+
+        ListAttribute<Token> tokens = text.getTokens();
+        ListAttribute<TranslatedTokens> transTokens = text.getTranslatedTokens();
+
+        assertEquals("One", tokens.get(0).getText());
+        assertEquals(".", tokens.get(1).getText());
+        assertEquals("Two", tokens.get(2).getText());
+        assertEquals(".", tokens.get(3).getText());
+
+        TranslatedTokens translation = transTokens.get(0);
+        domain = translation.getDomain();
+        assertEquals(ISO15924.Latn, domain.getScript());
+        assertEquals(LanguageCode.GERMAN, domain.getLanguage());
+        assertEquals(TransliterationScheme.NATIVE, domain.getTransliterationScheme());
+        List<String> translations = translation.getTranslations();
+        assertEquals("Ein", translations.get(0));
+        assertEquals(".", translations.get(1));
+        assertEquals("Zwei", translations.get(2));
+        assertEquals(".", translations.get(3));
+
+        translation = transTokens.get(1);
+        domain = translation.getDomain();
+        assertEquals(ISO15924.Latn, domain.getScript());
+        assertEquals(LanguageCode.SPANISH, domain.getLanguage());
+        assertEquals(TransliterationScheme.NATIVE, domain.getTransliterationScheme());
+        translations = translation.getTranslations();
+        assertEquals("Uno", translations.get(0));
+        assertEquals(".", translations.get(1));
+        assertEquals("Dos", translations.get(2));
+        assertEquals(".", translations.get(3));
     }
 
     @Test

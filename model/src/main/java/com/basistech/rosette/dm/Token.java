@@ -147,16 +147,16 @@ public class Token extends Attribute {
 
         Token token = (Token) o;
 
-        if (!analyses.equals(token.analyses)) {
+        if (analyses != null ? !analyses.equals(token.analyses) : token.analyses  != null) {
             return false;
         }
-        if (!normalized.equals(token.normalized)) {
+        if (normalized != null ? !normalized.equals(token.normalized) : token.normalized != null) {
             return false;
         }
-        if (!source.equals(token.source)) {
+        if (source != null ? !source.equals(token.source) : token.source != null) {
             return false;
         }
-        if (!text.equals(token.text)) {
+        if (text != null ? !text.equals(token.text) : token.text != null) {
             return false;
         }
 
