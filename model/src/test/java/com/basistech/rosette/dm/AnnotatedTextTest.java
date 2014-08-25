@@ -23,6 +23,7 @@ import org.junit.Test;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNull;
 
 public class AnnotatedTextTest {
@@ -54,16 +55,26 @@ public class AnnotatedTextTest {
     @Test
     public void testTranslatedData() {
 	String rawText = "One.  Two.";
-        String translatedText = "Ein.  Zwei.";
+        String germanText = "Ein.  Zwei.";
+        String spanishText = "Uno.  Dos.";
         AnnotatedText.Builder builder = new AnnotatedText.Builder().data(rawText);
 
-        TextDomain domain = new TextDomain(ISO15924.Latn, LanguageCode.GERMAN, TransliterationScheme.NATIVE);
-        TranslatedData.Builder tdBuilder = new TranslatedData.Builder(domain, translatedText);
+        ListAttribute.Builder<TranslatedData> translatedDataBuilder =
+            new ListAttribute.Builder<TranslatedData>(TranslatedData.class);
 
-        builder.translatedData(tdBuilder.build());
+        TextDomain domain = new TextDomain(ISO15924.Latn, LanguageCode.GERMAN, TransliterationScheme.NATIVE);
+        TranslatedData.Builder tdBuilder = new TranslatedData.Builder(domain, germanText);
+        translatedDataBuilder.add(tdBuilder.build());
+        domain = new TextDomain(ISO15924.Latn, LanguageCode.SPANISH, TransliterationScheme.NATIVE);
+        tdBuilder = new TranslatedData.Builder(domain, spanishText);
+        translatedDataBuilder.add(tdBuilder.build());
+
+        builder.translatedData(translatedDataBuilder.build());
         AnnotatedText text = builder.build();
 
-        TranslatedData data = text.getTranslatedData();
+        ListAttribute<TranslatedData> dataTranslations = text.getDataTranslations();
+
+        TranslatedData data = dataTranslations.get(0);
         TextDomain dataDomain = data.getDomain();
         ISO15924 script = dataDomain.getScript();
         LanguageCode language = dataDomain.getLanguage();
@@ -73,7 +84,19 @@ public class AnnotatedTextTest {
         assertEquals(script, ISO15924.Latn);
         assertEquals(language, LanguageCode.GERMAN);
         assertEquals(scheme, TransliterationScheme.NATIVE);
-        assertEquals(translation, translatedText);
+        assertEquals(translation, germanText);
+
+        data = dataTranslations.get(1);
+        dataDomain = data.getDomain();
+        script = dataDomain.getScript();
+        language = dataDomain.getLanguage();
+        scheme = dataDomain.getTransliterationScheme();
+        translation = data.getTranslation();
+
+        assertEquals(script, ISO15924.Latn);
+        assertEquals(language, LanguageCode.SPANISH);
+        assertEquals(scheme, TransliterationScheme.NATIVE);
+        assertEquals(translation, spanishText);
     }
 
     @Test
@@ -227,7 +250,7 @@ public class AnnotatedTextTest {
     public void testEntityMentionComparison() {
         EntityMention mention1 = new EntityMention.Builder(0, 3, "PERSON").build();
         EntityMention mention2 = new EntityMention.Builder(0, 3, "PERSON").confidence(1.0).build();
-        System.out.println(mention1.equals(mention2));
+        assertNotEquals(mention1, mention2);
     }
 
     @Test
@@ -235,7 +258,7 @@ public class AnnotatedTextTest {
         LanguageDetection.DetectionResult r1 = new LanguageDetection.DetectionResult.Builder(LanguageCode.FRENCH).build();
         LanguageDetection.DetectionResult r2 = new LanguageDetection.DetectionResult.Builder(LanguageCode.FRENCH).
             confidence(1.0).build();
-        System.out.println(r1.equals(r2));
+        assertNotEquals(r1, r2);
     }
 
 }

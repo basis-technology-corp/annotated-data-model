@@ -59,7 +59,8 @@ public class DmJsonUtilsTest extends Assert {
     private TextDomain germanDomain;
     private TextDomain spanishDomain;
     private Token token;
-    private TranslatedData translatedData;
+    private TranslatedData germanTranslatedData;
+    private TranslatedData spanishTranslatedData;
     private TranslatedTokens germanTranslation;
     private TranslatedTokens spanishTranslation;
     private AnnotatedText referenceText;
@@ -165,11 +166,20 @@ public class DmJsonUtilsTest extends Assert {
         tokenListBuilder.add(token);
         builder.tokens(tokenListBuilder.build());
 
+        ListAttribute.Builder<TranslatedData> translatedDataBuilder =
+            new ListAttribute.Builder<TranslatedData>(TranslatedData.class);
+
         germanDomain = new TextDomain(ISO15924.Latn, LanguageCode.GERMAN, TransliterationScheme.NATIVE);
-        String translatedText = "Ein.  Zwei.";
-        TranslatedData.Builder tdBuilder = new TranslatedData.Builder(germanDomain, translatedText);
-        translatedData = tdBuilder.build();
-        builder.translatedData(translatedData);
+        String germanText = "Ein.  Zwei.";
+        TranslatedData.Builder tdBuilder = new TranslatedData.Builder(germanDomain, germanText);
+        germanTranslatedData = tdBuilder.build();
+        translatedDataBuilder.add(germanTranslatedData);
+        spanishDomain = new TextDomain(ISO15924.Latn, LanguageCode.SPANISH, TransliterationScheme.NATIVE);
+        String spanishText = "Uno.  Dos.";
+        tdBuilder = new TranslatedData.Builder(spanishDomain, spanishText);
+        spanishTranslatedData = tdBuilder.build();
+        translatedDataBuilder.add(spanishTranslatedData);
+        builder.translatedData(translatedDataBuilder.build());
 
         ListAttribute.Builder<TranslatedTokens> translatedTokensListBuilder =
             new ListAttribute.Builder<TranslatedTokens>(TranslatedTokens.class);
@@ -243,7 +253,9 @@ public class DmJsonUtilsTest extends Assert {
         assertEquals(1, tokenList.size());
         assertEquals(token, tokenList.get(0));
 
-        assertEquals(read.getTranslatedData(), translatedData);
+        ListAttribute<TranslatedData> dataTranslations = read.getDataTranslations();
+        assertEquals(germanTranslatedData, dataTranslations.get(0));
+        assertEquals(spanishTranslatedData, dataTranslations.get(1));
 
         ListAttribute<TranslatedTokens> translatedTokens = read.getTranslatedTokens();
         assertEquals(germanTranslation, translatedTokens.get(0));

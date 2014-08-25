@@ -147,13 +147,13 @@ public class AnnotatedText implements CharSequence {
     }
 
     /**
-     * Returns the TranslatedData object for the entire text
+     * Returns the list of TranslatedData objects for the entire text
      *
-     * @return the TranslatedData object for the entire text
+     * @return the list of TranslatedData objects for the entire text
      */
     @SuppressWarnings("unchecked")
-    public TranslatedData getTranslatedData() {
-        return (TranslatedData) attributes.get(AttributeKey.TRANSLATED_DATA.key());
+    public ListAttribute<TranslatedData> getDataTranslations() {
+        return (ListAttribute<TranslatedData>) attributes.get(AttributeKey.DATA_TRANSLATIONS.key());
     }
 
     /**
@@ -387,8 +387,8 @@ public class AnnotatedText implements CharSequence {
          * @param translatedData a TranslatedData object
          * @return this
          */
-        public Builder translatedData(TranslatedData translatedData) {
-            attributes.put(AttributeKey.TRANSLATED_DATA.key(), translatedData);
+        public Builder translatedData(ListAttribute<TranslatedData> translatedData) {
+            attributes.put(AttributeKey.DATA_TRANSLATIONS.key(), translatedData);
             return this;
         }
 
