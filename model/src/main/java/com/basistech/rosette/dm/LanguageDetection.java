@@ -107,7 +107,7 @@ public class LanguageDetection extends Attribute {
 
             DetectionResult that = (DetectionResult) o;
 
-            if (Double.compare(that.confidence, confidence) != 0) {
+            if (confidence != null ? Double.compare(that.confidence, confidence) != 0 : that.confidence != null) {
                 return false;
             }
             if (encoding != null ? !encoding.equals(that.encoding) : that.encoding != null) {

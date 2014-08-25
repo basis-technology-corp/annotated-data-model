@@ -223,4 +223,19 @@ public class AnnotatedTextTest {
         assertEquals(23, resolvedEntity.getEndOffset());
     }
 
+    @Test
+    public void testEntityMentionComparison() {
+        EntityMention mention1 = new EntityMention.Builder(0, 3, "PERSON").build();
+        EntityMention mention2 = new EntityMention.Builder(0, 3, "PERSON").confidence(1.0).build();
+        System.out.println(mention1.equals(mention2));
+    }
+
+    @Test
+    public void testLanguageDetectionComparison() {
+        LanguageDetection.DetectionResult r1 = new LanguageDetection.DetectionResult.Builder(LanguageCode.FRENCH).build();
+        LanguageDetection.DetectionResult r2 = new LanguageDetection.DetectionResult.Builder(LanguageCode.FRENCH).
+            confidence(1.0).build();
+        System.out.println(r1.equals(r2));
+    }
+
 }
