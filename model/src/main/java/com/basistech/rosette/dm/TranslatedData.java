@@ -156,12 +156,7 @@ public class TranslatedData extends BaseAttribute {
          * @return a new TranslatedData object.
          */
         public TranslatedData build() {
-            String actualTranslation = null;
-            if (translation.length() > 0) {
-                actualTranslation = translation;
-            }
-
-            return new TranslatedData(domain, actualTranslation, extendedProperties);
+            return new TranslatedData(domain, translation, extendedProperties);
         }
     }
 }
