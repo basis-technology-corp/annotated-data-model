@@ -244,7 +244,7 @@ public class JsonTest extends AdmAssert {
         assertEquals(1, tokenList.size());
         assertEquals(token, tokenList.get(0));
 
-        ListAttribute<TranslatedData> dataTranslations = read.getDataTranslations();
+        ListAttribute<TranslatedData> dataTranslations = read.getTranslatedData();
         assertEquals(germanTranslatedData, dataTranslations.get(0));
         assertEquals(spanishTranslatedData, dataTranslations.get(1));
 

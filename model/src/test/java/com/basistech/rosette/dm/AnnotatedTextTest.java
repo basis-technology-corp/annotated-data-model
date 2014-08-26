@@ -72,7 +72,7 @@ public class AnnotatedTextTest {
         builder.translatedData(translatedDataBuilder.build());
         AnnotatedText text = builder.build();
 
-        ListAttribute<TranslatedData> dataTranslations = text.getDataTranslations();
+        ListAttribute<TranslatedData> dataTranslations = text.getTranslatedData();
 
         TranslatedData data = dataTranslations.get(0);
         TextDomain dataDomain = data.getDomain();

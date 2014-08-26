@@ -45,7 +45,7 @@ public abstract class AnnotatedTextMixin {
     public abstract ListAttribute<Token> getTokens();
 
     @JsonIgnore
-    public abstract ListAttribute<TranslatedData> getDataTranslations();
+    public abstract ListAttribute<TranslatedData> getTranslatedData();
 
     @JsonIgnore
     public abstract ListAttribute<TranslatedTokens> getTranslatedTokens();

@@ -118,15 +118,6 @@ public class TranslatedData extends BaseAttribute {
         private String translation;
 
         /**
-         * Constructs a builder with default values
-         */
-        public Builder() {
-            super();
-            domain = null;
-            translation = null;
-        }
-
-        /**
          * Constructs a builder from the required properties
          *
          * @param domain specifies the language and script of the translation

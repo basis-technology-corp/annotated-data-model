@@ -124,15 +124,6 @@ public class TranslatedTokens extends BaseAttribute {
         private List<String> translations;
 
         /**
-         * Constructs a builder with default values
-         */
-        public Builder() {
-            super();
-            domain = null;
-            translations = Lists.newArrayList();
-        }
-
-        /**
          * Constructs a builder from the required properties
          *
          * @param domain specifies the language and script of the translation
