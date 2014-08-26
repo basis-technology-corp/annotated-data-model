@@ -27,8 +27,12 @@ import com.basistech.rosette.dm.MorphoAnalysis;
 import com.basistech.rosette.dm.ScriptRegion;
 import com.basistech.rosette.dm.Sentence;
 import com.basistech.rosette.dm.Token;
+import com.basistech.rosette.dm.TranslatedData;
+import com.basistech.rosette.dm.TranslatedTokens;
 import com.basistech.util.ISO15924;
 import com.basistech.util.LanguageCode;
+import com.basistech.util.TextDomain;
+import com.basistech.util.TransliterationScheme;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -52,7 +56,13 @@ public class DmJsonUtilsTest extends Assert {
     private ScriptRegion scriptRegion;
     private Sentence sentence;
     private MorphoAnalysis morphoAnalysis;
+    private TextDomain germanDomain;
+    private TextDomain spanishDomain;
     private Token token;
+    private TranslatedData germanTranslatedData;
+    private TranslatedData spanishTranslatedData;
+    private TranslatedTokens germanTranslation;
+    private TranslatedTokens spanishTranslation;
     private AnnotatedText referenceText;
 
     @Before
@@ -123,7 +133,6 @@ public class DmJsonUtilsTest extends Assert {
         Token.Builder tokenBuilder = new Token.Builder(0, 4, "This");
         tokenBuilder.source("test");
         tokenBuilder.addNormalized("abnormal");
-        tokenBuilder.addVariation("different");
         tokenBuilder.extendedProperty("tok-ex", "tok-ex-val");
 
         MorphoAnalysis.Builder maBuilder = new MorphoAnalysis.Builder();
@@ -156,6 +165,42 @@ public class DmJsonUtilsTest extends Assert {
         token = tokenBuilder.build();
         tokenListBuilder.add(token);
         builder.tokens(tokenListBuilder.build());
+
+        ListAttribute.Builder<TranslatedData> translatedDataBuilder =
+            new ListAttribute.Builder<TranslatedData>(TranslatedData.class);
+
+        germanDomain = new TextDomain(ISO15924.Latn, LanguageCode.GERMAN, TransliterationScheme.NATIVE);
+        String germanText = "Ein.  Zwei.";
+        TranslatedData.Builder tdBuilder = new TranslatedData.Builder(germanDomain, germanText);
+        germanTranslatedData = tdBuilder.build();
+        translatedDataBuilder.add(germanTranslatedData);
+        spanishDomain = new TextDomain(ISO15924.Latn, LanguageCode.SPANISH, TransliterationScheme.NATIVE);
+        String spanishText = "Uno.  Dos.";
+        tdBuilder = new TranslatedData.Builder(spanishDomain, spanishText);
+        spanishTranslatedData = tdBuilder.build();
+        translatedDataBuilder.add(spanishTranslatedData);
+        builder.translatedData(translatedDataBuilder.build());
+
+        ListAttribute.Builder<TranslatedTokens> translatedTokensListBuilder =
+            new ListAttribute.Builder<TranslatedTokens>(TranslatedTokens.class);
+
+        TranslatedTokens.Builder ttBuilder = new TranslatedTokens.Builder(germanDomain);
+        ttBuilder.addTranslatedToken("Ein");
+        ttBuilder.addTranslatedToken(".");
+        ttBuilder.addTranslatedToken("Zwei");
+        ttBuilder.addTranslatedToken(".");
+        germanTranslation = ttBuilder.build();
+        translatedTokensListBuilder.add(germanTranslation);
+        spanishDomain = new TextDomain(ISO15924.Latn, LanguageCode.SPANISH, TransliterationScheme.NATIVE);
+        ttBuilder = new TranslatedTokens.Builder(spanishDomain);
+        ttBuilder.addTranslatedToken("Uno");
+        ttBuilder.addTranslatedToken(".");
+        ttBuilder.addTranslatedToken("Dos");
+        ttBuilder.addTranslatedToken(".");
+        spanishTranslation = ttBuilder.build();
+        translatedTokensListBuilder.add(spanishTranslation);
+        builder.translatedTokens(translatedTokensListBuilder.build());
+
         referenceText = builder.build();
     }
 
@@ -203,9 +248,17 @@ public class DmJsonUtilsTest extends Assert {
 
         assertEquals(sentence, sentences.get(0));
 
-        ListAttribute<Token> tokenList = referenceText.getTokens();
+        ListAttribute<Token> tokenList = read.getTokens();
         assertNotNull(tokenList);
         assertEquals(1, tokenList.size());
         assertEquals(token, tokenList.get(0));
+
+        ListAttribute<TranslatedData> dataTranslations = read.getTranslatedData();
+        assertEquals(germanTranslatedData, dataTranslations.get(0));
+        assertEquals(spanishTranslatedData, dataTranslations.get(1));
+
+        ListAttribute<TranslatedTokens> translatedTokens = read.getTranslatedTokens();
+        assertEquals(germanTranslation, translatedTokens.get(0));
+        assertEquals(spanishTranslation, translatedTokens.get(1));
     }
 }

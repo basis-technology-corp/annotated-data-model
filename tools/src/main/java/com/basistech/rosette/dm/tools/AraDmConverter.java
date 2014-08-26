@@ -403,9 +403,7 @@ public final class AraDmConverter {
             String[] variations = ara.getTokenVariations().getStringsForTokenIndex(x);
             if (variations != null) {
                 // no support yet to relocate variations into raw.
-                for (String variation : variations) {
-                    builder.addVariation(variation);
-                }
+                builder.addExtendedProperty("TOKEN_VARIATIONS", variations);
             }
         }
 

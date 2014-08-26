@@ -31,14 +31,12 @@ public class Token extends Attribute {
     private final List<String> normalized;
     private final List<MorphoAnalysis> analyses;
     private final String source;
-    private final List<String> variations;
 
     Token(int startOffset,
           int endOffset,
           String text,
           List<String> normalized,
           String source,
-          List<String> variations,
           List<MorphoAnalysis> analyses,
           Map<String, Object> extendedProperties) {
         super(startOffset, endOffset, extendedProperties);
@@ -51,12 +49,6 @@ public class Token extends Attribute {
         }
 
         this.source = source;
-
-        if (variations != null) {
-            this.variations = ImmutableList.copyOf(variations);
-        } else {
-            this.variations = null;
-        }
 
         if (analyses != null) {
             this.analyses = ImmutableList.copyOf(analyses);
@@ -71,7 +63,6 @@ public class Token extends Attribute {
         normalized = ImmutableList.of();
         analyses = ImmutableList.of();
         source = "";
-        variations = ImmutableList.of();
     }
 
     Token(int startOffset,
@@ -79,7 +70,6 @@ public class Token extends Attribute {
           String text,
           List<String> normalized,
           String source,
-          List<String> variations,
           List<MorphoAnalysis> analyses) {
         super(startOffset, endOffset);
         this.text = text;
@@ -91,12 +81,6 @@ public class Token extends Attribute {
         }
 
         this.source = source;
-
-        if (variations != null) {
-            this.variations = ImmutableList.copyOf(variations);
-        } else {
-            this.variations = null;
-        }
 
         if (analyses != null) {
             this.analyses = ImmutableList.copyOf(analyses);
@@ -149,15 +133,6 @@ public class Token extends Attribute {
         return source;
     }
 
-    /**
-     * Returns variant forms of the token.
-     *
-     * @return variant forms of the token
-     */
-    public List<String> getVariations() {
-        return variations;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -172,19 +147,16 @@ public class Token extends Attribute {
 
         Token token = (Token) o;
 
-        if (!analyses.equals(token.analyses)) {
+        if (analyses != null ? !analyses.equals(token.analyses) : token.analyses  != null) {
             return false;
         }
-        if (!normalized.equals(token.normalized)) {
+        if (normalized != null ? !normalized.equals(token.normalized) : token.normalized != null) {
             return false;
         }
-        if (!source.equals(token.source)) {
+        if (source != null ? !source.equals(token.source) : token.source != null) {
             return false;
         }
-        if (!text.equals(token.text)) {
-            return false;
-        }
-        if (!variations.equals(token.variations)) {
+        if (text != null ? !text.equals(token.text) : token.text != null) {
             return false;
         }
 
@@ -198,7 +170,6 @@ public class Token extends Attribute {
         result = 31 * result + normalized.hashCode();
         result = 31 * result + analyses.hashCode();
         result = 31 * result + source.hashCode();
-        result = 31 * result + variations.hashCode();
         return result;
     }
 
@@ -208,8 +179,7 @@ public class Token extends Attribute {
                 .add("text", text)
                 .add("normalized", normalized)
                 .add("analyses", analyses)
-                .add("source", source)
-                .add("variations", variations);
+                .add("source", source);
     }
 
     /**
@@ -221,7 +191,6 @@ public class Token extends Attribute {
         private List<MorphoAnalysis> analyses;
 
         private String source;
-        private List<String> variations;
 
         /**
          * Constructs a builder from the required properties.
@@ -235,7 +204,6 @@ public class Token extends Attribute {
             this.text = text;
             this.analyses = Lists.newArrayList();
             this.source = null;
-            variations = Lists.newArrayList();
             normalized = Lists.newArrayList();
         }
 
@@ -249,7 +217,6 @@ public class Token extends Attribute {
             super(toCopy);
             text = toCopy.text;
             normalized = toCopy.normalized;
-            variations.addAll(toCopy.variations);
             analyses = toCopy.getAnalyses();
         }
 
@@ -286,12 +253,13 @@ public class Token extends Attribute {
         }
 
         /**
-         * Adds a variant form.
+         * Adds an extended property.
          *
-         * @param variation the variant form
+         * @param key the key of the property
+         * @param value the value of the property
          */
-        public Builder addVariation(String variation) {
-            this.variations.add(variation);
+        public Builder addExtendedProperty(String key, Object value) {
+            extendedProperties.put(key, value);
             return this;
         }
 
@@ -323,12 +291,7 @@ public class Token extends Attribute {
                 actualAnalyses = analyses;
             }
 
-            List<String> actualVariations = null;
-            if (variations.size() != 0) {
-                actualVariations = variations;
-            }
-
-            return new Token(startOffset, endOffset, text, actualNormalized, source, actualVariations, actualAnalyses, extendedProperties);
+            return new Token(startOffset, endOffset, text, actualNormalized, source, actualAnalyses, extendedProperties);
         }
     }
 }

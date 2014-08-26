@@ -119,6 +119,7 @@ public class AnnotatedText implements CharSequence {
      * on the attribute.
      *
      * @return all of the annotations on this text
+     *
      * @adm.ignore
      */
     public Map<String, BaseAttribute> getAttributes() {
@@ -133,6 +134,26 @@ public class AnnotatedText implements CharSequence {
     @SuppressWarnings("unchecked")
     public ListAttribute<Token> getTokens() {
         return (ListAttribute<Token>) attributes.get(AttributeKey.TOKEN.key());
+    }
+
+    /**
+     * Returns the list of TranslatedTokens objects.
+     *
+     * @return the list of TranslatedTokens objects.
+     */
+    @SuppressWarnings("unchecked")
+    public ListAttribute<TranslatedTokens> getTranslatedTokens() {
+        return (ListAttribute<TranslatedTokens>) attributes.get(AttributeKey.TRANSLATED_TOKENS.key());
+    }
+
+    /**
+     * Returns the list of TranslatedData objects for the entire text
+     *
+     * @return the list of TranslatedData objects for the entire text
+     */
+    @SuppressWarnings("unchecked")
+    public ListAttribute<TranslatedData> getTranslatedData() {
+        return (ListAttribute<TranslatedData>) attributes.get(AttributeKey.TRANSLATED_DATA.key());
     }
 
     /**
@@ -346,6 +367,28 @@ public class AnnotatedText implements CharSequence {
          */
         public Builder tokens(ListAttribute<Token> tokens) {
             attributes.put(AttributeKey.TOKEN.key(), tokens);
+            return this;
+        }
+
+        /**
+         * Attaches a list of TranslatedTokens objects
+         *
+         * @param translatedTokens a list of TranslatedTokens objects
+         * @return this
+         */
+        public Builder translatedTokens(ListAttribute<TranslatedTokens> translatedTokens) {
+            attributes.put(AttributeKey.TRANSLATED_TOKENS.key(), translatedTokens);
+            return this;
+        }
+
+        /**
+         * Attaches a TranslatedData object
+         *
+         * @param translatedData a TranslatedData object
+         * @return this
+         */
+        public Builder translatedData(ListAttribute<TranslatedData> translatedData) {
+            attributes.put(AttributeKey.TRANSLATED_DATA.key(), translatedData);
             return this;
         }
 

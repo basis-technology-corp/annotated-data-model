@@ -14,28 +14,19 @@
 
 package com.basistech.rosette.dm;
 
+import com.basistech.util.TextDomain;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-
-import java.util.List;
 
 /**
- * {@link com.basistech.rosette.dm.Token}.
+ * {@link com.basistech.rosette.dm.TranslatedData}.
  */
-public abstract class TokenMixin {
-    @JsonDeserialize(using = MorphoAnalysisListDeserializer.class)
-    List<MorphoAnalysis> analyses;
-
+public abstract class TranslatedDataMixin {
     @JsonCreator
-    TokenMixin(@JsonProperty("startOffset") int startOffset,
-               @JsonProperty("endOffset") int endOffset,
-               @JsonProperty("text") String text,
-               @JsonProperty("normalized") List<String> normalized,
-               @JsonProperty("source") String source,
-               @JsonProperty("analyses") List<MorphoAnalysis> analyses) {
+    TranslatedDataMixin(@JsonProperty("domain") TextDomain domain,
+                        @JsonProperty("translation") String translation) {
         //
     }
-
-
 }
+

@@ -24,7 +24,7 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
  * Jackson module to configure Json serialization and deserialization for the
  * annotated data model.
  */
-public class AnnotatedDataModelModule extends SimpleModule {
+public class  AnnotatedDataModelModule extends SimpleModule {
 
     public AnnotatedDataModelModule() {
         //TODO: set up a filtered property file to deliver these facts.
@@ -47,6 +47,8 @@ public class AnnotatedDataModelModule extends SimpleModule {
         context.setMixInAnnotations(ScriptRegion.class, ScriptRegionMixin.class);
         context.setMixInAnnotations(Sentence.class, SentenceMixin.class);
         context.setMixInAnnotations(Token.class, TokenMixin.class);
+        context.setMixInAnnotations(TranslatedData.class, TranslatedDataMixin.class);
+        context.setMixInAnnotations(TranslatedTokens.class, TranslatedTokensMixin.class);
     }
 
     /**

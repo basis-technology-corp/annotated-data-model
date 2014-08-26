@@ -33,7 +33,9 @@ enum AttributeKey {
     LANGUAGE_DETECTION("languageDetection"),
     SCRIPT_REGION("scriptRegion"),
     SENTENCE("sentence"),
-    TOKEN("token");
+    TOKEN("token"),
+    TRANSLATED_DATA("translatedData"),
+    TRANSLATED_TOKENS("translatedTokens");
 
     private final String key;
 

@@ -168,7 +168,7 @@ public class EntityMention extends Attribute {
 
         EntityMention that = (EntityMention) o;
 
-        if (Double.compare(that.confidence, confidence) != 0) {
+        if (confidence != null ? Double.compare(that.confidence, confidence) != 0 : that.confidence != null) {
             return false;
         }
         if (coreferenceChainId != that.coreferenceChainId) {
