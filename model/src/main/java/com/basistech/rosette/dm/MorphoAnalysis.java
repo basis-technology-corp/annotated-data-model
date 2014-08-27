@@ -257,12 +257,7 @@ public class MorphoAnalysis extends BaseAttribute {
          * @return the new analysis
          */
         public MorphoAnalysis build() {
-            List<Token> actualComponents = null;
-            if (components.size() != 0) {
-                actualComponents = components;
-            }
-
-            return new MorphoAnalysis(partOfSpeech, lemma, actualComponents, raw);
+            return new MorphoAnalysis(partOfSpeech, lemma, listOrNull(components), raw);
         }
     }
 }

@@ -167,9 +167,15 @@ public class Token extends Attribute {
     public int hashCode() {
         int result = super.hashCode();
         result = 31 * result + text.hashCode();
-        result = 31 * result + normalized.hashCode();
-        result = 31 * result + analyses.hashCode();
-        result = 31 * result + source.hashCode();
+        if (normalized != null) {
+            result = 31 * result + normalized.hashCode();
+        }
+        if (analyses != null) {
+            result = 31 * result + analyses.hashCode();
+        }
+        if (source != null) {
+            result = 31 * result + source.hashCode();
+        }
         return result;
     }
 
