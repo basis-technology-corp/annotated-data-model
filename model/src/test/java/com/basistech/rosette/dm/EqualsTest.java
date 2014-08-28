@@ -14,6 +14,8 @@
 
 package com.basistech.rosette.dm;
 
+import com.basistech.util.ISO15924;
+import com.basistech.util.LanguageCode;
 import com.google.common.collect.Lists;
 import org.junit.Test;
 
@@ -266,5 +268,26 @@ public class EqualsTest {
         assertFalse(em1.equals(em2));
         assertFalse(em2.equals(em1));
         assertNotSame(em1.hashCode(), em2.hashCode());
+    }
+
+    @Test
+    public void languageDetection() throws Exception {
+        LanguageDetection.DetectionResult.Builder lddrBuilder = new LanguageDetection.DetectionResult.Builder(LanguageCode.ESTONIAN);
+        lddrBuilder.encoding("aes");
+        lddrBuilder.script(ISO15924.Armn);
+        lddrBuilder.confidence(Double.MIN_VALUE);
+        LanguageDetection.DetectionResult dr1 = lddrBuilder.build();
+        dr1.hashCode();
+        assertTrue(dr1.equals(dr1));
+
+        lddrBuilder = new LanguageDetection.DetectionResult.Builder(LanguageCode.ESTONIAN);
+        lddrBuilder.encoding("aes");
+        lddrBuilder.script(ISO15924.Armn);
+        // no confidence
+        LanguageDetection.DetectionResult dr2 = lddrBuilder.build();
+        assertNull(dr2.getConfidence());
+        assertFalse(dr1.equals(dr2));
+        assertFalse(dr2.equals(dr1));
+        assertNotSame(dr1.hashCode(), dr2.hashCode());
     }
 }

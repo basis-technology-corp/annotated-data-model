@@ -107,9 +107,14 @@ public class LanguageDetection extends Attribute {
 
             DetectionResult that = (DetectionResult) o;
 
-            if (confidence != null ? Double.compare(that.confidence, confidence) != 0 : that.confidence != null) {
+            if ((confidence == null) != (that.confidence == null)) {
                 return false;
             }
+
+            if (confidence != null && Double.compare(that.confidence, confidence) != 0) {
+                return false;
+            }
+
             if (encoding != null ? !encoding.equals(that.encoding) : that.encoding != null) {
                 return false;
             }
@@ -126,12 +131,13 @@ public class LanguageDetection extends Attribute {
         @Override
         public int hashCode() {
             int result;
-            long temp;
             result = language.hashCode();
             result = 31 * result + (encoding != null ? encoding.hashCode() : 0);
             result = 31 * result + (script != null ? script.hashCode() : 0);
-            temp = Double.doubleToLongBits(confidence);
-            result = 31 * result + (int) (temp ^ (temp >>> 32));
+            if (confidence != null) {
+                long temp = Double.doubleToLongBits(confidence);
+                result = 31 * result + (int) (temp ^ (temp >>> 32));
+            }
             return result;
         }
 
@@ -329,6 +335,7 @@ public class LanguageDetection extends Attribute {
          * @return the new language detection
          */
         public LanguageDetection build() {
+            // we do not null this list when empty. Should we?
             return new LanguageDetection(startOffset, endOffset, detectionResults, extendedProperties);
         }
     }

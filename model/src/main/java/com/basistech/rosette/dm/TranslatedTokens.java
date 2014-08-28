@@ -148,7 +148,7 @@ public class TranslatedTokens extends BaseAttribute {
          * Adds the translation of one token to the list of translations.
          *
          * @param translatedToken the translation for one token
-         * @return
+         * @return this
          */
         public Builder addTranslatedToken(String translatedToken) {
             this.translations.add(translatedToken);
@@ -172,12 +172,7 @@ public class TranslatedTokens extends BaseAttribute {
          * @return a new TranslatedTokens object.
          */
         public TranslatedTokens build() {
-            List<String> actualTranslations = null;
-            if (translations.size() > 0) {
-                actualTranslations = translations;
-            }
-
-            return new TranslatedTokens(domain, actualTranslations, extendedProperties);
+            return new TranslatedTokens(domain, listOrNull(translations), extendedProperties);
         }
     }
 }
