@@ -16,21 +16,25 @@ package com.basistech.rosette.dm;
 
 import com.basistech.util.ISO15924;
 import com.basistech.util.LanguageCode;
-import com.google.common.collect.Lists;
 import org.junit.Test;
 
-import java.util.List;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.IsEqual.equalTo;
-import static org.hamcrest.core.IsNot.not;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Test {@link Object#equals(Object)} methods across the DM.
+ * Test {@link Object#equals(Object)} and {@link Object#hashCode()} methods across the DM.
+ * It seems clear that really comprehensive testing here should be automated somehow, either
+ * with a code generator or some reflection. So, while the {@link #morphAnalysisBase()} is
+ * manually comprehensive, the rest are focussed on areas where we know that we have some
+ * null pointer exposure. The first method could be thought of as a target for future automation.
+ * <p/>
+ * Note the extensive use of {@link org.junit.Assert#assertFalse} and {@link org.junit.Assert#assertTrue} in here.
+ * First, this makes it explicit that we are, in fact, testing the result of {@link Object#equals(Object)}.
+ * Then, in cases like {@code assertFalse(x1.hashCode() == x2.hashCode())}, neither value is 'correct', so
+ * this seems more explicit to me than some use of {@code assertNotSame}.
  */
 public class EqualsTest {
 
@@ -63,7 +67,7 @@ public class EqualsTest {
         maBuilder.raw("cooked");
         MorphoAnalysis ma2 = maBuilder.build();
         ma2.hashCode();
-        assertThat(ma1.hashCode(), not(equalTo(ma2.hashCode())));
+        assertFalse(ma1.hashCode() == ma2.hashCode());
 
         assertFalse(ma1.equals(ma2));
 
@@ -74,7 +78,7 @@ public class EqualsTest {
         maBuilder.raw("cooked");
         ma2 = maBuilder.build();
         ma2.hashCode();
-        assertThat(ma1.hashCode(), not(equalTo(ma2.hashCode())));
+        assertNotSame(ma1.hashCode(), ma2.hashCode());
 
         assertFalse(ma1.equals(ma2));
 
@@ -85,7 +89,7 @@ public class EqualsTest {
         maBuilder.raw("cooked");
         ma2 = maBuilder.build();
         ma2.hashCode();
-        assertThat(ma1.hashCode(), not(equalTo(ma2.hashCode())));
+        assertNotSame(ma1.hashCode(), ma2.hashCode());
 
         assertFalse(ma1.equals(ma2));
 
@@ -96,7 +100,7 @@ public class EqualsTest {
         maBuilder.raw("hide");
         ma2 = maBuilder.build();
         ma2.hashCode();
-        assertThat(ma1.hashCode(), not(equalTo(ma2.hashCode())));
+        assertNotSame(ma1.hashCode(), ma2.hashCode());
 
         assertFalse(ma1.equals(ma2));
 
@@ -112,7 +116,7 @@ public class EqualsTest {
         ma2 = maBuilder.build();
         assertNull(ma2.getComponents());
         ma2.hashCode();
-        assertThat(ma1.hashCode(), not(equalTo(ma2.hashCode())));
+        assertNotSame(ma1.hashCode(), ma2.hashCode());
 
         assertFalse(ma1.equals(ma2));
         assertFalse(ma2.equals(ma1));
@@ -124,7 +128,7 @@ public class EqualsTest {
         maBuilder.raw("cooked");
         ma2 = maBuilder.build();
         ma2.hashCode();
-        assertThat(ma1.hashCode(), not(equalTo(ma2.hashCode())));
+        assertNotSame(ma1.hashCode(), ma2.hashCode());
 
         assertFalse(ma1.equals(ma2));
         assertFalse(ma2.equals(ma1));
@@ -136,7 +140,7 @@ public class EqualsTest {
         maBuilder.raw("cooked");
         ma2 = maBuilder.build();
         ma2.hashCode();
-        assertThat(ma1.hashCode(), not(equalTo(ma2.hashCode())));
+        assertNotSame(ma1.hashCode(), ma2.hashCode());
 
         assertFalse(ma1.equals(ma2));
         assertFalse(ma2.equals(ma1));
@@ -148,7 +152,7 @@ public class EqualsTest {
         maBuilder.raw(null);
         ma2 = maBuilder.build();
         ma2.hashCode();
-        assertThat(ma1.hashCode(), not(equalTo(ma2.hashCode())));
+        assertNotSame(ma1.hashCode(), ma2.hashCode());
 
         assertFalse(ma1.equals(ma2));
         assertFalse(ma2.equals(ma1));
@@ -170,7 +174,7 @@ public class EqualsTest {
         assertFalse(ma1.equals(ma2));
         assertFalse(ma2.equals(ma1));
         ma2.hashCode();
-        assertThat(ma1.hashCode(), not(equalTo(ma2.hashCode())));
+        assertNotSame(ma1.hashCode(), ma2.hashCode());
 
         maBuilder = new HanMorphoAnalysis.Builder();
         // leave reading null
@@ -179,7 +183,7 @@ public class EqualsTest {
         assertFalse(ma1.equals(ma2));
         assertFalse(ma2.equals(ma1));
         ma2.hashCode();
-        assertThat(ma1.hashCode(), not(equalTo(ma2.hashCode())));
+        assertNotSame(ma1.hashCode(), ma2.hashCode());
     }
 
     @Test
@@ -205,7 +209,7 @@ public class EqualsTest {
         Token tok2 = tokBuilder.build();
         assertFalse(tok1.equals(tok2));
         assertFalse(tok2.equals(tok1));
-        assertNotSame(tok1.hashCode(), tok2.hashCode());
+        assertFalse(tok1.hashCode() == tok2.hashCode());
 
         tokBuilder = new Token.Builder(0, 10, "token");
         tokBuilder.addNormalized("norm");
@@ -214,7 +218,7 @@ public class EqualsTest {
         tok2 = tokBuilder.build();
         assertFalse(tok1.equals(tok2));
         assertFalse(tok2.equals(tok1));
-        assertNotSame(tok1.hashCode(), tok2.hashCode());
+        assertFalse(tok1.hashCode() == tok2.hashCode());
     }
 
     @Test
@@ -241,7 +245,7 @@ public class EqualsTest {
         assertNull(em2.getConfidence());
         assertFalse(em1.equals(em2));
         assertFalse(em2.equals(em1));
-        assertNotSame(em1.hashCode(), em2.hashCode());
+        assertFalse(em1.hashCode() == em2.hashCode());
 
         emBuilder = new EntityMention.Builder(0, 10, "something");
         emBuilder.confidence(Double.MIN_VALUE);
@@ -254,7 +258,7 @@ public class EqualsTest {
         assertNull(em2.getCoreferenceChainId());
         assertFalse(em1.equals(em2));
         assertFalse(em2.equals(em1));
-        assertNotSame(em1.hashCode(), em2.hashCode());
+        assertFalse(em1.hashCode() == em2.hashCode());
 
         emBuilder = new EntityMention.Builder(0, 10, "something");
         emBuilder.confidence(Double.MIN_VALUE);
@@ -267,7 +271,7 @@ public class EqualsTest {
         assertNull(em2.getFlags());
         assertFalse(em1.equals(em2));
         assertFalse(em2.equals(em1));
-        assertNotSame(em1.hashCode(), em2.hashCode());
+        assertFalse(em1.hashCode() == em2.hashCode());
     }
 
     @Test
@@ -288,6 +292,6 @@ public class EqualsTest {
         assertNull(dr2.getConfidence());
         assertFalse(dr1.equals(dr2));
         assertFalse(dr2.equals(dr1));
-        assertNotSame(dr1.hashCode(), dr2.hashCode());
+        assertFalse(dr1.hashCode() == dr2.hashCode());
     }
 }
