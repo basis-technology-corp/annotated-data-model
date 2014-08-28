@@ -128,6 +128,7 @@ public class TranslatedTokens extends BaseAttribute {
          * @param domain specifies the language and script of the translation
          */
         public Builder(TextDomain domain) {
+            super();
             this.domain = domain;
             this.translations = Lists.newArrayList();
         }
@@ -140,6 +141,7 @@ public class TranslatedTokens extends BaseAttribute {
         public Builder(TranslatedTokens toCopy) {
             super(toCopy);
             this.domain = toCopy.domain;
+            translations = Lists.newArrayList();
             addAllToList(translations, toCopy.getTranslations());
         }
 

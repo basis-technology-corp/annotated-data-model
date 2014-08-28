@@ -321,7 +321,8 @@ public class LanguageDetection extends Attribute {
          */
         public Builder(LanguageDetection toCopy) {
             super(toCopy);
-            this.detectionResults = toCopy.detectionResults;
+            this.detectionResults = Lists.newArrayList();
+            addAllToList(this.detectionResults, toCopy.detectionResults);
         }
 
         /**
@@ -331,7 +332,7 @@ public class LanguageDetection extends Attribute {
          */
         public LanguageDetection build() {
             // we do not null this list when empty. Should we?
-            return new LanguageDetection(startOffset, endOffset, detectionResults, extendedProperties);
+            return new LanguageDetection(startOffset, endOffset, listOrNull(detectionResults), extendedProperties);
         }
     }
 }

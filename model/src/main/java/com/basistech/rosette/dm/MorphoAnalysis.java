@@ -201,6 +201,7 @@ public class MorphoAnalysis extends BaseAttribute {
          */
         public Builder(MorphoAnalysis toCopy) {
             super(toCopy);
+            components = Lists.newArrayList();
             partOfSpeech = toCopy.partOfSpeech;
             lemma = toCopy.lemma;
             addAllToList(components, toCopy.components);

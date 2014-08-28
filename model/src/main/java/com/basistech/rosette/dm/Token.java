@@ -222,6 +222,8 @@ public class Token extends Attribute {
         public Builder(Token toCopy) {
             super(toCopy);
             text = toCopy.text;
+            normalized = Lists.newArrayList();
+            analyses = Lists.newArrayList();
             addAllToList(normalized, toCopy.normalized);
             addAllToList(analyses, toCopy.getAnalyses());
         }

@@ -119,6 +119,7 @@ public class HanMorphoAnalysis extends MorphoAnalysis {
          */
         public Builder(HanMorphoAnalysis toCopy) {
             super(toCopy);
+            readings = Lists.newArrayList();
             addAllToList(readings, toCopy.getReadings());
         }
 

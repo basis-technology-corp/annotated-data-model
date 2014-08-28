@@ -339,6 +339,13 @@ public class ArabicMorphoAnalysis extends MorphoAnalysis {
          */
         public Builder(ArabicMorphoAnalysis toCopy) {
             super(toCopy);
+            prefixes = Lists.newArrayList();
+            stems = Lists.newArrayList();
+            suffixes = Lists.newArrayList();
+            prefixTags = Lists.newArrayList();
+            stemTags = Lists.newArrayList();
+            suffixes = Lists.newArrayList();
+            suffixTags = Lists.newArrayList();
             addAllToList(prefixes, toCopy.prefixes);
             addAllToList(stems, toCopy.stems);
             addAllToList(suffixes, toCopy.suffixes);
