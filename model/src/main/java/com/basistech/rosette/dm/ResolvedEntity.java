@@ -94,13 +94,13 @@ public class ResolvedEntity extends Attribute {
 
         ResolvedEntity that = (ResolvedEntity) o;
 
-        if (!entityId.equals(that.entityId)) {
-            return false;
-        }
         if (Double.compare(that.confidence, confidence) != 0) {
             return false;
         }
         if (coreferenceChainId != that.coreferenceChainId) {
+            return false;
+        }
+        if (entityId != null ? !entityId.equals(that.entityId) : that.entityId != null) {
             return false;
         }
 
@@ -111,10 +111,10 @@ public class ResolvedEntity extends Attribute {
     public int hashCode() {
         int result = super.hashCode();
         long temp;
-        result = 31 * result + entityId.hashCode();
+        result = 31 * result + (entityId != null ? entityId.hashCode() : 0);
+        result = 31 * result + coreferenceChainId;
         temp = Double.doubleToLongBits(confidence);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
-        result = 31 * result + coreferenceChainId;
         return result;
     }
 

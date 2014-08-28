@@ -104,17 +104,15 @@ public class LanguageDetection extends Attribute {
             if (o == null || getClass() != o.getClass()) {
                 return false;
             }
+            if (!super.equals(o)) {
+                return false;
+            }
 
             DetectionResult that = (DetectionResult) o;
 
-            if ((confidence == null) != (that.confidence == null)) {
+            if (confidence != null ? !confidence.equals(that.confidence) : that.confidence != null) {
                 return false;
             }
-
-            if (confidence != null && Double.compare(that.confidence, confidence) != 0) {
-                return false;
-            }
-
             if (encoding != null ? !encoding.equals(that.encoding) : that.encoding != null) {
                 return false;
             }
@@ -130,14 +128,11 @@ public class LanguageDetection extends Attribute {
 
         @Override
         public int hashCode() {
-            int result;
-            result = language.hashCode();
+            int result = super.hashCode();
+            result = 31 * result + (language != null ? language.hashCode() : 0);
             result = 31 * result + (encoding != null ? encoding.hashCode() : 0);
             result = 31 * result + (script != null ? script.hashCode() : 0);
-            if (confidence != null) {
-                long temp = Double.doubleToLongBits(confidence);
-                result = 31 * result + (int) (temp ^ (temp >>> 32));
-            }
+            result = 31 * result + (confidence != null ? confidence.hashCode() : 0);
             return result;
         }
 

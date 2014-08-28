@@ -168,32 +168,16 @@ public class EntityMention extends Attribute {
 
         EntityMention that = (EntityMention) o;
 
-        // nullness must match
-        if ((confidence == null) != (that.confidence == null)) {
+        if (confidence != null ? !confidence.equals(that.confidence) : that.confidence != null) {
             return false;
         }
-
-        if (confidence != null && Double.compare(that.confidence, confidence) != 0) {
+        if (coreferenceChainId != null ? !coreferenceChainId.equals(that.coreferenceChainId) : that.coreferenceChainId != null) {
             return false;
         }
-
-        if ((coreferenceChainId == null) != (that.coreferenceChainId == null)) {
+        if (entityType != null ? !entityType.equals(that.entityType) : that.entityType != null) {
             return false;
         }
-
-        if (coreferenceChainId != null && !coreferenceChainId.equals(that.coreferenceChainId)) {
-            return false;
-        }
-
-        if ((flags == null) != (that.flags == null)) {
-            return false;
-        }
-
-        if (flags != null && !flags.equals(that.flags)) {
-            return false;
-        }
-
-        if (!entityType.equals(that.entityType)) {
+        if (flags != null ? !flags.equals(that.flags) : that.flags != null) {
             return false;
         }
         if (normalized != null ? !normalized.equals(that.normalized) : that.normalized != null) {
@@ -212,17 +196,10 @@ public class EntityMention extends Attribute {
     @Override
     public int hashCode() {
         int result = super.hashCode();
-        result = 31 * result + entityType.hashCode();
-        if (confidence != null) {
-            long temp = Double.doubleToLongBits(confidence);
-            result = 31 * result + (int) (temp ^ (temp >>> 32));
-        }
-        if (coreferenceChainId != null) {
-            result = 31 * result + coreferenceChainId;
-        }
-        if (flags != null) {
-            result = 31 * result + flags;
-        }
+        result = 31 * result + (entityType != null ? entityType.hashCode() : 0);
+        result = 31 * result + (confidence != null ? confidence.hashCode() : 0);
+        result = 31 * result + (coreferenceChainId != null ? coreferenceChainId.hashCode() : 0);
+        result = 31 * result + (flags != null ? flags.hashCode() : 0);
         result = 31 * result + (source != null ? source.hashCode() : 0);
         result = 31 * result + (subsource != null ? subsource.hashCode() : 0);
         result = 31 * result + (normalized != null ? normalized.hashCode() : 0);
