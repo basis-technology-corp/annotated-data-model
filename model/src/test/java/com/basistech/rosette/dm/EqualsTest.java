@@ -158,8 +158,6 @@ public class EqualsTest {
         assertFalse(ma2.equals(ma1));
     }
 
-    // Oh, gosh, the Arabic case. Not to worry until COMN-101
-
     @Test
     public void hanMorphoAnalysis() throws Exception {
         HanMorphoAnalysis.Builder maBuilder = new HanMorphoAnalysis.Builder();
@@ -293,5 +291,26 @@ public class EqualsTest {
         assertFalse(dr1.equals(dr2));
         assertFalse(dr2.equals(dr1));
         assertFalse(dr1.hashCode() == dr2.hashCode());
+    }
+
+    @Test
+    public void testArabicMorphoBuilderReuse() throws Exception {
+        // COMN-101
+        ArabicMorphoAnalysis.Builder builder = new ArabicMorphoAnalysis.Builder();
+        ArabicMorphoAnalysis analysis1 = builder.build();
+        Token token = new Token.Builder(0, 10, "token").build();
+        builder.addComponent(token);
+        ArabicMorphoAnalysis analysis2 = builder.build();
+        assertFalse(analysis1.equals(analysis2));
+    }
+
+    @Test
+    public void testArabicMorphoToStringIncludesBaseClass() throws Exception {
+        // COMN-101
+        ArabicMorphoAnalysis.Builder builder = new ArabicMorphoAnalysis.Builder();
+        Token token = new Token.Builder(0, 10, "token").build();
+        builder.addComponent(token);
+        ArabicMorphoAnalysis analysis = builder.build();
+        assertTrue(analysis.toString().contains("components"));
     }
 }
