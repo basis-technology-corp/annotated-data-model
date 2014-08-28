@@ -15,6 +15,7 @@
 package com.basistech.rosette.dm;
 
 import com.google.common.base.Objects;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 
 import java.util.List;
@@ -53,7 +54,11 @@ public class MorphoAnalysis extends BaseAttribute {
                    String raw) {
         this.partOfSpeech = partOfSpeech;
         this.lemma = lemma;
-        this.components = components;
+        if (components == null) {
+            this.components = null;
+        } else {
+            this.components = ImmutableList.copyOf(components);
+        }
         this.raw = raw;
     }
 

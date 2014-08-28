@@ -16,6 +16,7 @@ package com.basistech.rosette.dm;
 
 import com.basistech.util.TextDomain;
 import com.google.common.base.Objects;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 
 import java.util.List;
@@ -50,7 +51,11 @@ public class TranslatedTokens extends BaseAttribute {
      */
     TranslatedTokens(TextDomain domain, List<String> translations) {
         this.domain = domain;
-        this.translations = translations;
+        if (translations == null) {
+            this.translations = null;
+        } else {
+            this.translations = ImmutableList.copyOf(translations);
+        }
     }
 
     protected TranslatedTokens() {

@@ -17,6 +17,7 @@ package com.basistech.rosette.dm;
 import com.basistech.util.ISO15924;
 import com.basistech.util.LanguageCode;
 import com.google.common.base.Objects;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 
 import java.util.List;
@@ -250,7 +251,11 @@ public class LanguageDetection extends Attribute {
                       int endOffset,
                       List<DetectionResult> detectionResults) {
         super(startOffset, endOffset);
-        this.detectionResults = detectionResults;
+        if (detectionResults == null) {
+            this.detectionResults = null;
+        } else {
+            this.detectionResults = ImmutableList.copyOf(detectionResults);
+        }
     }
 
     /**
