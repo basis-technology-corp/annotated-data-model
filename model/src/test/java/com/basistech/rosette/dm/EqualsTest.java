@@ -214,4 +214,57 @@ public class EqualsTest {
         assertFalse(tok2.equals(tok1));
         assertNotSame(tok1.hashCode(), tok2.hashCode());
     }
+
+    @Test
+    public void entityMention() throws Exception {
+        EntityMention.Builder emBuilder = new EntityMention.Builder(0, 10, "something");
+        emBuilder.confidence(Double.MIN_VALUE);
+        emBuilder.coreferenceChainId(42);
+        emBuilder.flags(3);
+        emBuilder.source("nile");
+        emBuilder.subsource("alexandria");
+        emBuilder.normalized("ab");
+        EntityMention em1 = emBuilder.build();
+        em1.hashCode();
+        assertTrue(em1.equals(em1));
+
+        emBuilder = new EntityMention.Builder(0, 10, "something");
+        // no confidence
+        emBuilder.coreferenceChainId(42);
+        emBuilder.flags(3);
+        emBuilder.source("nile");
+        emBuilder.subsource("alexandria");
+        emBuilder.normalized("ab");
+        EntityMention em2 = emBuilder.build();
+        assertNull(em2.getConfidence());
+        assertFalse(em1.equals(em2));
+        assertFalse(em2.equals(em1));
+        assertNotSame(em1.hashCode(), em2.hashCode());
+
+        emBuilder = new EntityMention.Builder(0, 10, "something");
+        emBuilder.confidence(Double.MIN_VALUE);
+        // no coref
+        emBuilder.flags(3);
+        emBuilder.source("nile");
+        emBuilder.subsource("alexandria");
+        emBuilder.normalized("ab");
+        em2 = emBuilder.build();
+        assertNull(em2.getCoreferenceChainId());
+        assertFalse(em1.equals(em2));
+        assertFalse(em2.equals(em1));
+        assertNotSame(em1.hashCode(), em2.hashCode());
+
+        emBuilder = new EntityMention.Builder(0, 10, "something");
+        emBuilder.confidence(Double.MIN_VALUE);
+        emBuilder.coreferenceChainId(42);
+        // no flags.
+        emBuilder.source("nile");
+        emBuilder.subsource("alexandria");
+        emBuilder.normalized("ab");
+        em2 = emBuilder.build();
+        assertNull(em2.getFlags());
+        assertFalse(em1.equals(em2));
+        assertFalse(em2.equals(em1));
+        assertNotSame(em1.hashCode(), em2.hashCode());
+    }
 }

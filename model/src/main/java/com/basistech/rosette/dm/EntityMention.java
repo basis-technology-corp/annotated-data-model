@@ -168,15 +168,31 @@ public class EntityMention extends Attribute {
 
         EntityMention that = (EntityMention) o;
 
-        if (confidence != null ? Double.compare(that.confidence, confidence) != 0 : that.confidence != null) {
+        // nullness must match
+        if ((confidence == null) != (that.confidence == null)) {
             return false;
         }
-        if (coreferenceChainId != that.coreferenceChainId) {
+
+        if (confidence != null && Double.compare(that.confidence, confidence) != 0) {
             return false;
         }
-        if (flags != that.flags) {
+
+        if ((coreferenceChainId == null) != (that.coreferenceChainId == null)) {
             return false;
         }
+
+        if (coreferenceChainId != null && !coreferenceChainId.equals(that.coreferenceChainId)) {
+            return false;
+        }
+
+        if ((flags == null) != (that.flags == null)) {
+            return false;
+        }
+
+        if (flags != null && !flags.equals(that.flags)) {
+            return false;
+        }
+
         if (!entityType.equals(that.entityType)) {
             return false;
         }
@@ -196,12 +212,17 @@ public class EntityMention extends Attribute {
     @Override
     public int hashCode() {
         int result = super.hashCode();
-        long temp;
         result = 31 * result + entityType.hashCode();
-        temp = Double.doubleToLongBits(confidence);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        result = 31 * result + coreferenceChainId;
-        result = 31 * result + flags;
+        if (confidence != null) {
+            long temp = Double.doubleToLongBits(confidence);
+            result = 31 * result + (int) (temp ^ (temp >>> 32));
+        }
+        if (coreferenceChainId != null) {
+            result = 31 * result + coreferenceChainId;
+        }
+        if (flags != null) {
+            result = 31 * result + flags;
+        }
         result = 31 * result + (source != null ? source.hashCode() : 0);
         result = 31 * result + (subsource != null ? subsource.hashCode() : 0);
         result = 31 * result + (normalized != null ? normalized.hashCode() : 0);
