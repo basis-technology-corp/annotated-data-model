@@ -60,12 +60,42 @@ public class ArabicMorphoAnalysis extends MorphoAnalysis {
         this.prefixLength = prefixLength;
         this.stemLength = stemLength;
         this.root = root;
-        this.prefixes = ImmutableList.copyOf(prefixes);
-        this.stems = ImmutableList.copyOf(stems);
-        this.suffixes = ImmutableList.copyOf(suffixes);
-        this.prefixTags = ImmutableList.copyOf(prefixTags);
-        this.stemTags = ImmutableList.copyOf(stemTags);
-        this.suffixTags = ImmutableList.copyOf(suffixTags);
+        if (prefixes == null) {
+            this.prefixes = null;
+        } else {
+            this.prefixes = ImmutableList.copyOf(prefixes);
+        }
+
+        if (stems == null) {
+            this.stems = null;
+        } else {
+            this.stems = ImmutableList.copyOf(stems);
+        }
+
+        if (suffixes == null) {
+            this.suffixes = null;
+        } else {
+            this.suffixes = ImmutableList.copyOf(suffixes);
+        }
+
+        if (prefixTags == null) {
+            this.prefixTags = null;
+        } else {
+            this.prefixTags = ImmutableList.copyOf(prefixTags);
+        }
+
+        if (stemTags == null) {
+            this.stemTags = null;
+        } else {
+            this.stemTags = ImmutableList.copyOf(stemTags);
+        }
+
+        if (suffixTags == null) {
+            this.suffixTags = null;
+        } else {
+            this.suffixTags = ImmutableList.copyOf(suffixTags);
+        }
+
         this.definiteArticle = definiteArticle;
         this.strippablePrefix = strippablePrefix;
     }
@@ -183,6 +213,7 @@ public class ArabicMorphoAnalysis extends MorphoAnalysis {
         return strippablePrefix;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -209,25 +240,25 @@ public class ArabicMorphoAnalysis extends MorphoAnalysis {
         if (strippablePrefix != that.strippablePrefix) {
             return false;
         }
-        if (!prefixTags.equals(that.prefixTags)) {
+        if (prefixTags != null ? !prefixTags.equals(that.prefixTags) : that.prefixTags != null) {
             return false;
         }
-        if (!prefixes.equals(that.prefixes)) {
+        if (prefixes != null ? !prefixes.equals(that.prefixes) : that.prefixes != null) {
             return false;
         }
         if (root != null ? !root.equals(that.root) : that.root != null) {
             return false;
         }
-        if (!stemTags.equals(that.stemTags)) {
+        if (stemTags != null ? !stemTags.equals(that.stemTags) : that.stemTags != null) {
             return false;
         }
-        if (!stems.equals(that.stems)) {
+        if (stems != null ? !stems.equals(that.stems) : that.stems != null) {
             return false;
         }
-        if (!suffixTags.equals(that.suffixTags)) {
+        if (suffixTags != null ? !suffixTags.equals(that.suffixTags) : that.suffixTags != null) {
             return false;
         }
-        if (!suffixes.equals(that.suffixes)) {
+        if (suffixes != null ? !suffixes.equals(that.suffixes) : that.suffixes != null) {
             return false;
         }
 
@@ -242,18 +273,18 @@ public class ArabicMorphoAnalysis extends MorphoAnalysis {
         result = 31 * result + (root != null ? root.hashCode() : 0);
         result = 31 * result + (definiteArticle ? 1 : 0);
         result = 31 * result + (strippablePrefix ? 1 : 0);
-        result = 31 * result + prefixes.hashCode();
-        result = 31 * result + stems.hashCode();
-        result = 31 * result + suffixes.hashCode();
-        result = 31 * result + prefixTags.hashCode();
-        result = 31 * result + stemTags.hashCode();
-        result = 31 * result + suffixTags.hashCode();
+        result = 31 * result + (prefixes != null ? prefixes.hashCode() : 0);
+        result = 31 * result + (stems != null ? stems.hashCode() : 0);
+        result = 31 * result + (suffixes != null ? suffixes.hashCode() : 0);
+        result = 31 * result + (prefixTags != null ? prefixTags.hashCode() : 0);
+        result = 31 * result + (stemTags != null ? stemTags.hashCode() : 0);
+        result = 31 * result + (suffixTags != null ? suffixTags.hashCode() : 0);
         return result;
     }
 
     @Override
     protected Objects.ToStringHelper toStringHelper() {
-        return Objects.toStringHelper(this)
+        return super.toStringHelper()
                 .add("prefixLength", prefixLength)
                 .add("stemLength", stemLength)
                 .add("root", root)
@@ -297,7 +328,7 @@ public class ArabicMorphoAnalysis extends MorphoAnalysis {
             stemTags = Lists.newArrayList();
             suffixes = Lists.newArrayList();
             suffixTags = Lists.newArrayList();
-            root = "";
+            root = null;
         }
 
         /**
@@ -308,12 +339,19 @@ public class ArabicMorphoAnalysis extends MorphoAnalysis {
          */
         public Builder(ArabicMorphoAnalysis toCopy) {
             super(toCopy);
-            prefixes = toCopy.prefixes;
-            stems = toCopy.stems;
-            suffixes = toCopy.suffixes;
-            prefixTags = toCopy.prefixTags;
-            stemTags = toCopy.stemTags;
-            suffixTags = toCopy.suffixTags;
+            prefixes = Lists.newArrayList();
+            stems = Lists.newArrayList();
+            suffixes = Lists.newArrayList();
+            prefixTags = Lists.newArrayList();
+            stemTags = Lists.newArrayList();
+            suffixes = Lists.newArrayList();
+            suffixTags = Lists.newArrayList();
+            addAllToList(prefixes, toCopy.prefixes);
+            addAllToList(stems, toCopy.stems);
+            addAllToList(suffixes, toCopy.suffixes);
+            addAllToList(prefixTags, toCopy.prefixTags);
+            addAllToList(stemTags, toCopy.stemTags);
+            addAllToList(suffixTags, toCopy.suffixTags);
         }
 
         /**
@@ -401,10 +439,14 @@ public class ArabicMorphoAnalysis extends MorphoAnalysis {
          * @return the new analysis object
          */
         public ArabicMorphoAnalysis build() {
-            return new ArabicMorphoAnalysis(partOfSpeech, lemma, components,
-                raw, prefixLength, stemLength, root, definiteArticle,
-                strippablePrefix, prefixes, stems, suffixes, prefixTags,
-                stemTags, suffixTags);
+            return new ArabicMorphoAnalysis(partOfSpeech, lemma, listOrNull(components),
+                    raw, prefixLength, stemLength, root, definiteArticle,
+                    strippablePrefix, listOrNull(prefixes),
+                    listOrNull(stems),
+                    listOrNull(suffixes),
+                    listOrNull(prefixTags),
+                    listOrNull(stemTags),
+                    listOrNull(suffixTags));
         }
     }
 }

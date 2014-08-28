@@ -142,5 +142,17 @@ public abstract class BaseAttribute {
                 return listToBuild;
             }
         }
+
+        /**
+         * Add all the entries of a list to another list, but don't NPE if the 'to be added' list is null.
+         * @param list list to add to.
+         * @param toAdd list to add.
+         * @param <T> type of elements.
+         */
+        protected static <T> void addAllToList(List<T> list, List<T> toAdd) {
+            if (toAdd != null) {
+                list.addAll(toAdd);
+            }
+        }
     }
 }

@@ -16,6 +16,7 @@ package com.basistech.rosette.dm;
 
 import com.basistech.util.TextDomain;
 import com.google.common.base.Objects;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 
 import java.util.List;
@@ -50,7 +51,11 @@ public class TranslatedTokens extends BaseAttribute {
      */
     TranslatedTokens(TextDomain domain, List<String> translations) {
         this.domain = domain;
-        this.translations = translations;
+        if (translations == null) {
+            this.translations = null;
+        } else {
+            this.translations = ImmutableList.copyOf(translations);
+        }
     }
 
     protected TranslatedTokens() {
@@ -88,12 +93,12 @@ public class TranslatedTokens extends BaseAttribute {
             return false;
         }
 
-        TranslatedTokens ttok = (TranslatedTokens) o;
+        TranslatedTokens that = (TranslatedTokens) o;
 
-        if (!domain.equals(ttok.domain)) {
+        if (domain != null ? !domain.equals(that.domain) : that.domain != null) {
             return false;
         }
-        if (!translations.equals(ttok.translations)) {
+        if (translations != null ? !translations.equals(that.translations) : that.translations != null) {
             return false;
         }
 
@@ -102,10 +107,9 @@ public class TranslatedTokens extends BaseAttribute {
 
     @Override
     public int hashCode() {
-        int result;
-        result = super.hashCode();
-        result = 31 * result + domain.hashCode();
-        result = 31 * result + translations.hashCode();
+        int result = super.hashCode();
+        result = 31 * result + (domain != null ? domain.hashCode() : 0);
+        result = 31 * result + (translations != null ? translations.hashCode() : 0);
         return result;
     }
 
@@ -129,6 +133,7 @@ public class TranslatedTokens extends BaseAttribute {
          * @param domain specifies the language and script of the translation
          */
         public Builder(TextDomain domain) {
+            super();
             this.domain = domain;
             this.translations = Lists.newArrayList();
         }
@@ -141,7 +146,8 @@ public class TranslatedTokens extends BaseAttribute {
         public Builder(TranslatedTokens toCopy) {
             super(toCopy);
             this.domain = toCopy.domain;
-            this.translations = toCopy.getTranslations();
+            translations = Lists.newArrayList();
+            addAllToList(translations, toCopy.getTranslations());
         }
 
         /**
