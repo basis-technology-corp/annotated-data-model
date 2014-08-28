@@ -168,16 +168,16 @@ public class EntityMention extends Attribute {
 
         EntityMention that = (EntityMention) o;
 
-        if (confidence != null ? Double.compare(that.confidence, confidence) != 0 : that.confidence != null) {
+        if (confidence != null ? !confidence.equals(that.confidence) : that.confidence != null) {
             return false;
         }
-        if (coreferenceChainId != that.coreferenceChainId) {
+        if (coreferenceChainId != null ? !coreferenceChainId.equals(that.coreferenceChainId) : that.coreferenceChainId != null) {
             return false;
         }
-        if (flags != that.flags) {
+        if (entityType != null ? !entityType.equals(that.entityType) : that.entityType != null) {
             return false;
         }
-        if (!entityType.equals(that.entityType)) {
+        if (flags != null ? !flags.equals(that.flags) : that.flags != null) {
             return false;
         }
         if (normalized != null ? !normalized.equals(that.normalized) : that.normalized != null) {
@@ -196,12 +196,10 @@ public class EntityMention extends Attribute {
     @Override
     public int hashCode() {
         int result = super.hashCode();
-        long temp;
-        result = 31 * result + entityType.hashCode();
-        temp = Double.doubleToLongBits(confidence);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        result = 31 * result + coreferenceChainId;
-        result = 31 * result + flags;
+        result = 31 * result + (entityType != null ? entityType.hashCode() : 0);
+        result = 31 * result + (confidence != null ? confidence.hashCode() : 0);
+        result = 31 * result + (coreferenceChainId != null ? coreferenceChainId.hashCode() : 0);
+        result = 31 * result + (flags != null ? flags.hashCode() : 0);
         result = 31 * result + (source != null ? source.hashCode() : 0);
         result = 31 * result + (subsource != null ? subsource.hashCode() : 0);
         result = 31 * result + (normalized != null ? normalized.hashCode() : 0);

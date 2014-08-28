@@ -37,7 +37,11 @@ public class HanMorphoAnalysis extends MorphoAnalysis {
                       String raw,
                       List<String> readings) {
         super(partOfSpeech, lemma, components, raw);
-        this.readings = ImmutableList.copyOf(readings);
+        if (readings != null) {
+            this.readings = ImmutableList.copyOf(readings);
+        } else {
+            this.readings = null;
+        }
     }
 
     protected HanMorphoAnalysis() {
@@ -67,6 +71,10 @@ public class HanMorphoAnalysis extends MorphoAnalysis {
 
         HanMorphoAnalysis that = (HanMorphoAnalysis) o;
 
+        if (readings == null) {
+            return that.readings == null;
+        }
+
         if (!readings.equals(that.readings)) {
             return false;
         }
@@ -77,7 +85,9 @@ public class HanMorphoAnalysis extends MorphoAnalysis {
     @Override
     public int hashCode() {
         int result = super.hashCode();
-        result = 31 * result + readings.hashCode();
+        if (readings != null) {
+            result = 31 * result + readings.hashCode();
+        }
         return result;
     }
 
@@ -131,7 +141,7 @@ public class HanMorphoAnalysis extends MorphoAnalysis {
          * @return the analysis
          */
         public HanMorphoAnalysis build() {
-            return new HanMorphoAnalysis(partOfSpeech, lemma, components, raw, readings);
+            return new HanMorphoAnalysis(partOfSpeech, lemma, listOrNull(components), raw, listOrNull(readings));
         }
     }
 }

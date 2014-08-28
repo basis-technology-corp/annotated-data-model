@@ -18,6 +18,7 @@ import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -124,6 +125,22 @@ public abstract class BaseAttribute {
         public Builder extendedProperty(String key, Object value) {
             this.extendedProperties.put(key, value);
             return this;
+        }
+
+        /**
+         * Utility method for the 'no empty lists' convention. Takes a list,
+         * if empty returns null, else returns the list.
+         * @param listToBuild the list
+         * @param <T> the type of the list
+         * @return a list, or null.
+         */
+        protected static <T> List<T> listOrNull(List<T> listToBuild) {
+            // note: Guava's nullable business is an option here, but it's a lot to drag in at the moment.
+            if (listToBuild == null || listToBuild.size() == 0) {
+                return null;
+            } else {
+                return listToBuild;
+            }
         }
     }
 }
