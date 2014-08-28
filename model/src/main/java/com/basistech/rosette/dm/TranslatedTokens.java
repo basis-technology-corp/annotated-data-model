@@ -88,12 +88,12 @@ public class TranslatedTokens extends BaseAttribute {
             return false;
         }
 
-        TranslatedTokens ttok = (TranslatedTokens) o;
+        TranslatedTokens that = (TranslatedTokens) o;
 
-        if (!domain.equals(ttok.domain)) {
+        if (domain != null ? !domain.equals(that.domain) : that.domain != null) {
             return false;
         }
-        if (!translations.equals(ttok.translations)) {
+        if (translations != null ? !translations.equals(that.translations) : that.translations != null) {
             return false;
         }
 
@@ -102,10 +102,9 @@ public class TranslatedTokens extends BaseAttribute {
 
     @Override
     public int hashCode() {
-        int result;
-        result = super.hashCode();
-        result = 31 * result + domain.hashCode();
-        result = 31 * result + translations.hashCode();
+        int result = super.hashCode();
+        result = 31 * result + (domain != null ? domain.hashCode() : 0);
+        result = 31 * result + (translations != null ? translations.hashCode() : 0);
         return result;
     }
 
@@ -141,7 +140,7 @@ public class TranslatedTokens extends BaseAttribute {
         public Builder(TranslatedTokens toCopy) {
             super(toCopy);
             this.domain = toCopy.domain;
-            this.translations = toCopy.getTranslations();
+            addAllToList(translations, toCopy.getTranslations());
         }
 
         /**

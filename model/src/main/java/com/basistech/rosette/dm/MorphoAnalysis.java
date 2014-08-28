@@ -203,7 +203,7 @@ public class MorphoAnalysis extends BaseAttribute {
             super(toCopy);
             partOfSpeech = toCopy.partOfSpeech;
             lemma = toCopy.lemma;
-            components.addAll(toCopy.components);
+            addAllToList(components, toCopy.components);
             raw = toCopy.raw;
         }
 
