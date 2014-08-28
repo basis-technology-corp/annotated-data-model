@@ -20,7 +20,10 @@ import org.junit.Test;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.IsEqual.equalTo;
+import static org.hamcrest.core.IsNot.not;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
@@ -58,6 +61,7 @@ public class EqualsTest {
         maBuilder.raw("cooked");
         MorphoAnalysis ma2 = maBuilder.build();
         ma2.hashCode();
+        assertThat(ma1.hashCode(), not(equalTo(ma2.hashCode())));
 
         assertFalse(ma1.equals(ma2));
 
@@ -68,6 +72,7 @@ public class EqualsTest {
         maBuilder.raw("cooked");
         ma2 = maBuilder.build();
         ma2.hashCode();
+        assertThat(ma1.hashCode(), not(equalTo(ma2.hashCode())));
 
         assertFalse(ma1.equals(ma2));
 
@@ -78,6 +83,7 @@ public class EqualsTest {
         maBuilder.raw("cooked");
         ma2 = maBuilder.build();
         ma2.hashCode();
+        assertThat(ma1.hashCode(), not(equalTo(ma2.hashCode())));
 
         assertFalse(ma1.equals(ma2));
 
@@ -88,6 +94,7 @@ public class EqualsTest {
         maBuilder.raw("hide");
         ma2 = maBuilder.build();
         ma2.hashCode();
+        assertThat(ma1.hashCode(), not(equalTo(ma2.hashCode())));
 
         assertFalse(ma1.equals(ma2));
 
@@ -103,6 +110,7 @@ public class EqualsTest {
         ma2 = maBuilder.build();
         assertNull(ma2.getComponents());
         ma2.hashCode();
+        assertThat(ma1.hashCode(), not(equalTo(ma2.hashCode())));
 
         assertFalse(ma1.equals(ma2));
         assertFalse(ma2.equals(ma1));
@@ -114,6 +122,7 @@ public class EqualsTest {
         maBuilder.raw("cooked");
         ma2 = maBuilder.build();
         ma2.hashCode();
+        assertThat(ma1.hashCode(), not(equalTo(ma2.hashCode())));
 
         assertFalse(ma1.equals(ma2));
         assertFalse(ma2.equals(ma1));
@@ -125,6 +134,7 @@ public class EqualsTest {
         maBuilder.raw("cooked");
         ma2 = maBuilder.build();
         ma2.hashCode();
+        assertThat(ma1.hashCode(), not(equalTo(ma2.hashCode())));
 
         assertFalse(ma1.equals(ma2));
         assertFalse(ma2.equals(ma1));
@@ -136,6 +146,7 @@ public class EqualsTest {
         maBuilder.raw(null);
         ma2 = maBuilder.build();
         ma2.hashCode();
+        assertThat(ma1.hashCode(), not(equalTo(ma2.hashCode())));
 
         assertFalse(ma1.equals(ma2));
         assertFalse(ma2.equals(ma1));
@@ -157,6 +168,7 @@ public class EqualsTest {
         assertFalse(ma1.equals(ma2));
         assertFalse(ma2.equals(ma1));
         ma2.hashCode();
+        assertThat(ma1.hashCode(), not(equalTo(ma2.hashCode())));
 
         maBuilder = new HanMorphoAnalysis.Builder();
         // leave reading null
@@ -165,5 +177,41 @@ public class EqualsTest {
         assertFalse(ma1.equals(ma2));
         assertFalse(ma2.equals(ma1));
         ma2.hashCode();
+        assertThat(ma1.hashCode(), not(equalTo(ma2.hashCode())));
+    }
+
+    @Test
+    public void token() throws Exception {
+        Token.Builder tokBuilder = new Token.Builder(0, 10, "token");
+        tokBuilder.addNormalized("norm");
+        MorphoAnalysis.Builder maBuilder = new MorphoAnalysis.Builder();
+        componentList(maBuilder, "beam", "post");
+        maBuilder.lemma("orange");
+        maBuilder.partOfSpeech("woof");
+        maBuilder.raw("cooked");
+        MorphoAnalysis ma1 = maBuilder.build();
+        tokBuilder.addAnalysis(ma1);
+        tokBuilder.source("nile");
+        Token tok1 = tokBuilder.build();
+        tok1.hashCode();
+        assertTrue(tok1.equals(tok1));
+
+        tokBuilder = new Token.Builder(0, 10, "token");
+        // no normalized
+        tokBuilder.addAnalysis(ma1);
+        tokBuilder.source("nile");
+        Token tok2 = tokBuilder.build();
+        assertFalse(tok1.equals(tok2));
+        assertFalse(tok2.equals(tok1));
+        assertNotSame(tok1.hashCode(), tok2.hashCode());
+
+        tokBuilder = new Token.Builder(0, 10, "token");
+        tokBuilder.addNormalized("norm");
+        // no analysis
+        tokBuilder.source("nile");
+        tok2 = tokBuilder.build();
+        assertFalse(tok1.equals(tok2));
+        assertFalse(tok2.equals(tok1));
+        assertNotSame(tok1.hashCode(), tok2.hashCode());
     }
 }

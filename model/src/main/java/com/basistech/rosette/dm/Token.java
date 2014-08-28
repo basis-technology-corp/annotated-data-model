@@ -287,17 +287,7 @@ public class Token extends Attribute {
          */
         public Token build() {
             // we do not want to build the token with empty lists.
-            List<String> actualNormalized = null;
-            if (normalized.size() > 0) {
-                actualNormalized = normalized;
-            }
-
-            List<MorphoAnalysis> actualAnalyses = null;
-            if (analyses.size() != 0) {
-                actualAnalyses = analyses;
-            }
-
-            return new Token(startOffset, endOffset, text, actualNormalized, source, actualAnalyses, extendedProperties);
+            return new Token(startOffset, endOffset, text, listOrNull(normalized), source, listOrNull(analyses), extendedProperties);
         }
     }
 }
