@@ -20,7 +20,6 @@ import org.junit.Test;
 
 
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
@@ -28,7 +27,7 @@ import static org.junit.Assert.assertTrue;
  * Test {@link Object#equals(Object)} and {@link Object#hashCode()} methods across the DM.
  * It seems clear that really comprehensive testing here should be automated somehow, either
  * with a code generator or some reflection. So, while the {@link #morphAnalysisBase()} is
- * manually comprehensive, the rest are focussed on areas where we know that we have some
+ * manually comprehensive, the rest are focused on areas where we know that we have some
  * null pointer exposure. The first method could be thought of as a target for future automation.
  * <p/>
  * Note the extensive use of {@link org.junit.Assert#assertFalse} and {@link org.junit.Assert#assertTrue} in here.
@@ -78,7 +77,7 @@ public class EqualsTest {
         maBuilder.raw("cooked");
         ma2 = maBuilder.build();
         ma2.hashCode();
-        assertNotSame(ma1.hashCode(), ma2.hashCode());
+        assertFalse(ma1.hashCode() == ma2.hashCode());
 
         assertFalse(ma1.equals(ma2));
 
@@ -89,7 +88,7 @@ public class EqualsTest {
         maBuilder.raw("cooked");
         ma2 = maBuilder.build();
         ma2.hashCode();
-        assertNotSame(ma1.hashCode(), ma2.hashCode());
+        assertFalse(ma1.hashCode() == ma2.hashCode());
 
         assertFalse(ma1.equals(ma2));
 
@@ -100,7 +99,7 @@ public class EqualsTest {
         maBuilder.raw("hide");
         ma2 = maBuilder.build();
         ma2.hashCode();
-        assertNotSame(ma1.hashCode(), ma2.hashCode());
+        assertFalse(ma1.hashCode() == ma2.hashCode());
 
         assertFalse(ma1.equals(ma2));
 
@@ -116,7 +115,7 @@ public class EqualsTest {
         ma2 = maBuilder.build();
         assertNull(ma2.getComponents());
         ma2.hashCode();
-        assertNotSame(ma1.hashCode(), ma2.hashCode());
+        assertFalse(ma1.hashCode() == ma2.hashCode());
 
         assertFalse(ma1.equals(ma2));
         assertFalse(ma2.equals(ma1));
@@ -128,7 +127,7 @@ public class EqualsTest {
         maBuilder.raw("cooked");
         ma2 = maBuilder.build();
         ma2.hashCode();
-        assertNotSame(ma1.hashCode(), ma2.hashCode());
+        assertFalse(ma1.hashCode() == ma2.hashCode());
 
         assertFalse(ma1.equals(ma2));
         assertFalse(ma2.equals(ma1));
@@ -140,7 +139,7 @@ public class EqualsTest {
         maBuilder.raw("cooked");
         ma2 = maBuilder.build();
         ma2.hashCode();
-        assertNotSame(ma1.hashCode(), ma2.hashCode());
+        assertFalse(ma1.hashCode() == ma2.hashCode());
 
         assertFalse(ma1.equals(ma2));
         assertFalse(ma2.equals(ma1));
@@ -152,7 +151,7 @@ public class EqualsTest {
         maBuilder.raw(null);
         ma2 = maBuilder.build();
         ma2.hashCode();
-        assertNotSame(ma1.hashCode(), ma2.hashCode());
+        assertFalse(ma1.hashCode() == ma2.hashCode());
 
         assertFalse(ma1.equals(ma2));
         assertFalse(ma2.equals(ma1));
@@ -174,7 +173,7 @@ public class EqualsTest {
         assertFalse(ma1.equals(ma2));
         assertFalse(ma2.equals(ma1));
         ma2.hashCode();
-        assertNotSame(ma1.hashCode(), ma2.hashCode());
+        assertFalse(ma1.hashCode() == ma2.hashCode());
 
         maBuilder = new HanMorphoAnalysis.Builder();
         // leave reading null
@@ -183,7 +182,7 @@ public class EqualsTest {
         assertFalse(ma1.equals(ma2));
         assertFalse(ma2.equals(ma1));
         ma2.hashCode();
-        assertNotSame(ma1.hashCode(), ma2.hashCode());
+        assertFalse(ma1.hashCode() == ma2.hashCode());
     }
 
     @Test
