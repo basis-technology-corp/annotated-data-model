@@ -30,7 +30,20 @@
                   <pattern>com.fasterxml</pattern>
                   <shadedPattern>com.basistech.com.fasterxml</shadedPattern>
                 </relocation>
+                <relocation>
+                  <pattern>org.apache</pattern>
+                  <shadedPattern>com.basistech.org.apache</shadedPattern>
+                </relocation>
+                <relocation>
+                  <pattern>javassist</pattern>
+                  <shadedPattern>com.basistech.javassist</shadedPattern>
+                </relocation>
               </relocations>
+              <artifactSet>
+                <excludes>
+                  <exclude>com.basistech:common</exclude>
+                </excludes>
+              </artifactSet>       
         </configuration>
         <executions>
           <execution>

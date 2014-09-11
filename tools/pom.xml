@@ -54,6 +54,7 @@
         <dependency>
           <groupId>args4j</groupId>
           <artifactId>args4j</artifactId>
+          <optional>true</optional> <!-- cli does not make sense in users -->
         </dependency>
     </dependencies>
     <build>
