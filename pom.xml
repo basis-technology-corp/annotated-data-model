@@ -36,6 +36,7 @@
         <module>taglets</module>
         <module>model</module>
         <module>json</module>
+        <module>json-benchmark</module>
         <module>tools</module>
         <module>shaded</module>
         <module>shaded-test</module>
