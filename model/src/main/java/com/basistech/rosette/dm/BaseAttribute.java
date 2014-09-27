@@ -32,14 +32,14 @@ public abstract class BaseAttribute {
     protected Map<String, Object> extendedProperties;
 
     protected BaseAttribute() {
-        this.extendedProperties = ImmutableMap.<String, Object>builder().build();
+        this.extendedProperties = ImmutableMap.of();
     }
 
     protected BaseAttribute(Map<String, Object> extendedProperties) {
         if (extendedProperties != null) {
-            this.extendedProperties = ImmutableMap.<String, Object>builder().putAll(extendedProperties).build();
+            this.extendedProperties = ImmutableMap.copyOf(extendedProperties);
         } else {
-            this.extendedProperties = ImmutableMap.<String, Object>builder().build();
+            this.extendedProperties = ImmutableMap.of();
         }
     }
 
