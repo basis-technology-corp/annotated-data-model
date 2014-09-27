@@ -19,6 +19,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Arabic morphological analysis.  An Arabic token is analyzed into a prefix,
@@ -55,8 +56,9 @@ public class ArabicMorphoAnalysis extends MorphoAnalysis {
                          List<String> suffixes,
                          List<String> prefixTags,
                          List<String> stemTags,
-                         List<String> suffixTags) {
-        super(partOfSpeech, lemma, components, raw);
+                         List<String> suffixTags,
+                         Map<String, Object> extendedProperties) {
+        super(partOfSpeech, lemma, components, raw, extendedProperties);
         this.prefixLength = prefixLength;
         this.stemLength = stemLength;
         this.root = root;
@@ -446,7 +448,8 @@ public class ArabicMorphoAnalysis extends MorphoAnalysis {
                     listOrNull(suffixes),
                     listOrNull(prefixTags),
                     listOrNull(stemTags),
-                    listOrNull(suffixTags));
+                    listOrNull(suffixTags),
+                    extendedProperties);
         }
     }
 }

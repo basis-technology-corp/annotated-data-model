@@ -38,34 +38,34 @@ import static com.codahale.metrics.MetricRegistry.name;
 /**
  * Created by benson on 9/26/14.
  */
-public class AdmJsonBenchmark {
-    static final MetricRegistry METRICS = new MetricRegistry();
-    private final Timer read = METRICS.timer(name(AdmJsonBenchmark.class, "read"));
-    private final Timer write = METRICS.timer(name(AdmJsonBenchmark.class, "write"));
-    private ConsoleReporter reporter;
+public final class AdmJsonBenchmark {
+    private AdmJsonBenchmark() {
+        //
+    }
 
     public static void main(String[] args) throws IOException {
-        if (args.length == 0) {
-            System.out.println("Usage: AdmJsonBenchmark DATA_FILE [-afterburner] [-smile]");
+        if (args.length != 1) {
+            System.out.println("Usage: AdmJsonBenchmark DATA_FILE");
             return;
         }
         File input = new File(args[0]);
-        boolean afterburner = false;
-        boolean smile = false;
 
-        for (int x = 1; x < args.length; x++) {
-            if ("-afterburner".equals(args[x])) {
-                afterburner = true;
-            } else if ("-smile".equals(args[x])) {
-                smile = true;
-            }
-        }
-
-        new AdmJsonBenchmark().go(input, afterburner, smile);
+        new AdmJsonBenchmark().go(input, false, false);
+        new AdmJsonBenchmark().go(input, true, false);
+        new AdmJsonBenchmark().go(input, false, true);
+        new AdmJsonBenchmark().go(input, true, true);
     }
 
     private void go(File input, boolean afterburner, boolean smile) throws IOException {
-        startReport();
+        // new metrics for each case.
+        MetricRegistry metrics = new MetricRegistry();
+        final Timer read = metrics.timer(name(AdmJsonBenchmark.class, "read"));
+        final Timer write = metrics.timer(name(AdmJsonBenchmark.class, "write"));
+        ConsoleReporter reporter = ConsoleReporter.forRegistry(metrics)
+                .convertRatesTo(TimeUnit.SECONDS)
+                .convertDurationsTo(TimeUnit.MILLISECONDS)
+                .build();
+        reporter.start(60, TimeUnit.SECONDS);
         System.out.printf("%s %s %s\n", input.getAbsolutePath(), afterburner ? " afterburner" : "", smile ? " smile" : " json");
 
         // use a different mapper for reading from the file and measuring, even if we could in theory use
@@ -123,13 +123,5 @@ public class AdmJsonBenchmark {
         }
         reporter.report();
         reporter.close();
-    }
-
-    void startReport() {
-        reporter = ConsoleReporter.forRegistry(METRICS)
-                .convertRatesTo(TimeUnit.SECONDS)
-                .convertDurationsTo(TimeUnit.MILLISECONDS)
-                .build();
-        reporter.start(30, TimeUnit.SECONDS);
     }
 }

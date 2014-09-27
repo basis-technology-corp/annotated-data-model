@@ -16,6 +16,10 @@ package com.basistech.adm.tools;
 
 import com.basistech.rosette.dm.AnnotatedDataModelModule;
 import com.basistech.rosette.dm.AnnotatedText;
+import com.basistech.rosette.dm.BaseAttribute;
+import com.basistech.rosette.dm.ListAttribute;
+import com.basistech.rosette.dm.MorphoAnalysis;
+import com.basistech.rosette.dm.Token;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -32,6 +36,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
+import java.util.Map;
 
 /**
  * The RaaS team made a mongo db with ~7000 adms. We want to pull the
@@ -60,21 +65,10 @@ public final class ExtractAdmsFromMongoDump {
         final List<AnnotatedText> texts = Lists.newArrayList();
         final ObjectMapper mapper = AnnotatedDataModelModule.setupObjectMapper(new ObjectMapper());
 
-        charSource.readLines(new LineProcessor<Void>() {
-            @Override
-            public boolean processLine(String line) throws IOException {
-                texts.add(mapper.readValue(line, MongoDoc.class).resAnnotatedText);
-                return true;
-            }
-
-            @Override
-            public Void getResult() {
-                return null;
-            }
-        });
+        charSource.readLines(new VoidLineProcessor(mapper, texts));
 
         SmileFactory smileFactory = new SmileFactory();
-        // write out one big file?
+        // write out one big file.
         ObjectMapper outMapper = AnnotatedDataModelModule.setupObjectMapper(new ObjectMapper(smileFactory));
         ByteSink sink = Files.asByteSink(new File(args[1]));
         OutputStream outputStream = null;
@@ -83,6 +77,66 @@ public final class ExtractAdmsFromMongoDump {
             outMapper.writeValue(outputStream, texts);
         } finally {
             IOUtils.closeQuietly(outputStream);
+        }
+    }
+
+    private static class VoidLineProcessor implements LineProcessor<Void> {
+        private final ObjectMapper mapper;
+        private final List<AnnotatedText> texts;
+
+        public VoidLineProcessor(ObjectMapper mapper, List<AnnotatedText> texts) {
+            this.mapper = mapper;
+            this.texts = texts;
+        }
+
+        @Override
+        public boolean processLine(String line) throws IOException {
+            final AnnotatedText text = mapper.readValue(line, MongoDoc.class).resAnnotatedText;
+            // we need to eliminate 'variations' from all the tokens in here, or else we spend a lot of time on stupid overhead.
+            AnnotatedText.Builder noVariationBuilder = new AnnotatedText.Builder();
+            noVariationBuilder.data(text.getData());
+            noVariationBuilder.documentMetadata().putAll(text.getDocumentMetadata());
+            for (Map.Entry<String, BaseAttribute> me : text.getAttributes().entrySet()) {
+                if ("token".equals(me.getKey())) {
+                    noVariationBuilder.tokens(stripTokens(me.getValue()));
+                } else {
+                    noVariationBuilder.attributes().put(me.getKey(), me.getValue());
+                }
+            }
+
+
+            texts.add(noVariationBuilder.build());
+            return true;
+        }
+
+        @SuppressWarnings("unchecked")
+        private ListAttribute<Token> stripTokens(BaseAttribute value) {
+            List<Token> tokens = (List<Token>)value;
+            ListAttribute.Builder<Token> listBuilder = new ListAttribute.Builder<Token>(Token.class);
+            for (Token token : tokens) {
+                Token.Builder tokenBuilder = new Token.Builder(token.getStartOffset(), token.getEndOffset(), token.getText());
+                if (token.getAnalyses() != null) {
+                    for (MorphoAnalysis ma : token.getAnalyses()) {
+                        tokenBuilder.addAnalysis(ma);
+                    }
+                }
+                if (token.getNormalized() != null) {
+                    for (String normalized : token.getNormalized()) {
+                        tokenBuilder.addNormalized(normalized);
+                    }
+                }
+                if (token.getSource() != null) {
+                    tokenBuilder.source(token.getSource());
+                }
+                // ignore extended properties!
+                listBuilder.add(tokenBuilder.build());
+            }
+            return listBuilder.build();
+        }
+
+        @Override
+        public Void getResult() {
+            return null;
         }
     }
 }

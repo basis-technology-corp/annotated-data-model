@@ -54,13 +54,19 @@ public abstract class BaseAttribute {
         return extendedProperties;
     }
 
+    /**
+     * Called only from Jackson to implement deserialization via JsonAnySetter.
+     * @param name property name
+     * @param value property value
+     */
     protected void setExtendedProperty(String name, Object value) {
         /* This is only called in deserialization. So we do something
         * to work around the read-only collection. */
-        Map<String, Object> newExtendedProperties = Maps.newHashMap();
-        newExtendedProperties.putAll(extendedProperties);
-        newExtendedProperties.put(name, value);
-        extendedProperties = ImmutableMap.copyOf(newExtendedProperties);
+        if (extendedProperties.size() > 0) {
+            extendedProperties = ImmutableMap.<String, Object>builder().putAll(extendedProperties).put(name, value).build();
+        } else {
+            extendedProperties = ImmutableMap.of(name, value);
+        }
     }
 
     @Override
