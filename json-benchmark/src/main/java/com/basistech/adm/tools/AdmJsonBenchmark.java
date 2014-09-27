@@ -19,16 +19,18 @@ import com.basistech.rosette.dm.AnnotatedText;
 import com.codahale.metrics.ConsoleReporter;
 import com.codahale.metrics.MetricRegistry;
 import com.codahale.metrics.Timer;
+import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.smile.SmileFactory;
 import com.fasterxml.jackson.module.afterburner.AfterburnerModule;
-import org.apache.commons.io.output.NullOutputStream;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.OutputStream;
+import java.io.InputStream;
 import java.util.concurrent.TimeUnit;
 
 import static com.codahale.metrics.MetricRegistry.name;
@@ -43,17 +45,48 @@ public class AdmJsonBenchmark {
     private ConsoleReporter reporter;
 
     public static void main(String[] args) throws IOException {
-        boolean afterburner = args.length == 2 && "-afterburner".equals(args[1]);
-        new AdmJsonBenchmark().go(new File(args[0]), afterburner);
+        if (args.length == 0) {
+            System.out.println("Usage: AdmJsonBenchmark DATA_FILE [-afterburner] [-smile]");
+            return;
+        }
+        File input = new File(args[0]);
+        boolean afterburner = false;
+        boolean smile = false;
+
+        for (int x = 1; x < args.length; x++) {
+            if ("-afterburner".equals(args[x])) {
+                afterburner = true;
+            } else if ("-smile".equals(args[x])) {
+                smile = true;
+            }
+        }
+
+        new AdmJsonBenchmark().go(input, afterburner, smile);
     }
 
-    private void go(File input, boolean afterburner) throws IOException {
+    private void go(File input, boolean afterburner, boolean smile) throws IOException {
         startReport();
+        System.out.printf("%s %s %s\n", input.getAbsolutePath(), afterburner ? " afterburner" : "", smile ? " smile" : " json");
+
+        // use a different mapper for reading from the file and measuring, even if we could in theory use
+        // the read from the file as a smile measurement.
+
+        JsonFactory measureFactory;
+        if (smile) {
+            measureFactory = new SmileFactory();
+        } else {
+            measureFactory = new JsonFactory();
+        }
+
+        ObjectMapper measureMapper = AnnotatedDataModelModule.setupObjectMapper(new ObjectMapper(measureFactory));
+        if (afterburner) {
+            measureMapper.registerModule(new AfterburnerModule());
+        }
+
+        // now set up a mapper just for reading the reference file.
         SmileFactory smileFactory = new SmileFactory();
         ObjectMapper mapper = AnnotatedDataModelModule.setupObjectMapper(new ObjectMapper(smileFactory));
-        if (afterburner) {
-            mapper.registerModule(new AfterburnerModule());
-        }
+        mapper.registerModule(new AfterburnerModule());
         JsonParser jp = smileFactory.createParser(input);
         jp.setCodec(mapper);
 
@@ -65,28 +98,28 @@ public class AdmJsonBenchmark {
         }
 
         while (jp.nextToken() != JsonToken.END_ARRAY) {
-            // pointing at an ADM
-            AnnotatedText text;
+            // pointing at an ADM; just read it in.
+            AnnotatedText text = jp.readValueAs(AnnotatedText.class);
 
-            final Timer.Context readContext = read.time();
-            try {
-                text = jp.readValueAs(AnnotatedText.class);
-            } finally {
-                readContext.stop();
-            }
-
-            OutputStream dump = new NullOutputStream();
-
-            // write out one big file?
-            ObjectMapper outMapper = AnnotatedDataModelModule.setupObjectMapper(new ObjectMapper(smileFactory));
+            ByteArrayOutputStream dump = new ByteArrayOutputStream();
 
             final Timer.Context writeContext = write.time();
             try {
-                outMapper.writeValue(dump, text);
+                // time the write
+                measureMapper.writeValue(dump, text);
             } finally {
                 writeContext.stop();
             }
 
+            // now time a read from json.
+            InputStream inputStream = new ByteArrayInputStream(dump.toByteArray());
+            final Timer.Context readContext = read.time();
+            try {
+                // read just to see how long it takes in json.
+                measureMapper.readValue(inputStream, AnnotatedText.class);
+            } finally {
+                readContext.stop();
+            }
         }
         reporter.report();
         reporter.close();
@@ -97,6 +130,6 @@ public class AdmJsonBenchmark {
                 .convertRatesTo(TimeUnit.SECONDS)
                 .convertDurationsTo(TimeUnit.MILLISECONDS)
                 .build();
-        reporter.start(1, TimeUnit.SECONDS);
+        reporter.start(30, TimeUnit.SECONDS);
     }
 }
