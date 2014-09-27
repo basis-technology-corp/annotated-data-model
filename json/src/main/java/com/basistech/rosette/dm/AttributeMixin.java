@@ -17,23 +17,12 @@ package com.basistech.rosette.dm;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.Map;
-
 /**
- * {@link com.basistech.rosette.dm.EntityMention}
+ * Mixin class to allow Jackson to use a constructor for 'Attribute'.
  */
-public abstract class EntityMentionMixin {
+public class AttributeMixin {
     @JsonCreator
-    EntityMentionMixin(@JsonProperty("startOffset") int startOffset,
-                       @JsonProperty("endOffset") int endOffset,
-                       @JsonProperty("entityType") String entityType,
-                       @JsonProperty("coreferenceChainId") Integer coreferenceChainId,
-                       @JsonProperty("confidence") Double confidence,
-                       @JsonProperty("flags") Integer flags,
-                       @JsonProperty("source") String source,
-                       @JsonProperty("subsource") String subsource,
-                       @JsonProperty("normalized") String normalized,
-                       @JsonProperty("extendedProperties") Map<String, Object> extendedProperties) {
+    public AttributeMixin(@JsonProperty("startOffset") int startOffset, @JsonProperty("endOffset") int endOffset) {
         //
     }
 }
