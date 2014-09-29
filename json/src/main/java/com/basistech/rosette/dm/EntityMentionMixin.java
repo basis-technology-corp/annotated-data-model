@@ -17,6 +17,8 @@ package com.basistech.rosette.dm;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.Map;
+
 /**
  * {@link com.basistech.rosette.dm.EntityMention}
  */
@@ -25,12 +27,13 @@ public abstract class EntityMentionMixin {
     EntityMentionMixin(@JsonProperty("startOffset") int startOffset,
                        @JsonProperty("endOffset") int endOffset,
                        @JsonProperty("entityType") String entityType,
-                       @JsonProperty("coreferenceChainId") int coreferenceChainId,
-                       @JsonProperty("confidence") double confidence,
-                       @JsonProperty("flags") int flags,
+                       @JsonProperty("coreferenceChainId") Integer coreferenceChainId,
+                       @JsonProperty("confidence") Double confidence,
+                       @JsonProperty("flags") Integer flags,
                        @JsonProperty("source") String source,
                        @JsonProperty("subsource") String subsource,
-                       @JsonProperty("normalized") String normalized) {
+                       @JsonProperty("normalized") String normalized,
+                       @JsonProperty("extendedProperties") Map<String, Object> extendedProperties) {
         //
     }
 }

@@ -18,6 +18,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * {@link com.basistech.rosette.dm.ArabicMorphoAnalysis}
@@ -38,6 +39,7 @@ public abstract class ArabicMorphoAnalysisMixin {
                               @JsonProperty("suffixes") List<String> suffixes,
                               @JsonProperty("prefixTags") List<String> prefixTags,
                               @JsonProperty("stemTags") List<String> stemTags,
-                              @JsonProperty("suffixTags") List<String> suffixTags) {
+                              @JsonProperty("suffixTags") List<String> suffixTags,
+                              @JsonProperty("extendedProperties") Map<String, Object> extendedProperties) {
     }
 }

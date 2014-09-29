@@ -32,6 +32,7 @@ public class  AnnotatedDataModelModule extends SimpleModule {
     }
 
     public void setupModule(SetupContext context) {
+        context.setMixInAnnotations(Attribute.class, AttributeMixin.class);
         context.setMixInAnnotations(LanguageCode.class, LanguageCodeMixin.class);
         context.setMixInAnnotations(AnnotatedText.class, AnnotatedTextMixin.class);
         context.setMixInAnnotations(ArabicMorphoAnalysis.class, ArabicMorphoAnalysisMixin.class);

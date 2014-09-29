@@ -17,12 +17,15 @@ package com.basistech.rosette.dm;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.Map;
+
 /**
  * {@link Sentence}.
  */
 public abstract class SentenceMixin {
     @JsonCreator
-    SentenceMixin(@JsonProperty("startOffset") int startOffset, @JsonProperty("endOffset") int endOffset) {
+    SentenceMixin(@JsonProperty("startOffset") int startOffset, @JsonProperty("endOffset") int endOffset,
+                  @JsonProperty("extendedProperties") Map<String, Object> extendedProperties) {
         //
     }
 }

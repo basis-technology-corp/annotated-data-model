@@ -14,6 +14,7 @@
 
 package com.basistech.rosette.dm;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.databind.ObjectWriter;
@@ -87,5 +88,28 @@ public class ExtendedPropertyTest extends AdmAssert {
         ObjectReader reader = mapper.reader(AnnotatedText.class);
         AnnotatedText deserialized = reader.readValue(sw.toString());
         assertEquals("extra_value", deserialized.getEntityMentions().getExtendedProperties().get("extra_key"));
+    }
+
+    @Test
+    public void morphoAnalysisListExtProps() throws Exception {
+        Token.Builder tokBuilder = new Token.Builder(0, 0, "nothing");
+        HanMorphoAnalysis.Builder hmaBuilder = new HanMorphoAnalysis.Builder();
+        hmaBuilder.addReading("Proust")
+                .extendedProperty("spill", "ink");
+        tokBuilder.addAnalysis(hmaBuilder.build());
+        ArabicMorphoAnalysis.Builder armaBuilder = new ArabicMorphoAnalysis.Builder();
+        armaBuilder.definiteArticle(true)
+                .extendedProperty("some", "apples");
+        tokBuilder.addAnalysis(armaBuilder.build());
+        ObjectMapper mapper = AnnotatedDataModelModule.setupObjectMapper(new ObjectMapper());
+        ObjectWriter objectWriter = mapper.writerWithDefaultPrettyPrinter();
+        Writer sw = new StringWriter();
+        objectWriter.writeValue(sw, tokBuilder.build());
+        ObjectReader reader = mapper.reader(Token.class);
+        Token deserialized = reader.readValue(sw.toString());
+        HanMorphoAnalysis ma1 = (HanMorphoAnalysis)deserialized.getAnalyses().get(0);
+        assertEquals("ink", ma1.getExtendedProperties().get("spill"));
+        ArabicMorphoAnalysis ma2 = (ArabicMorphoAnalysis)deserialized.getAnalyses().get(1);
+        assertEquals("apples", ma2.getExtendedProperties().get("some"));
     }
 }

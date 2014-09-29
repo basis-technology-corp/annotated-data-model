@@ -19,6 +19,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * {@link com.basistech.rosette.dm.MorphoAnalysis}.
@@ -29,7 +30,8 @@ public abstract class MorphoAnalysisMixin {
     MorphoAnalysisMixin(@JsonProperty("partOfSpeech") String partOfSpeech,
                         @JsonProperty("lemma") String lemma,
                         @JsonProperty("components") List<Token> components,
-                        @JsonProperty("raw") String raw) {
+                        @JsonProperty("raw") String raw,
+                        @JsonProperty("extendedProperties") Map<String, Object> extendedProperties) {
         //
     }
 

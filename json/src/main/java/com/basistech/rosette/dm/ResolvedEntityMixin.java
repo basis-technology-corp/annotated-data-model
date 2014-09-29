@@ -17,6 +17,8 @@ package com.basistech.rosette.dm;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.Map;
+
 /**
  * {@link ResolvedEntity}
  */
@@ -26,7 +28,8 @@ public abstract class ResolvedEntityMixin {
                         @JsonProperty("endOffset") int endOffset,
                         @JsonProperty("entityId") String entityId,
                         @JsonProperty("coreferenceChainId") int coreferenceChainId,
-                        @JsonProperty("confidence") double confidence) {
+                        @JsonProperty("confidence") double confidence,
+                        @JsonProperty("extendedProperties") Map<String, Object> extendedProperties) {
         //
     }
 }

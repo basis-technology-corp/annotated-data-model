@@ -19,6 +19,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Morphological analysis objects for Chinese and Japanese.
@@ -35,8 +36,9 @@ public class HanMorphoAnalysis extends MorphoAnalysis {
                       String lemma,
                       List<Token> components,
                       String raw,
-                      List<String> readings) {
-        super(partOfSpeech, lemma, components, raw);
+                      List<String> readings,
+                      Map<String, Object> extendedProperties) {
+        super(partOfSpeech, lemma, components, raw, extendedProperties);
         if (readings != null) {
             this.readings = ImmutableList.copyOf(readings);
         } else {
@@ -140,7 +142,7 @@ public class HanMorphoAnalysis extends MorphoAnalysis {
          * @return the analysis
          */
         public HanMorphoAnalysis build() {
-            return new HanMorphoAnalysis(partOfSpeech, lemma, listOrNull(components), raw, listOrNull(readings));
+            return new HanMorphoAnalysis(partOfSpeech, lemma, listOrNull(components), raw, listOrNull(readings), extendedProperties);
         }
     }
 }

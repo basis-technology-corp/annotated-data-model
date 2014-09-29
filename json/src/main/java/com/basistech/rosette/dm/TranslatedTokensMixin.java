@@ -20,6 +20,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * {@link com.basistech.rosette.dm.TranslatedTokens}.
@@ -27,7 +28,8 @@ import java.util.List;
 public abstract class TranslatedTokensMixin {
     @JsonCreator
     TranslatedTokensMixin(@JsonProperty("domain") TextDomain domain,
-                          @JsonProperty("translations") List<String> translations) {
+                          @JsonProperty("translations") List<String> translations,
+                          @JsonProperty("extendedProperties") Map<String, Object> extendedProperties) {
         //
     }
 }

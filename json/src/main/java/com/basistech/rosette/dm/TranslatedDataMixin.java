@@ -19,13 +19,16 @@ import com.basistech.util.TextDomain;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.Map;
+
 /**
  * {@link com.basistech.rosette.dm.TranslatedData}.
  */
 public abstract class TranslatedDataMixin {
     @JsonCreator
     TranslatedDataMixin(@JsonProperty("domain") TextDomain domain,
-                        @JsonProperty("translation") String translation) {
+                        @JsonProperty("translation") String translation,
+                        @JsonProperty("extendedProperties") Map<String, Object> extendedProperties) {
         //
     }
 }
