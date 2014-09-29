@@ -19,6 +19,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * {@link com.basistech.rosette.dm.Token}.
@@ -33,7 +34,8 @@ public abstract class TokenMixin {
                @JsonProperty("text") String text,
                @JsonProperty("normalized") List<String> normalized,
                @JsonProperty("source") String source,
-               @JsonProperty("analyses") List<MorphoAnalysis> analyses) {
+               @JsonProperty("analyses") List<MorphoAnalysis> analyses,
+               @JsonProperty("extendedProperties") Map<String, Object> extendedProperties) {
         //
     }
 

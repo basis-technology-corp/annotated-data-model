@@ -18,6 +18,8 @@ import com.basistech.util.ISO15924;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.Map;
+
 /**
  * {@link com.basistech.rosette.dm.ScriptRegion}.
  */
@@ -25,7 +27,8 @@ public abstract class ScriptRegionMixin {
     @JsonCreator
     ScriptRegionMixin(@JsonProperty("startOffset") int startOffset,
                       @JsonProperty("endOffset") int endOffset,
-                      @JsonProperty("value") ISO15924 value) {
+                      @JsonProperty("value") ISO15924 value,
+                      @JsonProperty("extendedProperties") Map<String, Object> extendedProperties) {
         //
     }
 }

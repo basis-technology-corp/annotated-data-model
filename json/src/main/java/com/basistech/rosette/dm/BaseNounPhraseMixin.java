@@ -17,12 +17,16 @@ package com.basistech.rosette.dm;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.Map;
+
 /**
  * {@link com.basistech.rosette.dm.BaseNounPhrase}
  */
 public abstract class BaseNounPhraseMixin {
     @JsonCreator
-    BaseNounPhraseMixin(@JsonProperty("startOffset") int startOffset, @JsonProperty("endOffset") int endOffset) {
+    BaseNounPhraseMixin(@JsonProperty("startOffset") int startOffset,
+                        @JsonProperty("endOffset") int endOffset,
+                        @JsonProperty("extendedProperties") Map<String, Object> extendedProperties) {
         //
     }
 }

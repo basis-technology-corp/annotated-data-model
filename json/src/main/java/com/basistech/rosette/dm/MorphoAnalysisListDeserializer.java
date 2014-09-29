@@ -196,7 +196,6 @@ public final class MorphoAnalysisListDeserializer extends JsonDeserializer<List<
                 builder.addComponent(token);
             }
         }
-
     }
 
     @SuppressWarnings("unchecked")

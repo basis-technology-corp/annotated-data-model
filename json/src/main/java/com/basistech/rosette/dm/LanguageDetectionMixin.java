@@ -22,6 +22,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * {@link com.basistech.rosette.dm.LanguageDetection}
@@ -48,7 +49,8 @@ public abstract class LanguageDetectionMixin {
     @JsonCreator
     LanguageDetectionMixin(@JsonProperty("startOffset") int startOffset,
                            @JsonProperty("endOffset") int endOffset,
-                           @JsonProperty("detectionResults") List<LanguageDetection.DetectionResult> detectionResults) {
+                           @JsonProperty("detectionResults") List<LanguageDetection.DetectionResult> detectionResults,
+                           @JsonProperty("extendedProperties") Map<String, Object> extendedProperties) {
         //
     }
 

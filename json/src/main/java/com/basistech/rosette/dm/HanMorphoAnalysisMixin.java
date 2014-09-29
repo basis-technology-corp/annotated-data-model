@@ -18,6 +18,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * {@link com.basistech.rosette.dm.HanMorphoAnalysis}
@@ -28,7 +29,8 @@ public abstract class HanMorphoAnalysisMixin {
                            @JsonProperty("lemma") String lemma,
                            @JsonProperty("components") List<Token> components,
                            @JsonProperty("raw") String raw,
-                           @JsonProperty("readings") List<String> readings) {
+                           @JsonProperty("readings") List<String> readings,
+                           @JsonProperty("extendedProperties") Map<String, Object> extendedProperties) {
         //
     }
 }

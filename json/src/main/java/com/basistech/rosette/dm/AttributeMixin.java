@@ -17,12 +17,16 @@ package com.basistech.rosette.dm;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.Map;
+
 /**
  * Mixin class to allow Jackson to use a constructor for 'Attribute'.
  */
 public class AttributeMixin {
     @JsonCreator
-    public AttributeMixin(@JsonProperty("startOffset") int startOffset, @JsonProperty("endOffset") int endOffset) {
+    public AttributeMixin(@JsonProperty("startOffset") int startOffset,
+                          @JsonProperty("endOffset") int endOffset,
+                          @JsonProperty("extendedProperties") Map<String, Object> extendedProperties) {
         //
     }
 }
