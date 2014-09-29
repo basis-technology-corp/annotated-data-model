@@ -51,15 +51,16 @@ public final class MorphoAnalysisListDeserializer extends JsonDeserializer<List<
         ARABIC_FIELDS = builder.build();
     }
 
-    private boolean cached;
-    private JsonDeserializer<Object> maDeserializer;
-    private JsonDeserializer<Object> hanMaDeserializer;
-    private JsonDeserializer<Object> arMaDeserializer;
-
-    private JsonDeserializer<Object> currentDeserializer;
+    private final boolean cached;
+    private final JsonDeserializer<Object> maDeserializer;
+    private final JsonDeserializer<Object> hanMaDeserializer;
+    private final JsonDeserializer<Object> arMaDeserializer;
 
     public MorphoAnalysisListDeserializer() {
-        //
+        cached = false;
+        maDeserializer = null;
+        hanMaDeserializer = null;
+        arMaDeserializer = null;
     }
 
     private MorphoAnalysisListDeserializer(DeserializationContext ctxt) throws JsonMappingException {
@@ -69,7 +70,7 @@ public final class MorphoAnalysisListDeserializer extends JsonDeserializer<List<
         hanMaDeserializer = ctxt.findRootValueDeserializer(type);
         type = ctxt.constructType(ArabicMorphoAnalysis.class);
         arMaDeserializer = ctxt.findRootValueDeserializer(type);
-        currentDeserializer = maDeserializer;
+        ctxt.setAttribute(MorphoAnalysisListDeserializer.class, maDeserializer);
         cached = true;
     }
 
@@ -80,6 +81,11 @@ public final class MorphoAnalysisListDeserializer extends JsonDeserializer<List<
             }
         }
         return false;
+    }
+
+    @SuppressWarnings("unchecked")
+    private JsonDeserializer<Object> castDeserializer(Object attributeValue) {
+        return (JsonDeserializer<Object>)attributeValue;
     }
 
     @Override
@@ -94,6 +100,13 @@ public final class MorphoAnalysisListDeserializer extends JsonDeserializer<List<
          */
         if (jp.getCurrentToken() != JsonToken.START_ARRAY) {
             throw ctxt.wrongTokenException(jp, JsonToken.START_ARRAY, "Expected array of items");
+        }
+
+        JsonDeserializer<Object> currentDeserializer =
+                castDeserializer(ctxt.getAttribute(MorphoAnalysisListDeserializer.class));
+        if (currentDeserializer == null) {
+            currentDeserializer = maDeserializer;
+            ctxt.setAttribute(MorphoAnalysisListDeserializer.class, maDeserializer);
         }
 
         List<MorphoAnalysis> result = Lists.newArrayList();
@@ -119,7 +132,7 @@ public final class MorphoAnalysisListDeserializer extends JsonDeserializer<List<
                     }
 
                     analysis = builder.build();
-                    currentDeserializer = hanMaDeserializer;
+                    ctxt.setAttribute(MorphoAnalysisListDeserializer.class, hanMaDeserializer);
                 } else if (anyArabicFields(analysis.getExtendedProperties().keySet())) {
                     ArabicMorphoAnalysis.Builder builder = new ArabicMorphoAnalysis.Builder();
                     copyBasic(analysis, builder);
@@ -173,7 +186,7 @@ public final class MorphoAnalysisListDeserializer extends JsonDeserializer<List<
                     }
 
                     analysis = builder.build();
-                    currentDeserializer = arMaDeserializer;
+                    ctxt.setAttribute(MorphoAnalysisListDeserializer.class, arMaDeserializer);
                 }
             }
             result.add(analysis);
