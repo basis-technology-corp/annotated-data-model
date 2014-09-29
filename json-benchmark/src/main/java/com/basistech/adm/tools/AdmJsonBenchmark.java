@@ -44,16 +44,25 @@ public final class AdmJsonBenchmark {
     }
 
     public static void main(String[] args) throws IOException {
-        if (args.length != 1) {
-            System.out.println("Usage: AdmJsonBenchmark DATA_FILE");
+        if (args.length == 0) {
+            System.out.println("Usage: AdmJsonBenchmark DATA_FILE [-smile] [-afterburner]");
             return;
         }
         File input = new File(args[0]);
+        boolean smile = false;
+        boolean afterburner = false;
+        for (int argx = 1; argx < args.length; argx++) {
+            if ("-smile".equals(args[argx])) {
+                smile = true;
+            } else if ("-afterburner".equals(args[argx])) {
+                afterburner = true;
+            } else {
+                System.err.println("Invalid argument " + args[argx]);
+                return;
+            }
+        }
 
-        new AdmJsonBenchmark().go(input, false, false);
-        new AdmJsonBenchmark().go(input, true, false);
-        new AdmJsonBenchmark().go(input, false, true);
-        new AdmJsonBenchmark().go(input, true, true);
+        new AdmJsonBenchmark().go(input, afterburner, smile);
     }
 
     private void go(File input, boolean afterburner, boolean smile) throws IOException {
@@ -68,8 +77,7 @@ public final class AdmJsonBenchmark {
         reporter.start(60, TimeUnit.SECONDS);
         System.out.printf("%s %s %s\n", input.getAbsolutePath(), afterburner ? " afterburner" : "", smile ? " smile" : " json");
 
-        // use a different mapper for reading from the file and measuring, even if we could in theory use
-        // the read from the file as a smile measurement.
+        // Use a different mapper for reading from the file and measuring.
 
         JsonFactory measureFactory;
         if (smile) {
@@ -86,7 +94,7 @@ public final class AdmJsonBenchmark {
         // now set up a mapper just for reading the reference file.
         SmileFactory smileFactory = new SmileFactory();
         ObjectMapper mapper = AnnotatedDataModelModule.setupObjectMapper(new ObjectMapper(smileFactory));
-        mapper.registerModule(new AfterburnerModule());
+        mapper.registerModule(new AfterburnerModule()); // why not?
         JsonParser jp = smileFactory.createParser(input);
         jp.setCodec(mapper);
 
@@ -115,7 +123,7 @@ public final class AdmJsonBenchmark {
             InputStream inputStream = new ByteArrayInputStream(dump.toByteArray());
             final Timer.Context readContext = read.time();
             try {
-                // read just to see how long it takes in json.
+                // read back to measure.
                 measureMapper.readValue(inputStream, AnnotatedText.class);
             } finally {
                 readContext.stop();
