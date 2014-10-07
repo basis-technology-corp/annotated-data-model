@@ -16,8 +16,12 @@ package com.basistech.rosette.dm;
 
 import com.basistech.util.ISO15924;
 import com.basistech.util.LanguageCode;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import org.junit.Test;
 
+
+import java.util.Map;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
@@ -312,5 +316,19 @@ public class EqualsTest {
         builder.addComponent(token);
         ArabicMorphoAnalysis analysis = builder.build();
         assertTrue(analysis.toString().contains("components"));
+    }
+
+    @Test
+    public void testCategorizerResults() throws Exception {
+        CategorizerResult cr1 = new CategorizerResult.Builder("POLITICS", -0.2)
+            .confidence(0.1).build();
+        cr1.hashCode();
+        assertTrue(cr1.equals(cr1));
+
+        CategorizerResult cr2 = new CategorizerResult.Builder("POLITICS", -0.2).build();
+        assertNull(cr2.getConfidence());
+        assertFalse(cr1.equals(cr2));
+        assertFalse(cr2.equals(cr1));
+        assertFalse(cr1.hashCode() == cr2.hashCode());
     }
 }

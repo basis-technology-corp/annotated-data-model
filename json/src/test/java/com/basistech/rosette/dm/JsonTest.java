@@ -18,6 +18,7 @@ import com.basistech.util.ISO15924;
 import com.basistech.util.LanguageCode;
 import com.basistech.util.TextDomain;
 import com.basistech.util.TransliterationScheme;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
@@ -25,11 +26,13 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.StringWriter;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -189,6 +192,19 @@ public class JsonTest extends AdmAssert {
         spanishTranslation = ttBuilder.build();
         translatedTokensListBuilder.add(spanishTranslation);
         builder.translatedTokens(translatedTokensListBuilder.build());
+
+        ListAttribute.Builder<CategorizerResult> crBuilder
+            = new ListAttribute.Builder<CategorizerResult>(CategorizerResult.class);
+        crBuilder.add(new CategorizerResult.Builder("SPORTS", 0.1).build());
+        Map<String, Double> perFeatureScores = Maps.newHashMap();
+        perFeatureScores.put("foo", 1.2);
+        perFeatureScores.put("bar", -2.4);
+        crBuilder.add(new CategorizerResult.Builder("POLITICS", -0.2)
+            .confidence(0.3)
+            .explanationSet(Lists.newArrayList("foo", "bar"))
+            .perFeatureScores(perFeatureScores)
+            .build());
+        builder.categorizerResults(crBuilder.build());
 
         referenceText = builder.build();
     }

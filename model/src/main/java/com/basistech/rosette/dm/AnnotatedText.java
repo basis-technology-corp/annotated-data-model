@@ -226,6 +226,17 @@ public class AnnotatedText implements CharSequence {
     }
 
     /**
+     * Returns the list of categorizer results.
+     *
+     * @return the list of categorizer results
+     */
+    @SuppressWarnings("unchecked")
+    public ListAttribute<CategorizerResult> getCategorizerResults() {
+        // TODO: split this into cat, review sentiment, short string sentiment; or use a string key?
+        return (ListAttribute<CategorizerResult>) attributes.get(AttributeKey.CATEGORIZER_RESULTS.key());
+    }
+
+    /**
      * Returns the textual data as a string.
      *
      * @return the textual data as a string
@@ -371,7 +382,7 @@ public class AnnotatedText implements CharSequence {
         }
 
         /**
-         * Attaches a list of TranslatedTokens objects
+         * Attaches a list of TranslatedTokens objects.
          *
          * @param translatedTokens a list of TranslatedTokens objects
          * @return this
@@ -382,13 +393,25 @@ public class AnnotatedText implements CharSequence {
         }
 
         /**
-         * Attaches a TranslatedData object
+         * Attaches a TranslatedData object.
          *
          * @param translatedData a TranslatedData object
          * @return this
          */
         public Builder translatedData(ListAttribute<TranslatedData> translatedData) {
             attributes.put(AttributeKey.TRANSLATED_DATA.key(), translatedData);
+            return this;
+        }
+
+        /**
+         * Attaches a list categorizer results.
+         *
+         * @param categorizerResults the categorizer results
+         * @return this
+         */
+        public Builder categorizerResults(ListAttribute<CategorizerResult> categorizerResults) {
+            // TODO: separate ones for cat, review sentiment, short string sentiment
+            attributes.put(AttributeKey.CATEGORIZER_RESULTS.key(), categorizerResults);
             return this;
         }
 

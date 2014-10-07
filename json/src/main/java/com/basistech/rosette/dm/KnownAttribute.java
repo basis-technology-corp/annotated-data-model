@@ -29,6 +29,7 @@ enum KnownAttribute {
     TOKEN("token", Token.class),
     TRANSLATED_DATA("translatedData", TranslatedData.class),
     TRANSLATED_TOKENS("translatedTokens", TranslatedTokens.class),
+    CATEGORIZATION_RESULT("categorizerResults", CategorizerResult.class),
     LIST("list", ListAttribute.class),
     UNKNOWN("unknown", UnknownAttribute.class);
 

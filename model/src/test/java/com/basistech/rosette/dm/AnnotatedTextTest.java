@@ -18,9 +18,12 @@ import com.basistech.util.ISO15924;
 import com.basistech.util.LanguageCode;
 import com.basistech.util.TextDomain;
 import com.basistech.util.TransliterationScheme;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import org.junit.Test;
 
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
@@ -261,4 +264,33 @@ public class AnnotatedTextTest {
         assertNotEquals(r1, r2);
     }
 
+    @Test
+    public void testCategorizerResults() {
+        AnnotatedText.Builder builder = new AnnotatedText.Builder();
+        ListAttribute.Builder<CategorizerResult> listBuilder
+            = new ListAttribute.Builder<CategorizerResult>(CategorizerResult.class);
+        listBuilder.add(new CategorizerResult.Builder("SPORTS", 0.1).build());
+        Map<String, Double> perFeatureScores = Maps.newHashMap();
+        perFeatureScores.put("foo", 1.2);
+        perFeatureScores.put("bar", -2.4);
+        listBuilder.add(new CategorizerResult.Builder("POLITICS", -0.2)
+            .confidence(0.3)
+            .explanationSet(Lists.newArrayList("foo", "bar"))
+            .perFeatureScores(perFeatureScores)
+            .build());
+        builder.categorizerResults(listBuilder.build());
+        AnnotatedText text = builder.build();
+
+        CategorizerResult r1 = text.getCategorizerResults().get(0);
+        assertEquals("SPORTS", r1.getLabel());
+        assertEquals(0.1, r1.getScore(), 0.000000001);
+        assertNull(r1.getConfidence());
+        assertNull(r1.getExplanationSet());
+        assertNull(r1.getPerFeatureScores());
+
+        CategorizerResult r2 = text.getCategorizerResults().get(1);
+        assertEquals(0.3, r2.getConfidence(), 0.000000001);
+        assertEquals(Lists.newArrayList("foo", "bar"), r2.getExplanationSet());
+        assertEquals(-2.4, r2.getPerFeatureScores().get("bar"), 0.000000001);
+    }
 }
