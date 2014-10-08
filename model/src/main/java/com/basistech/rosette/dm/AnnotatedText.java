@@ -413,7 +413,7 @@ public class AnnotatedText implements CharSequence {
         }
 
         /**
-         * Attaches a list categorizer results.
+         * Attaches a list of categorizer results.
          *
          * @param categorizerResults the categorizer results
          * @return this
@@ -424,7 +424,7 @@ public class AnnotatedText implements CharSequence {
         }
 
         /**
-         * Attaches a list sentiment results.
+         * Attaches a list of sentiment results.
          *
          * @param sentimentResults the sentiment results
          * @return this
