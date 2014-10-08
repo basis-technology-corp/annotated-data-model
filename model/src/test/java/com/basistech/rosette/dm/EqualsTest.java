@@ -185,6 +185,33 @@ public class EqualsTest {
     }
 
     @Test
+    public void korMorphoAnalysis() throws Exception {
+        KoreanMorphoAnalysis.Builder maBuilder = new KoreanMorphoAnalysis.Builder();
+        maBuilder.addMorpheme("m1", "t1");
+        KoreanMorphoAnalysis ma1 = maBuilder.build();
+        assertTrue(ma1.equals(ma1));
+        ma1.hashCode();
+
+        maBuilder = new KoreanMorphoAnalysis.Builder();
+        maBuilder.addMorpheme("m2", "t2");
+        KoreanMorphoAnalysis ma2 = maBuilder.build();
+        assertFalse(ma1.equals(ma2));
+        assertFalse(ma2.equals(ma1));
+        ma2.hashCode();
+        assertFalse(ma1.hashCode() == ma2.hashCode());
+
+        maBuilder = new KoreanMorphoAnalysis.Builder();
+        // leave reading null
+        ma2 = maBuilder.build();
+        assertNull(ma2.getMorphemes());
+        assertNull(ma2.getMorphemeTags());
+        assertFalse(ma1.equals(ma2));
+        assertFalse(ma2.equals(ma1));
+        ma2.hashCode();
+        assertFalse(ma1.hashCode() == ma2.hashCode());
+    }
+
+    @Test
     public void token() throws Exception {
         Token.Builder tokBuilder = new Token.Builder(0, 10, "token");
         tokBuilder.addNormalized("norm");

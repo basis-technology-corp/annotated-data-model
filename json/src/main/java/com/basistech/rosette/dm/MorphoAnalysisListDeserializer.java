@@ -55,12 +55,14 @@ public final class MorphoAnalysisListDeserializer extends JsonDeserializer<List<
     private final JsonDeserializer<Object> maDeserializer;
     private final JsonDeserializer<Object> hanMaDeserializer;
     private final JsonDeserializer<Object> arMaDeserializer;
+    private final JsonDeserializer<Object> korMaDeserializer;
 
     public MorphoAnalysisListDeserializer() {
         cached = false;
         maDeserializer = null;
         hanMaDeserializer = null;
         arMaDeserializer = null;
+        korMaDeserializer = null;
     }
 
     private MorphoAnalysisListDeserializer(DeserializationContext ctxt) throws JsonMappingException {
@@ -71,6 +73,9 @@ public final class MorphoAnalysisListDeserializer extends JsonDeserializer<List<
         type = ctxt.constructType(ArabicMorphoAnalysis.class);
         arMaDeserializer = ctxt.findRootValueDeserializer(type);
         ctxt.setAttribute(MorphoAnalysisListDeserializer.class, maDeserializer);
+        type = ctxt.constructType(KoreanMorphoAnalysis.class);
+        korMaDeserializer = ctxt.findRootValueDeserializer(type);
+        ctxt.setAttribute(KoreanMorphoAnalysis.class, korMaDeserializer);
         cached = true;
     }
 
@@ -111,12 +116,32 @@ public final class MorphoAnalysisListDeserializer extends JsonDeserializer<List<
 
         List<MorphoAnalysis> result = Lists.newArrayList();
         while (jp.nextToken() != JsonToken.END_ARRAY) {
-            // if we just read it in as a MorphoAnalysis, any leftovers will end up in extendedAttributes, and we can cope.
+            // if we just read it in as the wrong class, any leftovers will end up in extendedAttributes, and we can cope.
 
             MorphoAnalysis analysis = (MorphoAnalysis) currentDeserializer.deserialize(jp, ctxt);
             if (analysis.getExtendedProperties().size() != 0) {
                 // so, we have leftovers. Note that this will not trim han and arabic down. Tough
-                if (analysis.getExtendedProperties().containsKey("readings")) {
+
+                if (analysis.getExtendedProperties().containsKey("morphemes")) {
+                    KoreanMorphoAnalysis.Builder builder = new KoreanMorphoAnalysis.Builder();
+                    copyBasic(analysis, builder);
+
+                    List<String> morphemes = cast(analysis.getExtendedProperties().get("morphemes"));
+                    List<String> morphemeTags = cast(analysis.getExtendedProperties().get("morphemeTags"));
+                    for (int x = 0; x < morphemes.size(); x++) {
+                        builder.addMorpheme(morphemes.get(x), morphemeTags.get(x));
+                    }
+
+                    for (Map.Entry<String, Object> me : analysis.getExtendedProperties().entrySet()) {
+                        if (!"morphemes".equals(me.getKey()) && !"morphemeTags".equals(me.getKey())) {
+                            builder.extendedProperty(me.getKey(), me.getValue());
+                        }
+                    }
+
+                    analysis = builder.build();
+                    ctxt.setAttribute(MorphoAnalysisListDeserializer.class, korMaDeserializer);
+
+                } else if (analysis.getExtendedProperties().containsKey("readings")) {
                     // convert to Han.
                     HanMorphoAnalysis.Builder builder = new HanMorphoAnalysis.Builder();
                     copyBasic(analysis, builder);
