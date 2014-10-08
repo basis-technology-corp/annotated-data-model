@@ -232,8 +232,17 @@ public class AnnotatedText implements CharSequence {
      */
     @SuppressWarnings("unchecked")
     public ListAttribute<CategorizerResult> getCategorizerResults() {
-        // TODO: split this into cat, review sentiment, short string sentiment; or use a string key?
         return (ListAttribute<CategorizerResult>) attributes.get(AttributeKey.CATEGORIZER_RESULTS.key());
+    }
+
+    /**
+     * Returns the list of sentiment results.
+     *
+     * @return the list of sentiment results
+     */
+    @SuppressWarnings("unchecked")
+    public ListAttribute<CategorizerResult> getSentimentResults() {
+        return (ListAttribute<CategorizerResult>) attributes.get(AttributeKey.SENTIMENT_RESULTS.key());
     }
 
     /**
@@ -410,8 +419,18 @@ public class AnnotatedText implements CharSequence {
          * @return this
          */
         public Builder categorizerResults(ListAttribute<CategorizerResult> categorizerResults) {
-            // TODO: separate ones for cat, review sentiment, short string sentiment
             attributes.put(AttributeKey.CATEGORIZER_RESULTS.key(), categorizerResults);
+            return this;
+        }
+
+        /**
+         * Attaches a list sentiment results.
+         *
+         * @param sentimentResults the sentiment results
+         * @return this
+         */
+        public Builder sentimentResults(ListAttribute<CategorizerResult> sentimentResults) {
+            attributes.put(AttributeKey.SENTIMENT_RESULTS.key(), sentimentResults);
             return this;
         }
 

@@ -73,4 +73,7 @@ public abstract class AnnotatedTextMixin {
 
     @JsonIgnore
     public abstract ListAttribute<CategorizerResult> getCategorizerResults();
+
+    @JsonIgnore
+    public abstract ListAttribute<CategorizerResult> getSentimentResults();
 }

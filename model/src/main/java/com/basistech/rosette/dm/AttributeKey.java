@@ -37,7 +37,8 @@ enum AttributeKey {
     TRANSLATED_DATA("translatedData"),
     TRANSLATED_TOKENS("translatedTokens"),
 
-    CATEGORIZER_RESULTS("categorizerResults");  // TODO: split into cat, review sentiment, short string sentiment
+    CATEGORIZER_RESULTS("categorizerResults"),
+    SENTIMENT_RESULTS("sentimentResults");
 
     private final String key;
 

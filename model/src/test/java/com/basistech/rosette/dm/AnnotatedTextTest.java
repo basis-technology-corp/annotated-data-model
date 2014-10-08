@@ -293,4 +293,35 @@ public class AnnotatedTextTest {
         assertEquals(Lists.newArrayList("foo", "bar"), r2.getExplanationSet());
         assertEquals(-2.4, r2.getPerFeatureScores().get("bar"), 0.000000001);
     }
+
+    @Test
+    public void testSentimentResults() {
+        AnnotatedText.Builder builder = new AnnotatedText.Builder();
+        ListAttribute.Builder<CategorizerResult> listBuilder
+            = new ListAttribute.Builder<CategorizerResult>(CategorizerResult.class);
+        listBuilder.add(new CategorizerResult.Builder("positive", 0.1).build());
+        Map<String, Double> perFeatureScores = Maps.newHashMap();
+        perFeatureScores.put("foo", 1.2);
+        perFeatureScores.put("bar", -2.4);
+        listBuilder.add(new CategorizerResult.Builder("negative", -0.2)
+            .confidence(0.3)
+            .explanationSet(Lists.newArrayList("foo", "bar"))
+            .perFeatureScores(perFeatureScores)
+            .build());
+        builder.sentimentResults(listBuilder.build());
+        AnnotatedText text = builder.build();
+
+        CategorizerResult r1 = text.getSentimentResults().get(0);
+        assertEquals("positive", r1.getLabel());
+        assertEquals(0.1, r1.getScore(), 0.000000001);
+        assertNull(r1.getConfidence());
+        assertNull(r1.getExplanationSet());
+        assertNull(r1.getPerFeatureScores());
+
+        CategorizerResult r2 = text.getSentimentResults().get(1);
+        assertEquals(0.3, r2.getConfidence(), 0.000000001);
+        assertEquals(Lists.newArrayList("foo", "bar"), r2.getExplanationSet());
+        assertEquals(-2.4, r2.getPerFeatureScores().get("bar"), 0.000000001);
+    }
+
 }
