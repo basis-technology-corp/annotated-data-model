@@ -25,11 +25,13 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.StringWriter;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -52,6 +54,8 @@ public class JsonTest extends AdmAssert {
     private TranslatedData spanishTranslatedData;
     private TranslatedTokens germanTranslation;
     private TranslatedTokens spanishTranslation;
+    private CategorizerResult categoryResult;
+    private CategorizerResult sentimentResult;
     private AnnotatedText referenceText;
 
     @Before
@@ -197,6 +201,26 @@ public class JsonTest extends AdmAssert {
         translatedTokensListBuilder.add(spanishTranslation);
         builder.translatedTokens(translatedTokensListBuilder.build());
 
+        ListAttribute.Builder<CategorizerResult> crBuilder
+            = new ListAttribute.Builder<CategorizerResult>(CategorizerResult.class);
+        Map<String, Double> perFeatureScores = Maps.newHashMap();
+        perFeatureScores.put("foo", 1.2);
+        perFeatureScores.put("bar", -2.4);
+        categoryResult = new CategorizerResult.Builder("POLITICS", -0.2)
+            .confidence(0.3)
+            .explanationSet(Lists.newArrayList("foo", "bar"))
+            .perFeatureScores(perFeatureScores).build();
+        crBuilder.add(categoryResult);
+        builder.categorizerResults(crBuilder.build());
+
+        crBuilder = new ListAttribute.Builder<CategorizerResult>(CategorizerResult.class);
+        sentimentResult = new CategorizerResult.Builder("negative", -0.2)
+            .confidence(0.3)
+            .explanationSet(Lists.newArrayList("foo", "bar"))
+            .perFeatureScores(perFeatureScores).build();
+        crBuilder.add(sentimentResult);
+        builder.sentimentResults(crBuilder.build());
+
         referenceText = builder.build();
     }
 
@@ -258,6 +282,10 @@ public class JsonTest extends AdmAssert {
         ListAttribute<TranslatedTokens> translatedTokens = read.getTranslatedTokens();
         assertEquals(germanTranslation, translatedTokens.get(0));
         assertEquals(spanishTranslation, translatedTokens.get(1));
+
+        assertEquals(categoryResult, read.getCategorizerResults().get(0));
+
+        assertEquals(sentimentResult, read.getSentimentResults().get(0));
     }
 
     @Test

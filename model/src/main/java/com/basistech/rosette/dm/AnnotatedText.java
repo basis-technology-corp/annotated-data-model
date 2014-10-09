@@ -226,6 +226,26 @@ public class AnnotatedText implements CharSequence {
     }
 
     /**
+     * Returns the list of categorizer results.
+     *
+     * @return the list of categorizer results
+     */
+    @SuppressWarnings("unchecked")
+    public ListAttribute<CategorizerResult> getCategorizerResults() {
+        return (ListAttribute<CategorizerResult>) attributes.get(AttributeKey.CATEGORIZER_RESULTS.key());
+    }
+
+    /**
+     * Returns the list of sentiment results.
+     *
+     * @return the list of sentiment results
+     */
+    @SuppressWarnings("unchecked")
+    public ListAttribute<CategorizerResult> getSentimentResults() {
+        return (ListAttribute<CategorizerResult>) attributes.get(AttributeKey.SENTIMENT_RESULTS.key());
+    }
+
+    /**
      * Returns the textual data as a string.
      *
      * @return the textual data as a string
@@ -371,7 +391,7 @@ public class AnnotatedText implements CharSequence {
         }
 
         /**
-         * Attaches a list of TranslatedTokens objects
+         * Attaches a list of TranslatedTokens objects.
          *
          * @param translatedTokens a list of TranslatedTokens objects
          * @return this
@@ -382,13 +402,35 @@ public class AnnotatedText implements CharSequence {
         }
 
         /**
-         * Attaches a TranslatedData object
+         * Attaches a TranslatedData object.
          *
          * @param translatedData a TranslatedData object
          * @return this
          */
         public Builder translatedData(ListAttribute<TranslatedData> translatedData) {
             attributes.put(AttributeKey.TRANSLATED_DATA.key(), translatedData);
+            return this;
+        }
+
+        /**
+         * Attaches a list of categorizer results.
+         *
+         * @param categorizerResults the categorizer results
+         * @return this
+         */
+        public Builder categorizerResults(ListAttribute<CategorizerResult> categorizerResults) {
+            attributes.put(AttributeKey.CATEGORIZER_RESULTS.key(), categorizerResults);
+            return this;
+        }
+
+        /**
+         * Attaches a list of sentiment results.
+         *
+         * @param sentimentResults the sentiment results
+         * @return this
+         */
+        public Builder sentimentResults(ListAttribute<CategorizerResult> sentimentResults) {
+            attributes.put(AttributeKey.SENTIMENT_RESULTS.key(), sentimentResults);
             return this;
         }
 

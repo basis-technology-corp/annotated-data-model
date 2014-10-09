@@ -35,7 +35,10 @@ enum AttributeKey {
     SENTENCE("sentence"),
     TOKEN("token"),
     TRANSLATED_DATA("translatedData"),
-    TRANSLATED_TOKENS("translatedTokens");
+    TRANSLATED_TOKENS("translatedTokens"),
+
+    CATEGORIZER_RESULTS("categorizerResults"),
+    SENTIMENT_RESULTS("sentimentResults");
 
     private final String key;
 

@@ -51,6 +51,7 @@ public class  AnnotatedDataModelModule extends SimpleModule {
         context.setMixInAnnotations(Token.class, TokenMixin.class);
         context.setMixInAnnotations(TranslatedData.class, TranslatedDataMixin.class);
         context.setMixInAnnotations(TranslatedTokens.class, TranslatedTokensMixin.class);
+        context.setMixInAnnotations(CategorizerResult.class, CategorizerResultMixin.class);
     }
 
     /**

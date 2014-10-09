@@ -70,4 +70,10 @@ public abstract class AnnotatedTextMixin {
 
     @JsonIgnore
     public abstract LanguageDetection getWholeTextLanguageDetection();
+
+    @JsonIgnore
+    public abstract ListAttribute<CategorizerResult> getCategorizerResults();
+
+    @JsonIgnore
+    public abstract ListAttribute<CategorizerResult> getSentimentResults();
 }
