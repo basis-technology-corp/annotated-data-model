@@ -283,7 +283,6 @@ public class ArabicMorphoAnalysis extends MorphoAnalysis {
             suffixes = Lists.newArrayList();
             prefixTags = Lists.newArrayList();
             stemTags = Lists.newArrayList();
-            suffixes = Lists.newArrayList();
             suffixTags = Lists.newArrayList();
             root = null;
         }
@@ -301,7 +300,6 @@ public class ArabicMorphoAnalysis extends MorphoAnalysis {
             suffixes = Lists.newArrayList();
             prefixTags = Lists.newArrayList();
             stemTags = Lists.newArrayList();
-            suffixes = Lists.newArrayList();
             suffixTags = Lists.newArrayList();
             addAllToList(prefixes, toCopy.prefixes);
             addAllToList(stems, toCopy.stems);
