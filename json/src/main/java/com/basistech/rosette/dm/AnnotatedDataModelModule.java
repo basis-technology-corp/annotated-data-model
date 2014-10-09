@@ -42,6 +42,7 @@ public class  AnnotatedDataModelModule extends SimpleModule {
         context.setMixInAnnotations(ResolvedEntity.class, ResolvedEntityMixin.class);
         context.setMixInAnnotations(HanMorphoAnalysis.class, HanMorphoAnalysisMixin.class);
         context.setMixInAnnotations(LanguageDetection.class, LanguageDetectionMixin.class);
+        context.setMixInAnnotations(LanguageDetection.DetectionResult.class, LanguageDetectionMixin.DetectionResultMixin.class);
         context.setMixInAnnotations(ListAttribute.class, ListAttributeMixin.class);
         context.setMixInAnnotations(MorphoAnalysis.class, MorphoAnalysisMixin.class);
         context.setMixInAnnotations(RawData.class, RawDataMixin.class);

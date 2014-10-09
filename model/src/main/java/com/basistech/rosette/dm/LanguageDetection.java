@@ -52,15 +52,6 @@ public class LanguageDetection extends Attribute {
             this.confidence = confidence;
         }
 
-        // TODO: I removed similar constructors from all other classes, but jackson
-        // complains when this one is missing.  Why?
-        protected DetectionResult() {
-            language = LanguageCode.UNKNOWN;
-            encoding = null;
-            script = ISO15924.Zyyy;
-            confidence = null;
-        }
-
         /**
          * Returns the detected language.
          *

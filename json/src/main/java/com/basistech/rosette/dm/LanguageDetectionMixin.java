@@ -38,7 +38,8 @@ public abstract class LanguageDetectionMixin {
                                     LanguageCode language,
                                     @JsonProperty("encoding") String encoding,
                                     @JsonProperty("script") ISO15924 script,
-                                    @JsonProperty("confidence") double confidence) {
+                                    @JsonProperty("confidence") Double confidence,
+                                    @JsonProperty("extendedProperties") Map<String, Object> extendedProperties) {
             //
         }
 
