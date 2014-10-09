@@ -17,6 +17,7 @@ package com.basistech.rosette.dm.test;
 import com.basistech.rosette.dm.AnnotatedText;
 import com.basistech.rosette.dm.ArabicMorphoAnalysis;
 import com.basistech.rosette.dm.BaseNounPhrase;
+import com.basistech.rosette.dm.CategorizerResult;
 import com.basistech.rosette.dm.DmJsonUtils;
 import com.basistech.rosette.dm.EntityMention;
 import com.basistech.rosette.dm.ResolvedEntity;
@@ -40,11 +41,14 @@ import org.junit.Test;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-/**
- *
- */
+// Copied mostly from JsonTest, but this one is special for the shaded-test.
+// Note that intellj has problems with this file, but the maven build works.
+// We do NOT depend on guava here, so you'll see some old-style constructions
+// like List<String> list = new ArrayList<String>();
 public class DmJsonUtilsTest extends Assert {
     public static final String THIS_IS_THE_TERRIER_SHOT_TO_BOSTON = "This is the terrier shot to Boston.";
     private BaseNounPhrase baseNounPhrase;
@@ -63,6 +67,8 @@ public class DmJsonUtilsTest extends Assert {
     private TranslatedData spanishTranslatedData;
     private TranslatedTokens germanTranslation;
     private TranslatedTokens spanishTranslation;
+    private CategorizerResult categoryResult;
+    private CategorizerResult sentimentResult;
     private AnnotatedText referenceText;
 
     @Before
@@ -201,6 +207,29 @@ public class DmJsonUtilsTest extends Assert {
         translatedTokensListBuilder.add(spanishTranslation);
         builder.translatedTokens(translatedTokensListBuilder.build());
 
+        ListAttribute.Builder<CategorizerResult> crBuilder
+            = new ListAttribute.Builder<CategorizerResult>(CategorizerResult.class);
+        Map<String, Double> perFeatureScores = new HashMap<String, Double>();
+        perFeatureScores.put("foo", 1.2);
+        perFeatureScores.put("bar", -2.4);
+        List<String> explanationSet = new ArrayList<String>();
+        explanationSet.add("foo");
+        explanationSet.add("bar");
+        categoryResult = new CategorizerResult.Builder("POLITICS", -0.2)
+            .confidence(0.3)
+            .explanationSet(explanationSet)
+            .perFeatureScores(perFeatureScores).build();
+        crBuilder.add(categoryResult);
+        builder.categorizerResults(crBuilder.build());
+
+        crBuilder = new ListAttribute.Builder<CategorizerResult>(CategorizerResult.class);
+        sentimentResult = new CategorizerResult.Builder("negative", -0.2)
+            .confidence(0.3)
+            .explanationSet(explanationSet)
+            .perFeatureScores(perFeatureScores).build();
+        crBuilder.add(sentimentResult);
+        builder.sentimentResults(crBuilder.build());
+
         referenceText = builder.build();
     }
 
@@ -260,5 +289,9 @@ public class DmJsonUtilsTest extends Assert {
         ListAttribute<TranslatedTokens> translatedTokens = read.getTranslatedTokens();
         assertEquals(germanTranslation, translatedTokens.get(0));
         assertEquals(spanishTranslation, translatedTokens.get(1));
+
+        assertEquals(categoryResult, read.getCategorizerResults().get(0));
+
+        assertEquals(sentimentResult, read.getSentimentResults().get(0));
     }
 }
