@@ -26,19 +26,9 @@ import com.google.common.base.Objects;
 public class ScriptRegion extends Attribute {
     private final ISO15924 script;
 
-    ScriptRegion(int startOffset, int endOffset, ISO15924 script) {
-        super(startOffset, endOffset);
-        this.script = script;
-    }
-
-    ScriptRegion(int startOffset, int endOffset, ISO15924 script, Map<String, Object> extendedProperties) {
+    protected ScriptRegion(int startOffset, int endOffset, ISO15924 script, Map<String, Object> extendedProperties) {
         super(startOffset, endOffset, extendedProperties);
         this.script = script;
-    }
-
-    // make Jackson happy.
-    protected ScriptRegion() {
-        script = null;
     }
 
     /**

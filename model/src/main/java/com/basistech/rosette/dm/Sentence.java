@@ -31,16 +31,8 @@ import java.util.Map;
  */
 public class Sentence extends Attribute {
 
-    Sentence(int startOffset, int endOffset) {
-        super(startOffset, endOffset);
-    }
-
-    Sentence(int startOffset, int endOffset, Map<String, Object> extendedProperties) {
+    protected Sentence(int startOffset, int endOffset, Map<String, Object> extendedProperties) {
         super(startOffset, endOffset, extendedProperties);
-    }
-
-    // Make json happy
-    protected Sentence() {
     }
 
     /**

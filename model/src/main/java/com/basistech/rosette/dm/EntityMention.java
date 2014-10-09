@@ -30,12 +30,12 @@ public class EntityMention extends Attribute {
     private final String subsource;
     private final String normalized;
 
-    EntityMention(int startOffset, int endOffset,
-                  String entityType,
-                  Integer coreferenceChainId,
-                  Double confidence, Integer flags,
-                  String source, String subsource, String normalized,
-                  Map<String, Object> extendedProperties) {
+    protected EntityMention(int startOffset, int endOffset,
+                            String entityType,
+                            Integer coreferenceChainId,
+                            Double confidence, Integer flags,
+                            String source, String subsource, String normalized,
+                            Map<String, Object> extendedProperties) {
         super(startOffset, endOffset, extendedProperties);
         this.entityType = entityType;
         this.confidence = confidence;
@@ -44,36 +44,6 @@ public class EntityMention extends Attribute {
         this.source = source;
         this.subsource = subsource;
         this.normalized = normalized;
-    }
-
-    EntityMention(int startOffset,
-                  int endOffset,
-                  String entityType,
-                  Integer coreferenceChainId,
-                  Double confidence,
-                  Integer flags,
-                  String source,
-                  String subsource,
-                  String normalized) {
-        super(startOffset, endOffset);
-        this.entityType = entityType;
-        this.confidence = confidence;
-        this.coreferenceChainId = coreferenceChainId;
-        this.flags = flags;
-        this.source = source;
-        this.subsource = subsource;
-        this.normalized = normalized;
-    }
-
-    protected EntityMention() {
-        // make jackson happy.
-        entityType = null;
-        confidence = null;
-        coreferenceChainId = null;
-        flags = null;
-        source = null;
-        subsource = null;
-        normalized = null;
     }
 
     /**

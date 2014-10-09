@@ -30,26 +30,10 @@ public class TranslatedData extends BaseAttribute {
      * @param translation the translation of the text
      * @param extendedProperties extended properties for this attribute.
      */
-    TranslatedData(TextDomain domain, String translation, Map<String, Object> extendedProperties) {
+    protected TranslatedData(TextDomain domain, String translation, Map<String, Object> extendedProperties) {
         super(extendedProperties);
         this.domain = domain;
         this.translation = translation;
-    }
-
-    /**
-     * Construct a TranslatedData object.
-     *
-     * @param domain specifies the language and script of the translation
-     * @param translation the translation of the text
-     */
-    TranslatedData(TextDomain domain, String translation) {
-        this.domain = domain;
-        this.translation = translation;
-    }
-
-    protected TranslatedData() {
-        this.domain = null;
-        this.translation = null;
     }
 
     /**

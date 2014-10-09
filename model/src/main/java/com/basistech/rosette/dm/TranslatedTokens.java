@@ -16,16 +16,14 @@ package com.basistech.rosette.dm;
 
 import com.basistech.util.TextDomain;
 import com.google.common.base.Objects;
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 
 import java.util.List;
 import java.util.Map;
 
 /**
- * A list of translations for the tokens.  Each translation matches the corresponding token.
+ * A list of translations for the tokens. Each translation matches the corresponding token.
  */
-
 public class TranslatedTokens extends BaseAttribute {
     private final TextDomain domain;
     private final List<String> translations; // 1-1 with tokens
@@ -37,30 +35,10 @@ public class TranslatedTokens extends BaseAttribute {
      * @param translations       a list of translations, one for each token
      * @param extendedProperties extended properties for this attribute.
      */
-    TranslatedTokens(TextDomain domain, List<String> translations, Map<String, Object> extendedProperties) {
+    protected TranslatedTokens(TextDomain domain, List<String> translations, Map<String, Object> extendedProperties) {
         super(extendedProperties);
         this.domain = domain;
-        this.translations = translations;
-    }
-
-    /**
-     * Creates a TranslatedTokens object.
-     *
-     * @param domain specifies the language and script of the translation
-     * @param translations a list of translations, one for each token
-     */
-    TranslatedTokens(TextDomain domain, List<String> translations) {
-        this.domain = domain;
-        if (translations == null) {
-            this.translations = null;
-        } else {
-            this.translations = ImmutableList.copyOf(translations);
-        }
-    }
-
-    protected TranslatedTokens() {
-        this.domain = null;
-        this.translations = Lists.newArrayList();
+        this.translations = listOrNull(translations);
     }
 
     /**
@@ -162,23 +140,12 @@ public class TranslatedTokens extends BaseAttribute {
         }
 
         /**
-         * Adds an extended value key-value pair.
-         *
-         * @param key the key
-         * @param value the value
-         */
-        public Builder addExtendedProperty(String key, Object value) {
-            super.extendedProperties.put(key, value);
-            return this;
-        }
-
-        /**
          * Builds a new TranslatedTokens object from the current state of the builder.
          *
          * @return a new TranslatedTokens object.
          */
         public TranslatedTokens build() {
-            return new TranslatedTokens(domain, listOrNull(translations), extendedProperties);
+            return new TranslatedTokens(domain, translations, extendedProperties);
         }
     }
 }

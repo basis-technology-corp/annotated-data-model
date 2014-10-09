@@ -29,28 +29,13 @@ public class ResolvedEntity extends Attribute {
     private final int coreferenceChainId;
     private final double confidence;
 
-    ResolvedEntity(int startOffset, int endOffset, String entityId,
-                   int coreferenceChainId, double confidence,
-                   Map<String, Object> extendedProperties) {
+    protected ResolvedEntity(int startOffset, int endOffset, String entityId,
+                             int coreferenceChainId, double confidence,
+                             Map<String, Object> extendedProperties) {
         super(startOffset, endOffset, extendedProperties);
         this.entityId = entityId;
         this.coreferenceChainId = coreferenceChainId;
         this.confidence = confidence;
-    }
-
-    ResolvedEntity(int startOffset, int endOffset, String entityId,
-                   int coreferenceChainId, double confidence) {
-        super(startOffset, endOffset);
-        this.entityId = entityId;
-        this.coreferenceChainId = coreferenceChainId;
-        this.confidence = confidence;
-    }
-
-    protected ResolvedEntity() {
-        // make jackson happy.
-        entityId = null;
-        confidence = 0.0;
-        coreferenceChainId = -1;
     }
 
     /**

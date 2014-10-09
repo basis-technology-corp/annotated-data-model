@@ -15,7 +15,6 @@
 package com.basistech.rosette.dm;
 
 import com.google.common.base.Objects;
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 
 import java.util.List;
@@ -43,51 +42,22 @@ public class MorphoAnalysis extends BaseAttribute {
     /**
      * Creates an analysis.
      *
-     * @param partOfSpeech  part of speech
-     * @param lemma lemma
-     * @param components components
-     * @param raw the raw analysis
-     */
-    MorphoAnalysis(String partOfSpeech,
-                   String lemma,
-                   List<Token> components,
-                   String raw) {
-        this.partOfSpeech = partOfSpeech;
-        this.lemma = lemma;
-        if (components == null) {
-            this.components = null;
-        } else {
-            this.components = ImmutableList.copyOf(components);
-        }
-        this.raw = raw;
-    }
-
-    /**
-     * Creates an analysis.
-     *
      * @param partOfSpeech part of speech
      * @param lemma the lemma
      * @param components compound components
      * @param raw raw analysis
      * @param extendedProperties extended properties
      */
-    MorphoAnalysis(String partOfSpeech,
-                   String lemma,
-                   List<Token> components,
-                   String raw,
-                   Map<String, Object> extendedProperties) {
+    protected MorphoAnalysis(String partOfSpeech,
+                             String lemma,
+                             List<Token> components,
+                             String raw,
+                             Map<String, Object> extendedProperties) {
         super(extendedProperties);
         this.partOfSpeech = partOfSpeech;
         this.lemma = lemma;
-        this.components = components;
+        this.components = listOrNull(components);
         this.raw = raw;
-    }
-
-    protected MorphoAnalysis() {
-        partOfSpeech = "";
-        lemma = "";
-        components = Lists.newArrayList();
-        raw = "";
     }
 
     /**
@@ -263,7 +233,7 @@ public class MorphoAnalysis extends BaseAttribute {
          * @return the new analysis
          */
         public MorphoAnalysis build() {
-            return new MorphoAnalysis(partOfSpeech, lemma, listOrNull(components), raw);
+            return new MorphoAnalysis(partOfSpeech, lemma, components, raw, extendedProperties);
         }
     }
 }

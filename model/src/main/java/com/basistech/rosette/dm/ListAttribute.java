@@ -36,13 +36,13 @@ public class ListAttribute<Item extends BaseAttribute> extends BaseAttribute imp
     private final List<Item> items;
     private final Class<? extends BaseAttribute> itemClass;
 
-    ListAttribute(Class<? extends BaseAttribute> itemClass, List<Item> items) {
+    protected ListAttribute(Class<? extends BaseAttribute> itemClass, List<Item> items) {
         this.itemClass = itemClass;
         this.items = ImmutableList.copyOf(items);
     }
 
     // no json creator. This has custom serialization/deserialization.
-    ListAttribute(Class<? extends BaseAttribute> itemClass, List<Item> items, Map<String, Object> extendedProperties) {
+    protected ListAttribute(Class<? extends BaseAttribute> itemClass, List<Item> items, Map<String, Object> extendedProperties) {
         super(extendedProperties);
         this.items = items;
         this.itemClass = itemClass;

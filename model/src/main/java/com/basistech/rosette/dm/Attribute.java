@@ -37,13 +37,6 @@ public abstract class Attribute extends BaseAttribute {
         this.endOffset = endOffset;
     }
 
-    // make Jackson happy.
-    protected Attribute() {
-        //
-        startOffset = 0;
-        endOffset = 0;
-    }
-
     /**
      * Returns the start character offset.
      *

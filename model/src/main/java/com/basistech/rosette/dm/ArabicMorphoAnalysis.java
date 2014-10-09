@@ -15,7 +15,6 @@
 package com.basistech.rosette.dm;
 
 import com.google.common.base.Objects;
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 
 import java.util.List;
@@ -42,7 +41,7 @@ public class ArabicMorphoAnalysis extends MorphoAnalysis {
     private final List<String> stemTags;
     private final List<String> suffixTags;
 
-    ArabicMorphoAnalysis(String partOfSpeech,
+    protected ArabicMorphoAnalysis(String partOfSpeech,
                          String lemma,
                          List<Token> components,
                          String raw,
@@ -62,58 +61,14 @@ public class ArabicMorphoAnalysis extends MorphoAnalysis {
         this.prefixLength = prefixLength;
         this.stemLength = stemLength;
         this.root = root;
-        if (prefixes == null) {
-            this.prefixes = null;
-        } else {
-            this.prefixes = ImmutableList.copyOf(prefixes);
-        }
-
-        if (stems == null) {
-            this.stems = null;
-        } else {
-            this.stems = ImmutableList.copyOf(stems);
-        }
-
-        if (suffixes == null) {
-            this.suffixes = null;
-        } else {
-            this.suffixes = ImmutableList.copyOf(suffixes);
-        }
-
-        if (prefixTags == null) {
-            this.prefixTags = null;
-        } else {
-            this.prefixTags = ImmutableList.copyOf(prefixTags);
-        }
-
-        if (stemTags == null) {
-            this.stemTags = null;
-        } else {
-            this.stemTags = ImmutableList.copyOf(stemTags);
-        }
-
-        if (suffixTags == null) {
-            this.suffixTags = null;
-        } else {
-            this.suffixTags = ImmutableList.copyOf(suffixTags);
-        }
-
+        this.prefixes = listOrNull(prefixes);
+        this.stems = listOrNull(stems);
+        this.suffixes = listOrNull(suffixes);
+        this.prefixTags = listOrNull(prefixTags);
+        this.stemTags = listOrNull(stemTags);
+        this.suffixTags = listOrNull(suffixTags);
         this.definiteArticle = definiteArticle;
         this.strippablePrefix = strippablePrefix;
-    }
-
-    protected ArabicMorphoAnalysis() {
-        this.prefixLength = 0;
-        this.stemLength = 0;
-        this.root = "";
-        this.prefixes = ImmutableList.of();
-        this.stems = ImmutableList.of();
-        this.suffixes = ImmutableList.of();
-        this.prefixTags = ImmutableList.of();
-        this.stemTags = ImmutableList.of();
-        this.suffixTags = ImmutableList.of();
-        this.definiteArticle = false;
-        this.strippablePrefix = false;
     }
 
     /**
@@ -328,7 +283,6 @@ public class ArabicMorphoAnalysis extends MorphoAnalysis {
             suffixes = Lists.newArrayList();
             prefixTags = Lists.newArrayList();
             stemTags = Lists.newArrayList();
-            suffixes = Lists.newArrayList();
             suffixTags = Lists.newArrayList();
             root = null;
         }
@@ -346,7 +300,6 @@ public class ArabicMorphoAnalysis extends MorphoAnalysis {
             suffixes = Lists.newArrayList();
             prefixTags = Lists.newArrayList();
             stemTags = Lists.newArrayList();
-            suffixes = Lists.newArrayList();
             suffixTags = Lists.newArrayList();
             addAllToList(prefixes, toCopy.prefixes);
             addAllToList(stems, toCopy.stems);
@@ -441,14 +394,14 @@ public class ArabicMorphoAnalysis extends MorphoAnalysis {
          * @return the new analysis object
          */
         public ArabicMorphoAnalysis build() {
-            return new ArabicMorphoAnalysis(partOfSpeech, lemma, listOrNull(components),
+            return new ArabicMorphoAnalysis(partOfSpeech, lemma, components,
                     raw, prefixLength, stemLength, root, definiteArticle,
-                    strippablePrefix, listOrNull(prefixes),
-                    listOrNull(stems),
-                    listOrNull(suffixes),
-                    listOrNull(prefixTags),
-                    listOrNull(stemTags),
-                    listOrNull(suffixTags),
+                    strippablePrefix, prefixes,
+                    stems,
+                    suffixes,
+                    prefixTags,
+                    stemTags,
+                    suffixTags,
                     extendedProperties);
         }
     }

@@ -17,7 +17,6 @@ package com.basistech.rosette.dm;
 import com.basistech.util.ISO15924;
 import com.basistech.util.LanguageCode;
 import com.google.common.base.Objects;
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 
 import java.util.List;
@@ -40,13 +39,6 @@ public class LanguageDetection extends Attribute {
         private final String encoding;
         private final ISO15924 script;
         private final Double confidence;
-
-        protected DetectionResult() {
-            language = LanguageCode.UNKNOWN;
-            encoding = null;
-            script = ISO15924.Zyyy;
-            confidence = null;
-        }
 
         protected DetectionResult(LanguageCode language,
                                    String encoding,
@@ -236,26 +228,9 @@ public class LanguageDetection extends Attribute {
 
     private final List<DetectionResult> detectionResults;
 
-    LanguageDetection() {
-        // make Jackson happy
-        super();
-        this.detectionResults = Lists.newArrayList();
-    }
-
-    LanguageDetection(int startOffset, int endOffset, List<DetectionResult> detectionResults, Map<String, Object> extendedProperties) {
+    protected LanguageDetection(int startOffset, int endOffset, List<DetectionResult> detectionResults, Map<String, Object> extendedProperties) {
         super(startOffset, endOffset, extendedProperties);
-        this.detectionResults = detectionResults;
-    }
-
-    LanguageDetection(int startOffset,
-                      int endOffset,
-                      List<DetectionResult> detectionResults) {
-        super(startOffset, endOffset);
-        if (detectionResults == null) {
-            this.detectionResults = null;
-        } else {
-            this.detectionResults = ImmutableList.copyOf(detectionResults);
-        }
+        this.detectionResults = listOrNull(detectionResults);
     }
 
     /**
@@ -337,7 +312,7 @@ public class LanguageDetection extends Attribute {
          */
         public LanguageDetection build() {
             // we do not null this list when empty. Should we?
-            return new LanguageDetection(startOffset, endOffset, listOrNull(detectionResults), extendedProperties);
+            return new LanguageDetection(startOffset, endOffset, detectionResults, extendedProperties);
         }
     }
 }
