@@ -22,9 +22,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * A list of translations for the tokens.  Each translation matches the corresponding token.
+ * A list of translations for the tokens. Each translation matches the corresponding token.
  */
-
 public class TranslatedTokens extends BaseAttribute {
     private final TextDomain domain;
     private final List<String> translations; // 1-1 with tokens
