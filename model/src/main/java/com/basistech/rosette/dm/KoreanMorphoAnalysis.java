@@ -132,6 +132,7 @@ public class KoreanMorphoAnalysis extends MorphoAnalysis {
         public Builder(KoreanMorphoAnalysis toCopy) {
             super(toCopy);
             morphemes = Lists.newArrayList();
+            morphemeTags = Lists.newArrayList();
             addAllToList(morphemes, toCopy.getMorphemes());
             addAllToList(morphemeTags, toCopy.getMorphemeTags());
         }
@@ -144,7 +145,7 @@ public class KoreanMorphoAnalysis extends MorphoAnalysis {
          */
         public Builder addMorpheme(String morpheme, String tag) {
             morphemes.add(morpheme);
-            morphemeTags.add(morpheme);
+            morphemeTags.add(tag);
             return this;
         }
 
