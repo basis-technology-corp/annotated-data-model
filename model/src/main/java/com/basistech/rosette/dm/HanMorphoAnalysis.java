@@ -15,7 +15,6 @@
 package com.basistech.rosette.dm;
 
 import com.google.common.base.Objects;
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 
 import java.util.List;
@@ -32,22 +31,14 @@ import java.util.Map;
 public class HanMorphoAnalysis extends MorphoAnalysis {
     private final List<String> readings;
 
-    HanMorphoAnalysis(String partOfSpeech,
-                      String lemma,
-                      List<Token> components,
-                      String raw,
-                      List<String> readings,
-                      Map<String, Object> extendedProperties) {
+    protected HanMorphoAnalysis(String partOfSpeech,
+                                String lemma,
+                                List<Token> components,
+                                String raw,
+                                List<String> readings,
+                                Map<String, Object> extendedProperties) {
         super(partOfSpeech, lemma, components, raw, extendedProperties);
-        if (readings != null) {
-            this.readings = ImmutableList.copyOf(readings);
-        } else {
-            this.readings = null;
-        }
-    }
-
-    protected HanMorphoAnalysis() {
-        readings = ImmutableList.of();
+        this.readings = listOrNull(readings);
     }
 
     /**
@@ -142,7 +133,7 @@ public class HanMorphoAnalysis extends MorphoAnalysis {
          * @return the analysis
          */
         public HanMorphoAnalysis build() {
-            return new HanMorphoAnalysis(partOfSpeech, lemma, listOrNull(components), raw, listOrNull(readings), extendedProperties);
+            return new HanMorphoAnalysis(partOfSpeech, lemma, components, raw, readings, extendedProperties);
         }
     }
 }

@@ -15,7 +15,6 @@
 package com.basistech.rosette.dm;
 
 import com.google.common.base.Objects;
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 
 import java.util.List;
@@ -32,61 +31,18 @@ public class Token extends Attribute {
     private final List<MorphoAnalysis> analyses;
     private final String source;
 
-    Token(int startOffset,
-          int endOffset,
-          String text,
-          List<String> normalized,
-          String source,
-          List<MorphoAnalysis> analyses,
-          Map<String, Object> extendedProperties) {
+    protected Token(int startOffset,
+                    int endOffset,
+                    String text,
+                    List<String> normalized,
+                    String source,
+                    List<MorphoAnalysis> analyses,
+                    Map<String, Object> extendedProperties) {
         super(startOffset, endOffset, extendedProperties);
         this.text = text;
-
-        if (normalized != null) {
-            this.normalized = ImmutableList.copyOf(normalized);
-        } else {
-            this.normalized = null;
-        }
-
+        this.normalized = listOrNull(normalized);
         this.source = source;
-
-        if (analyses != null) {
-            this.analyses = ImmutableList.copyOf(analyses);
-        } else {
-            this.analyses = null;
-        }
-
-    }
-
-    protected Token() {
-        text = "";
-        normalized = ImmutableList.of();
-        analyses = ImmutableList.of();
-        source = "";
-    }
-
-    Token(int startOffset,
-          int endOffset,
-          String text,
-          List<String> normalized,
-          String source,
-          List<MorphoAnalysis> analyses) {
-        super(startOffset, endOffset);
-        this.text = text;
-
-        if (normalized != null) {
-            this.normalized = ImmutableList.copyOf(normalized);
-        } else {
-            this.normalized = null;
-        }
-
-        this.source = source;
-
-        if (analyses != null) {
-            this.analyses = ImmutableList.copyOf(analyses);
-        } else {
-            this.analyses = null;
-        }
+        this.analyses = listOrNull(analyses);
     }
 
     /**
@@ -261,17 +217,6 @@ public class Token extends Attribute {
         }
 
         /**
-         * Adds an extended property.
-         *
-         * @param key the key of the property
-         * @param value the value of the property
-         */
-        public Builder addExtendedProperty(String key, Object value) {
-            extendedProperties.put(key, value);
-            return this;
-        }
-
-        /**
          * Adds an analysis.
          *
          * @param analysis the analysis
@@ -288,8 +233,7 @@ public class Token extends Attribute {
          * @return the new token
          */
         public Token build() {
-            // we do not want to build the token with empty lists.
-            return new Token(startOffset, endOffset, text, listOrNull(normalized), source, listOrNull(analyses), extendedProperties);
+            return new Token(startOffset, endOffset, text, normalized, source, analyses, extendedProperties);
         }
     }
 }

@@ -21,16 +21,8 @@ import java.util.Map;
  */
 public class BaseNounPhrase extends Attribute {
 
-    BaseNounPhrase(int startOffset, int endOffset) {
-        super(startOffset, endOffset);
-    }
-
-    BaseNounPhrase(int startOffset, int endOffset, Map<String, Object> extendedProperties) {
+    protected BaseNounPhrase(int startOffset, int endOffset, Map<String, Object> extendedProperties) {
         super(startOffset, endOffset, extendedProperties);
-    }
-
-    // Make json happy
-    protected BaseNounPhrase() {
     }
 
     /**
