@@ -147,9 +147,16 @@ public class JsonTest extends AdmAssert {
 
         HanMorphoAnalysis.Builder hanMaBuilder = new HanMorphoAnalysis.Builder();
         hanMaBuilder.addReading("proust");
-        araMaBuilder.lemma("lemma");
-        araMaBuilder.partOfSpeech("pos");
+        hanMaBuilder.lemma("lemma");
+        hanMaBuilder.partOfSpeech("pos");
         tokenBuilder.addAnalysis(hanMaBuilder.build());
+
+        KoreanMorphoAnalysis.Builder korMaBuilder = new KoreanMorphoAnalysis.Builder();
+        korMaBuilder.addMorpheme("m1", "t1");
+        korMaBuilder.addMorpheme("m2", "t2");
+        korMaBuilder.partOfSpeech("korean");
+        korMaBuilder.lemma("koreanLemma");
+        tokenBuilder.addAnalysis(korMaBuilder.build());
 
         token = tokenBuilder.build();
         tokenListBuilder.add(token);

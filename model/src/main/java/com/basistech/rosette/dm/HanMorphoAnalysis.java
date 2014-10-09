@@ -95,7 +95,7 @@ public class HanMorphoAnalysis extends MorphoAnalysis {
 
     @Override
     protected Objects.ToStringHelper toStringHelper() {
-        return Objects.toStringHelper(this)
+        return super.toStringHelper()
                 .add("readings", readings);
     }
 
