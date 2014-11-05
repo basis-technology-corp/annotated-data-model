@@ -45,4 +45,18 @@ public class ListAttributeDeserializerTest extends AdmAssert {
             assertTrue(token instanceof Token);
         }
     }
+
+    @Test
+    public void annotatedTextInOrder() throws Exception {
+        /*
+         * a list of tokens not in an AnnotatedText. There's no 'type' handling, just our
+         * custom itemType to worry over.
+         */
+        AnnotatedText text = mapper.readValue(new File("test-data/ordered-list-in-annotated-text.json"), AnnotatedText.class);
+        ListAttribute<Token> tokens = text.getTokens();
+        assertEquals(3, tokens.size());
+        for (Object token : tokens) {
+            assertTrue(token instanceof Token);
+        }
+    }
 }

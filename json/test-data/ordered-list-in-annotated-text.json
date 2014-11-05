@@ -1,0 +1,44 @@
+{
+  "attributes" : {
+    "token": {
+      "type": "list",
+      "itemType": "token",
+      "items": [
+        {
+          "startOffset": 0,
+          "endOffset": 3,
+          "text": "The",
+          "analyses": [
+            {
+              "partOfSpeech": "DET",
+              "lemma": "the"
+            }
+          ]
+        },
+        {
+          "startOffset": 4,
+          "endOffset": 10,
+          "text": "Boston",
+          "analyses": [
+            {
+              "partOfSpeech": "PROP",
+              "lemma": "Boston"
+            }
+          ]
+        },
+        {
+          "startOffset": 11,
+          "endOffset": 14,
+          "text": "Red",
+          "analyses": [
+            {
+              "partOfSpeech": "PROP",
+              "lemma": "Red"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "documentMetadata" : { }
+}

@@ -35,23 +35,29 @@ public class ListAttributeDeserializer extends JsonDeserializer<ListAttribute> {
     @SuppressWarnings("unchecked")
     public ListAttribute deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
         if (jp.getCurrentToken() == JsonToken.START_OBJECT) { // this is what we expect.
-            TokenBuffer tb = null;
-            for (JsonToken t = jp.nextToken(); t == JsonToken.FIELD_NAME; t = jp.nextToken()) {
-                String name = jp.getCurrentName();
-                if ("itemType".equals(name)) { // gotcha!
-                    return deserialize(jp, ctxt, tb);
-                }
-                if (tb == null) {
-                    tb = new TokenBuffer(null, false);
-                }
-                tb.writeFieldName(name);
-                tb.copyCurrentStructure(jp);
-            }
-            throw ctxt.mappingException("No itemType provided in a list");
+            // we advance to be in the same place the 'else' will be -- the first FIELD_NAME.
+            jp.nextToken();
         } else {
-            // probably will come up.
-            throw ctxt.wrongTokenException(jp, JsonToken.START_OBJECT, "ListAttributeDeserializer called not at START_OBJECT");
+            /* In a full AnnotatedText, which is already doing some polymorphism shuffling, we end up here. */
+            /* We find a FIELD_NAME for the first field of the object */
+            if (jp.getCurrentToken() != JsonToken.FIELD_NAME) {
+                throw ctxt.wrongTokenException(jp, JsonToken.START_OBJECT, "ListAttributeDeserializer called not at or FIELD_NAME of first field");
+            }
+            /* We are at the field name, ready for the loop. */
         }
+        TokenBuffer tb = null;
+        for (JsonToken t = jp.getCurrentToken(); t == JsonToken.FIELD_NAME; t = jp.nextToken()) {
+            String name = jp.getCurrentName();
+            if ("itemType".equals(name)) { // gotcha!
+                return deserialize(jp, ctxt, tb);
+            }
+            if (tb == null) {
+                tb = new TokenBuffer(null, false);
+            }
+            tb.writeFieldName(name);
+            tb.copyCurrentStructure(jp);
+        }
+        throw ctxt.mappingException("No itemType provided in a list");
     }
 
     // called with field_name for the itemType field as the current position, perhaps with a buffer to merge in after that.

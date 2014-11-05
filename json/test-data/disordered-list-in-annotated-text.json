@@ -2,6 +2,7 @@
   "token": {
     "type" : "list",
     "itemType": "token",
+    "ext1": "ext-val1",
     "items": [
       {
         "startOffset": 0,
@@ -37,5 +38,6 @@
         ]
       }
     ]
-  }
+  },
+  "ext2": "ext-val2"
 }
