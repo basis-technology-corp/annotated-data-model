@@ -9,6 +9,14 @@
         <artifactId>annotated-data-model</artifactId>
         <version>1.10.1-SNAPSHOT</version>
     </parent>
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+    </build>
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>

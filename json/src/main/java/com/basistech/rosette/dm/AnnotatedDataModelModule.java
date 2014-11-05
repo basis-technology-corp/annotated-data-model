@@ -28,7 +28,7 @@ public class  AnnotatedDataModelModule extends SimpleModule {
 
     public AnnotatedDataModelModule() {
         //TODO: set up a filtered property file to deliver these facts.
-        super("ModuleName", new Version(2, 0, 0, "", "com.basistech", "adm-json"));
+        super("ModuleName", new Version(1, 11, 0, "", "com.basistech", "adm-json"));
     }
 
     public void setupModule(SetupContext context) {
