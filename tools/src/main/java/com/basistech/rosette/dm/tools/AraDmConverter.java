@@ -16,9 +16,6 @@
 package com.basistech.rosette.dm.tools;
 
 import com.basistech.rlp.AbstractResultAccess;
-import com.basistech.rlp.ResultAccessDeserializer;
-import com.basistech.rlp.ResultAccessSerializedFormat;
-import com.basistech.rosette.dm.AnnotatedDataModelModule;
 import com.basistech.rosette.dm.AnnotatedText;
 import com.basistech.rosette.dm.ArabicMorphoAnalysis;
 import com.basistech.rosette.dm.BaseNounPhrase;
@@ -32,19 +29,7 @@ import com.basistech.rosette.dm.Sentence;
 import com.basistech.rosette.dm.Token;
 import com.basistech.util.ISO15924;
 import com.basistech.util.LanguageCode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
 import com.google.common.collect.Lists;
-import com.google.common.io.Closeables;
-import org.kohsuke.args4j.Argument;
-import org.kohsuke.args4j.CmdLineException;
-import org.kohsuke.args4j.CmdLineParser;
-import org.kohsuke.args4j.Option;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 
 /**
@@ -54,13 +39,6 @@ public final class AraDmConverter {
 
     private static final int ARBL_FEATURE_DEFINITE_ARTICLE = 1 << 1;
     private static final int ARBL_FEATURE_STRIPPABLE_PREFIX = 1 << 2;
-
-    @Option(name = "-outputDirectory", metaVar = "OUTPUT_DIR", usage = "output directory")
-    File outputDirectory;
-
-    // note that in the simple case
-    @Argument(required = true, usage = "input1 ... inputN (or) INPUT OUTPUT")
-    List<File> inputs;
 
     private AraDmConverter() {
         //
@@ -427,73 +405,5 @@ public final class AraDmConverter {
         }
 
         return builder.build();
-    }
-
-    public static void main(String[] args) throws Exception {
-
-        AraDmConverter that = new AraDmConverter();
-        CmdLineParser parser = new CmdLineParser(that);
-        try {
-            if (args.length == 0 || args.length == 1) {
-                System.err.println("ara-dm-converter INPUT OUTPUT");
-                System.err.println(" - or -");
-                System.err.println("ara-dm-converter -outputDirectory OUTPUT_DIR Input1 ... InputN");
-                parser.printUsage(System.err);
-                return;
-            }
-            parser.parseArgument(args);
-        } catch (CmdLineException e) {
-            // handling of wrong arguments
-            System.err.println(e.getMessage());
-            parser.printUsage(System.err);
-            System.exit(1);
-        }
-
-        that.process();
-
-    }
-
-    private void process() throws IOException {
-
-        File twoArgOutput = null; // non-null implies two-arg case.
-
-
-        if (outputDirectory == null) {
-            if (inputs.size() == 2) {
-                // support simple usage model.
-                twoArgOutput = inputs.get(1);
-                outputDirectory = null;
-                inputs.remove(1); // get rid of the output
-            } else {
-                System.err.println("More than two inputs but no -outputDirectory.");
-                System.exit(1);
-                return;
-            }
-        }
-
-        ResultAccessDeserializer rad = new ResultAccessDeserializer();
-        rad.setFormat(ResultAccessSerializedFormat.JSON);
-        ObjectMapper mapper = AnnotatedDataModelModule.setupObjectMapper(new ObjectMapper());
-        ObjectWriter writer = mapper.writer().withDefaultPrettyPrinter();
-
-        for (File input : inputs) {
-            System.out.println("Processing " + input.getAbsolutePath());
-            File output;
-            if (twoArgOutput != null) {
-                output = twoArgOutput;
-            } else {
-                output = new File(outputDirectory, input.getName());
-            }
-            InputStream inputStream = null;
-            AbstractResultAccess ara;
-            try {
-                inputStream = new FileInputStream(input);
-                ara = rad.deserializeAbstractResultAccess(inputStream);
-                writer.writeValue(output, convert(ara));
-            } finally {
-                Closeables.close(inputStream, true);
-            }
-        }
-
     }
 }
