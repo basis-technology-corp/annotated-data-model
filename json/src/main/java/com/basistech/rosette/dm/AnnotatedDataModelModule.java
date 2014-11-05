@@ -16,7 +16,6 @@ package com.basistech.rosette.dm;
 
 import com.basistech.util.LanguageCode;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 
@@ -27,8 +26,10 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 public class  AnnotatedDataModelModule extends SimpleModule {
 
     public AnnotatedDataModelModule() {
-        //TODO: set up a filtered property file to deliver these facts.
-        super("ModuleName", new Version(1, 11, 0, "", "com.basistech", "adm-json"));
+        /*
+         * As of 2.4.x, Jackson module names and versions don't do anything, but, just in case, we set one up.
+         */
+        super(ModuleVersion.VERSION);
     }
 
     public void setupModule(SetupContext context) {
