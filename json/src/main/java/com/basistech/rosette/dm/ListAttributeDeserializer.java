@@ -70,6 +70,9 @@ public class ListAttributeDeserializer extends JsonDeserializer<ListAttribute> {
         // Must point to the next value; tb had no current, jp pointed to VALUE_STRING:
 
         KnownAttribute attribute = KnownAttribute.getAttributeForKey(keyName);
+        if (attribute == null) {
+            attribute = KnownAttribute.UNKNOWN;
+        }
         Class<? extends BaseAttribute> itemClass = attribute.attributeClass();
 
         ListAttribute.Builder<BaseAttribute> builder = new ListAttribute.Builder<BaseAttribute>(attribute.attributeClass());
