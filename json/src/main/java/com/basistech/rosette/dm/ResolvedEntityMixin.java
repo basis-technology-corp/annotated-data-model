@@ -27,8 +27,8 @@ public abstract class ResolvedEntityMixin {
     ResolvedEntityMixin(@JsonProperty("startOffset") int startOffset,
                         @JsonProperty("endOffset") int endOffset,
                         @JsonProperty("entityId") String entityId,
-                        @JsonProperty("coreferenceChainId") int coreferenceChainId,
-                        @JsonProperty("confidence") double confidence,
+                        @JsonProperty("coreferenceChainId") Integer coreferenceChainId,
+                        @JsonProperty("confidence") Double confidence,
                         @JsonProperty("extendedProperties") Map<String, Object> extendedProperties) {
         //
     }
