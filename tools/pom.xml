@@ -54,7 +54,7 @@
         <dependency>
           <groupId>args4j</groupId>
           <artifactId>args4j</artifactId>
-          <optional>true</optional> <!-- cli does not make sense in users -->
+          <optional>true</optional> <!-- cli does not make sense in users, so don't impose downstream. -->
         </dependency>
     </dependencies>
     <build>
@@ -75,7 +75,7 @@
                             <repositoryLayout>flat</repositoryLayout>
                             <programs>
                                 <program>
-                                    <mainClass>com.basistech.rosette.dm.tools.AraDmConverter</mainClass>
+                                    <mainClass>com.basistech.rosette.dm.tools.AraDmConverterCommand</mainClass>
                                     <id>ara-dm-converter</id>
                                 </program>
                             </programs>
