@@ -1,43 +1,46 @@
 {
-  "token": {
-    "type" : "list",
-    "itemType": "token",
-    "ext1": "ext-val1",
-    "items": [
-      {
-        "startOffset": 0,
-        "endOffset": 3,
-        "text": "The",
-        "analyses": [
-          {
-            "partOfSpeech": "DET",
-            "lemma": "the"
-          }
-        ]
-      },
-      {
-        "startOffset": 4,
-        "endOffset": 10,
-        "text": "Boston",
-        "analyses": [
-          {
-            "partOfSpeech": "PROP",
-            "lemma": "Boston"
-          }
-        ]
-      },
-      {
-        "startOffset": 11,
-        "endOffset": 14,
-        "text": "Red",
-        "analyses": [
-          {
-            "partOfSpeech": "PROP",
-            "lemma": "Red"
-          }
-        ]
-      }
-    ]
+  "attributes" : {
+    "token": {
+      "type": "list",
+      "ext1": "ext-val1",
+      "itemType": "token",
+      "items": [
+        {
+          "startOffset": 0,
+          "endOffset": 3,
+          "text": "The",
+          "analyses": [
+            {
+              "partOfSpeech": "DET",
+              "lemma": "the"
+            }
+          ]
+        },
+        {
+          "startOffset": 4,
+          "endOffset": 10,
+          "text": "Boston",
+          "analyses": [
+            {
+              "partOfSpeech": "PROP",
+              "lemma": "Boston"
+            }
+          ]
+        },
+        {
+          "startOffset": 11,
+          "endOffset": 14,
+          "text": "Red",
+          "analyses": [
+            {
+              "partOfSpeech": "PROP",
+              "lemma": "Red"
+            }
+          ]
+        }
+      ],
+      "ext2": "ext-val2"
+    }
   },
-  "ext2": "ext-val2"
+  "documentMetadata" : { }
 }

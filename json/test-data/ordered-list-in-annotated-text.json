@@ -3,6 +3,7 @@
     "token": {
       "type": "list",
       "itemType": "token",
+      "ext1": "val1",
       "items": [
         {
           "startOffset": 0,
@@ -37,7 +38,8 @@
             }
           ]
         }
-      ]
+      ],
+      "ext2": "val2"
     }
   },
   "documentMetadata" : { }

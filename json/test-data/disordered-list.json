@@ -1,4 +1,5 @@
 {
+  "ext1": "val1",
   "items": [
     {
       "startOffset": 0,
@@ -34,5 +35,6 @@
       ]
     }
   ],
-  "itemType": "token"
+  "itemType": "token",
+  "ext2": "val2"
 }

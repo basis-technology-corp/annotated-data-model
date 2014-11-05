@@ -16,7 +16,6 @@ package com.basistech.rosette.dm;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
-import com.fasterxml.jackson.core.io.SerializedString;
 import com.fasterxml.jackson.core.util.JsonParserSequence;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
@@ -54,7 +53,6 @@ public class ListAttributeDeserializer extends JsonDeserializer<ListAttribute> {
             if (tb == null) {
                 tb = new TokenBuffer(null, false);
             }
-            tb.writeFieldName(name);
             tb.copyCurrentStructure(jp);
         }
         throw ctxt.mappingException("No itemType provided in a list");

@@ -16,6 +16,7 @@ package com.basistech.rosette.dm;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.collect.Lists;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -44,13 +45,14 @@ public class ListAttributeDeserializerTest extends AdmAssert {
         for (Object token : tokens) {
             assertTrue(token instanceof Token);
         }
+        assertEquals(Lists.newArrayList("val1"), tokens.getExtendedProperties().get("ext1"));
+        assertEquals("val2", tokens.getExtendedProperties().get("ext2"));
     }
 
     @Test
     public void annotatedTextInOrder() throws Exception {
         /*
-         * a list of tokens not in an AnnotatedText. There's no 'type' handling, just our
-         * custom itemType to worry over.
+         * a list of tokens not in an AnnotatedText.
          */
         AnnotatedText text = mapper.readValue(new File("test-data/ordered-list-in-annotated-text.json"), AnnotatedText.class);
         ListAttribute<Token> tokens = text.getTokens();
@@ -58,5 +60,35 @@ public class ListAttributeDeserializerTest extends AdmAssert {
         for (Object token : tokens) {
             assertTrue(token instanceof Token);
         }
+        assertEquals("val1", tokens.getExtendedProperties().get("ext1"));
+        assertEquals("val2", tokens.getExtendedProperties().get("ext2"));
+    }
+
+    @Test
+    public void isolatedOutOfOrder() throws Exception {
+        /*
+         * a list of tokens not in an AnnotatedText. There's no 'type' handling, just our
+         * custom itemType to worry over.
+         */
+        ListAttribute<Token> tokens = mapper.readValue(new File("test-data/disordered-list.json"), new TypeReference<ListAttribute<Token>>(){});
+        assertEquals(3, tokens.size());
+        for (Object token : tokens) {
+            assertTrue(token instanceof Token);
+        }
+        assertEquals("val1", tokens.getExtendedProperties().get("ext1"));
+        assertEquals("val2", tokens.getExtendedProperties().get("ext2"));
+    }
+
+    @Test
+    public void annotatedTextOutOfOrder() throws Exception {
+        AnnotatedText text = mapper.readValue(new File("test-data/disordered-list-in-annotated-text.json"), AnnotatedText.class);
+        ListAttribute<Token> tokens = text.getTokens();
+        assertEquals(3, tokens.size());
+        for (Object token : tokens) {
+            assertTrue(token instanceof Token);
+        }
+        assertEquals("ext-val1", tokens.getExtendedProperties().get("ext1"));
+        assertEquals("ext-val2", tokens.getExtendedProperties().get("ext2"));
+
     }
 }
