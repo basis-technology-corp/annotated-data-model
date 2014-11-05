@@ -26,11 +26,11 @@ import java.util.Map;
 public class ResolvedEntity extends Attribute {
     private final String entityId;
     //I prefer 'chainId' over 'coreferenceChainId' but picked the latter to make it consistent with EntityMention
-    private final int coreferenceChainId;
-    private final double confidence;
+    private final Integer coreferenceChainId;
+    private final Double confidence;
 
     protected ResolvedEntity(int startOffset, int endOffset, String entityId,
-                             int coreferenceChainId, double confidence,
+                             Integer coreferenceChainId, Double confidence,
                              Map<String, Object> extendedProperties) {
         super(startOffset, endOffset, extendedProperties);
         this.entityId = entityId;
@@ -48,20 +48,20 @@ public class ResolvedEntity extends Attribute {
     }
 
     /**
-     * Returns the in-document coreference chain ID for this entity, or -1 if there is none.
+     * Returns the in-document coreference chain ID for this entity, or null if there is none.
      *
-     * @return the in-document coreference chain ID for this entity, or -1 if there is none
+     * @return the in-document coreference chain ID for this entity, or null if there is none.
      */
-    public int getCoreferenceChainId() {
+    public Integer getCoreferenceChainId() {
         return coreferenceChainId;
     }
 
     /**
-     * Returns the confidence for this resolved entity.
+     * Returns the confidence for this resolved entity, or null if there is none.
      *
-     * @return the confidence for this resolved entity
+     * @return the confidence for this resolved entity, or null if there is none.
      */
-    public double getConfidence() {
+    public Double getConfidence() {
         return confidence;
     }
 
@@ -79,13 +79,13 @@ public class ResolvedEntity extends Attribute {
 
         ResolvedEntity that = (ResolvedEntity) o;
 
-        if (Double.compare(that.confidence, confidence) != 0) {
+        if (confidence != null ? !confidence.equals(that.confidence) : that.confidence != null) {
             return false;
         }
-        if (coreferenceChainId != that.coreferenceChainId) {
+        if (coreferenceChainId != null ? !coreferenceChainId.equals(that.coreferenceChainId) : that.coreferenceChainId != null) {
             return false;
         }
-        if (entityId != null ? !entityId.equals(that.entityId) : that.entityId != null) {
+        if (!entityId.equals(that.entityId)) {
             return false;
         }
 
@@ -95,11 +95,9 @@ public class ResolvedEntity extends Attribute {
     @Override
     public int hashCode() {
         int result = super.hashCode();
-        long temp;
-        result = 31 * result + (entityId != null ? entityId.hashCode() : 0);
-        result = 31 * result + coreferenceChainId;
-        temp = Double.doubleToLongBits(confidence);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + entityId.hashCode();
+        result = 31 * result + (coreferenceChainId != null ? coreferenceChainId.hashCode() : 0);
+        result = 31 * result + (confidence != null ? confidence.hashCode() : 0);
         return result;
     }
 
@@ -116,8 +114,8 @@ public class ResolvedEntity extends Attribute {
      */
     public static class Builder extends Attribute.Builder {
         private String entityId;
-        private double confidence; // NAN?
-        private int coreferenceChainId = -1;
+        private Double confidence; // NAN?
+        private Integer coreferenceChainId;
 
         /**
          * Constructs a builder from the required values.

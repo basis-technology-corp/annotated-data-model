@@ -358,4 +358,34 @@ public class EqualsTest {
         assertFalse(cr2.equals(cr1));
         assertFalse(cr1.hashCode() == cr2.hashCode());
     }
+
+    @Test
+    public void resolvedEntity() throws Exception {
+        ResolvedEntity re1 = new ResolvedEntity.Builder(0, 10, "foo").build();
+        re1.hashCode();
+        assertTrue(re1.equals(re1));
+
+        ResolvedEntity re2 = new ResolvedEntity.Builder(0, 10, "foo").coreferenceChainId(1).build();
+        assertFalse(re2.equals(re1));
+
+        re1 = new ResolvedEntity.Builder(0, 10, "foo").confidence(1.0d).build();
+        re1.hashCode();
+        assertTrue(re1.equals(re1));
+
+        re2 = new ResolvedEntity.Builder(0, 10, "foo").confidence(2.0d).build();
+        assertFalse(re1.equals(re2));
+
+        re1 = new ResolvedEntity.Builder(0, 10, "foo").coreferenceChainId(3).build();
+        re1.hashCode();
+        assertTrue(re1.equals(re1));
+
+        re1 = new ResolvedEntity.Builder(0, 10, "foo").confidence(1.0d).coreferenceChainId(3).build();
+        re1.hashCode();
+        assertTrue(re1.equals(re1));
+
+
+
+
+
+    }
 }

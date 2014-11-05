@@ -324,4 +324,14 @@ public class AnnotatedTextTest {
         assertEquals(-2.4, r2.getPerFeatureScores().get("bar"), 0.000000001);
     }
 
+    @Test
+    public void resolvedEntity() throws Exception {
+        ResolvedEntity re = new ResolvedEntity.Builder(0, 10, "foo").build();
+        assertNull(re.getConfidence());
+        assertNull(re.getCoreferenceChainId());
+        re = new ResolvedEntity.Builder(0, 10, "foo").coreferenceChainId(22).build();
+        assertEquals(Integer.valueOf(22), re.getCoreferenceChainId());
+        re = new ResolvedEntity.Builder(0, 10, "foo").confidence(3d).build();
+        assertEquals(3d, re.getConfidence(), 0);
+    }
 }
