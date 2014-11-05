@@ -27,6 +27,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.google.common.base.Charsets;
+import com.google.common.collect.Lists;
 import com.google.common.io.Closeables;
 import com.google.common.io.Resources;
 import org.junit.Assert;
@@ -201,6 +202,16 @@ public class AdmConversionTest extends Assert {
     public void testBadAra4() throws IOException {
         AbstractResultAccess ara = deserialize(new File("../model/data/shimon-peres-zho.json"));
         AraDmConverter.convert(ara);
+    }
+
+    @Test
+    public void cli() throws Exception {
+        AraDmConverterCommand command = new AraDmConverterCommand();
+        command.inputs = Lists.newArrayList(new File("../model/data/shimon-peres-zho.json"),
+                new File("target/spz.adm.json"));
+        command.process();
+        objectMapper.readValue(new File("target/spz.adm.json"), AnnotatedText.class);
+        // if this doesn't throw, we believe that the CLI hasn't somehow busted the rest.
     }
 
     @Test
