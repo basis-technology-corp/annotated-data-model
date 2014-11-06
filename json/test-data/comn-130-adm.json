@@ -1,0 +1,133 @@
+{
+  "data" : "The Boston Red Sox beat the Orioles last night.\n",
+  "attributes" : {
+    "languageDetectionRegions" : {
+      "type" : "list",
+      "itemType" : "languageDetection",
+      "items" : [ ]
+    },
+    "token" : {
+      "type" : "list",
+      "itemType" : "token",
+      "items" : [ {
+        "startOffset" : 0,
+        "endOffset" : 3,
+        "text" : "The",
+        "analyses" : [ {
+          "partOfSpeech" : "DET",
+          "lemma" : "the"
+        } ]
+      }, {
+        "startOffset" : 4,
+        "endOffset" : 10,
+        "text" : "Boston",
+        "analyses" : [ {
+          "partOfSpeech" : "PROP",
+          "lemma" : "Boston"
+        } ]
+      }, {
+        "startOffset" : 11,
+        "endOffset" : 14,
+        "text" : "Red",
+        "analyses" : [ {
+          "partOfSpeech" : "PROP",
+          "lemma" : "Red"
+        } ]
+      }, {
+        "startOffset" : 15,
+        "endOffset" : 18,
+        "text" : "Sox",
+        "analyses" : [ {
+          "partOfSpeech" : "NOUN",
+          "lemma" : "sock"
+        } ]
+      }, {
+        "startOffset" : 19,
+        "endOffset" : 23,
+        "text" : "beat",
+        "analyses" : [ {
+          "partOfSpeech" : "VPAST",
+          "lemma" : "beat"
+        } ]
+      }, {
+        "startOffset" : 24,
+        "endOffset" : 27,
+        "text" : "the",
+        "analyses" : [ {
+          "partOfSpeech" : "DET",
+          "lemma" : "the"
+        } ]
+      }, {
+        "startOffset" : 28,
+        "endOffset" : 35,
+        "text" : "Orioles",
+        "analyses" : [ {
+          "partOfSpeech" : "NOUN",
+          "lemma" : "oriole"
+        } ]
+      }, {
+        "startOffset" : 36,
+        "endOffset" : 40,
+        "text" : "last",
+        "analyses" : [ {
+          "partOfSpeech" : "ADJ",
+          "lemma" : "last"
+        } ]
+      }, {
+        "startOffset" : 41,
+        "endOffset" : 46,
+        "text" : "night",
+        "analyses" : [ {
+          "partOfSpeech" : "NOUN",
+          "lemma" : "night"
+        } ]
+      }, {
+        "startOffset" : 46,
+        "endOffset" : 47,
+        "text" : ".",
+        "analyses" : [ {
+          "partOfSpeech" : "SENT",
+          "lemma" : "."
+        } ]
+      } ]
+    },
+    "languageDetection" : {
+      "type" : "languageDetection",
+      "startOffset" : 0,
+      "endOffset" : 48,
+      "detectionResults" : [ {
+        "language" : "eng",
+        "encoding" : "UTF8"
+      } ]
+    },
+    "scriptRegion" : {
+      "type" : "list",
+      "itemType" : "scriptRegion",
+      "items" : [ {
+        "startOffset" : 0,
+        "endOffset" : 48,
+        "script" : "Latn"
+      } ]
+    },
+    "sentence" : {
+      "type" : "list",
+      "itemType" : "sentence",
+      "items" : [ {
+        "startOffset" : 0,
+        "endOffset" : 48
+      } ]
+    },
+    "baseNounPhrases" : {
+      "type" : "list",
+      "itemType" : "baseNounPhrases",
+      "items" : [ {
+        "startOffset" : 0,
+        "endOffset" : 18
+      }, {
+        "startOffset" : 24,
+        "endOffset" : 46
+      } ]
+    }
+  },
+  "documentMetadata" : { }
+}
