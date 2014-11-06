@@ -39,7 +39,20 @@ public class EnumModuleTest {
     }
 
     @Test
+    public void defaultLanguageCodeMapper() throws Exception {
+        // The default ObjectMapper does traffic in the enum constants:
+        // LanguageCode.ARABIC.name()  --> "ARABIC"
+        ObjectMapper myMapper = new ObjectMapper();
+        LanguageCode langCode = myMapper.readValue("\"ARABIC\"", LanguageCode.class);
+        assertEquals(LanguageCode.ARABIC, langCode);
+        assertEquals("\"ARABIC\"", myMapper.writeValueAsString(LanguageCode.ARABIC));
+    }
+
+    @Test
     public void languageCode() throws Exception {
+        // The EnumModule wires up the special LanguageCodeSerializer
+        // and LanguageCodeDeserializer, which let use the ISO636_3 string
+        // instead of the string of the enum constant.
         LanguageCode code = mapper.readValue("\"ara\"", LanguageCode.class);
         assertEquals(LanguageCode.ARABIC, code);
         assertEquals("\"ara\"", mapper.writeValueAsString(LanguageCode.ARABIC));

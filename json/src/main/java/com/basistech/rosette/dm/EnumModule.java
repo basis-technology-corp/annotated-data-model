@@ -21,6 +21,10 @@ import com.fasterxml.jackson.databind.module.SimpleSerializers;
 
 /**
  * Module for common enum types when not embedded in the rest of the ADM.
+ * This provides specialized serialization when the enum constants themselves
+ * are not desirable.  For example, {@code LanguageCode} is usually
+ * deserialized from "ARABIC", but this module deserializes it from "ara"
+ * instead.
  */
 public class EnumModule extends SimpleModule {
 
