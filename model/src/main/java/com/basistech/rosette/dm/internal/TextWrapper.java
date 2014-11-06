@@ -103,7 +103,7 @@ public class TextWrapper {
             sentenceTokenEnds = new int[0];
         }
 
-        int maxMentionChainId = -1;
+        int maxMentionChainId = -1; // you can't do max on a null.
         if (text.getEntityMentions() != null) {
             if (!text.getEntityMentions().isEmpty() && (text.getTokens() == null || text.getTokens().isEmpty())) {
                 throw new IllegalArgumentException("If text has entityMentions it must also have tokens.");
@@ -118,7 +118,7 @@ public class TextWrapper {
                 }
 
                 Integer corefId = mention.getCoreferenceChainId();
-                if (corefId != null && corefId > maxMentionChainId) {
+                if (corefId != null && corefId > maxMentionChainId) { // note null check.
                     maxMentionChainId = mention.getCoreferenceChainId();
                 }
 
