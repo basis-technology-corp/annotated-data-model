@@ -53,7 +53,12 @@ public class AnnotatedText implements CharSequence {
     AnnotatedText(CharSequence data,
                   Map<String, BaseAttribute> attributes,
                   Map<String, List<String>> documentMetadata) {
-        this.data = data;
+        if (data == null) {
+            // convention: this thing _is_ a CharSequence, "" is as null as it gets, even if we read json with no value.
+            this.data = "";
+        } else {
+            this.data = data;
+        }
         // allow incoming json that simply lacks attributes or documentMetadata.
         if (attributes != null) {
             this.attributes = ImmutableMap.copyOf(attributes);
