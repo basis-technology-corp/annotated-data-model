@@ -22,11 +22,13 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertNull;
 
 public class AnnotatedTextTest {
@@ -324,4 +326,21 @@ public class AnnotatedTextTest {
         assertEquals(-2.4, r2.getPerFeatureScores().get("bar"), 0.000000001);
     }
 
+    @Test
+    public void documentMetadata() throws Exception {
+        AnnotatedText.Builder builder = new AnnotatedText.Builder();
+        final ArrayList<String> listOfStrings = Lists.newArrayList("value1", "value2");
+        builder.documentMetadata("key", listOfStrings);
+        AnnotatedText text = builder.build();
+        assertEquals(listOfStrings, text.getDocumentMetadata().get("key"));
+        assertNotSame(listOfStrings, text.getDocumentMetadata().get("key"));
+        builder = new AnnotatedText.Builder();
+        Map<String, List<String>> wholeMap = Maps.newHashMap();
+        wholeMap.put("key", listOfStrings);
+        builder.documentMetadata(wholeMap);
+        text = builder.build();
+        assertEquals(listOfStrings, text.getDocumentMetadata().get("key"));
+        assertNotSame(listOfStrings, text.getDocumentMetadata().get("key"));
+        assertNotSame(wholeMap, text.getDocumentMetadata());
+    }
 }
