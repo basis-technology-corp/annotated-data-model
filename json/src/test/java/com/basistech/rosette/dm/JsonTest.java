@@ -368,4 +368,11 @@ public class JsonTest extends AdmAssert {
         assertEquals("off", item.getExtendedProperties().get("color"));
 
     }
+
+    @Test
+    public void emptyAdm() throws Exception {
+        /* We want to be able to read an empty object as an ADM */
+        /* No asserts needed, what we need here is a lack of a throw. */
+        objectMapper().readValue("{}", AnnotatedText.class).toString();
+    }
 }

@@ -53,9 +53,23 @@ public class AnnotatedText implements CharSequence {
     AnnotatedText(CharSequence data,
                   Map<String, BaseAttribute> attributes,
                   Map<String, List<String>> documentMetadata) {
-        this.data = data;
-        this.attributes = ImmutableMap.copyOf(attributes);
-        this.documentMetadata = ImmutableMap.copyOf(documentMetadata);
+        if (data == null) {
+            // convention: this thing _is_ a CharSequence, "" is as null as it gets, even if we read json with no value.
+            this.data = "";
+        } else {
+            this.data = data;
+        }
+        // allow incoming json that simply lacks attributes or documentMetadata.
+        if (attributes != null) {
+            this.attributes = ImmutableMap.copyOf(attributes);
+        } else {
+            this.attributes = ImmutableMap.of();
+        }
+        if (documentMetadata != null) {
+            this.documentMetadata = ImmutableMap.copyOf(documentMetadata);
+        } else {
+            this.documentMetadata = ImmutableMap.of();
+        }
     }
 
     /**
@@ -476,6 +490,19 @@ public class AnnotatedText implements CharSequence {
          */
         public Builder documentMetadata(String key, List<String> value) {
             documentMetadata.put(key, ImmutableList.copyOf(value));
+            return this;
+        }
+
+        /**
+         * Add all of the contents of a map of metadata to the document metadata.
+         *
+         * @param mapOfValues a map from keys to values.
+         * @return this
+         */
+        public Builder documentMetadata(Map<String, List<String>> mapOfValues) {
+            for (Map.Entry<String, List<String>> me : mapOfValues.entrySet()) {
+                documentMetadata.put(me.getKey(), ImmutableList.copyOf(me.getValue()));
+            }
             return this;
         }
 
