@@ -16,22 +16,19 @@ package com.basistech.rosette.dm;
 
 import com.basistech.util.LanguageCode;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.module.SimpleModule;
-
 /**
  * Jackson module to configure Json serialization and deserialization for the
  * annotated data model.
  */
-public class  AnnotatedDataModelModule extends SimpleModule {
+public class  AnnotatedDataModelModule extends EnumModule {
 
     public AnnotatedDataModelModule() {
-        //TODO: set up a filtered property file to deliver these facts.
-        super("ModuleName", new Version(2, 0, 0, "", "com.basistech", "adm-json"));
+        super();
     }
 
     public void setupModule(SetupContext context) {
+        super.setupModule(context); // pick up any enum support.
         context.setMixInAnnotations(Attribute.class, AttributeMixin.class);
         context.setMixInAnnotations(LanguageCode.class, LanguageCodeMixin.class);
         context.setMixInAnnotations(AnnotatedText.class, AnnotatedTextMixin.class);

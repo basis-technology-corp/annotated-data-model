@@ -29,4 +29,9 @@ public class LanguageCodeSerializer extends JsonSerializer<LanguageCode> {
     public void serialize(LanguageCode languageCode, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
         jsonGenerator.writeString(languageCode.ISO639_3());
     }
+
+    @Override
+    public Class<LanguageCode> handledType() {
+        return LanguageCode.class;
+    }
 }
