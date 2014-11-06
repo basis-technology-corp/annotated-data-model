@@ -49,10 +49,10 @@ public class EnumModuleTest {
     public void languageCodeKey() throws Exception {
         Map<LanguageCode, String> map = Maps.newHashMap();
         map.put(LanguageCode.CHINESE, "dumpling");
-        Map<LanguageCode, String> deser = mapper.readValue("{\"zho\": \"dumpling\"}", new TypeReference<Map<LanguageCode, String>>() {
-        });
+        Map<LanguageCode, String> deser = mapper.readValue("{\"zho\": \"dumpling\"}", new TypeReference<Map<LanguageCode, String>>() { });
         assertEquals(map, deser);
-        String json = mapper.writeValueAsString(map);
+        // Note: Jackson assumes that maps have homogeneous key types and does not notice the serializer without this extra level of spec.
+        String json = mapper.writerWithType(new TypeReference<Map<LanguageCode, String>>() { }).writeValueAsString(map);
         assertTrue(json.contains("zho")); // and not, by implication, CHINESE.
     }
 
