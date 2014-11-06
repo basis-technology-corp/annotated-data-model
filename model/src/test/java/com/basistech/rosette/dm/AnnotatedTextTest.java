@@ -342,5 +342,9 @@ public class AnnotatedTextTest {
         assertEquals(listOfStrings, text.getDocumentMetadata().get("key"));
         assertNotSame(listOfStrings, text.getDocumentMetadata().get("key"));
         assertNotSame(wholeMap, text.getDocumentMetadata());
+        builder = new AnnotatedText.Builder();
+        builder.documentMetadata("key", "value");
+        text = builder.build();
+        assertEquals("value", text.getDocumentMetadata().get("key").get(0));
     }
 }
