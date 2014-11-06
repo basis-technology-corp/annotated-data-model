@@ -70,10 +70,10 @@ public class Mention {
 
     /**
      * Returns the in-document coreference chain identifier. If no in-document coreference chain information
-     * is present then returns -1
-     * @return chain identifier or -1
+     * is present then returns null.
+     * @return chain identifier or null.
      */
-    public int getIndocChainId() {
+    public Integer getIndocChainId() {
         return entityMention.getCoreferenceChainId();
     }
 
