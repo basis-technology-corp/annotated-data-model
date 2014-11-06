@@ -68,7 +68,8 @@ public class EntityMention extends Attribute {
 
     /**
      * Returns a chain id that links together entity mentions that refer to the
-     * same entity as determined by in-document analysis. -1 if no in-document
+     * same entity as determined by in-document analysis. This is {@code null}
+     * if no in-document
      * coreference information is available.  Currently, the chain id is the
      * index (into the {@code EntityMention} list) of the head mention of the
      * chain.  The head mention is the (first) longest mention in the chain.
