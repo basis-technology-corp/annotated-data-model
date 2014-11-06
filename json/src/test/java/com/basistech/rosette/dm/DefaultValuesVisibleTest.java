@@ -33,7 +33,7 @@ public class DefaultValuesVisibleTest extends AdmAssert {
         ListAttribute.Builder<EntityMention> mentionListBuilder = new ListAttribute.Builder<EntityMention>(EntityMention.class);
         //int startOffset, int endOffset, String entityType)
         EntityMention.Builder mentionBuilder = new EntityMention.Builder(0, 17, "politician");
-        mentionBuilder.coreferenceChainId(-1); // -1 is the declared default.
+        mentionBuilder.coreferenceChainId(null); // null is the official default, but null is never rendered, default or not.
         mentionListBuilder.add(mentionBuilder.build());
         builder.entityMentions(mentionListBuilder.build());
         AnnotatedText text = builder.build();
@@ -48,6 +48,6 @@ public class DefaultValuesVisibleTest extends AdmAssert {
         ObjectNode attrsNode = (ObjectNode) tree.get("attributes");
         ObjectNode mentionsNode = (ObjectNode) attrsNode.get(KnownAttribute.ENTITY_MENTION.key());
         ObjectNode mentionNode = (ObjectNode) mentionsNode.get("items").get(0);
-        assertTrue(mentionNode.has("coreferenceChainId"));
+        assertFalse(mentionNode.has("coreferenceChainId"));
     }
 }

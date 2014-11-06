@@ -53,6 +53,6 @@ public class MentionTest {
         assertEquals(12, mentions.get(0).getEndCharacterOffset());
         assertEquals(0, mentions.get(0).getStartTokenIndex());
         assertEquals(2, mentions.get(0).getEndTokenIndex());
-        assertEquals(0, mentions.get(0).getIndocChainId());
+        assertEquals(Integer.valueOf(0), mentions.get(0).getIndocChainId());
     }
 }
