@@ -61,11 +61,7 @@ public class AnnotatedText implements CharSequence {
             this.attributes = ImmutableMap.of();
         }
         if (documentMetadata != null) {
-            ImmutableMap.Builder<String, List<String>> mapBuilder = new ImmutableMap.Builder<String, List<String>>();
-            for (Map.Entry<String, List<String>> me : documentMetadata.entrySet()) {
-                mapBuilder.put(me.getKey(), ImmutableList.copyOf(me.getValue()));
-            }
-            this.documentMetadata = mapBuilder.build();
+            this.documentMetadata = ImmutableMap.copyOf(documentMetadata);
         } else {
             this.documentMetadata = ImmutableMap.of();
         }
@@ -499,7 +495,9 @@ public class AnnotatedText implements CharSequence {
          * @return this
          */
         public Builder documentMetadata(Map<String, List<String>> mapOfValues) {
-            documentMetadata.putAll(mapOfValues);
+            for (Map.Entry<String, List<String>> me : mapOfValues.entrySet()) {
+                documentMetadata.put(me.getKey(), ImmutableList.copyOf(me.getValue()));
+            }
             return this;
         }
 
