@@ -28,6 +28,7 @@ public abstract class TranslatedDataMixin {
     @JsonCreator
     TranslatedDataMixin(@JsonProperty("domain") TextDomain domain,
                         @JsonProperty("translation") String translation,
+                        @JsonProperty("confidence") Double confidence,
                         @JsonProperty("extendedProperties") Map<String, Object> extendedProperties) {
         //
     }
