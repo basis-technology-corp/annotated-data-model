@@ -14,13 +14,201 @@
 
 package com.basistech.rosette.dm;
 
+import com.basistech.util.ISO15924;
+import com.basistech.util.LanguageCode;
+import com.google.common.base.Objects;
+
+import javax.print.attribute.standard.MediaSize;
+import java.util.Map;
+
+/*
+ * This class is designed to be enough to support an RNT web service, and no more.
+ * So it does not do anything with the concept of fields or contain any of the other
+ * complexities of RNI storage or query production.
+ */
+
 /**
  * A name of something in the world.
  * Both Names and {@link com.basistech.rosette.dm.EntityMention} objects can contains the names of things.
  * {@linkplain com.basistech.rosette.dm.EntityMention} is used for reference inside of documents, while
  * {@linkplain Name} is used for names unrelated to documents.
  */
-public class Name {
+public class Name extends BaseAttribute {
     private final String text;
-    
+    private final ISO15924 script;
+    private final LanguageCode languageOfOrigin;
+    private final LanguageCode languageOfUse;
+
+    // work around a Jackson bug.
+    Name() {
+        text = "";
+        script = ISO15924.Zyyy;
+        languageOfUse = LanguageCode.UNKNOWN;
+        languageOfOrigin = LanguageCode.UNKNOWN;
+    }
+
+    protected Name(String text, ISO15924 script, LanguageCode languageOfOrigin, LanguageCode languageOfUse, Map<String, Object> extendedProperties) {
+        super(extendedProperties);
+
+        if (text == null) {
+            this.text = "";
+        } else {
+            this.text = text;
+        }
+
+        if (script == null) {
+            this.script = ISO15924.Zyyy;
+        } else {
+            this.script = script;
+        }
+
+        if (languageOfOrigin == null) {
+            this.languageOfOrigin = LanguageCode.UNKNOWN;
+        } else {
+            this.languageOfOrigin = languageOfOrigin;
+        }
+
+        if (languageOfUse == null) {
+            this.languageOfUse = LanguageCode.UNKNOWN;
+        } else {
+            this.languageOfUse = languageOfUse;
+        }
+    }
+
+    /**
+     * @return the text of this name.
+     */
+    public String getText() {
+        return text;
+    }
+
+    /**
+     * @return the script code for this name. If the script is not specified, this will return
+     * {@link com.basistech.util.ISO15924#Zyyy }.
+     */
+    public ISO15924 getScript() {
+        return script;
+    }
+
+    /**
+     * @return the language of origin for this name. If the language of origin is not specified,
+     * this will return {@link LanguageCode#UNKNOWN}.
+     */
+    public LanguageCode getLanguageOfOrigin() {
+        return languageOfOrigin;
+    }
+
+    /**
+     * @return the language of use for this name. If the language of use is not specified,
+     * this will return {@link LanguageCode#UNKNOWN}.
+     */
+    public LanguageCode getLanguageOfUse() {
+        return languageOfUse;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
+
+        Name name = (Name) o;
+
+        if (languageOfOrigin != name.languageOfOrigin) {
+            return false;
+        }
+        if (languageOfUse != name.languageOfUse) {
+            return false;
+        }
+        if (script != name.script) {
+            return false;
+        }
+
+        if (!text.equals(name.text)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + text.hashCode();
+        result = 31 * result + (script != null ? script.hashCode() : 0);
+        result = 31 * result + (languageOfOrigin != null ? languageOfOrigin.hashCode() : 0);
+        result = 31 * result + (languageOfUse != null ? languageOfUse.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    protected Objects.ToStringHelper
+    toStringHelper() {
+        Objects.ToStringHelper builder = super.toStringHelper().add("text", text);
+        if (script != null && script != ISO15924.Zyyy) {
+            builder.add("script", script.code4());
+        }
+        if (languageOfUse != null && languageOfUse != LanguageCode.UNKNOWN) {
+            builder.add("languageOfUse", languageOfUse.ISO639_3());
+        }
+        if (languageOfOrigin != null && languageOfOrigin != LanguageCode.UNKNOWN) {
+            builder.add("languageOfOrigin", languageOfOrigin.ISO639_3());
+        }
+        return builder;
+    }
+
+    public static class Builder extends BaseAttribute.Builder {
+        private String text;
+        private ISO15924 script;
+        private LanguageCode languageOfUse;
+        private LanguageCode languageOfOrigin;
+
+        public Builder(String text) {
+            this.text = text;
+            this.script = ISO15924.Zyyy;
+            this.languageOfOrigin = LanguageCode.UNKNOWN;
+            this.languageOfUse = LanguageCode.UNKNOWN;
+        }
+
+        public Builder text(String text) {
+            this.text = text;
+            return this;
+        }
+
+        public Builder script(ISO15924 script) {
+            if (script == null) {
+                script = ISO15924.Zyyy;
+            }
+            this.script = script;
+            return this;
+        }
+
+        public Builder languageOfUse(LanguageCode languageOfUse) {
+            if (languageOfUse == null) {
+                this.languageOfUse = LanguageCode.UNKNOWN;
+            } else {
+                this.languageOfUse = languageOfUse;
+            }
+            return this;
+        }
+
+        public Builder languageOfOrigin(LanguageCode languageOfOrigin) {
+            if (languageOfOrigin == null) {
+                this.languageOfOrigin = LanguageCode.UNKNOWN;
+            } else {
+                this.languageOfOrigin = languageOfOrigin;
+            }
+            return this;
+        }
+
+        public Name build() {
+            return new Name(text, script, languageOfOrigin, languageOfUse, extendedProperties);
+        }
+    }
 }
