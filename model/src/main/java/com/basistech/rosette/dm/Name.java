@@ -18,7 +18,6 @@ import com.basistech.util.ISO15924;
 import com.basistech.util.LanguageCode;
 import com.google.common.base.Objects;
 
-import javax.print.attribute.standard.MediaSize;
 import java.util.Map;
 
 /*
@@ -35,6 +34,7 @@ import java.util.Map;
  */
 public class Name extends BaseAttribute {
     private final String text;
+    private final String type;
     private final ISO15924 script;
     private final LanguageCode languageOfOrigin;
     private final LanguageCode languageOfUse;
@@ -42,12 +42,13 @@ public class Name extends BaseAttribute {
     // work around a Jackson bug.
     Name() {
         text = "";
+        type = null;
         script = ISO15924.Zyyy;
         languageOfUse = LanguageCode.UNKNOWN;
         languageOfOrigin = LanguageCode.UNKNOWN;
     }
 
-    protected Name(String text, ISO15924 script, LanguageCode languageOfOrigin, LanguageCode languageOfUse, Map<String, Object> extendedProperties) {
+    protected Name(String text, String type, ISO15924 script, LanguageCode languageOfOrigin, LanguageCode languageOfUse, Map<String, Object> extendedProperties) {
         super(extendedProperties);
 
         if (text == null) {
@@ -55,6 +56,8 @@ public class Name extends BaseAttribute {
         } else {
             this.text = text;
         }
+
+        this.type = type;
 
         if (script == null) {
             this.script = ISO15924.Zyyy;
@@ -80,6 +83,14 @@ public class Name extends BaseAttribute {
      */
     public String getText() {
         return text;
+    }
+
+    /**
+     * @return the type of the name, or null. Types are types of things in the world, such as
+     * 'PERSON' or 'LOCATION'.
+     */
+    public String getType() {
+        return type;
     }
 
     /**
@@ -129,8 +140,10 @@ public class Name extends BaseAttribute {
         if (script != name.script) {
             return false;
         }
-
         if (!text.equals(name.text)) {
+            return false;
+        }
+        if (type != null ? !type.equals(name.type) : name.type != null) {
             return false;
         }
 
@@ -141,9 +154,10 @@ public class Name extends BaseAttribute {
     public int hashCode() {
         int result = super.hashCode();
         result = 31 * result + text.hashCode();
-        result = 31 * result + (script != null ? script.hashCode() : 0);
-        result = 31 * result + (languageOfOrigin != null ? languageOfOrigin.hashCode() : 0);
-        result = 31 * result + (languageOfUse != null ? languageOfUse.hashCode() : 0);
+        result = 31 * result + (type != null ? type.hashCode() : 0);
+        result = 31 * result + script.hashCode();
+        result = 31 * result + languageOfOrigin.hashCode();
+        result = 31 * result + languageOfUse.hashCode();
         return result;
     }
 
@@ -151,6 +165,9 @@ public class Name extends BaseAttribute {
     protected Objects.ToStringHelper
     toStringHelper() {
         Objects.ToStringHelper builder = super.toStringHelper().add("text", text);
+        if (type != null) {
+            builder.add("type", type);
+        }
         if (script != null && script != ISO15924.Zyyy) {
             builder.add("script", script.code4());
         }
@@ -163,12 +180,20 @@ public class Name extends BaseAttribute {
         return builder;
     }
 
+    /**
+     * Builder for {@link com.basistech.rosette.dm.Name}.
+     */
     public static class Builder extends BaseAttribute.Builder {
         private String text;
+        private String type;
         private ISO15924 script;
         private LanguageCode languageOfUse;
         private LanguageCode languageOfOrigin;
 
+        /**
+         * Construct a builder from a name text.
+         * @param text the text.
+         */
         public Builder(String text) {
             this.text = text;
             this.script = ISO15924.Zyyy;
@@ -176,11 +201,31 @@ public class Name extends BaseAttribute {
             this.languageOfUse = LanguageCode.UNKNOWN;
         }
 
+        /**
+         * Alter the text for the name.
+         * @param text new text.
+         * @return this.
+         */
         public Builder text(String text) {
             this.text = text;
             return this;
         }
 
+        /**
+         * Specify the type for this name, such as 'PERSON' or 'LOCATION'.
+         * @param type the type. Null is interpreted as an unspecified type.
+         * @return this.
+         */
+        public Builder type(String type) {
+            this.type = type;
+            return this;
+        }
+
+        /**
+         * Specify the script of the text of a name.
+         * @param script script identifier. Null is interpreted as {@link com.basistech.util.ISO15924#Zyyy}.
+         * @return
+         */
         public Builder script(ISO15924 script) {
             if (script == null) {
                 script = ISO15924.Zyyy;
@@ -189,6 +234,11 @@ public class Name extends BaseAttribute {
             return this;
         }
 
+        /**
+         * Specify the language of use for the name.
+         * @param languageOfUse language. Null is interpreted as {@link com.basistech.util.LanguageCode#UNKNOWN}.
+         * @return this.
+         */
         public Builder languageOfUse(LanguageCode languageOfUse) {
             if (languageOfUse == null) {
                 this.languageOfUse = LanguageCode.UNKNOWN;
@@ -198,6 +248,11 @@ public class Name extends BaseAttribute {
             return this;
         }
 
+        /**
+         * Specify the language of origin for the name.
+         * @param languageOfOrigin language. Null is interpreted as {@link com.basistech.util.LanguageCode#UNKNOWN}.
+         * @return this.
+         */
         public Builder languageOfOrigin(LanguageCode languageOfOrigin) {
             if (languageOfOrigin == null) {
                 this.languageOfOrigin = LanguageCode.UNKNOWN;
@@ -207,8 +262,12 @@ public class Name extends BaseAttribute {
             return this;
         }
 
+        /**
+         * Construct a new, immutable, {@link Name} object from the contents of the builder.
+         * @return the new {@linkplain Name}.
+         */
         public Name build() {
-            return new Name(text, script, languageOfOrigin, languageOfUse, extendedProperties);
+            return new Name(text, type, script, languageOfOrigin, languageOfUse, extendedProperties);
         }
     }
 }

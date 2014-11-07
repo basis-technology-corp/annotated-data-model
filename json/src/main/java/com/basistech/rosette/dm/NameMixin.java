@@ -27,6 +27,8 @@ import java.util.Map;
  */
 @JsonInclude(JsonInclude.Include.NON_DEFAULT)
 public abstract class NameMixin {
+    // Due to an apparent Jackson bug these are not used to define defaults.
+    // Thus there's a no-args ctor, which we would rather not have, on the actual class.
     String text = "";
     ISO15924 script = ISO15924.Zyyy;
     LanguageCode languageOfUse = LanguageCode.UNKNOWN;
@@ -39,6 +41,7 @@ public abstract class NameMixin {
 
     @JsonCreator
     public NameMixin(@JsonProperty("text") String text,
+                     @JsonProperty("type") String type,
                      @JsonProperty("script") ISO15924 script,
                      @JsonProperty("languageOfOrigin") LanguageCode languageOfOrigin,
                      @JsonProperty("languageOfUse") LanguageCode languageOfUse,

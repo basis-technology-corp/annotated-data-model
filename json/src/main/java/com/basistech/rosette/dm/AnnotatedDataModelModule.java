@@ -14,7 +14,6 @@
 
 package com.basistech.rosette.dm;
 
-import com.basistech.util.LanguageCode;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 /**
