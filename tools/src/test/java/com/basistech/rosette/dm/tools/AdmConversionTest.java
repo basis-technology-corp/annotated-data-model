@@ -74,12 +74,12 @@ public class AdmConversionTest extends Assert {
     }
 
     @Test
-    public void nullLemmasButPos() throws Exception {
+    public void avoidNullAnalysis() throws Exception {
         URL tcUrl = Resources.getResource(getClass(), "null_lemmas.json");
         String tcJson = Resources.toString(tcUrl, Charsets.UTF_8);
         AbstractResultAccess tc = deserialize(tcJson);
         AnnotatedText text = AraDmConverter.convert(tc);
-        assertNotNull(text.getTokens().get(0).getAnalyses().get(0).getPartOfSpeech());
+        assertNull(text.getTokens().get(0).getAnalyses());
     }
 
     @Test

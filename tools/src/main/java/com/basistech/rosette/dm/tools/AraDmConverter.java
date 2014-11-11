@@ -226,7 +226,10 @@ public final class AraDmConverter {
     }
 
     private static void buildAnalysisList(AbstractResultAccess ara, int x, Token.Builder builder) {
-        builder.addAnalysis(buildBaseAnalysis(ara, x));
+        final MorphoAnalysis analysis = buildBaseAnalysis(ara, x);
+        if (analysis != null) {
+            builder.addAnalysis(analysis);
+        }
         if (ara.getAlternativePartsOfSpeech() != null && ara.getAlternativePartsOfSpeech().getStringsForTokenIndex(x) != null) {
             buildAltAnalyses(ara, x, builder);
         }
@@ -320,8 +323,11 @@ public final class AraDmConverter {
 
     private static MorphoAnalysis buildCommonAnalysis(AbstractResultAccess ara, int x) {
         MorphoAnalysis.Builder builder = new MorphoAnalysis.Builder();
-        setupCommonBaseAnalysis(ara, x, builder);
-        return builder.build();
+        if (setupCommonBaseAnalysis(ara, x, builder)) {
+            return builder.build();
+        } else {
+            return null;
+        }
     }
 
     private static MorphoAnalysis buildBaseHanAnalysis(AbstractResultAccess ara, int x) {
@@ -338,22 +344,27 @@ public final class AraDmConverter {
         return builder.build();
     }
 
-    private static void setupCommonBaseAnalysis(AbstractResultAccess ara, int x, MorphoAnalysis.Builder builder) {
+    private static boolean setupCommonBaseAnalysis(AbstractResultAccess ara, int x, MorphoAnalysis.Builder builder) {
+        boolean anythingHere = false;
         if (ara.getLemma() != null) {
+            anythingHere = true;
             builder.lemma(ara.getLemma()[x]);
         }
         if (ara.getPartOfSpeech() != null) {
+            anythingHere = true;
             builder.partOfSpeech(ara.getPartOfSpeech()[x]);
         }
         if (ara.getCompound() != null) {
             String[] comps = ara.getCompound().getStringsForTokenIndex(x);
             if (comps != null) {
+                anythingHere = true;
                 for (String comp : comps) {
                     Token.Builder tokenBuilder = new Token.Builder(0, 0, comp);
                     builder.addComponent(tokenBuilder.build());
                 }
             }
         }
+        return anythingHere;
     }
 
     private static MorphoAnalysis buildBaseArabicAnalysis(AbstractResultAccess ara, int x) {
