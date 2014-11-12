@@ -74,6 +74,15 @@ public class AdmConversionTest extends Assert {
     }
 
     @Test
+    public void avoidNullAnalysis() throws Exception {
+        URL tcUrl = Resources.getResource(getClass(), "null_lemmas.json");
+        String tcJson = Resources.toString(tcUrl, Charsets.UTF_8);
+        AbstractResultAccess tc = deserialize(tcJson);
+        AnnotatedText text = AraDmConverter.convert(tc);
+        assertNull(text.getTokens().get(0).getAnalyses());
+    }
+
+    @Test
     public void sentenceEndOffset() throws Exception {
         URL tcUrl = Resources.getResource(getClass(), "token_offset_crash.json");
         String tcJson = Resources.toString(tcUrl, Charsets.UTF_8);
