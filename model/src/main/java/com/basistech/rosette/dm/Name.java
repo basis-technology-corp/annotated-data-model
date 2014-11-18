@@ -227,9 +227,6 @@ public class Name extends BaseAttribute {
          * @return
          */
         public Builder script(ISO15924 script) {
-            if (script == null) {
-                script = ISO15924.Zyyy;
-            }
             this.script = script;
             return this;
         }
@@ -240,11 +237,7 @@ public class Name extends BaseAttribute {
          * @return this.
          */
         public Builder languageOfUse(LanguageCode languageOfUse) {
-            if (languageOfUse == null) {
-                this.languageOfUse = LanguageCode.UNKNOWN;
-            } else {
-                this.languageOfUse = languageOfUse;
-            }
+            this.languageOfUse = languageOfUse;
             return this;
         }
 
@@ -254,11 +247,7 @@ public class Name extends BaseAttribute {
          * @return this.
          */
         public Builder languageOfOrigin(LanguageCode languageOfOrigin) {
-            if (languageOfOrigin == null) {
-                this.languageOfOrigin = LanguageCode.UNKNOWN;
-            } else {
-                this.languageOfOrigin = languageOfOrigin;
-            }
+            this.languageOfOrigin = languageOfOrigin;
             return this;
         }
 
