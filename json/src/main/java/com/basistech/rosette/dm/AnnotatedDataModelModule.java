@@ -14,7 +14,6 @@
 
 package com.basistech.rosette.dm;
 
-import com.basistech.util.LanguageCode;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 /**
@@ -29,26 +28,26 @@ public class  AnnotatedDataModelModule extends EnumModule {
 
     public void setupModule(SetupContext context) {
         super.setupModule(context); // pick up any enum support.
-        context.setMixInAnnotations(Attribute.class, AttributeMixin.class);
-        context.setMixInAnnotations(LanguageCode.class, LanguageCodeMixin.class);
         context.setMixInAnnotations(AnnotatedText.class, AnnotatedTextMixin.class);
         context.setMixInAnnotations(ArabicMorphoAnalysis.class, ArabicMorphoAnalysisMixin.class);
+        context.setMixInAnnotations(Attribute.class, AttributeMixin.class);
         context.setMixInAnnotations(BaseAttribute.class, BaseAttributeMixin.class);
         context.setMixInAnnotations(BaseNounPhrase.class, BaseNounPhraseMixin.class);
+        context.setMixInAnnotations(CategorizerResult.class, CategorizerResultMixin.class);
         context.setMixInAnnotations(EntityMention.class, EntityMentionMixin.class);
-        context.setMixInAnnotations(ResolvedEntity.class, ResolvedEntityMixin.class);
         context.setMixInAnnotations(HanMorphoAnalysis.class, HanMorphoAnalysisMixin.class);
         context.setMixInAnnotations(LanguageDetection.class, LanguageDetectionMixin.class);
         context.setMixInAnnotations(LanguageDetection.DetectionResult.class, LanguageDetectionMixin.DetectionResultMixin.class);
         context.setMixInAnnotations(ListAttribute.class, ListAttributeMixin.class);
         context.setMixInAnnotations(MorphoAnalysis.class, MorphoAnalysisMixin.class);
+        context.setMixInAnnotations(Name.class, NameMixin.class);
         context.setMixInAnnotations(RawData.class, RawDataMixin.class);
-        context.setMixInAnnotations(ScriptRegion.class, ScriptRegionMixin.class);
+        context.setMixInAnnotations(ResolvedEntity.class, ResolvedEntityMixin.class);
         context.setMixInAnnotations(Sentence.class, SentenceMixin.class);
+        context.setMixInAnnotations(ScriptRegion.class, ScriptRegionMixin.class);
         context.setMixInAnnotations(Token.class, TokenMixin.class);
         context.setMixInAnnotations(TranslatedData.class, TranslatedDataMixin.class);
         context.setMixInAnnotations(TranslatedTokens.class, TranslatedTokensMixin.class);
-        context.setMixInAnnotations(CategorizerResult.class, CategorizerResultMixin.class);
     }
 
     /**

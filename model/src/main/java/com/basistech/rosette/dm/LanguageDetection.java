@@ -154,7 +154,6 @@ public class LanguageDetection extends Attribute {
              */
             public Builder(LanguageCode language) {
                 this.language = language;
-                script = ISO15924.Zyyy;
             }
 
             /**
