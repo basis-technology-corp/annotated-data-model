@@ -30,8 +30,8 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-javadoc-plugin</artifactId>
                     <configuration>
-                      <show>public</show>
-                      <!-- adm.ignore is a custom tag used to note that
+                        <show>public</show>
+                        <!-- adm.ignore is a custom tag used to note that
                            some things don't get seen by codegen. -->
                         <tags>
                             <tag>
@@ -40,18 +40,56 @@
                             </tag>
                         </tags>
                         <taglets>
-                          <taglet>
-                            <tagletClass>com.basistech.dm.taglets.JavaTaglet</tagletClass>
-                          </taglet>
+                            <taglet>
+                                <tagletClass>com.basistech.dm.taglets.JavaTaglet</tagletClass>
+                            </taglet>
                         </taglets>
                         <tagletArtifact>
-                          <groupId>${project.groupId}</groupId>
-                          <artifactId>adm-taglets</artifactId>
-                          <version>${project.version}</version>
+                            <groupId>${project.groupId}</groupId>
+                            <artifactId>adm-taglets</artifactId>
+                            <version>${project.version}</version>
                         </tagletArtifact>
                     </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>
+        <plugins>
+            <plugin>
+                <!--  We will shade SnakeYAML, to simplify deployment, avoid version conflicts -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>2.2</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <minimizeJar>true</minimizeJar>
+                            <artifactSet>
+                                <includes>
+                                    <include>com.google.guava:guava</include>
+                                </includes>
+                            </artifactSet>
+                            <relocations>
+                                <relocation>
+                                    <pattern>com.google</pattern>
+                                    <shadedPattern>com.basistech.com.google</shadedPattern>
+                                </relocation>
+                            </relocations>
+                            <filters>
+                                <filter>
+                                    <artifact>com.google:guava</artifact>
+                                    <excludes>
+                                        <exclude>META-INF/**</exclude>
+                                    </excludes>
+                                </filter>
+                            </filters>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
     </build>
 </project>
