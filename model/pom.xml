@@ -81,7 +81,9 @@
                             <relocations>
                                 <relocation>
                                     <pattern>com.google</pattern>
-                                    <shadedPattern>com.basistech.com.google</shadedPattern>
+                                    <!-- Pick a name that won't conflict with some other shading
+                                         in some other jar of ours. -->
+                                    <shadedPattern>com.basistech.dm.com.google</shadedPattern>
                                 </relocation>
                             </relocations>
                             <filters>
