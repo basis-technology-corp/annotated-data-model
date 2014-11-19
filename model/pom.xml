@@ -88,7 +88,7 @@
                             </relocations>
                             <filters>
                                 <filter>
-                                    <artifact>com.google:guava</artifact>
+                                    <artifact>com.google.guava:guava</artifact>
                                     <excludes>
                                         <exclude>META-INF/**</exclude>
                                     </excludes>
