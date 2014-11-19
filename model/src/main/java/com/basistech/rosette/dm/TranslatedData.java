@@ -22,18 +22,21 @@ import java.util.Map;
 public class TranslatedData extends BaseAttribute {
     private final TextDomain domain;
     private final String translation;
+    private final Double confidence;
 
     /**
      * Construct a TranslatedData object.
      *
      * @param domain specifies the language and script of the translation
      * @param translation the translation of the text
+     * @param confidence confidence value for this translation, or null.
      * @param extendedProperties extended properties for this attribute.
      */
-    protected TranslatedData(TextDomain domain, String translation, Map<String, Object> extendedProperties) {
+    protected TranslatedData(TextDomain domain, String translation, Double confidence, Map<String, Object> extendedProperties) {
         super(extendedProperties);
         this.domain = domain;
         this.translation = translation;
+        this.confidence = confidence;
     }
 
     /**
@@ -54,6 +57,13 @@ public class TranslatedData extends BaseAttribute {
         return translation;
     }
 
+    /**
+     * @return the confidence value for this translation, or null if there is none.
+     */
+    public Double getConfidence() {
+        return confidence;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -66,12 +76,15 @@ public class TranslatedData extends BaseAttribute {
             return false;
         }
 
-        TranslatedData tdat = (TranslatedData) o;
+        TranslatedData that = (TranslatedData) o;
 
-        if (!domain.equals(tdat.domain)) {
+        if (confidence != null ? !confidence.equals(that.confidence) : that.confidence != null) {
             return false;
         }
-        if (!translation.equals(tdat.translation)) {
+        if (!domain.equals(that.domain)) {
+            return false;
+        }
+        if (!translation.equals(that.translation)) {
             return false;
         }
 
@@ -80,18 +93,22 @@ public class TranslatedData extends BaseAttribute {
 
     @Override
     public int hashCode() {
-        int result;
-        result = super.hashCode();
+        int result = super.hashCode();
         result = 31 * result + domain.hashCode();
         result = 31 * result + translation.hashCode();
+        result = 31 * result + (confidence != null ? confidence.hashCode() : 0);
         return result;
     }
 
     @Override
     protected Objects.ToStringHelper toStringHelper() {
-        return Objects.toStringHelper(this)
-            .add("domain", domain)
-            .add("translation", translation);
+        Objects.ToStringHelper helper = Objects.toStringHelper(this)
+                .add("domain", domain)
+                .add("translation", translation);
+        if (confidence != null) {
+            helper.add("confidence", confidence);
+        }
+        return helper;
     }
 
     /**
@@ -100,6 +117,7 @@ public class TranslatedData extends BaseAttribute {
     public static class Builder extends BaseAttribute.Builder {
         private TextDomain domain;
         private String translation;
+        private Double confidence;
 
         /**
          * Constructs a builder from the required properties
@@ -123,6 +141,17 @@ public class TranslatedData extends BaseAttribute {
             this.translation = toCopy.getTranslation();
         }
 
+
+        /**
+         * Specify the confidence value for this translation.
+         * @param confidence the confidence, or null to mean that there is associated confidence value.
+         * @return this.
+         */
+        public Builder confidence(Double confidence) {
+            this.confidence = confidence;
+            return this;
+        }
+
         /**
          * Adds an extended value key-value pair.
          *
@@ -140,7 +169,7 @@ public class TranslatedData extends BaseAttribute {
          * @return a new TranslatedData object.
          */
         public TranslatedData build() {
-            return new TranslatedData(domain, translation, extendedProperties);
+            return new TranslatedData(domain, translation, confidence, extendedProperties);
         }
     }
 }
