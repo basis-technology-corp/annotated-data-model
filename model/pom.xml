@@ -12,7 +12,7 @@
     <dependencies>
         <dependency>
             <groupId>com.basistech</groupId>
-            <artifactId>common</artifactId>
+            <artifactId>common-api</artifactId>
         </dependency>
         <dependency>
             <groupId>com.google.guava</groupId>
