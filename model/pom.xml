@@ -3,12 +3,12 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>adm-model</artifactId>
     <name>adm-model</name>
-    <version>1.10.1</version>
+    <version>1.10.2-SNAPSHOT</version>
     <packaging>bundle</packaging>
     <parent>
         <groupId>com.basistech</groupId>
         <artifactId>annotated-data-model</artifactId>
-        <version>1.10.1</version>
+        <version>1.10.2-SNAPSHOT</version>
     </parent>
     <description>Rosette Data Model for Text and Annotations.</description>
     <dependencies>
