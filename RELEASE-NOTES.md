@@ -12,7 +12,7 @@ places.
 
 ## New Parent/New Common ([COMN-151](http://jira.basistech.net/browse/COMN-151)) ##
    
-Pick up new rosette-common-java, with new jar structure, via
+Pick up rosette-common-java 34.0.0, with new jar structure, via
 textanalytics 56.3.1.
 
    
