@@ -14,11 +14,22 @@
 
 package com.basistech.rosette.dm;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 /**
- * Class used for future-proof representation of attributes in json that we
- * don't have classes for.
- * @adm.ignore
+ * {@link com.basistech.rosette.dm.ListAttribute}.
  */
-public class UnknownAttribute extends BaseAttribute {
-    //
+@JsonSerialize(using = ListAttributeArraySerializer.class)
+@JsonDeserialize(using = ListAttributeArrayDeserializer.class)
+public abstract class ListAttributeArrayMixin {
+
+    // this is only used by the serializer, never let it get processed automatically.
+    @JsonIgnore
+    abstract String getItemJsonKey();
+
+    @JsonIgnore
+    public abstract boolean isEmpty();
+
 }

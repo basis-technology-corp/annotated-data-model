@@ -14,11 +14,22 @@
 
 package com.basistech.rosette.dm;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectReader;
+import org.junit.Test;
+
+import java.io.File;
+
 /**
- * Class used for future-proof representation of attributes in json that we
- * don't have classes for.
- * @adm.ignore
+ * Tests of the complex code that speeds up morpho analysis deserialization.
  */
-public class UnknownAttribute extends BaseAttribute {
-    //
+public class MorphoDeserializerTest extends AdmAssert {
+
+    @Test
+    public void comn130() throws Exception {
+        ObjectMapper mapper = objectMapper();
+        ObjectReader reader = mapper.reader(AnnotatedText.class);
+        // threw
+        reader.readValue(new File("test-data/comn-130-adm.json"));
+    }
 }
