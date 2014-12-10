@@ -341,7 +341,7 @@ public class JsonTest extends AdmAssert {
         JsonNode tree = mapper.valueToTree(simpleText);
         ObjectNode attributes = (ObjectNode) tree.get("attributes");
         ObjectNode extendedObject = attributes.putObject("novelty");
-        extendedObject.put("type", "list");
+        extendedObject.put("type", "itemList");
         extendedObject.put("itemType", "noveltyItem");
         ArrayNode items = extendedObject.putArray("items");
         ObjectNode item0 = items.addObject();

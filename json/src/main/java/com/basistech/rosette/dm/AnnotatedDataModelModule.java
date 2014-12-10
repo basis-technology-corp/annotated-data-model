@@ -36,6 +36,7 @@ public class  AnnotatedDataModelModule extends EnumModule {
         context.setMixInAnnotations(CategorizerResult.class, CategorizerResultMixin.class);
         context.setMixInAnnotations(EntityMention.class, EntityMentionMixin.class);
         context.setMixInAnnotations(HanMorphoAnalysis.class, HanMorphoAnalysisMixin.class);
+        context.setMixInAnnotations(KoreanMorphoAnalysis.class, KoreanMorphoAnalysisMixin.class);
         context.setMixInAnnotations(LanguageDetection.class, LanguageDetectionMixin.class);
         context.setMixInAnnotations(LanguageDetection.DetectionResult.class, LanguageDetectionMixin.DetectionResultMixin.class);
         context.setMixInAnnotations(ListAttribute.class, ListAttributeMixin.class);

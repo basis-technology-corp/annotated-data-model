@@ -14,26 +14,32 @@
 
 package com.basistech.rosette.dm;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
+import java.util.List;
+import java.util.Map;
+
 /**
- * {@link com.basistech.rosette.dm.ListAttribute}.
+ * {@link Token}.
  */
-@JsonSerialize(using = ListAttributeArraySerializer.class)
-@JsonDeserialize(using = ListAttributeArrayDeserializer.class)
-@JsonPropertyOrder(alphabetic = true)
-@JsonFormat(shape = JsonFormat.Shape.ARRAY)
-public abstract class ListAttributeArrayMixin {
+public abstract class TokenArrayMixin {
+    @JsonDeserialize(using = MorphoAnalysisListArrayDeserializer.class)
+    @JsonSerialize(using = MorphoAnalysisListArraySerializer.class)
+    List<MorphoAnalysis> analyses;
 
-    // this is only used by the serializer, never let it get processed automatically.
-    @JsonIgnore
-    abstract String getItemJsonKey();
+    @JsonCreator
+    TokenArrayMixin(@JsonProperty("startOffset") int startOffset,
+                    @JsonProperty("endOffset") int endOffset,
+                    @JsonProperty("text") String text,
+                    @JsonProperty("normalized") List<String> normalized,
+                    @JsonProperty("source") String source,
+                    @JsonProperty("analyses") List<MorphoAnalysis> analyses,
+                    @JsonProperty("extendedProperties") Map<String, Object> extendedProperties) {
+        //
+    }
 
-    @JsonIgnore
-    public abstract boolean isEmpty();
 
 }
