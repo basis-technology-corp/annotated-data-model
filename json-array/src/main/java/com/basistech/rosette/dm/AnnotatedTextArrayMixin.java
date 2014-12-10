@@ -20,7 +20,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.annotation.JsonTypeIdResolver;
 
 import java.util.List;
@@ -29,7 +28,6 @@ import java.util.Map;
 /**
  * {@link AnnotatedText}.
  */
-@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 @JsonFormat(shape = JsonFormat.Shape.ARRAY)
 @JsonPropertyOrder(alphabetic = true)
 public abstract class AnnotatedTextArrayMixin {

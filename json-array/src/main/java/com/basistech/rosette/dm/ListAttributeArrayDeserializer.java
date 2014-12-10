@@ -74,6 +74,7 @@ public class ListAttributeArrayDeserializer extends JsonDeserializer<ListAttribu
         for (Map.Entry<String, Object> me : props.entrySet()) {
             builder.extendedProperty(me.getKey(), me.getValue());
         }
+        jp.nextToken(); // consume the END_OBJECT of the extended props
         return builder.build();
     }
 }

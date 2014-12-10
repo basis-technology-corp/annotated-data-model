@@ -14,10 +14,7 @@
 
 package com.basistech.rosette.dm;
 
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import java.util.Map;
@@ -26,7 +23,6 @@ import java.util.Map;
  * {@link com.basistech.rosette.dm.BaseAttribute}.
  * This does not treat extended properties as special; if we are carrying them around, a map will appear in the array.
  */
-@JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonFormat(shape = JsonFormat.Shape.ARRAY)
 @JsonPropertyOrder(alphabetic = true)
 public abstract class BaseAttributeArrayMixin {

@@ -57,7 +57,6 @@ public class AnnotatedDataModelArrayModule extends EnumModule {
      * @return the same mapper, for convenience.
      */
     public static ObjectMapper setupObjectMapper(ObjectMapper mapper) {
-        mapper.getSerializationConfig().withSerializationInclusion(JsonInclude.Include.NON_NULL);
         final AnnotatedDataModelArrayModule module = new AnnotatedDataModelArrayModule();
         mapper.registerModule(module);
         return mapper;
