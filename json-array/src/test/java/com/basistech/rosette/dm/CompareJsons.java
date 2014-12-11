@@ -25,6 +25,11 @@ import com.fasterxml.jackson.dataformat.cbor.CBORFactory;
 import com.fasterxml.jackson.dataformat.smile.SmileFactory;
 import com.google.common.io.ByteSource;
 import com.google.common.io.ByteStreams;
+import org.apache.commons.math3.stat.descriptive.AbstractStorelessUnivariateStatistic;
+import org.apache.commons.math3.stat.descriptive.StorelessUnivariateStatistic;
+import org.apache.commons.math3.stat.descriptive.moment.Mean;
+import org.apache.commons.math3.stat.descriptive.moment.StandardDeviation;
+import org.xerial.snappy.Snappy;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -36,15 +41,59 @@ import java.util.zip.GZIPOutputStream;
  * Quick command line to see what we've achieved.
  */
 public final class CompareJsons {
-    static final MetricRegistry METRICS = new MetricRegistry();
-    static ConsoleReporter reporter;
+
+    static class CompressionStats extends AbstractStorelessUnivariateStatistic {
+        private final Mean mean;
+        private final StandardDeviation standardDeviation;
+
+        CompressionStats() {
+            mean = new Mean();
+            standardDeviation = new StandardDeviation();
+        }
+
+        @Override
+        public StorelessUnivariateStatistic copy() {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public void clear() {
+            mean.clear();
+            standardDeviation.clear();
+
+        }
+
+        @Override
+        public double getResult() {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public long getN() {
+            return mean.getN();
+        }
+
+        @Override
+        public void increment(double d) {
+            mean.increment(d);
+            standardDeviation.increment(d);
+        }
+
+        double getMean() {
+            return mean.getResult();
+        }
+
+        double getStandardDeviation() {
+            return standardDeviation.getResult();
+        }
+
+    }
 
     private CompareJsons() {
         //
     }
 
     public static void main(String[] args) throws Exception {
-        startReport();
         File plenty = new File(args[0]);
         System.out.println(String.format("Original file length %d", plenty.length()));
         ObjectMapper inputMapper = AnnotatedDataModelModule.setupObjectMapper(new ObjectMapper());
@@ -53,56 +102,92 @@ public final class CompareJsons {
         runWithFormat(texts, new MappingJsonFactory(), "Plain");
         runWithFormat(texts, new SmileFactory(), "SMILE");
         runWithFormat(texts, new CBORFactory(), "CBOR");
-        reporter.report();
-        reporter.stop();
     }
 
     private static void runWithFormat(AnnotatedText[] texts, JsonFactory factory, String format) throws JsonProcessingException {
-        ObjectMapper classicMapper = AnnotatedDataModelModule.setupObjectMapper(new ObjectMapper(factory));
+
+        MetricRegistry metrics = new MetricRegistry();
+        ConsoleReporter reporter = ConsoleReporter.forRegistry(metrics)
+                .convertRatesTo(TimeUnit.SECONDS)
+                .convertDurationsTo(TimeUnit.MILLISECONDS)
+                .build();
+
+        // 'normal' means 'classic json textual format', as opposed to array.
+        ObjectMapper normalMapper = AnnotatedDataModelModule.setupObjectMapper(new ObjectMapper(factory));
         ObjectMapper arrayMapper = AnnotatedDataModelArrayModule.setupObjectMapper(new ObjectMapper(factory));
 
-        int totalClassicLength = 0;
-        int totalClassicCompressedLength = 0;
-        int totalArrayLength = 0;
-        int totalArrayCompressedLength = 0;
+        // times with Metrics
+        Timer normalSerialTime = metrics.timer(String.format("%s-normal-serial", format));
+        Timer arraySerialTime = metrics.timer(String.format("%s-array-serial", format));
 
-        Timer classicTime = METRICS.timer(String.format("%s-classic", format));
-        Timer arrayTime = METRICS.timer(String.format("%s-array", format));
+        CompressionStats normalSizeStats = new CompressionStats();
+        CompressionStats normalGzipStats = new CompressionStats();
+        CompressionStats normalSnappyStats = new CompressionStats();
 
-        Timer classicCompressTime = METRICS.timer(String.format("%s-compress-classic", format));
-        Timer arrayCompressTime = METRICS.timer(String.format("%s-compress-array", format));
+        CompressionStats arraySizeStats = new CompressionStats();
+        CompressionStats arrayGzipStats = new CompressionStats();
+        CompressionStats arraySnappyStats = new CompressionStats();
+
+        Timer normalGzipCompressTime = metrics.timer(String.format("%s-gzip-compress-normal", format));
+        Timer normalSnappyCompressTime = metrics.timer(String.format("%s-snappy-compress-normal", format));
+        Timer arrayGzipCompressTime = metrics.timer(String.format("%s-gzip-compress-array", format));
+        Timer arraySnappyCompressTime = metrics.timer(String.format("%s-snappy-compress-array", format));
 
         for (AnnotatedText text : texts) {
-            Timer.Context ctxt = classicTime.time();
-            byte[] classic = classicMapper.writeValueAsBytes(text);
+            // text and array time and size
+            Timer.Context ctxt = normalSerialTime.time();
+            byte[] textJson = normalMapper.writeValueAsBytes(text);
             ctxt.stop();
+            normalSizeStats.increment(textJson.length);
 
-            ctxt = arrayTime.time();
-            byte[] array = arrayMapper.writeValueAsBytes(text);
+            ctxt = arraySerialTime.time();
+            byte[] arrayJson = arrayMapper.writeValueAsBytes(text);
             ctxt.stop();
+            arraySizeStats.increment(arrayJson.length);
 
-            totalClassicLength += classic.length;
-
-            ctxt = classicCompressTime.time();
-            totalClassicCompressedLength += compressedLength(classic);
+            // gzip time and space
+            ctxt = normalGzipCompressTime.time();
+            int compLen = gzipCompressedLength(textJson);
             ctxt.stop();
+            normalGzipStats.increment(compressionRatio(textJson.length, compLen));
 
-            totalArrayLength += array.length;
-
-            ctxt = arrayCompressTime.time();
-            totalArrayCompressedLength += compressedLength(array);
+            ctxt = arrayGzipCompressTime.time();
+            compLen = gzipCompressedLength(arrayJson);
             ctxt.stop();
+            arrayGzipStats.increment(compressionRatio(arrayJson.length, compLen));
+
+            // snappy time and space
+            ctxt = normalSnappyCompressTime.time();
+            compLen = snappyCompressedLength(textJson);
+            ctxt.stop();
+            normalSnappyStats.increment(compressionRatio(textJson.length, compLen));
+
+            ctxt = arraySnappyCompressTime.time();
+            compLen = snappyCompressedLength(arrayJson);
+            ctxt.stop();
+            arraySnappyStats.increment(compressionRatio(arrayJson.length, compLen));
         }
 
-        System.out.println(format + ":");
-        System.out.println(String.format("Classic %d Array %d: %.02f", totalClassicLength, totalArrayLength,
-                (float)(totalClassicLength - totalArrayLength) / totalClassicLength));
-        System.out.println("Compressed " + format + ":");
-        System.out.println(String.format("Classic %d Array %d: %.02f", totalClassicCompressedLength, totalArrayCompressedLength,
-                (float)(totalClassicCompressedLength - totalArrayCompressedLength) / totalClassicCompressedLength));
+        System.out.println("\nStatistics for " + format);
+        System.out.println();
+        System.out.format("Normal Size: mean %.2f stddev %.2f\n", normalSizeStats.getMean(), normalSizeStats.getStandardDeviation());
+        System.out.format("Normal GZIP Compression ratio: mean %.2f stddev %.2f\n", normalGzipStats.getMean(), normalGzipStats.getStandardDeviation());
+        System.out.format("Normal Snappy Compression ratio: mean %.2f stddev %.2f\n", normalSnappyStats.getMean(), normalSnappyStats.getStandardDeviation());
+
+        System.out.format("Array Size: mean %.2f stddev %.2f\n", arraySizeStats.getMean(), arraySizeStats.getStandardDeviation());
+        System.out.format("Array GZIP Compression ratio: mean %.2f stddev %.2f\n", arrayGzipStats.getMean(), arrayGzipStats.getStandardDeviation());
+        System.out.format("Array Snappy Compression ratio: mean %.2f stddev %.2f\n", arraySnappyStats.getMean(), arraySnappyStats.getStandardDeviation());
+        System.out.println();
+        reporter.report();
+        reporter.stop();
+
     }
 
-    private static int compressedLength(byte[] data) {
+    private static double compressionRatio(int uncompressed, int compressed) {
+        return ((double)(uncompressed - compressed)) / (double)uncompressed;
+    }
+
+    private static int gzipCompressedLength(byte[] data) {
         ByteSource dataSource = ByteSource.wrap(data);
         ByteArrayOutputStream sink = new ByteArrayOutputStream();
         try {
@@ -113,11 +198,12 @@ public final class CompareJsons {
             throw new RuntimeException(e);
         }
     }
-
-    static void startReport() {
-        reporter = ConsoleReporter.forRegistry(METRICS)
-                .convertRatesTo(TimeUnit.SECONDS)
-                .convertDurationsTo(TimeUnit.MILLISECONDS)
-                .build();
+    
+    private static int snappyCompressedLength(byte[] data) {
+        try {
+            return Snappy.compress(data).length;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
