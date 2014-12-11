@@ -254,6 +254,7 @@ public final class CompareJsons {
         try {
             GZIPOutputStream compressedStream = new GZIPOutputStream(sink);
             ByteStreams.copy(new ByteArrayInputStream(data), compressedStream);
+            compressedStream.close();
             return sink.toByteArray();
         } catch (IOException e) {
             throw new RuntimeException(e);
