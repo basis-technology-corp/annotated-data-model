@@ -213,7 +213,7 @@ public final class CompareJsons {
             normalSnappyStats.increment(compressionRatio(textJson.length, compLen));
 
             // decompression?
-            ctxt = normalSnappyCompressTime.time();
+            ctxt = normalSnappyDecompressTime.time();
             snappyDecompress(compressed);
             ctxt.stop();
 
@@ -225,7 +225,7 @@ public final class CompareJsons {
             arraySnappyStats.increment(compressionRatio(arrayJson.length, compLen));
 
             // decompression?
-            ctxt = arraySnappyCompressTime.time();
+            ctxt = arraySnappyDecompressTime.time();
             snappyDecompress(compressed);
             ctxt.stop();
         }
