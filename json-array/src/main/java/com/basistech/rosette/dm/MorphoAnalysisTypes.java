@@ -28,7 +28,6 @@ enum MorphoAnalysisTypes {
     KOREAN(KoreanMorphoAnalysis.class),
     ARABIC(ArabicMorphoAnalysis.class);
 
-    private Class<? extends MorphoAnalysis> clazz;
     static final Map<Class<? extends MorphoAnalysis>, MorphoAnalysisTypes> BY_CLASS =
         new ImmutableMap.Builder<Class<? extends MorphoAnalysis>, MorphoAnalysisTypes>()
             .put(MorphoAnalysis.class, PLAIN)
@@ -36,12 +35,10 @@ enum MorphoAnalysisTypes {
             .put(KoreanMorphoAnalysis.class, KOREAN)
             .put(ArabicMorphoAnalysis.class, ARABIC).build();
 
+    private Class<? extends MorphoAnalysis> clazz;
+
     MorphoAnalysisTypes(Class<? extends MorphoAnalysis> clazz) {
         this.clazz = clazz;
-    }
-
-    Class<? extends MorphoAnalysis> getMorphoAnalysisClass() {
-        return clazz;
     }
 
     static MorphoAnalysisTypes byOrdinal(int ord) {
@@ -51,4 +48,9 @@ enum MorphoAnalysisTypes {
     static MorphoAnalysisTypes byClass(Class<? extends MorphoAnalysis> clazz) {
         return BY_CLASS.get(clazz);
     }
+
+    Class<? extends MorphoAnalysis> getMorphoAnalysisClass() {
+        return clazz;
+    }
+
 }

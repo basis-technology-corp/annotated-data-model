@@ -14,7 +14,6 @@
 
 package com.basistech.rosette.dm;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 /**
  * Jackson module to configure Json serialization and deserialization for the
@@ -37,8 +36,8 @@ public class AnnotatedDataModelArrayModule extends EnumModule {
         context.setMixInAnnotations(EntityMention.class, EntityMentionMixin.class);
         context.setMixInAnnotations(HanMorphoAnalysis.class, HanMorphoAnalysisMixin.class);
         context.setMixInAnnotations(KoreanMorphoAnalysis.class, KoreanMorphoAnalysisMixin.class);
-        context.setMixInAnnotations(LanguageDetection.class, LanguageDetectionMixin.class);
-        context.setMixInAnnotations(LanguageDetection.DetectionResult.class, LanguageDetectionMixin.DetectionResultMixin.class);
+        context.setMixInAnnotations(LanguageDetection.class, LanguageDetectionArrayMixin.class);
+        context.setMixInAnnotations(LanguageDetection.DetectionResult.class, LanguageDetectionArrayMixin.DetectionResultMixin.class);
         context.setMixInAnnotations(ListAttribute.class, ListAttributeArrayMixin.class);
         context.setMixInAnnotations(MorphoAnalysis.class, MorphoAnalysisMixin.class);
         context.setMixInAnnotations(Name.class, NameMixin.class);

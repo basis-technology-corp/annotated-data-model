@@ -46,9 +46,6 @@ public class JsonTest extends AdmAssert {
     private LanguageDetection languageDetection;
     private ScriptRegion scriptRegion;
     private Sentence sentence;
-    private MorphoAnalysis morphoAnalysis;
-    private TextDomain germanDomain;
-    private TextDomain spanishDomain;
     private Token token;
     private TranslatedData germanTranslatedData;
     private TranslatedData spanishTranslatedData;
@@ -133,7 +130,7 @@ public class JsonTest extends AdmAssert {
         maBuilder.partOfSpeech("+woof");
         Token.Builder compTokBuilder = new Token.Builder(0, 2, "Th");
         maBuilder.addComponent(compTokBuilder.build());
-        morphoAnalysis = maBuilder.build();
+        MorphoAnalysis morphoAnalysis = maBuilder.build();
         tokenBuilder.addAnalysis(morphoAnalysis);
 
         ArabicMorphoAnalysis.Builder araMaBuilder = new ArabicMorphoAnalysis.Builder();
@@ -169,12 +166,12 @@ public class JsonTest extends AdmAssert {
         ListAttribute.Builder<TranslatedData> translatedDataBuilder =
             new ListAttribute.Builder<TranslatedData>(TranslatedData.class);
 
-        germanDomain = new TextDomain(ISO15924.Latn, LanguageCode.GERMAN, TransliterationScheme.NATIVE);
+        TextDomain germanDomain = new TextDomain(ISO15924.Latn, LanguageCode.GERMAN, TransliterationScheme.NATIVE);
         String germanText = "Ein.  Zwei.";
         TranslatedData.Builder tdBuilder = new TranslatedData.Builder(germanDomain, germanText);
         germanTranslatedData = tdBuilder.build();
         translatedDataBuilder.add(germanTranslatedData);
-        spanishDomain = new TextDomain(ISO15924.Latn, LanguageCode.SPANISH, TransliterationScheme.NATIVE);
+        TextDomain spanishDomain = new TextDomain(ISO15924.Latn, LanguageCode.SPANISH, TransliterationScheme.NATIVE);
         String spanishText = "Uno.  Dos.";
         tdBuilder = new TranslatedData.Builder(spanishDomain, spanishText);
         spanishTranslatedData = tdBuilder.build();
@@ -286,93 +283,5 @@ public class JsonTest extends AdmAssert {
         assertEquals(categoryResult, read.getCategorizerResults().get(0));
 
         assertEquals(sentimentResult, read.getSentimentResults().get(0));
-    }
-
-    @Test
-    public void testForwardCompatibilitySimple() throws Exception {
-        ObjectMapper mapper = objectMapper();
-        AnnotatedText.Builder builder = new AnnotatedText.Builder();
-        builder.data(THIS_IS_THE_TERRIER_SHOT_TO_BOSTON);
-        AnnotatedText simpleText = builder.build();
-
-        JsonNode tree = mapper.valueToTree(simpleText);
-        ObjectNode attributes = (ObjectNode) tree.get("attributes");
-        ObjectNode extendedObject = attributes.putObject("novelty");
-        extendedObject.put("type", "novelty");
-        extendedObject.put("startOffset", 4);
-        extendedObject.put("endOffset", 8);
-        extendedObject.put("color", "pari");
-
-        AnnotatedText read = mapper.treeToValue(tree, AnnotatedText.class);
-        BaseAttribute novelty = read.getAttributes().get("novelty");
-        assertNotNull(novelty);
-        assertEquals(Integer.valueOf(4), novelty.getExtendedProperties().get("startOffset"));
-        assertEquals(Integer.valueOf(8), novelty.getExtendedProperties().get("endOffset"));
-        assertEquals("pari", novelty.getExtendedProperties().get("color"));
-    }
-
-    @Test
-    public void testForwardCompatibilityNoisy() throws Exception {
-        ObjectMapper mapper = objectMapper();
-        JsonNode tree = mapper.valueToTree(referenceText);
-        ObjectNode attributes = (ObjectNode) tree.get("attributes");
-        ObjectNode extendedObject = attributes.putObject("novelty");
-        extendedObject.put("type", "novelty");
-        extendedObject.put("startOffset", 4);
-        extendedObject.put("endOffset", 8);
-        extendedObject.put("color", "pari");
-
-        AnnotatedText read = mapper.treeToValue(tree, AnnotatedText.class);
-        BaseAttribute novelty = read.getAttributes().get("novelty");
-        assertNotNull(novelty);
-        assertEquals(Integer.valueOf(4), novelty.getExtendedProperties().get("startOffset"));
-        assertEquals(Integer.valueOf(8), novelty.getExtendedProperties().get("endOffset"));
-        assertEquals("pari", novelty.getExtendedProperties().get("color"));
-    }
-
-    @Test
-    @SuppressWarnings("unchecked")
-    public void testForwardCompatibilityList() throws Exception {
-        ObjectMapper mapper = objectMapper();
-        AnnotatedText.Builder builder = new AnnotatedText.Builder();
-        builder.data(THIS_IS_THE_TERRIER_SHOT_TO_BOSTON);
-        AnnotatedText simpleText = builder.build();
-
-        JsonNode tree = mapper.valueToTree(simpleText);
-        ObjectNode attributes = (ObjectNode) tree.get("attributes");
-        ObjectNode extendedObject = attributes.putObject("novelty");
-        extendedObject.put("type", "itemList");
-        extendedObject.put("itemType", "noveltyItem");
-        ArrayNode items = extendedObject.putArray("items");
-        ObjectNode item0 = items.addObject();
-        item0.put("startOffset", 4);
-        item0.put("endOffset", 8);
-        item0.put("color", "pari");
-        ObjectNode item1 = items.addObject();
-        item1.put("startOffset", 10);
-        item1.put("endOffset", 12);
-        item1.put("color", "off");
-
-        AnnotatedText read = mapper.treeToValue(tree, AnnotatedText.class);
-        ListAttribute<BaseAttribute> novelty = (ListAttribute<BaseAttribute>) read.getAttributes().get("novelty");
-        assertNotNull(novelty);
-        assertEquals(2, novelty.size());
-        BaseAttribute item = novelty.get(0);
-        assertEquals(Integer.valueOf(4), item.getExtendedProperties().get("startOffset"));
-        assertEquals(Integer.valueOf(8), item.getExtendedProperties().get("endOffset"));
-        assertEquals("pari", item.getExtendedProperties().get("color"));
-
-        item = novelty.get(1);
-        assertEquals(Integer.valueOf(10), item.getExtendedProperties().get("startOffset"));
-        assertEquals(Integer.valueOf(12), item.getExtendedProperties().get("endOffset"));
-        assertEquals("off", item.getExtendedProperties().get("color"));
-
-    }
-
-    @Test
-    public void emptyAdm() throws Exception {
-        /* We want to be able to read an empty object as an ADM */
-        /* No asserts needed, what we need here is a lack of a throw. */
-        objectMapper().readValue("{}", AnnotatedText.class).toString();
     }
 }

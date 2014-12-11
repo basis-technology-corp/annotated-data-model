@@ -14,8 +14,13 @@
 
 package com.basistech.rosette.dm;
 
+import com.basistech.util.ISO15924;
+import com.basistech.util.LanguageCode;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.google.common.collect.Lists;
 import org.junit.Test;
+
+import java.util.List;
 
 /**
  * Test serialization a-la-array.
@@ -46,10 +51,53 @@ public class ListAttributeTest extends AdmAssert {
         atBuilder.data("Some Text");
         atBuilder.sentences(sentList);
         AnnotatedText annotatedText = atBuilder.build();
-        String json = objectMapper().writeValueAsString(annotatedText);
+        String json = objectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(annotatedText);
+        System.out.println(json);
         AnnotatedText readBack = objectMapper().readValue(json, AnnotatedText.class);
         // we don't have an equals() that is useful for AnnotatedText
         assertEquals(annotatedText.getData(), readBack.getData());
         assertEquals(annotatedText.getAttributes(), readBack.getAttributes());
+    }
+
+    @Test
+    public void languageDetectionInText() throws Exception {
+        AnnotatedText.Builder builder = new AnnotatedText.Builder();
+        builder.data("Some Text");
+
+        List<LanguageDetection.DetectionResult> dets;
+        LanguageDetection.Builder ldBuilder;
+
+        dets = Lists.newArrayList();
+        dets.add(new LanguageDetection.DetectionResult.Builder(LanguageCode.FRENCH).encoding("utf-8").script(ISO15924.Latn).confidence(1.0).build());
+        ldBuilder = new LanguageDetection.Builder(0, builder.data().length(), dets);
+        ldBuilder.extendedProperty("ldw-ex", "ldw-ex-val");
+        LanguageDetection languageDetection = ldBuilder.build();
+        builder.wholeDocumentLanguageDetection(languageDetection);
+
+        AnnotatedText annotatedText = builder.build();
+
+        String json = objectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(annotatedText);
+        System.out.println(json);
+        AnnotatedText readBack = objectMapper().readValue(json, AnnotatedText.class);
+        // we don't have an equals() that is useful for AnnotatedText
+        assertEquals(annotatedText.getData(), readBack.getData());
+        assertEquals(annotatedText.getAttributes(), readBack.getAttributes());
+
+    }
+
+    @Test
+    public void languageDetection() throws Exception {
+        List<LanguageDetection.DetectionResult> dets;
+        LanguageDetection.Builder ldBuilder;
+
+        dets = Lists.newArrayList();
+        dets.add(new LanguageDetection.DetectionResult.Builder(LanguageCode.FRENCH).encoding("utf-8").script(ISO15924.Latn).confidence(1.0).build());
+        ldBuilder = new LanguageDetection.Builder(0, 100, dets);
+        ldBuilder.extendedProperty("ldw-ex", "ldw-ex-val");
+        LanguageDetection languageDetection = ldBuilder.build();
+        String json = objectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(languageDetection);
+        System.out.println(json);
+        LanguageDetection readBack = objectMapper().readValue(json, LanguageDetection.class);
+        assertEquals(languageDetection, readBack);
     }
 }

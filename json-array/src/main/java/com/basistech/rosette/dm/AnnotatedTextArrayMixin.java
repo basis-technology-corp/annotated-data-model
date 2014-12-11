@@ -20,6 +20,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.annotation.JsonTypeIdResolver;
 
 import java.util.List;
@@ -41,6 +42,7 @@ public abstract class AnnotatedTextArrayMixin {
 
     @JsonTypeInfo(use = JsonTypeInfo.Id.CUSTOM, include = JsonTypeInfo.As.WRAPPER_ARRAY)
     @JsonTypeIdResolver(DmTypeIdResolver.class)
+    @JsonSerialize(using = TempAttributeMapSerializer.class)
     public abstract Map<String, BaseAttribute> getAttributes();
 
     @JsonIgnore

@@ -17,10 +17,8 @@ package com.basistech.rosette.dm;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.core.util.JsonParserSequence;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
-import com.fasterxml.jackson.databind.util.TokenBuffer;
 import com.google.common.collect.Lists;
 
 import java.io.IOException;
@@ -70,7 +68,8 @@ public class ListAttributeArrayDeserializer extends JsonDeserializer<ListAttribu
         if (jp.nextToken() != JsonToken.START_OBJECT) {
             throw ctxt.wrongTokenException(jp, JsonToken.START_OBJECT, "No extended properties for list.");
         }
-        Map<String, Object> props = jp.readValueAs(new TypeReference<Map<String, Object>>() {});
+        Map<String, Object> props = jp.readValueAs(new TypeReference<Map<String, Object>>() {
+        });
         for (Map.Entry<String, Object> me : props.entrySet()) {
             builder.extendedProperty(me.getKey(), me.getValue());
         }
