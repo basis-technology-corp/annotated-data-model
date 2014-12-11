@@ -31,8 +31,18 @@ public class ListAttributeArraySerializer extends JsonSerializer<ListAttribute> 
     public void serialize(ListAttribute value, JsonGenerator jgen, SerializerProvider provider) throws IOException {
         jgen.writeStartArray();
         jgen.writeString(KnownAttribute.getAttributeForClass(value.getItemClass()).key());
-        jgen.writeObject(value.getItems());
+        writeItems(value, jgen, provider);
         writeExtendedProperties(value, jgen);
+        jgen.writeEndArray();
+    }
+
+    private void writeItems(ListAttribute value, JsonGenerator jgen, SerializerProvider provider) throws IOException {
+        jgen.writeStartArray();
+
+        for (Object attr : value) {
+            provider.defaultSerializeValue(attr, jgen);
+        }
+
         jgen.writeEndArray();
     }
 
@@ -49,7 +59,7 @@ public class ListAttributeArraySerializer extends JsonSerializer<ListAttribute> 
     public void serializeWithType(ListAttribute value, JsonGenerator jgen, SerializerProvider provider, TypeSerializer typeSer) throws IOException {
         typeSer.writeTypePrefixForArray(value, jgen);
         jgen.writeString(KnownAttribute.getAttributeForClass(value.getItemClass()).key());
-        jgen.writeObject(value.getItems());
+        writeItems(value, jgen, provider);
         writeExtendedProperties(value, jgen);
         typeSer.writeTypeSuffixForArray(value, jgen);
     }

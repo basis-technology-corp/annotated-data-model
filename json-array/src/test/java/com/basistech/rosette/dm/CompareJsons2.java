@@ -21,6 +21,7 @@ import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.MappingJsonFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.dataformat.cbor.CBORFactory;
 import com.fasterxml.jackson.dataformat.smile.SmileFactory;
 import com.google.common.io.ByteSource;
@@ -35,71 +36,70 @@ import java.util.zip.GZIPOutputStream;
 /**
  * Quick command line to see what we've achieved.
  */
-public final class CompareJsons {
+public final class CompareJsons2 {
     static final MetricRegistry METRICS = new MetricRegistry();
     static ConsoleReporter reporter;
 
-    private CompareJsons() {
+    private CompareJsons2() {
         //
     }
 
     public static void main(String[] args) throws Exception {
         startReport();
         File plenty = new File(args[0]);
+        String mapping = args[1];
+        SimpleModule module;
+        if ("classic".equals(mapping)) {
+            module = new AnnotatedDataModelModule();
+        } else if ("array".equals(mapping)) {
+            module = new AnnotatedDataModelArrayModule();
+        } else {
+            System.err.println("Invalid mapping " + mapping);
+            System.exit(1);
+            return;
+        }
+
+
         System.out.println(String.format("Original file length %d", plenty.length()));
         ObjectMapper inputMapper = AnnotatedDataModelModule.setupObjectMapper(new ObjectMapper());
         AnnotatedText[] texts = inputMapper.readValue(plenty, AnnotatedText[].class);
         System.out.println(String.format("%d documents", texts.length));
-        runWithFormat(texts, new MappingJsonFactory(), "Plain");
-        runWithFormat(texts, new SmileFactory(), "SMILE");
-        runWithFormat(texts, new CBORFactory(), "CBOR");
+        runWithFormat(texts, module, new MappingJsonFactory(), "Plain");
+        runWithFormat(texts, module, new SmileFactory(), "SMILE");
+        runWithFormat(texts, module, new CBORFactory(), "CBOR");
         reporter.report();
         reporter.stop();
     }
 
-    private static void runWithFormat(AnnotatedText[] texts, JsonFactory factory, String format) throws JsonProcessingException {
-        ObjectMapper classicMapper = AnnotatedDataModelModule.setupObjectMapper(new ObjectMapper(factory));
-        ObjectMapper arrayMapper = AnnotatedDataModelArrayModule.setupObjectMapper(new ObjectMapper(factory));
+    private static void runWithFormat(AnnotatedText[] texts, SimpleModule module, JsonFactory factory, String format) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper(factory);
+        mapper.registerModule(module);
 
-        int totalClassicLength = 0;
-        int totalClassicCompressedLength = 0;
-        int totalArrayLength = 0;
-        int totalArrayCompressedLength = 0;
+        int totalLength = 0;
+        int totalCompressedLength = 0;
 
-        Timer classicTime = METRICS.timer(String.format("%s-classic", format));
-        Timer arrayTime = METRICS.timer(String.format("%s-array", format));
+        Timer time = METRICS.timer(String.format("%s", format));
 
-        Timer classicCompressTime = METRICS.timer(String.format("%s-compress-classic", format));
-        Timer arrayCompressTime = METRICS.timer(String.format("%s-compress-array", format));
+        Timer compressTime = METRICS.timer(String.format("%s-compression", format));
 
         for (AnnotatedText text : texts) {
-            Timer.Context ctxt = classicTime.time();
-            byte[] classic = classicMapper.writeValueAsBytes(text);
+            Timer.Context ctxt = time.time();
+            byte[] results = mapper.writeValueAsBytes(text);
             ctxt.stop();
 
-            ctxt = arrayTime.time();
-            byte[] array = arrayMapper.writeValueAsBytes(text);
-            ctxt.stop();
+            System.out.println(mapper.writeValueAsString(text));
 
-            totalClassicLength += classic.length;
+            totalLength += results.length;
 
-            ctxt = classicCompressTime.time();
-            totalClassicCompressedLength += compressedLength(classic);
-            ctxt.stop();
-
-            totalArrayLength += array.length;
-
-            ctxt = arrayCompressTime.time();
-            totalArrayCompressedLength += compressedLength(array);
+            ctxt = compressTime.time();
+            totalCompressedLength += compressedLength(results);
             ctxt.stop();
         }
 
         System.out.println(format + ":");
-        System.out.println(String.format("Classic %d Array %d: %.02f", totalClassicLength, totalArrayLength,
-                (float)(totalClassicLength - totalArrayLength) / totalClassicLength));
+        System.out.println(String.format("Length %d", totalLength));
         System.out.println("Compressed " + format + ":");
-        System.out.println(String.format("Classic %d Array %d: %.02f", totalClassicCompressedLength, totalArrayCompressedLength,
-                (float)(totalClassicCompressedLength - totalArrayCompressedLength) / totalClassicCompressedLength));
+        System.out.println(String.format("Length %d", totalCompressedLength));
     }
 
     private static int compressedLength(byte[] data) {

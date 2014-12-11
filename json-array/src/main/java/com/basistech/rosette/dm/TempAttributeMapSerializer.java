@@ -40,11 +40,9 @@ public class TempAttributeMapSerializer extends JsonSerializer<Map<String, Attri
             jgen.writeStartArray();
             jgen.writeString(resolver.idFromValue(me.getValue()));
             // this will write out in array notation due to the annotation
-            jgen.writeObject(me.getValue());
+            provider.defaultSerializeValue(me.getValue(), jgen);
             jgen.writeEndArray();
         }
         jgen.writeEndObject();
-
-
     }
 }

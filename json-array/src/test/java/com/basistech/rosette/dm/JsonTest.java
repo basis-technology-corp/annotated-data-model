@@ -223,13 +223,13 @@ public class JsonTest extends AdmAssert {
 
     @Test
     public void roundTrip() throws Exception {
-        StringWriter writer = new StringWriter();
+
         ObjectMapper mapper = objectMapper();
-        ObjectWriter objectWriter = mapper.writer().withDefaultPrettyPrinter();
-        objectWriter.writeValue(writer, referenceText);
+        ObjectWriter objectWriter = mapper.writer();
+        String json = objectWriter.writeValueAsString(referenceText);
 
         ObjectReader reader = mapper.reader(AnnotatedText.class);
-        AnnotatedText read = reader.readValue(writer.toString());
+        AnnotatedText read = reader.readValue(json);
 
         ListAttribute<BaseNounPhrase> bnpList = read.getBaseNounPhrases();
         assertNotNull(bnpList);
