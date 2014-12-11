@@ -40,6 +40,7 @@ public abstract class AnnotatedTextArrayMixin {
         //
     }
 
+    // The first two work right for deserialization but not for serialization, so we have the third.
     @JsonTypeInfo(use = JsonTypeInfo.Id.CUSTOM, include = JsonTypeInfo.As.WRAPPER_ARRAY)
     @JsonTypeIdResolver(DmTypeIdResolver.class)
     @JsonSerialize(using = TempAttributeMapSerializer.class)
