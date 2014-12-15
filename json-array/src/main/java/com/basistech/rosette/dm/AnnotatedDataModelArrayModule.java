@@ -17,7 +17,12 @@ package com.basistech.rosette.dm;
 import com.fasterxml.jackson.databind.ObjectMapper;
 /**
  * Jackson module to configure Json serialization and deserialization for the
- * annotated data model.
+ * annotated data model, using an array syntax for performance.
+ *
+ * By default, Jackson represents Java objects as Json objects. This results in writing out
+ * all the field names as keys and looking them up, reflectively, when reading in. Jackson
+ * supports an alternative that writes out Java objects as arrays, using a fixed order for the fields
+ * This module installs customizations that read and write ADM using arrays.
  */
 public class AnnotatedDataModelArrayModule extends EnumModule {
 
