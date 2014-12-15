@@ -17,9 +17,13 @@ package com.basistech.rosette.dm.tools;
 import com.basistech.rlp.AbstractResultAccess;
 import com.basistech.rlp.ResultAccessDeserializer;
 import com.basistech.rlp.ResultAccessSerializedFormat;
+import com.basistech.rosette.dm.AnnotatedDataModelArrayModule;
 import com.basistech.rosette.dm.AnnotatedDataModelModule;
+import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import com.fasterxml.jackson.dataformat.cbor.CBORFactory;
+import com.fasterxml.jackson.dataformat.smile.SmileFactory;
 import com.google.common.io.Closeables;
 import org.kohsuke.args4j.Argument;
 import org.kohsuke.args4j.CmdLineException;
@@ -36,8 +40,20 @@ import java.util.List;
  * CLI for converting ARA to ADM.
  */
 public final class AraDmConverterCommand {
+    private static enum SHAPE { JSON, ARRAY }
+    private static enum FORMAT { JSON, SMILE, CBOR }
+
     @Option(name = "-outputDirectory", metaVar = "OUTPUT_DIR", usage = "output directory")
     File outputDirectory;
+
+    @Option(name = "-prettyPrint", usage = "pretty print output (default is false)")
+    boolean prettyPrint;
+
+    @Option(name = "-shape", usage = "shape of output (default is JSON)")
+    SHAPE shape = SHAPE.JSON;
+
+    @Option(name = "-format", usage = "format of output (default is JSON)")
+    FORMAT format = FORMAT.JSON;
 
     // note that in the simple case
     @Argument(required = true, usage = "input1 ... inputN (or) INPUT OUTPUT")
@@ -91,8 +107,38 @@ public final class AraDmConverterCommand {
 
         ResultAccessDeserializer rad = new ResultAccessDeserializer();
         rad.setFormat(ResultAccessSerializedFormat.JSON);
-        ObjectMapper mapper = AnnotatedDataModelModule.setupObjectMapper(new ObjectMapper());
-        ObjectWriter writer = mapper.writer().withDefaultPrettyPrinter();
+
+        JsonFactory jsonFactory;
+        switch (format) {
+        case JSON:
+            jsonFactory = new JsonFactory();
+            break;
+        case SMILE:
+            jsonFactory = new SmileFactory();
+            break;
+        case CBOR:
+            jsonFactory = new CBORFactory();
+            break;
+        default:
+            throw new RuntimeException("unexpected format: " + format);
+        }
+
+        ObjectMapper mapper;
+        switch (shape) {
+        case ARRAY:
+            mapper = AnnotatedDataModelArrayModule.setupObjectMapper(new ObjectMapper(jsonFactory));
+            break;
+        case JSON:
+            mapper = AnnotatedDataModelModule.setupObjectMapper(new ObjectMapper(jsonFactory));
+            break;
+        default:
+            throw new RuntimeException("unexpected shape: " + shape);
+        }
+
+        ObjectWriter writer = mapper.writer();
+        if (prettyPrint) {
+            writer = writer.withDefaultPrettyPrinter();
+        }
 
         for (File input : inputs) {
             System.out.println("Processing " + input.getAbsolutePath());

@@ -20,6 +20,11 @@
             <artifactId>adm-json</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>adm-json-array</artifactId>
+            <version>${project.version}</version>
+        </dependency>
       <dependency>
         <groupId>com.basistech</groupId>
         <artifactId>rlp-java-blackboard</artifactId>
@@ -46,6 +51,16 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-smile</artifactId>
+	    <version>${bt-jackson-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-cbor</artifactId>
+	    <version>${bt-jackson-version}</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
