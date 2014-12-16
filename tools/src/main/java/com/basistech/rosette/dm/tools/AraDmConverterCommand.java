@@ -141,7 +141,7 @@ public final class AraDmConverterCommand {
         }
 
         for (File input : inputs) {
-            System.out.println("Processing " + input.getAbsolutePath());
+            System.err.println("Processing " + input.getAbsolutePath());
             File output;
             if (twoArgOutput != null) {
                 output = twoArgOutput;
