@@ -4,18 +4,18 @@
 
 ### [COMN-158](http://jira.basistech.net/browse/COMN-158) Support array "shape" json
 
-The new adm-json-array artifact support serialization of ADM as
+The new adm-json-array artifact supports serialization of ADM as
 array-shaped json.  There is some space savings and some possible
 runtime savings, however components should never store this format.
 It's strictly for use "over the wire" - intended for RaaS.
 
 To use normal ADM "object" shape serialization, do this:
 
-    ObjectMapper mapper = AnnotatedDataModelArrayModule.setupObjectMapper(new ObjectMapper());
+    ObjectMapper mapper = AnnotatedDataModelModule.setupObjectMapper(new ObjectMapper());
 
 To use the new "array" shape serialization, do this:
 
-    ObjectMapper mapper = AnnotatedDataModelModule.setupObjectMapper(new ObjectMapper());
+    ObjectMapper mapper = AnnotatedDataModelArrayModule.setupObjectMapper(new ObjectMapper());
 
 ## 1.10.1
 
