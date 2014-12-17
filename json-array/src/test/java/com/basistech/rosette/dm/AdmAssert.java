@@ -14,11 +14,14 @@
 
 package com.basistech.rosette.dm;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.Assert;
+
 /**
- * Class used for future-proof representation of attributes in json that we
- * don't have classes for.
- * @adm.ignore
+ * Common utilities for tests.
  */
-public class UnknownAttribute extends BaseAttribute {
-    //
+public class AdmAssert extends Assert {
+    public static ObjectMapper objectMapper() {
+        return AnnotatedDataModelArrayModule.setupObjectMapper(new ObjectMapper());
+    }
 }

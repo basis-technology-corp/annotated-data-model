@@ -97,8 +97,8 @@ This annotation provides a translation for the entire text into a language and s
 
 ### TRANSLATED_TOKENS ###
 
-The translated tokens annotations provides a list of translations for each of the tokens in the text.  Each annotation
-contains a domain identifying the language and script of the translations and a list of translations corresponding to
+The translated tokens annotations provides a itemList of translations for each of the tokens in the text.  Each annotation
+contains a domain identifying the language and script of the translations and a itemList of translations corresponding to
 the tokens of the text.
 
 ## Class-Level Documentation ##
