@@ -23,7 +23,7 @@ import java.util.Map;
 /**
  * A MorphoAnalysis contains all the results of analyzing a word, or something like a word.
  * This data model assumes that, presented with a token, an analyzer will produce one or more analyses,
- * where each analysis is a coordinated collection of attributes. The simplest example is a part of speech tag
+ * where each analysis is a coordinated collection of attributes. The simplest example is a part-of-speech tag
  * and a lemma, but some languages yield more data.
  * <p/>
  * This one class contains the basic attributes that are more or less common to the languages supported by

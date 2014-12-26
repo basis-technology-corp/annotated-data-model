@@ -20,7 +20,8 @@ import java.util.Map;
 
 /**
  * Base class for attributes that span a range of text.  These attributes
- * have a start and end offset.
+ * have a start and end offset.  The offsets refer to a half-open range
+ * of characters (UTF-16 elements).
  */
 public abstract class Attribute extends BaseAttribute {
     protected final int startOffset;

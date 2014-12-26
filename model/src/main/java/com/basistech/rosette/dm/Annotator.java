@@ -20,7 +20,7 @@ import com.basistech.rosette.RosetteException;
  * An {@code Annotator} annotates text with attributes.  Typical annotations
  * are tokens, script/language regions, morphological analyses, sentences,
  * base noun phrases, and entity mentions.  A single annotator operates in one
- * language; while the Annotated Data Model supports multi-language texts, this
+ * language; while the data model supports multi-language texts, this
  * interface does not (yet) provide support.
  * @adm.ignore
  */
