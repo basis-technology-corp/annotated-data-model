@@ -4,6 +4,7 @@
     <artifactId>adm-json</artifactId>
     <name>adm-json</name>
     <version>1.10.2-SNAPSHOT</version>
+    <packaging>bundle</packaging>
     <parent>
         <groupId>com.basistech</groupId>
         <artifactId>annotated-data-model</artifactId>
@@ -16,6 +17,25 @@
                 <filtering>true</filtering>
             </resource>
         </resources>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.felix</groupId>
+            <artifactId>maven-bundle-plugin</artifactId>
+            <extensions>true</extensions>
+            <configuration>
+              <instructions>
+                <Export-Package>com.basistech.rosette.dm</Export-Package>
+                  <!--
+                  The explicit ! here works around a bnd quirk, probably provoked by the use of shade.
+                  Without it, bnd wants to import the shaded guava into here, where we don't need it and
+                  it confuses matters.
+                  -->
+                 <Import-Package>!com.basistech.dm.com.*,*</Import-Package>
+                <Fragment-Host>com.basistech.adm-model</Fragment-Host>
+              </instructions>
+            </configuration>
+          </plugin>
+        </plugins>
     </build>
     <dependencies>
         <dependency>
