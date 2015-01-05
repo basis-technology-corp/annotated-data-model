@@ -38,8 +38,8 @@ component, or if this is the first component in a pipeline, from an
 ``AnnotatedText.Builder``.
 
 Start/end offsets in attributes are always half-open ranges, and they
-refer to character-level (UTF-16 elements) offsets in the original
-text.
+refer to character-level offsets in the original text.  ("Character"
+here really means a UTF-16 element.)
 
 ``AnnotatedText`` objects are immutable.
 
@@ -65,7 +65,7 @@ Generic Attributes
 
 All attributes of the data model extend ``BaseAttribute``.  Attributes
 with with character offsets (e.g. a ``Token``) extend ``Attribute``.
-All attributes are stored in a map of string to BaseAttribute,
+All attributes are stored in a map of string to ``BaseAttribute``,
 accessed via ``AnnotatedText.getAttributes()``.  The keys are defined
 by the ``AttributeKey`` enumeration, however most applications will
 choose to use named attribute accessors instead.  This avoids the need
@@ -451,20 +451,23 @@ Korean example:
 ArabicMorphoAnalysis
 ~~~~~~~~~~~~~~~~~~~~
 
-Arabic analyses are the most complex.  Each analysis has a prefix,
-stem, and suffix (where some of these components can be empty).  An
-analysis may have a stem, a lemma, and a root, which are all different
-concepts in Arabic.  Each of prefix, stem, and suffix may have
-associated tags.  Here's an example that shows how a word ("the
-books") is divided into prefix, stem, and suffix.  The disambiguated
-analysis (the first one) shows a prefix (for "the"), a stem ("books"),
-and no suffix.
+Arabic analyses are the most complex.  Each analysis is broken down
+into prefix, stem, and suffix components, where some components could
+be empty.  The components may be broken down further into
+sub-components, e.g. a prefix could have multiple parts ("and the").
+Each component and sub-component has an associated tag.  Analyses also
+have distinct slots for stem, lemma, and root, which are all different
+concepts in Arabic.
 
-Arabic example:
+Here's an example that shows how a single word ("and the books") is
+divided into prefix, stem, and suffix.  The disambiguated analysis
+(the first one) shows a prefix (for "and the"), a stem ("books"), and
+no suffix.  The prefix itself is divided into two parts ("and" and
+"the"), and each of those has a tag ("CONJ", and "DET").
 
 ::
 
-    String s = "الكتب";  // "the books"
+    String s = "والكتب";  // "and the books"
     AnnotatedText.Builder builder = new AnnotatedText.Builder().data(s);
     AnnotatedText input = builder.build();
     AnnotatedText output = annotator.annotate(input);
@@ -484,18 +487,23 @@ Arabic example:
         }
     }
 
-    // prefix: ال, stem: كتب, suffix: , POS: NOUN
-    //   prefix info: [ال], [DET]
+    // prefix: وال, stem: كتب, suffix: , POS: NOUN
+    //   prefix info: [و, ال], [CONJ, DET]
     //   stem info:   [كتب], [NOUN]
     //   suffix info: [], [NO_FUNC]
-    // prefix: , stem: الكتب, suffix: , POS: NOUN_PROP
+    // prefix: , stem: والكتب, suffix: , POS: NOUN_PROP
     //   prefix info: [], [NO_FUNC]
-    //   stem info:   [الكتب], [NOUN_PROP]
+    //   stem info:   [والكتب], [NOUN_PROP]
     //   suffix info: [], [NO_FUNC]
-    // prefix: , stem: الكتب, suffix: , POS: NOUN_PROP
-    //   prefix info: [ال], [DET]
+    // prefix: , stem: والكتب, suffix: , POS: NOUN_PROP
+    //   prefix info: [و, ال], [CONJ, DET]
     //   stem info:   [كتب], [NOUN_PROP]
     //   suffix info: [], [NO_FUNC]
+    // prefix: , stem: والكتب, suffix: , POS: NOUN_PROP
+    //   prefix info: [و], [CONJ]
+    //   stem info:   [الكتب], [NOUN_PROP]
+    //   suffix info: [], [NO_FUNC]
+
 
 
 Entity Mentions

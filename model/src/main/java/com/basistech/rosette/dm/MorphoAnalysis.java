@@ -32,7 +32,7 @@ import java.util.Map;
  * In some languages, words are decompounded into pieces that can, themselves, be analyzed.
  */
 public class MorphoAnalysis extends BaseAttribute {
-    // every language we support has part of speech and lemma
+    // every language we support has part-of-speech and lemma
     private final String partOfSpeech;
     private final String lemma;
     // several language have compounds; we store a full token so that we can have analyses of the components.
@@ -42,7 +42,7 @@ public class MorphoAnalysis extends BaseAttribute {
     /**
      * Creates an analysis.
      *
-     * @param partOfSpeech part of speech
+     * @param partOfSpeech part-of-speech
      * @param lemma the lemma
      * @param components compound components
      * @param raw raw analysis
@@ -61,9 +61,9 @@ public class MorphoAnalysis extends BaseAttribute {
     }
 
     /**
-     * Returns the part of speech.
+     * Returns the part-of-speech.
      *
-     * @return the part of speech
+     * @return the part-of-speech
      */
     public String getPartOfSpeech() {
         return partOfSpeech;
@@ -184,9 +184,9 @@ public class MorphoAnalysis extends BaseAttribute {
         }
 
         /**
-         * Specifies the part of speech.
+         * Specifies the part-of-speech.
          *
-         * @param partOfSpeech the part of speech
+         * @param partOfSpeech the part-of-speech
          * @return this
          */
         public Builder partOfSpeech(String partOfSpeech) {
