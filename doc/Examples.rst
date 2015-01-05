@@ -457,7 +457,9 @@ be empty.  The components may be broken down further into
 sub-components, e.g. a prefix could have multiple parts ("and the").
 Each component and sub-component has an associated tag.  Analyses also
 have distinct slots for stem, lemma, and root, which are all different
-concepts in Arabic.
+concepts in Arabic.  Notice the need for the user to cast
+``MorphoAnalysis`` to ``ArabicMorphoAnalysis`` to access this
+information.
 
 Here's an example that shows how a single word ("and the books") is
 divided into prefix, stem, and suffix.  The disambiguated analysis
