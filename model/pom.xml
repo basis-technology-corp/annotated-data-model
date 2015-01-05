@@ -4,7 +4,6 @@
     <artifactId>adm-model</artifactId>
     <name>adm-model</name>
     <version>1.10.2-SNAPSHOT</version>
-    <packaging>bundle</packaging>
     <parent>
         <groupId>com.basistech</groupId>
         <artifactId>annotated-data-model</artifactId>
@@ -29,18 +28,6 @@
             <artifactId>jmockit</artifactId>
             <version>1.7</version>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.basistech</groupId>
-            <artifactId>pax-exam-test-composite</artifactId>
-            <version>0.0.2</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.osgi</groupId>
-            <artifactId>org.osgi.core</artifactId>
-            <version>5.0.0</version>
-            <scope>provided</scope>
         </dependency>
     </dependencies>
     <build>
@@ -74,72 +61,19 @@
             </plugins>
         </pluginManagement>
         <plugins>
+          <!-- build the unshaded jar. -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <version>2.9</version>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.5</version>
                 <executions>
                     <execution>
-                        <id>copy</id>
-                        <phase>generate-test-resources</phase>
+                        <phase>package</phase>
                         <goals>
-                            <goal>copy-dependencies</goal>
+                            <goal>jar</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${project.build.directory}/bundles</outputDirectory>
-                            <!--
-                              Exclude the ones that are not OSGi
-                              components, plus OSGi itself.
-                          -->
-                            <excludeArtifactIds>org.osgi.core</excludeArtifactIds>
-                            <excludeGroupIds>org.slf4j</excludeGroupIds>
-                            <includeScope>compile</includeScope>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.servicemix.tooling</groupId>
-                <artifactId>depends-maven-plugin</artifactId>
-                <version>1.2</version>
-                <executions>
-                    <execution>
-                        <id>generate-depends-file</id>
-                        <phase>generate-test-resources</phase>
-                        <goals>
-                            <goal>generate-depends-file</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.felix</groupId>
-                <artifactId>maven-bundle-plugin</artifactId>
-                <extensions>true</extensions>
-                <configuration>
-                    <instructions>
-                        <!-- shade is going to make this disappear -->
-                        <Private-Package>com.google.*</Private-Package>
-                        <Export-Package>com.basistech.rosette.dm.*</Export-Package>
-                    </instructions>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-failsafe-plugin</artifactId>
-                <version>2.18</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>integration-test</goal>
-                            <goal>verify</goal>
-                        </goals>
-                        <configuration>
-                            <systemPropertyVariables>
-                                <java.awt.headless>true</java.awt.headless>
-                                <project.build.directory>${project.build.directory}</project.build.directory>
-                                <project.version>${project.version}</project.version>
-                            </systemPropertyVariables>
+                            <classifier>unshaded-guava</classifier>
                         </configuration>
                     </execution>
                 </executions>
@@ -159,8 +93,7 @@
                             <minimizeJar>true</minimizeJar>
                             <artifactSet>
                                 <includes>
-                                    <!-- the bundle plugin already pulled in the actual contents, we just need the renaming.-->
-                                    <include>null:null</include>
+                                    <include>com.google.guava:guava</include>
                                 </includes>
                             </artifactSet>
                             <relocations>
