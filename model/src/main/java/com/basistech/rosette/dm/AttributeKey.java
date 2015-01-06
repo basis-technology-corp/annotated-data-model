@@ -18,6 +18,8 @@ package com.basistech.rosette.dm;
  * The attributes currently defined in the data model.
  * Applications may extend the model with additional attributes;
  * this provides keys for {@link com.basistech.rosette.dm.AnnotatedText} for the known attributes.
+ * The keys are defined by strings, rather than the enum itself, to allow for
+ * this extension.
  */
 enum AttributeKey {
     BASE_NOUN_PHRASE("baseNounPhrases"),

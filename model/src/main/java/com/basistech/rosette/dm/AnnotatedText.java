@@ -286,6 +286,8 @@ public class AnnotatedText implements CharSequence {
      */
     public static class Builder {
         private CharSequence data;
+        // Keys are strings to allow for extension.  Predefined keys are from
+        // AttributeKey.key().
         private final Map<String, BaseAttribute> attributes = Maps.newHashMap();
         private final Map<String, List<String>> documentMetadata = Maps.newHashMap();
 

@@ -194,10 +194,10 @@ only a single language.
 Script Regions
 --------------
 
-Script regions are produced as part of language region detection.  A
-single script region may contain multiple langauge regions.  For
-example, a Latn region may contain English and French.  A Cryl region
-may contain Russian and Serbian.
+Script regions can be produced separately or as part of language
+region detection.  A single script region may contain multiple
+langauge regions.  For example, a Latn region may contain English and
+French.  A Cryl region may contain Russian and Serbian.
 
 ::
 
@@ -293,6 +293,25 @@ Each token has a list of possible morphological analyses.  A
 disambiguation phase is responsible for selecting the best of these
 possibilities.  Disambiguation places the best analysis as the first
 element of the list.
+
+There is a class hierarchy for language-specific analyses.  Code that
+needs to handle any possible language needs to cast the returned
+``MorphologicalAnalysis`` to the proper language-specific class.  For
+example:
+
+    MorphologicalAnalysis analysis = ...;
+    if (analysis instanceof HanMorphoAnalysis) {
+        HanMorphoAnalysis hanAnalysis = (HanMorphoAnalysis) analysis;
+        // process Chinese/Japanese specifics
+    } else if (analysis instanceof KoreanMorphoAnalysis) {
+        KoreanMorphoAnalysis koreanAnalysis = (KoreanMorphoAnalysis) analysis;
+        // process Korean specifics
+    } else if (analysis instanceof ArabicMorphoAnalysis) {
+        ArabicMorphoAnalysis arabicAnalysis = (arabicMorphoAnalysis) analysis;
+        // process Arabic/Farsi/Urdu specifics
+    } else {
+        // process base MorphologicalAnalysis (e.g. English, French, etc.)
+    }
 
 MorphologicalAnalysis
 ~~~~~~~~~~~~~~~~~~~~~
