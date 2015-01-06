@@ -25,6 +25,24 @@ import java.util.Map;
  * a stem, and a suffix, where any of these components could be empty.  This
  * class stores the prefix length and the stem length.  The suffix length can
  * be deduced from these and the length of the original token.
+ * <p/>
+ * The component parts themselves can be subdivided into sub-components.  Each
+ * sub-component has an associated tag.  For example, one of the possible
+ * analyses for "wAlktb" (Buckwalter transliteration for "and the books") looks
+ * like:
+ *
+ * <pre>
+ * prefix:         wAl
+ * stem:           ktb
+ * suffix:
+ * part-of-speech: NOUN
+ * prefix:         [w, Al]
+ * prefixTags:     [CONJ, DET]
+ * stems:          [ktb]
+ * stemTags:       [NOUN]
+ * suffixes:       []
+ * suffixTags:     [NO_FUNC]
+ * </pre>
  */
 public class ArabicMorphoAnalysis extends MorphoAnalysis {
     private final int prefixLength;
@@ -99,54 +117,54 @@ public class ArabicMorphoAnalysis extends MorphoAnalysis {
     }
 
     /**
-     * Returns the prefixes, if any.
+     * Returns the components of the prefix, if any.
      *
-     * @return the prefixes, if any.
+     * @return the components of the prefix, if any
      */
     public List<String> getPrefixes() {
         return prefixes;
     }
 
     /**
-     * Returns the stems.
+     * Returns the components of the stem.
      *
-     * @return the stems
+     * @return the components of the stem
      */
     public List<String> getStems() {
         return stems;
     }
 
     /**
-     * Returns the suffixes, if any.
+     * Returns the components of the suffix, if any.
      *
-     * @return the suffixes, if any
+     * @return the components of the suffix, if any
      */
     public List<String> getSuffixes() {
         return suffixes;
     }
 
     /**
-     * Returns the part of speech tags for prefixes.
+     * Returns the part-of-speech tags for the prefix components.
      *
-     * @return the part of speech tags for prefixes
+     * @return the part-of-speech tags for prefix components
      */
     public List<String> getPrefixTags() {
         return prefixTags;
     }
 
     /**
-     * Returns the part of speech tags for stems.
+     * Returns the part-of-speech tags for stem components.
      *
-     * @return the part of speech tags for stems
+     * @return the part-of-speech tags for stem components
      */
     public List<String> getStemTags() {
         return stemTags;
     }
 
     /**
-     * Returns the part of speech tags for suffixes.
+     * Returns the part-of-speech tags for suffix components.
      *
-     * @return the part of speech tags for suffixes
+     * @return the part-of-speech tags for suffix components.
      */
     public List<String> getSuffixTags() {
         return suffixTags;
@@ -356,7 +374,7 @@ public class ArabicMorphoAnalysis extends MorphoAnalysis {
          * Adds a prefix.
          *
          * @param prefix the prefix
-         * @param prefixTag the part of speech for the prefix
+         * @param prefixTag the part-of-speech for the prefix
          */
         public Builder addPrefix(String prefix, String prefixTag) {
             prefixes.add(prefix);
@@ -368,7 +386,7 @@ public class ArabicMorphoAnalysis extends MorphoAnalysis {
          * Adds a stem.
          *
          * @param stem the stem
-         * @param stemTag the part of speech for the stem
+         * @param stemTag the part-of-speech for the stem
          */
         public Builder addStem(String stem, String stemTag) {
             stems.add(stem);
@@ -380,7 +398,7 @@ public class ArabicMorphoAnalysis extends MorphoAnalysis {
          * Adds a suffix.
          *
          * @param suffix the suffix
-         * @param suffixTag the part of speech for the suffix
+         * @param suffixTag the part-of-speech for the suffix
          */
         public Builder addSuffix(String suffix, String suffixTag) {
             suffixes.add(suffix);

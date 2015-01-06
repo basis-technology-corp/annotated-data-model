@@ -19,9 +19,10 @@ import com.google.common.base.Objects;
 import java.util.Map;
 
 /**
- * A named entity resolved to an entity 'in the world'.
- * Generally, resolved entities correspond to {@link com.basistech.rosette.dm.EntityMention}s,
- * but the data model allows for the alternative.
+ * A reference to a "real world" entity.  For example, an {@code EntityMention} of
+ * "George" could refer to many different Georges.  A {@code ResolvedEntity}
+ * associates the mention with an id from some external knowledge base, e.g.
+ * <a href="http://www.wikidata.org/wiki/Q23">Q23</a> from Wikidata.
  */
 public class ResolvedEntity extends Attribute {
     private final String entityId;
@@ -50,7 +51,7 @@ public class ResolvedEntity extends Attribute {
     /**
      * Returns the in-document coreference chain ID for this entity, or null if there is none.
      *
-     * @return the in-document coreference chain ID for this entity, or null if there is none.
+     * @return the in-document coreference chain ID for this entity, or null if there is none
      */
     public Integer getCoreferenceChainId() {
         return coreferenceChainId;
@@ -59,7 +60,7 @@ public class ResolvedEntity extends Attribute {
     /**
      * Returns the confidence for this resolved entity, or null if there is none.
      *
-     * @return the confidence for this resolved entity, or null if there is none.
+     * @return the confidence for this resolved entity, or null if there is none
      */
     public Double getConfidence() {
         return confidence;

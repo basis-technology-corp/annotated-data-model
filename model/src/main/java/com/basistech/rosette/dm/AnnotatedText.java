@@ -28,14 +28,14 @@ import java.util.Map;
  * to the text. The attributes are available from {@link #getAttributes()}, as well as from
  * some convenience accessors, such as {@link #getTokens()} or {@link #getEntityMentions()}.
  * <p/>
- * Generally, offsets used in the data model are character offsets into the
+ * Generally, offsets used in the data model are character (UTF-16 elements) offsets into the
  * original text.  Offset ranges are always half-open.  For example:
  * <pre>
  * 012345678901
  * Hello world
  * </pre>
  * The token "Hello" has start offset 0 and end offset 5.
- * </p>
+ * <p/>
  * A note on serialization: due to the internal structure of this class and the classes
  * that make up the model, we do not recommend that applications serialize this to
  * Json (or XML or other representations) by applying a reflection-based toolkit 'as-is'.
@@ -88,6 +88,7 @@ public class AnnotatedText implements CharSequence {
      * @return the length of the character data for this text.
      * @see CharSequence#length()
      */
+    @Override
     public int length() {
         return data.length();
     }
@@ -99,6 +100,7 @@ public class AnnotatedText implements CharSequence {
      * @return the character
      * @see CharSequence#charAt(int)
      */
+    @Override
     public char charAt(int index) {
         return data.charAt(index);
     }
@@ -111,6 +113,7 @@ public class AnnotatedText implements CharSequence {
      * @return the sub-sequence
      * @see CharSequence#subSequence(int, int)
      */
+    @Override
     public CharSequence subSequence(int start, int end) {
         return data.subSequence(start, end);
     }
@@ -130,7 +133,9 @@ public class AnnotatedText implements CharSequence {
      * Returns all of the annotations on this text. For the defined attributes,
      * the keys will be values from {@link AttributeKey#key()}. The values
      * are polymorphic; the subclass of {@link BaseAttribute} depends
-     * on the attribute.
+     * on the attribute.  Applications should usually prefer to use the
+     * convenience accessors (e.g. {@code getTokens}) instead, to avoid the
+     * need for a cast.
      *
      * @return all of the annotations on this text
      *
@@ -151,9 +156,12 @@ public class AnnotatedText implements CharSequence {
     }
 
     /**
-     * Returns the list of TranslatedTokens objects.
+     * Returns the translated tokens.  This API allows for multiple
+     * translations.  For example, element 0 may contain the {@code TranslatedTokens}
+     * for Simplified Chinese, and element 1 may contain the {@code TranslatedTokens}
+     * for Japanese.  Usually only element 0 will be populated.
      *
-     * @return the list of TranslatedTokens objects.
+     * @return the list of translated tokens
      */
     @SuppressWarnings("unchecked")
     public ListAttribute<TranslatedTokens> getTranslatedTokens() {
@@ -161,9 +169,12 @@ public class AnnotatedText implements CharSequence {
     }
 
     /**
-     * Returns the list of TranslatedData objects for the entire text
+     * Returns the translations for the text.  This API allows multiple
+     * translations.  For example, element 0 may contain the {@code TranslatedData}
+     * for Simplified Chinese, and element 1 may contain the {@code TranslatedData}
+     * for Japanese.  Usually only element 0 will be populated.
      *
-     * @return the list of TranslatedData objects for the entire text
+     * @return the translations for the text
      */
     @SuppressWarnings("unchecked")
     public ListAttribute<TranslatedData> getTranslatedData() {
@@ -181,9 +192,9 @@ public class AnnotatedText implements CharSequence {
     }
 
     /**
-     * Returns the language for the entire text.
+     * Returns the language results for the entire text.
      *
-     * @return the language for the entire text
+     * @return the language results for the entire text
      */
     public LanguageDetection getWholeTextLanguageDetection() {
         return (LanguageDetection)attributes.get(AttributeKey.LANGUAGE_DETECTION.key());

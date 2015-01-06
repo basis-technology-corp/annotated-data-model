@@ -59,7 +59,7 @@ public class AnnotatedTextTest {
 
     @Test
     public void testTranslatedData() {
-	String rawText = "One.  Two.";
+        String rawText = "One.  Two.";
         String germanText = "Ein.  Zwei.";
         String spanishText = "Uno.  Dos.";
         AnnotatedText.Builder builder = new AnnotatedText.Builder().data(rawText);

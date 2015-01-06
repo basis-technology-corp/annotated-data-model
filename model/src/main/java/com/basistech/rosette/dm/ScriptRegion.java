@@ -75,7 +75,7 @@ public class ScriptRegion extends Attribute {
     }
 
     /**
-     * Builder for script regions..
+     * Builder for script regions.
      */
     public static class Builder extends Attribute.Builder {
         private ISO15924 script;

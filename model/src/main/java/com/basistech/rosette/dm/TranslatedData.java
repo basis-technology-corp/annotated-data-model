@@ -19,19 +19,16 @@ import com.google.common.base.Objects;
 
 import java.util.Map;
 
+/**
+ * A translation of the text.  "Translation" may include script conversion,
+ * for example the original text may be Traditional Chinese, and the
+ * translation may be Simplified Chinese.
+ */
 public class TranslatedData extends BaseAttribute {
     private final TextDomain domain;
     private final String translation;
     private final Double confidence;
 
-    /**
-     * Construct a TranslatedData object.
-     *
-     * @param domain specifies the language and script of the translation
-     * @param translation the translation of the text
-     * @param confidence confidence value for this translation, or null.
-     * @param extendedProperties extended properties for this attribute.
-     */
     protected TranslatedData(TextDomain domain, String translation, Double confidence, Map<String, Object> extendedProperties) {
         super(extendedProperties);
         this.domain = domain;
@@ -40,7 +37,7 @@ public class TranslatedData extends BaseAttribute {
     }
 
     /**
-     * Gets the domain for this object
+     * Returns the domain for this object.
      *
      * @return the domain for this object
      */
@@ -49,7 +46,7 @@ public class TranslatedData extends BaseAttribute {
     }
 
     /**
-     * Get the translation for this object
+     * Returns the translation for this object.
      *
      * @return the translation for this object
      */
@@ -58,7 +55,9 @@ public class TranslatedData extends BaseAttribute {
     }
 
     /**
-     * @return the confidence value for this translation, or null if there is none.
+     * Returns the confidence value for this translation, nor null if there is none.
+     *
+     * @return the confidence value for this translation, or null if there is none
      */
     public Double getConfidence() {
         return confidence;

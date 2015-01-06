@@ -24,8 +24,8 @@ import java.util.Map;
 /**
  * A result from running Categorization.  A Categorizer typically emits
  * a ranked list of {@code CategorizerResult}s.  Each result has a label
- * and a raw score.  Optional fields include a confidence, an explanation
- * set, and per-feature scores.  This result holds the results for document
+ * and a confidence.  Optional fields include an explanation set, and
+ * per-feature scores.  This result holds the results for document
  * categorization and sentiment analysis.
  */
 public class CategorizerResult extends BaseAttribute {

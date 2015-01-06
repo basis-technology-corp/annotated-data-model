@@ -83,7 +83,7 @@ public class LanguageDetection extends Attribute {
          * Returns the confidence of this detection.
          *
          * @return the confidence of this detection alternative, or
-         * Not-a-Number if not available.
+         * null if not available.
          */
         public Double getConfidence() {
             return confidence;
