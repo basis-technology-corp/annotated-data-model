@@ -4,7 +4,6 @@
     <artifactId>adm-model</artifactId>
     <name>adm-model</name>
     <version>1.10.2-SNAPSHOT</version>
-    <packaging>bundle</packaging>
     <parent>
         <groupId>com.basistech</groupId>
         <artifactId>annotated-data-model</artifactId>
@@ -62,17 +61,22 @@
             </plugins>
         </pluginManagement>
         <plugins>
+          <!-- build the unshaded jar. -->
             <plugin>
-                <groupId>org.apache.felix</groupId>
-                <artifactId>maven-bundle-plugin</artifactId>
-                <extensions>true</extensions>
-                <configuration>
-                    <instructions>
-                        <!-- shade is going to make this disappear -->
-                        <Private-Package>com.google.*</Private-Package>
-                        <Export-Package>com.basistech.rosette.dm.*</Export-Package>
-                    </instructions>
-                </configuration>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.5</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                        <configuration>
+                            <classifier>unshaded-guava</classifier>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <!--  We will shade guava, to simplify deployment, avoid version conflicts -->
@@ -89,8 +93,7 @@
                             <minimizeJar>true</minimizeJar>
                             <artifactSet>
                                 <includes>
-                                    <!-- the bundle plugin already pulled in the actual contents, we just need the renaming.-->
-                                    <include>null:null</include>
+                                    <include>com.google.guava:guava</include>
                                 </includes>
                             </artifactSet>
                             <relocations>

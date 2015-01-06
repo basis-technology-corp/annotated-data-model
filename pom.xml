@@ -39,6 +39,7 @@
         <module>json-benchmark</module>
         <module>tools</module>
         <module>json-array</module>
+        <module>osgi</module>
         <module>shaded</module>
         <module>shaded-test</module>
         <module>script</module>
