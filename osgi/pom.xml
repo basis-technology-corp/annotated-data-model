@@ -3,12 +3,12 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>adm-osgi</artifactId>
     <name>adm-osgi</name>
-    <version>1.10.2</version>
+    <version>1.10.3-SNAPSHOT</version>
     <packaging>bundle</packaging>
     <parent>
         <groupId>com.basistech</groupId>
         <artifactId>annotated-data-model</artifactId>
-        <version>1.10.2</version>
+        <version>1.10.3-SNAPSHOT</version>
     </parent>
     <build>
         <resources>
