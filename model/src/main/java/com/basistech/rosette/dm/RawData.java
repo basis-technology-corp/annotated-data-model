@@ -22,9 +22,9 @@ import java.util.Map;
 import com.google.common.collect.ImmutableMap;
 
 /**
- * A container for incoming raw data.
+ * A container for incoming raw data (bytes).
  * {@link com.basistech.rosette.dm.AnnotatedText} does not store bytes; this class
- * serves components that consume bytes.
+ * serves components that consume bytes, e.g. encoding identification.
  * @adm.ignore
  */
 public class RawData {

@@ -28,13 +28,6 @@ public class TranslatedTokens extends BaseAttribute {
     private final TextDomain domain;
     private final List<String> translations; // 1-1 with tokens
 
-    /**
-     * Creates a TranslatedTokens object.
-     *
-     * @param domain             specifies the language and script of the translation
-     * @param translations       a list of translations, one for each token
-     * @param extendedProperties extended properties for this attribute.
-     */
     protected TranslatedTokens(TextDomain domain, List<String> translations, Map<String, Object> extendedProperties) {
         super(extendedProperties);
         this.domain = domain;
@@ -42,7 +35,7 @@ public class TranslatedTokens extends BaseAttribute {
     }
 
     /**
-     * Gets the domain for this object
+     * Returns the domain for this object.
      *
      * @return the domain for this object
      */
@@ -51,7 +44,7 @@ public class TranslatedTokens extends BaseAttribute {
     }
 
     /**
-     * Get the translations for this object
+     * Returns the translations for this object.
      *
      * @return the translations for this object
      */

@@ -19,7 +19,8 @@ import com.google.common.base.Objects;
 import java.util.Map;
 
 /**
- * A mention of a named entity in the text.
+ * A mention of a entity in the text.  For example, "George" and
+ * "George Washington" are mentions of type "PERSON".
  */
 public class EntityMention extends Attribute {
     private final String entityType;
