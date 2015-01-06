@@ -2,6 +2,12 @@
 
 ## 1.10.2
 
+### [COMN-163](http://jira.basistech.net/browse/COMN-1163) Restructure OSGi
+    
+All the OSGi metadata moves to a new artifact, adm-osgi. This avoids
+'split package' issues with multiple OSGi components with code in the
+same package.
+
 ### [COMN-158](http://jira.basistech.net/browse/COMN-158) Support array "shape" json
 
 The new adm-json-array artifact supports serialization of ADM as
