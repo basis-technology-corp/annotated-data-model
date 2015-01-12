@@ -49,7 +49,12 @@ public class ListAttribute<Item extends BaseAttribute> extends BaseAttribute imp
     }
 
     // needed to avoid recursion in the Json serialization!
-    List<Item> getItems() {
+
+    /**
+     * Internal use API used in Jackson serialization.
+     * @return the list itself.
+     */
+    public List<Item> getItems() {
         return items;
     }
 
@@ -64,7 +69,12 @@ public class ListAttribute<Item extends BaseAttribute> extends BaseAttribute imp
     }
 
     // this is only used by the serializer, never let it get processed automatically.
-    Class<? extends BaseAttribute> getItemClass() {
+
+    /**
+     * Internal use method for Jackson/Json serialization.
+     * @return the class of the items in this list.
+     */
+    public Class<? extends BaseAttribute> getItemClass() {
         return itemClass;
     }
 

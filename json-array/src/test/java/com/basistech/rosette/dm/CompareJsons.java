@@ -14,6 +14,8 @@
 
 package com.basistech.rosette.dm;
 
+import com.basistech.rosette.dm.jackson.AnnotatedDataModelModule;
+import com.basistech.rosette.dm.jackson.array.AnnotatedDataModelArrayModule;
 import com.codahale.metrics.ConsoleReporter;
 import com.codahale.metrics.MetricRegistry;
 import com.codahale.metrics.Timer;

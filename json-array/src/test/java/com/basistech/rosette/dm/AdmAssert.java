@@ -14,6 +14,7 @@
 
 package com.basistech.rosette.dm;
 
+import com.basistech.rosette.dm.jackson.array.AnnotatedDataModelArrayModule;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Assert;
 
