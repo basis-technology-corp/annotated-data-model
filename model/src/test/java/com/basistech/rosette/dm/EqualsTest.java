@@ -360,7 +360,7 @@ public class EqualsTest {
     }
 
     @Test
-    public void resolvedEntity() throws Exception {
+    public void testResolvedEntity() throws Exception {
         ResolvedEntity re1 = new ResolvedEntity.Builder(0, 10, "foo").build();
         re1.hashCode();
         assertTrue(re1.equals(re1));
@@ -382,10 +382,48 @@ public class EqualsTest {
         re1 = new ResolvedEntity.Builder(0, 10, "foo").confidence(1.0d).coreferenceChainId(3).build();
         re1.hashCode();
         assertTrue(re1.equals(re1));
-
-
-
-
-
     }
+
+    @Test
+    public void testRelationArgument() throws Exception {
+        // this one has offsets, type and an argid,
+        RelationArgument ra1 = new RelationArgument.Builder(0, 1).type("t").argumentId("1").build();
+        ra1.hashCode();
+        assertTrue(ra1.equals(ra1));
+
+        // this one doesn't have an argid
+        RelationArgument ra2 = new RelationArgument.Builder(0, 1).type("t").build();
+        ra2.hashCode();
+        assertTrue(ra2.equals(ra2));
+
+        assertNull(ra2.getArgumentId());
+        assertFalse(ra1.equals(ra2));
+        assertFalse(ra2.equals(ra1));
+        assertFalse(ra1.hashCode() == ra2.hashCode());
+    }
+
+    @Test
+    public void testRelationMention() throws Exception {
+        RelationArgument _ra1 = new RelationArgument.Builder(0, 1).type("t").argumentId("1").build();
+        RelationArgument _ra2 = new RelationArgument.Builder(0, 1).type("t").build();
+        RelationArgument _ra3 = new RelationArgument.Builder(0, 1).type("b").build();
+
+
+        // relId intentionally null, all other fields populated.
+        RelationMention rm1 = new RelationMention.Builder("developing software FTW", Lists.newArrayList(_ra1, _ra2)).build();
+        rm1.hashCode();
+        assertTrue(rm1.equals(rm1));
+        assertNull(rm1.getRelId());
+
+        // this guy has different arguments defined
+        RelationMention rm2 = new RelationMention.Builder("developing software FTW", Lists.newArrayList(_ra3)).build();
+        rm2.hashCode();
+        assertTrue(rm2.equals(rm2));
+        assertFalse(rm1.equals(rm2));
+        assertFalse(rm2.equals(rm1));
+        assertFalse(rm1.hashCode() == rm2.hashCode());
+    }
+
+
+
 }

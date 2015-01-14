@@ -4,7 +4,7 @@
  ** and may only be used as permitted under the license agreement under which
  ** it has been distributed, and in no other way.
  **
- ** Copyright (c) 2014 Basis Technology Corporation All rights reserved.
+ ** Copyright (c) 2015 Basis Technology Corporation All rights reserved.
  **
  ** The technical data and information provided herein are provided with
  ** `limited rights', and the computer software provided herein is provided
@@ -14,9 +14,11 @@
 
 package com.basistech.rosette.dm;
 
-/**
- * Created by hillel on 1/7/15.
- */
+
+import com.google.common.base.Objects;
+
+import java.util.Map;
+
 public class RelationArgument extends Attribute {
 
     /**
@@ -26,12 +28,13 @@ public class RelationArgument extends Attribute {
     private final String type;
 
     /**
-     * the argument id: placeholder for a freebase id.
+     * the argument id: placeholder for an identifier from an external knowledge-base the argument resolves to.
      */
     private final String argumentId;
 
-    protected RelationArgument(int startOffset, int endOffset, String type, String argumentId) {
-        super(startOffset, endOffset);
+
+    protected RelationArgument(int startOffset, int endOffset, String type, String argumentId, Map<String, Object> extendedProperties) {
+        super(startOffset, endOffset, extendedProperties);
         this.type = type;
         this.argumentId = argumentId;
     }
@@ -44,6 +47,12 @@ public class RelationArgument extends Attribute {
         return argumentId;
     }
 
+    @Override
+    protected Objects.ToStringHelper toStringHelper() {
+        return super.toStringHelper()
+                .add("type", type)
+                .add("argumentId", argumentId);
+    }
 
 
     @Override
@@ -98,7 +107,7 @@ public class RelationArgument extends Attribute {
         }
 
         public RelationArgument build() {
-            return new RelationArgument(startOffset, endOffset, type, argumentId);
+            return new RelationArgument(startOffset, endOffset, type, argumentId, extendedProperties);
         }
     }
 }

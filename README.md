@@ -66,6 +66,11 @@ Resolved Entities are the output of RES which associates an indoc (one or more e
 in a document with a real-world entity. See the RES documentation for the information delivered with a resolved 
 entity.
 
+### RELATION_MENTIONS ###
+
+Relationship Mentions are the output of RELAX which identifies how entities and other noun phrases are connected
+to each other in the text. THIS IS AN ALPHA FEATURE OF THE ANNOTATED DATA MODEL.
+
 ### LANGUAGE_DETECTION_REGIONS ###
 
 This annotation provides for splitting a text into regions by language.

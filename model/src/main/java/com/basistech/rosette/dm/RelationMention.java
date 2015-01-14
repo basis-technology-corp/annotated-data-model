@@ -4,7 +4,7 @@
  ** and may only be used as permitted under the license agreement under which
  ** it has been distributed, and in no other way.
  **
- ** Copyright (c) 2014 Basis Technology Corporation All rights reserved.
+ ** Copyright (c) 2015 Basis Technology Corporation All rights reserved.
  **
  ** The technical data and information provided herein are provided with
  ** `limited rights', and the computer software provided herein is provided
@@ -19,9 +19,6 @@ import com.google.common.base.Objects;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by hillel on 1/7/15.
- */
 public class RelationMention extends BaseAttribute {
 
     /**
@@ -42,7 +39,7 @@ public class RelationMention extends BaseAttribute {
     private final boolean synthetic;
 
     /**
-     * A placeholder for a relation id, e.g. a freebase id.
+     * placeholder for an identifier from an external knowledge-base the predicate resolves to.
      */
     private final String relId;
 
@@ -138,7 +135,6 @@ public class RelationMention extends BaseAttribute {
             this.relPhrase = relPhrase;
             this.relArgs = relArgs;
             this.synthetic = false;
-            this.relId = "";
         }
 
         /**
@@ -161,7 +157,7 @@ public class RelationMention extends BaseAttribute {
          * @param relPhrase the relation phrase
          * @return
          */
-        public Builder relPharse(String relPhrase) {
+        public Builder relPhrase(String relPhrase) {
             this.relPhrase = relPhrase;
             return this;
         }
