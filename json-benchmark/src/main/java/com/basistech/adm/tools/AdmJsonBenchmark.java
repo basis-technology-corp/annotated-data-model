@@ -14,7 +14,7 @@
 
 package com.basistech.adm.tools;
 
-import com.basistech.rosette.dm.AnnotatedDataModelModule;
+import com.basistech.rosette.dm.jackson.AnnotatedDataModelModule;
 import com.basistech.rosette.dm.AnnotatedText;
 import com.codahale.metrics.ConsoleReporter;
 import com.codahale.metrics.MetricRegistry;

@@ -1,8 +1,25 @@
 # Cumulative Release Notes for the Annotated Data Model
 
+## 1.11.0
+
+### [COMN-167](http://jira.basistech.net/browse/COMN-167) Restructure OSGi more
+
+The Jackson customizations move out of the com.basistech.dm package,
+into com.basistech.dm.jackson and com.basistech.dm.jackson.array.  The
+com.basistech:adm-osgi artifact was split into
+com.basistech:adm-model-osgi and com.basistech:adm-json-osgi.
+
+Moving the Jackson classes to to their own OSGi bundle allows an OSGi
+application to use the Jackson code _inside_ the OSGi environment and
+still use the main data model to communicate between the inside and
+the outside.
+
+Note that the package movement means that this has to fan out to
+projects that are using the json support today.
+
 ## 1.10.2
 
-### [COMN-163](http://jira.basistech.net/browse/COMN-1163) Restructure OSGi
+### [COMN-163](http://jira.basistech.net/browse/COMN-163) Restructure OSGi
     
 All the OSGi metadata moves to a new artifact, adm-osgi. This avoids
 'split package' issues with multiple OSGi components with code in the
