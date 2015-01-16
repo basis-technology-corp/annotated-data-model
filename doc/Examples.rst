@@ -299,6 +299,8 @@ needs to handle any possible language needs to cast the returned
 ``MorphologicalAnalysis`` to the proper language-specific class.  For
 example:
 
+::
+
     MorphologicalAnalysis analysis = ...;
     if (analysis instanceof HanMorphoAnalysis) {
         HanMorphoAnalysis hanAnalysis = (HanMorphoAnalysis) analysis;

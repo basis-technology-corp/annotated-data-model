@@ -17,7 +17,7 @@ package com.basistech.rosette.dm.tools;
 import com.basistech.rlp.AbstractResultAccess;
 import com.basistech.rlp.ResultAccessDeserializer;
 import com.basistech.rlp.ResultAccessSerializedFormat;
-import com.basistech.rosette.dm.AnnotatedDataModelModule;
+import com.basistech.rosette.dm.jackson.AnnotatedDataModelModule;
 import com.basistech.rosette.dm.AnnotatedText;
 import com.basistech.rosette.dm.EntityMention;
 import com.basistech.rosette.dm.LanguageDetection;

@@ -153,14 +153,14 @@ adm-json. As a result, it offers only a minimal json API from the
 class com.basistech.rosette.dm.DmJsonUtils. This is suitable for code
 that is delivered to SDK customers (REX-JE springs to mind).
 
-````
+```
 <dependency>
     <groupId>com.basistech</groupId>
     <artifactId>adm-shaded</artifactId>
     <version>1.9.100</version>
 </dependency>
 
-````
+```
 
 ### adm-tools ###
 
@@ -177,13 +177,25 @@ requirement from the adm-json project.
 
 ````
 
+## OSGi ##
+
+The data model is also packaged as two OSGi bundles. 
+
+* com.basistech.adm-model-osgi - The model, itself.
+* com.basistech.adm-json-osgi - The jackson modules to customize json.
+
+They are separate so that the model can be in an application classpath
+_outside_ of an OSGi container (in the 'system bundle') while the
+Jackson customizations are _inside_ the OSGi container and thus not in
+the application's classpath.
+
 
 ### How to push the Maven site to gh-pages ###
 
-````
+```
   mvn site site:stage
   mvn scm-publish:publish-scm
-````
+```
 
 Typically, this would be after a release:
 

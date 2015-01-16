@@ -99,7 +99,7 @@ public class CategorizerResult extends BaseAttribute {
 
     /**
      * Returns a list of the N highest positive features that contributed to
-     * the categorization (the "explanation set”), ordered by descending
+     * the categorization (the 'explanation set'), ordered by descending
      * score.  Returns null explanations are disabled.  The value of N is
      * determined by the calling Categorizer.
      *

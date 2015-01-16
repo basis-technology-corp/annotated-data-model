@@ -14,6 +14,7 @@
 
 package com.basistech.rosette.dm;
 
+import com.basistech.rosette.dm.jackson.array.AnnotatedDataModelArrayModule;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.databind.ObjectWriter;
