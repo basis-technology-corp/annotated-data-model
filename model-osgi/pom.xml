@@ -64,8 +64,8 @@
                 <configuration>
                   <instructions>
                         <Embed-Dependency>adm-model;inline=true</Embed-Dependency>
-                        <Import-Package>com.basistech.rosette.dm,com.basistech.rosette.dm.util,*</Import-Package>
-                        <Export-Package>com.basistech.rosette.dm,com.basistech.rosette.dm.util</Export-Package>
+                        <Import-Package>com.basistech.rosette.dm,com.basistech.rosette.dm.util,com.basistech.rosette.dm.internal,*</Import-Package>
+                        <Export-Package>com.basistech.rosette.dm,com.basistech.rosette.dm.util,com.basistech.rosette.dm.internal</Export-Package>
                         <Include-Resource>{META-INF/maven/dependencies.properties=${project.build.directory}/classes/META-INF/maven/dependencies.properties};{maven-resources}</Include-Resource>
                     </instructions>
                 </configuration>
