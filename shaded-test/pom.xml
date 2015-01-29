@@ -3,11 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>adm-shaded-test</artifactId>
     <name>adm-shaded-test</name>
-    <version>1.11.1-SNAPSHOT</version>
+    <version>1.11.1</version>
     <parent>
         <groupId>com.basistech</groupId>
         <artifactId>annotated-data-model</artifactId>
-        <version>1.11.1-SNAPSHOT</version>
+        <version>1.11.1</version>
     </parent>
     <dependencies>
         <dependency>
