@@ -1,5 +1,12 @@
 # Cumulative Release Notes for the Annotated Data Model
 
+## 1.11.1
+
+In support of [INDOC-11](http://jira.basistech.net/browse/INDOC-11),
+added com.basistech.dm.internal to the exported package list so that
+indoc can get to TextWrapper. Not wonderfully pretty, and not the end
+of the world.
+
 ## 1.11.0
 
 ### [COMN-167](http://jira.basistech.net/browse/COMN-167) Restructure OSGi more
