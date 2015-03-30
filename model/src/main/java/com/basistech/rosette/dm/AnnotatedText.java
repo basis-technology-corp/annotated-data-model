@@ -211,6 +211,16 @@ public class AnnotatedText implements CharSequence {
     }
 
     /**
+     * Returns the list of relation mentions.
+     *
+     * @return the list of relation mentions
+     */
+    @SuppressWarnings("unchecked")
+    public ListAttribute<RelationMention> getRelationMentions() {
+        return (ListAttribute<RelationMention>) attributes.get(AttributeKey.RELATION_MENTION.key());
+    }
+
+    /**
      * Returns the list of resolved entities.
      *
      * @return the list of resolved entities
@@ -348,6 +358,17 @@ public class AnnotatedText implements CharSequence {
          */
         public Builder entityMentions(ListAttribute<EntityMention> entityMentions) {
             attributes.put(AttributeKey.ENTITY_MENTION.key(), entityMentions);
+            return this;
+        }
+
+        /**
+         * Attaches a list of relation mentions.
+         *
+         * @param relationMentions the relation mentions.
+         * @return this
+         */
+        public Builder relationMentions(ListAttribute<RelationMention> relationMentions) {
+            attributes.put(AttributeKey.RELATION_MENTION.key(), relationMentions);
             return this;
         }
 

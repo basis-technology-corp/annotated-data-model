@@ -38,6 +38,7 @@ public class JsonTest extends AdmAssert {
     private BaseNounPhrase baseNounPhrase;
     private EntityMention entityMention;
     private ResolvedEntity resolvedEntity;
+    private RelationMention relationMention;
     private LanguageDetection languageDetectionRegion;
     private LanguageDetection languageDetection;
     private ScriptRegion scriptRegion;
@@ -75,6 +76,26 @@ public class JsonTest extends AdmAssert {
         entityMention = emBuilder.build();
         emListBuilder.add(entityMention);
         builder.entityMentions(emListBuilder.build());
+
+        // Build two relation arguments
+        List<RelationArgument> relArgs = Lists.newArrayList();
+        RelationArgument.Builder raBuilder = new RelationArgument.Builder(0, 4);
+        raBuilder.type("subject");
+        raBuilder.argumentId("/free/base/1");
+        relArgs.add(raBuilder.build());
+        raBuilder = new RelationArgument.Builder(10, 14);
+        raBuilder.type("toObject");
+        raBuilder.argumentId("/free/base/2");
+        relArgs.add(raBuilder.build());
+
+        // Build a relation
+        ListAttribute.Builder<RelationMention> rmListBuilder = new ListAttribute.Builder<RelationMention>(RelationMention.class);
+        RelationMention.Builder rmBuilder = new RelationMention.Builder("gave a ride", relArgs);
+        rmBuilder.relId("/free/base/property0");
+        rmBuilder.extendedProperty("rm-ex", "rm-ex-val");
+        relationMention = rmBuilder.build();
+        rmListBuilder.add(relationMention);
+        builder.relationMentions(rmListBuilder.build());
 
         ListAttribute.Builder<ResolvedEntity> reListBuilder = new ListAttribute.Builder<ResolvedEntity>(ResolvedEntity.class);
         ResolvedEntity.Builder reBuilder = new ResolvedEntity.Builder(27, 33, "Q100");
@@ -238,6 +259,12 @@ public class JsonTest extends AdmAssert {
         assertEquals(1, emList.size());
         EntityMention em = emList.get(0);
         assertEquals(entityMention, em);
+
+        ListAttribute<RelationMention> rmList = read.getRelationMentions();
+        assertNotNull(rmList);
+        assertEquals(1, rmList.size());
+        RelationMention rm = rmList.get(0);
+        assertEquals(relationMention, rm);
 
         ListAttribute<ResolvedEntity> resolvedEntityList = read.getResolvedEntities();
         assertNotNull(resolvedEntityList);

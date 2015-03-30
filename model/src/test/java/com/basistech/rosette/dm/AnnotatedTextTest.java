@@ -358,4 +358,31 @@ public class AnnotatedTextTest {
         re = new ResolvedEntity.Builder(0, 10, "foo").confidence(3d).build();
         assertEquals(3d, re.getConfidence(), 0);
     }
+
+    @Test
+    public void testRelationMentions() {
+        String argumentId = "/resolved/argument/";
+        String argType = "arg";
+        String relPhrase = "some-verb"; //
+
+        AnnotatedText.Builder relationMentionBuilder = new AnnotatedText.Builder();
+        ListAttribute.Builder<RelationMention> listBuilder
+                = new ListAttribute.Builder<RelationMention>(RelationMention.class);
+        RelationArgument.Builder relationArgumentBuilder1 = new RelationArgument.Builder(1, 1);
+        RelationArgument.Builder relationArgumentBuilder2 = new RelationArgument.Builder(2, 2);
+        relationArgumentBuilder1.type(argType + "1").argumentId(argumentId + "1");
+        relationArgumentBuilder2.type(argType + "2").argumentId(argumentId + "2");
+
+        List<RelationArgument> argumentList = Lists.newArrayList(relationArgumentBuilder1.build(), relationArgumentBuilder2.build());
+        ListAttribute.Builder rms = listBuilder.add(new RelationMention.Builder(relPhrase, argumentList).build());
+        relationMentionBuilder.relationMentions(rms.build());
+        AnnotatedText text = relationMentionBuilder.build();
+
+        RelationMention relationMention = text.getRelationMentions().get(0);
+        assertEquals(relPhrase, relationMention.getRelPhrase());
+        assertEquals(argType + "1", relationMention.getRelArgs().get(0).getType());
+        assertEquals(argType + "2", relationMention.getRelArgs().get(1).getType());
+        assertEquals(relPhrase, relationMention.getRelPhrase());
+    }
+
 }
