@@ -1,5 +1,11 @@
 # Cumulative Release Notes for the Annotated Data Model
 
+## ???
+
+### [COMN-180](http://jira.basistech.net/browse/COMN-180) Remove guava dependency
+
+adm-model and adm-model-osgi no longer externally depend on guava.
+
 ## 1.11.1
 
 In support of [INDOC-11](http://jira.basistech.net/browse/INDOC-11),
