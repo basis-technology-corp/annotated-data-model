@@ -82,7 +82,6 @@
                 <!--  We will shade guava, to simplify deployment, avoid version conflicts -->
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>2.2</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
@@ -101,7 +100,7 @@
                                     <pattern>com.google</pattern>
                                     <!-- Pick a name that won't conflict with some other shading
                                          in some other jar of ours. -->
-                                    <shadedPattern>com.basistech.dm.com.google</shadedPattern>
+                                    <shadedPattern>com.basistech.shaded.dm.com.google</shadedPattern>
                                 </relocation>
                             </relocations>
                             <filters>
