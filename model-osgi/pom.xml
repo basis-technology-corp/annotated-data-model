@@ -96,12 +96,12 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>adm-model</artifactId>
-            <classifier>unshaded-guava</classifier>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
