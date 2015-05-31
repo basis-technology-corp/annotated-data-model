@@ -1,5 +1,12 @@
 # Cumulative Release Notes for the Annotated Data Model
 
+## 1.11.2
+
+### [COMN-180](http://jira.basistech.net/browse/COMN-180) Remove guava dependency
+
+adm-model-osgi no longer externally depend on guava; adm-shaded no
+longer has extra copies of Guava classes in it.
+
 ## 1.11.1
 
 In support of [INDOC-11](http://jira.basistech.net/browse/INDOC-11),
