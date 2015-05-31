@@ -3,13 +3,13 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>adm-model-osgi</artifactId>
     <name>adm-model-osgi</name>
-    <version>1.11.1-SNAPSHOT</version>
+    <version>1.11.3-SNAPSHOT</version>
     <packaging>bundle</packaging>
     <description>OSGi bundle with the ADM data model.</description>
     <parent>
         <groupId>com.basistech</groupId>
         <artifactId>annotated-data-model</artifactId>
-        <version>1.11.1-SNAPSHOT</version>
+        <version>1.11.3-SNAPSHOT</version>
     </parent>
     <build>
         <resources>
@@ -64,8 +64,8 @@
                 <configuration>
                   <instructions>
                         <Embed-Dependency>adm-model;inline=true</Embed-Dependency>
-                        <Import-Package>com.basistech.rosette.dm,com.basistech.rosette.dm.util,*</Import-Package>
-                        <Export-Package>com.basistech.rosette.dm,com.basistech.rosette.dm.util</Export-Package>
+                        <Import-Package>com.basistech.rosette.dm,com.basistech.rosette.dm.util,com.basistech.rosette.dm.internal,*</Import-Package>
+                        <Export-Package>com.basistech.rosette.dm,com.basistech.rosette.dm.util,com.basistech.rosette.dm.internal</Export-Package>
                         <Include-Resource>{META-INF/maven/dependencies.properties=${project.build.directory}/classes/META-INF/maven/dependencies.properties};{maven-resources}</Include-Resource>
                     </instructions>
                 </configuration>
@@ -96,12 +96,12 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>adm-model</artifactId>
-            <classifier>unshaded-guava</classifier>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>junit</groupId>

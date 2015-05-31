@@ -3,24 +3,23 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>adm-shaded</artifactId>
     <name>adm-shaded</name>
-    <version>1.11.1-SNAPSHOT</version>
+    <version>1.11.3-SNAPSHOT</version>
     <parent>
         <groupId>com.basistech</groupId>
         <artifactId>annotated-data-model</artifactId>
-        <version>1.11.1-SNAPSHOT</version>
+        <version>1.11.3-SNAPSHOT</version>
     </parent>
  <build>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-shade-plugin</artifactId>
-        <version>2.3</version>
         <configuration>
           <shadedArtifactAttached>false</shadedArtifactAttached>
           <relocations>
                 <relocation>
                   <pattern>com.google</pattern>
-                  <shadedPattern>com.basistech.com.google</shadedPattern>
+                  <shadedPattern>com.basistech.com.shaded.google</shadedPattern>
                 </relocation>
                 <relocation>
                   <pattern>org.fasterxml</pattern>
@@ -61,16 +60,29 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>adm-model</artifactId>
             <version>${project.version}</version>
+            <classifier>unshaded-guava</classifier>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>adm-json</artifactId>
             <version>${project.version}</version>
+            <exclusions>
+              <exclusion>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>adm-model</artifactId>
+              </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>adm-tools</artifactId>
             <version>${project.version}</version>
+            <exclusions>
+              <exclusion>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>adm-model</artifactId>
+              </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
