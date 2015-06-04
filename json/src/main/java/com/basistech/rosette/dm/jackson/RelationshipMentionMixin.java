@@ -22,16 +22,16 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * {@link com.basistech.rosette.dm.RelationMention}
+ * {@link com.basistech.rosette.dm.RelationshipMention}
  */
-public abstract class RelationMentionMixin {
+public abstract class RelationshipMentionMixin {
 
     @JsonCreator
-    RelationMentionMixin(@JsonProperty("relPhrase") String relPhrase,
-                         @JsonProperty("relArgs") List<RelationArgument> relArgs,
-                         @JsonProperty("synthetic") boolean synthetic,
-                         @JsonProperty("relId") String relId,
-                         @JsonProperty("extendedProperties") Map<String, Object> extendedProperties) {
+    RelationshipMentionMixin(@JsonProperty("relPhrase") String relPhrase,
+                             @JsonProperty("relArgs") List<RelationArgument> relArgs,
+                             @JsonProperty("synthetic") boolean synthetic,
+                             @JsonProperty("relId") String relId,
+                             @JsonProperty("extendedProperties") Map<String, Object> extendedProperties) {
 
     }
 

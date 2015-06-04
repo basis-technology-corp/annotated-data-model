@@ -17,11 +17,8 @@ package com.basistech.rosette.dm;
 import com.basistech.util.ISO15924;
 import com.basistech.util.LanguageCode;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import org.junit.Test;
 
-
-import java.util.Map;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
@@ -410,13 +407,13 @@ public class EqualsTest {
 
 
         // relId intentionally null, all other fields populated.
-        RelationMention rm1 = new RelationMention.Builder("developing software FTW", Lists.newArrayList(_ra1, _ra2)).build();
+        RelationshipMention rm1 = new RelationshipMention.Builder("developing software FTW", Lists.newArrayList(_ra1, _ra2)).build();
         rm1.hashCode();
         assertTrue(rm1.equals(rm1));
         assertNull(rm1.getRelId());
 
         // this guy has different arguments defined
-        RelationMention rm2 = new RelationMention.Builder("developing software FTW", Lists.newArrayList(_ra3)).build();
+        RelationshipMention rm2 = new RelationshipMention.Builder("developing software FTW", Lists.newArrayList(_ra3)).build();
         rm2.hashCode();
         assertTrue(rm2.equals(rm2));
         assertFalse(rm1.equals(rm2));

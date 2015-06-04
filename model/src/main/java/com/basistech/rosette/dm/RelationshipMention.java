@@ -19,7 +19,7 @@ import com.google.common.base.Objects;
 import java.util.List;
 import java.util.Map;
 
-public class RelationMention extends BaseAttribute {
+public class RelationshipMention extends BaseAttribute {
 
     /**
      * A display string representing the relation
@@ -43,7 +43,7 @@ public class RelationMention extends BaseAttribute {
      */
     private final String relId;
 
-    protected RelationMention(String relPhrase, List<RelationArgument> relArgs, boolean synthetic, String relId, Map<String, Object> extendedProperties) {
+    protected RelationshipMention(String relPhrase, List<RelationArgument> relArgs, boolean synthetic, String relId, Map<String, Object> extendedProperties) {
         super(extendedProperties);
         this.relPhrase = relPhrase;
         this.relArgs = relArgs;
@@ -91,7 +91,7 @@ public class RelationMention extends BaseAttribute {
             return false;
         }
 
-        RelationMention that = (RelationMention) o;
+        RelationshipMention that = (RelationshipMention) o;
 
         if (synthetic != that.synthetic) {
             return false;
@@ -143,7 +143,7 @@ public class RelationMention extends BaseAttribute {
          * @param toCopy the object to create
          * @adm.ignore
          */
-        public Builder(RelationMention toCopy) {
+        public Builder(RelationshipMention toCopy) {
             super(toCopy);
             this.relPhrase = toCopy.relPhrase;
             this.relArgs = toCopy.relArgs;
@@ -211,8 +211,8 @@ public class RelationMention extends BaseAttribute {
          *
          * @return the new relation mention.
          */
-        public RelationMention build() {
-            return new RelationMention(relPhrase, relArgs, synthetic, relId, extendedProperties);
+        public RelationshipMention build() {
+            return new RelationshipMention(relPhrase, relArgs, synthetic, relId, extendedProperties);
         }
     }
 }

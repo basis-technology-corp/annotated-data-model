@@ -20,7 +20,7 @@ import com.basistech.rosette.dm.CategorizerResult;
 import com.basistech.rosette.dm.EntityMention;
 import com.basistech.rosette.dm.LanguageDetection;
 import com.basistech.rosette.dm.ListAttribute;
-import com.basistech.rosette.dm.RelationMention;
+import com.basistech.rosette.dm.RelationshipMention;
 import com.basistech.rosette.dm.ResolvedEntity;
 import com.basistech.rosette.dm.ScriptRegion;
 import com.basistech.rosette.dm.Sentence;
@@ -70,7 +70,7 @@ public abstract class AnnotatedTextMixin {
     public abstract ListAttribute<ResolvedEntity> getResolvedEntities();
 
     @JsonIgnore
-    public abstract ListAttribute<RelationMention> getRelationMentions();
+    public abstract ListAttribute<RelationshipMention> getRelationshipMentions();
 
     @JsonIgnore
     public abstract ListAttribute<ScriptRegion> getScriptRegions();
