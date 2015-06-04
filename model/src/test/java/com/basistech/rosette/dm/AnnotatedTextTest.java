@@ -368,12 +368,12 @@ public class AnnotatedTextTest {
         AnnotatedText.Builder relationMentionBuilder = new AnnotatedText.Builder();
         ListAttribute.Builder<RelationshipMention> listBuilder
                 = new ListAttribute.Builder<RelationshipMention>(RelationshipMention.class);
-        RelationArgument.Builder relationArgumentBuilder1 = new RelationArgument.Builder(1, 1);
-        RelationArgument.Builder relationArgumentBuilder2 = new RelationArgument.Builder(2, 2);
+        RelationshipArgument.Builder relationArgumentBuilder1 = new RelationshipArgument.Builder(1, 1);
+        RelationshipArgument.Builder relationArgumentBuilder2 = new RelationshipArgument.Builder(2, 2);
         relationArgumentBuilder1.type(argType + "1").argumentId(argumentId + "1");
         relationArgumentBuilder2.type(argType + "2").argumentId(argumentId + "2");
 
-        List<RelationArgument> argumentList = Lists.newArrayList(relationArgumentBuilder1.build(), relationArgumentBuilder2.build());
+        List<RelationshipArgument> argumentList = Lists.newArrayList(relationArgumentBuilder1.build(), relationArgumentBuilder2.build());
         ListAttribute.Builder rms = listBuilder.add(new RelationshipMention.Builder(relPhrase, argumentList).build());
         relationMentionBuilder.relationshipMentions(rms.build());
         AnnotatedText text = relationMentionBuilder.build();

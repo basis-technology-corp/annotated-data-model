@@ -29,7 +29,7 @@ public class RelationshipMention extends BaseAttribute {
     /**
      * An unbounded list of relation arguments
      */
-    private final List<RelationArgument> relArgs;
+    private final List<RelationshipArgument> relArgs;
 
     /**
      * Specifies whether the relation appears in the sentence (synthetic=false)
@@ -43,7 +43,7 @@ public class RelationshipMention extends BaseAttribute {
      */
     private final String relId;
 
-    protected RelationshipMention(String relPhrase, List<RelationArgument> relArgs, boolean synthetic, String relId, Map<String, Object> extendedProperties) {
+    protected RelationshipMention(String relPhrase, List<RelationshipArgument> relArgs, boolean synthetic, String relId, Map<String, Object> extendedProperties) {
         super(extendedProperties);
         this.relPhrase = relPhrase;
         this.relArgs = relArgs;
@@ -55,7 +55,7 @@ public class RelationshipMention extends BaseAttribute {
         return relPhrase;
     }
 
-    public List<RelationArgument> getRelArgs() {
+    public List<RelationshipArgument> getRelArgs() {
         return relArgs;
     }
 
@@ -125,12 +125,12 @@ public class RelationshipMention extends BaseAttribute {
     public static class Builder extends BaseAttribute.Builder {
 
         private String relPhrase;
-        private List<RelationArgument> relArgs;
+        private List<RelationshipArgument> relArgs;
         private boolean synthetic;
         private String relId;
 
 
-        public Builder(String relPhrase, List<RelationArgument> relArgs) {
+        public Builder(String relPhrase, List<RelationshipArgument> relArgs) {
             super();
             this.relPhrase = relPhrase;
             this.relArgs = relArgs;
@@ -179,7 +179,7 @@ public class RelationshipMention extends BaseAttribute {
          * @param relArgs the relation arguments.
          * @return this
          */
-        public Builder relArgs(List<RelationArgument> relArgs) {
+        public Builder relArgs(List<RelationshipArgument> relArgs) {
             this.relArgs = relArgs;
             return this;
         }

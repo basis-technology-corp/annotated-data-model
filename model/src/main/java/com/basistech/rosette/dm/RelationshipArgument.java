@@ -19,7 +19,7 @@ import com.google.common.base.Objects;
 
 import java.util.Map;
 
-public class RelationArgument extends Attribute {
+public class RelationshipArgument extends Attribute {
 
     /**
      * the argument type: subject, object, locative, temporal, etc. At the moment
@@ -33,7 +33,7 @@ public class RelationArgument extends Attribute {
     private final String argumentId;
 
 
-    protected RelationArgument(int startOffset, int endOffset, String type, String argumentId, Map<String, Object> extendedProperties) {
+    protected RelationshipArgument(int startOffset, int endOffset, String type, String argumentId, Map<String, Object> extendedProperties) {
         super(startOffset, endOffset, extendedProperties);
         this.type = type;
         this.argumentId = argumentId;
@@ -67,7 +67,7 @@ public class RelationArgument extends Attribute {
             return false;
         }
 
-        RelationArgument that = (RelationArgument) o;
+        RelationshipArgument that = (RelationshipArgument) o;
 
         if (argumentId != null ? !argumentId.equals(that.argumentId) : that.argumentId != null) {
             return false;
@@ -106,8 +106,8 @@ public class RelationArgument extends Attribute {
             return this;
         }
 
-        public RelationArgument build() {
-            return new RelationArgument(startOffset, endOffset, type, argumentId, extendedProperties);
+        public RelationshipArgument build() {
+            return new RelationshipArgument(startOffset, endOffset, type, argumentId, extendedProperties);
         }
     }
 }

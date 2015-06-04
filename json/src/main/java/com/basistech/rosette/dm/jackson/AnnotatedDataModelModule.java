@@ -28,7 +28,7 @@ import com.basistech.rosette.dm.ListAttribute;
 import com.basistech.rosette.dm.MorphoAnalysis;
 import com.basistech.rosette.dm.Name;
 import com.basistech.rosette.dm.RawData;
-import com.basistech.rosette.dm.RelationArgument;
+import com.basistech.rosette.dm.RelationshipArgument;
 import com.basistech.rosette.dm.RelationshipMention;
 import com.basistech.rosette.dm.ResolvedEntity;
 import com.basistech.rosette.dm.ScriptRegion;
@@ -57,7 +57,7 @@ public class  AnnotatedDataModelModule extends EnumModule {
         context.setMixInAnnotations(BaseNounPhrase.class, BaseNounPhraseMixin.class);
         context.setMixInAnnotations(CategorizerResult.class, CategorizerResultMixin.class);
         context.setMixInAnnotations(EntityMention.class, EntityMentionMixin.class);
-        context.setMixInAnnotations(RelationArgument.class, RelationArgumentMixin.class);
+        context.setMixInAnnotations(RelationshipArgument.class, RelationshipArgumentMixin.class);
         context.setMixInAnnotations(RelationshipMention.class, RelationshipMentionMixin.class);
         context.setMixInAnnotations(HanMorphoAnalysis.class, HanMorphoAnalysisMixin.class);
         context.setMixInAnnotations(KoreanMorphoAnalysis.class, KoreanMorphoAnalysisMixin.class);

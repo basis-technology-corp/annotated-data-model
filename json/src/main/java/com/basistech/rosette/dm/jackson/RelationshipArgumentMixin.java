@@ -20,16 +20,16 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Map;
 
 /**
- * {@link com.basistech.rosette.dm.RelationArgument}
+ * {@link com.basistech.rosette.dm.RelationshipArgument}
  */
-public abstract class RelationArgumentMixin {
+public abstract class RelationshipArgumentMixin {
 
     @JsonCreator
-    public RelationArgumentMixin(@JsonProperty("startOffset") int startOffset,
-                                 @JsonProperty("endOffset") int endOffset,
-                                 @JsonProperty("type") String type,
-                                 @JsonProperty("argumentId") String argumentId,
-                                 @JsonProperty("extendedProperties") Map<String, Object> extendedProperties) {
+    public RelationshipArgumentMixin(@JsonProperty("startOffset") int startOffset,
+                                     @JsonProperty("endOffset") int endOffset,
+                                     @JsonProperty("type") String type,
+                                     @JsonProperty("argumentId") String argumentId,
+                                     @JsonProperty("extendedProperties") Map<String, Object> extendedProperties) {
 
     }
 

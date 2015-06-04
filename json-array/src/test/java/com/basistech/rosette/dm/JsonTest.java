@@ -14,6 +14,7 @@
 
 package com.basistech.rosette.dm;
 
+import com.basistech.rosette.dm.jackson.AnnotatedDataModelModule;
 import com.basistech.util.ISO15924;
 import com.basistech.util.LanguageCode;
 import com.basistech.util.TextDomain;
@@ -78,12 +79,12 @@ public class JsonTest extends AdmAssert {
         builder.entityMentions(emListBuilder.build());
 
         // Build two relation arguments
-        List<RelationArgument> relArgs = Lists.newArrayList();
-        RelationArgument.Builder raBuilder = new RelationArgument.Builder(0, 4);
+        List<RelationshipArgument> relArgs = Lists.newArrayList();
+        RelationshipArgument.Builder raBuilder = new RelationshipArgument.Builder(0, 4);
         raBuilder.type("subject");
         raBuilder.argumentId("/free/base/1");
         relArgs.add(raBuilder.build());
-        raBuilder = new RelationArgument.Builder(10, 14);
+        raBuilder = new RelationshipArgument.Builder(10, 14);
         raBuilder.type("toObject");
         raBuilder.argumentId("/free/base/2");
         relArgs.add(raBuilder.build());
@@ -241,7 +242,8 @@ public class JsonTest extends AdmAssert {
     @Test
     public void roundTrip() throws Exception {
 
-        ObjectMapper mapper = objectMapper();
+        ObjectMapper mapper1 = objectMapper();
+        ObjectMapper mapper = AnnotatedDataModelModule.setupObjectMapper(mapper1);
         ObjectWriter objectWriter = mapper.writer();
         String json = objectWriter.writeValueAsString(referenceText);
 

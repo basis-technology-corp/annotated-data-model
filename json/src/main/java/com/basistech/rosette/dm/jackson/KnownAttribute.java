@@ -37,7 +37,7 @@ import com.basistech.rosette.dm.UnknownAttribute;
 public enum KnownAttribute {
     BASE_NOUN_PHRASE("baseNounPhrases", BaseNounPhrase.class),
     ENTITY_MENTION("entityMentions", EntityMention.class),
-    RELATION_MENTION("relationshipMentions", RelationshipMention.class),
+    RELATIONSHIP_MENTION("relationshipMentions", RelationshipMention.class),
     RESOLVED_ENTITY("resolvedEntities", ResolvedEntity.class),
     LANGUAGE_DETECTION("languageDetection", LanguageDetection.class),
     SCRIPT_REGION("scriptRegion", ScriptRegion.class),

@@ -25,7 +25,7 @@ import com.basistech.rosette.dm.KoreanMorphoAnalysis;
 import com.basistech.rosette.dm.LanguageDetection;
 import com.basistech.rosette.dm.ListAttribute;
 import com.basistech.rosette.dm.MorphoAnalysis;
-import com.basistech.rosette.dm.RelationArgument;
+import com.basistech.rosette.dm.RelationshipArgument;
 import com.basistech.rosette.dm.RelationshipMention;
 import com.basistech.rosette.dm.ResolvedEntity;
 import com.basistech.rosette.dm.ScriptRegion;
@@ -104,12 +104,12 @@ public class JsonTest extends AdmAssert {
         builder.entityMentions(emListBuilder.build());
 
         // Build two relation arguments
-        List<RelationArgument> relArgs = Lists.newArrayList();
-        RelationArgument.Builder raBuilder = new RelationArgument.Builder(0, 4);
+        List<RelationshipArgument> relArgs = Lists.newArrayList();
+        RelationshipArgument.Builder raBuilder = new RelationshipArgument.Builder(0, 4);
         raBuilder.type("subject");
         raBuilder.argumentId("/free/base/1");
         relArgs.add(raBuilder.build());
-        raBuilder = new RelationArgument.Builder(10, 14);
+        raBuilder = new RelationshipArgument.Builder(10, 14);
         raBuilder.type("toObject");
         raBuilder.argumentId("/free/base/2");
         relArgs.add(raBuilder.build());
