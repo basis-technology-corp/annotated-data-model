@@ -14,11 +14,15 @@
 
 package com.basistech.rosette.dm.jackson;
 
+import com.basistech.rosette.dm.BaseAttribute;
+import com.basistech.rosette.dm.ListAttribute;
 import com.basistech.rosette.dm.RelationshipArgument;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.databind.annotation.JsonTypeIdResolver;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -28,11 +32,33 @@ public abstract class RelationshipMentionMixin {
 
     @JsonCreator
     RelationshipMentionMixin(@JsonProperty("relPhrase") String relPhrase,
-                             @JsonProperty("relArgs") List<RelationshipArgument> relArgs,
+                             @JsonProperty("arguments") Map<String, BaseAttribute> arguments,
                              @JsonProperty("synthetic") boolean synthetic,
                              @JsonProperty("relId") String relId,
                              @JsonProperty("extendedProperties") Map<String, Object> extendedProperties) {
 
     }
+
+    @JsonTypeInfo(use = JsonTypeInfo.Id.CUSTOM, include = JsonTypeInfo.As.PROPERTY, property = "type")
+    @JsonTypeIdResolver(DmTypeIdResolver.class)
+    public abstract Map<String, BaseAttribute> getArguments();
+
+    @JsonIgnore
+    public abstract RelationshipArgument getArg1();
+
+    @JsonIgnore
+    public abstract RelationshipArgument getArg2();
+
+    @JsonIgnore
+    public abstract RelationshipArgument getArg3();
+
+    @JsonIgnore
+    public abstract ListAttribute<RelationshipArgument> getAdjuncts();
+
+    @JsonIgnore
+    public abstract ListAttribute<RelationshipArgument> getLocatives();
+
+    @JsonIgnore
+    public abstract ListAttribute<RelationshipArgument> getTemporals();
 
 }

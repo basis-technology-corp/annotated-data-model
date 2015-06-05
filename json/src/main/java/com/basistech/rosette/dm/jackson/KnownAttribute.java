@@ -20,6 +20,7 @@ import com.basistech.rosette.dm.CategorizerResult;
 import com.basistech.rosette.dm.EntityMention;
 import com.basistech.rosette.dm.LanguageDetection;
 import com.basistech.rosette.dm.ListAttribute;
+import com.basistech.rosette.dm.RelationshipArgument;
 import com.basistech.rosette.dm.RelationshipMention;
 import com.basistech.rosette.dm.ResolvedEntity;
 import com.basistech.rosette.dm.ScriptRegion;
@@ -32,9 +33,13 @@ import com.basistech.rosette.dm.UnknownAttribute;
 /**
  * The attributes currently defined in the data model.
  * Applications may extend the model with additional attributes;
- * this provides keys for {@link com.basistech.rosette.dm.AnnotatedText} for the known attributes.
+ * this provides keys for {@link com.basistech.rosette.dm.AnnotatedText} and
+ * {@link com.basistech.rosette.dm.RelationshipMention} for the known attributes.
  */
 public enum KnownAttribute {
+    /**
+     * from {@link com.basistech.rosette.dm.AttributeKey}
+     */
     BASE_NOUN_PHRASE("baseNounPhrases", BaseNounPhrase.class),
     ENTITY_MENTION("entityMentions", EntityMention.class),
     RELATIONSHIP_MENTION("relationshipMentions", RelationshipMention.class),
@@ -48,7 +53,17 @@ public enum KnownAttribute {
     CATEGORIZATION_RESULT("categorizerResults", CategorizerResult.class),
     SENTIMENT_RESULT("sentimentResults", CategorizerResult.class),
     LIST("list", ListAttribute.class),
-    UNKNOWN("unknown", UnknownAttribute.class);
+    UNKNOWN("unknown", UnknownAttribute.class),
+
+    /**
+     * from {@link com.basistech.rosette.dm.RelationshipArgumentType}
+     */
+    ARG1("arg1", RelationshipArgument.class),
+    ARG2("arg2", RelationshipArgument.class),
+    ARG3("arg3", RelationshipArgument.class),
+    ADJUNCT("adjuncts", RelationshipArgument.class),
+    LOCATIVE("locatives", RelationshipArgument.class),
+    TEMPORAL("temporals", RelationshipArgument.class);
 
     private final String jsonTag;
     private final Class<? extends BaseAttribute> attributeClass;
@@ -59,7 +74,8 @@ public enum KnownAttribute {
     }
 
     /**
-     * @return a value used as a key in {@link com.basistech.rosette.dm.AnnotatedText} and in json serialization.
+     * @return a value used as a key in {@link com.basistech.rosette.dm.AnnotatedText} or
+     * {@link com.basistech.rosette.dm.RelationshipMention} and in json serialization.
      */
     public String key() {
         return jsonTag;

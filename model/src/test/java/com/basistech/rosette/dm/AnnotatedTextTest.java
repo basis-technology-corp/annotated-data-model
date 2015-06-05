@@ -373,15 +373,15 @@ public class AnnotatedTextTest {
         relationArgumentBuilder1.type(argType + "1").argumentId(argumentId + "1");
         relationArgumentBuilder2.type(argType + "2").argumentId(argumentId + "2");
 
-        List<RelationshipArgument> argumentList = Lists.newArrayList(relationArgumentBuilder1.build(), relationArgumentBuilder2.build());
-        ListAttribute.Builder rms = listBuilder.add(new RelationshipMention.Builder(relPhrase, argumentList).build());
+        ListAttribute.Builder rms = listBuilder.add(new RelationshipMention.Builder(relPhrase).arg1
+                (relationArgumentBuilder1.build()).arg2(relationArgumentBuilder2.build()).build());
         relationMentionBuilder.relationshipMentions(rms.build());
         AnnotatedText text = relationMentionBuilder.build();
 
         RelationshipMention relationshipMention = text.getRelationshipMentions().get(0);
         assertEquals(relPhrase, relationshipMention.getRelPhrase());
-        assertEquals(argType + "1", relationshipMention.getRelArgs().get(0).getType());
-        assertEquals(argType + "2", relationshipMention.getRelArgs().get(1).getType());
+        assertEquals(argType + "1", relationshipMention.getArg1().getType());
+        assertEquals(argType + "2", relationshipMention.getArg2().getType());
         assertEquals(relPhrase, relationshipMention.getRelPhrase());
     }
 

@@ -76,7 +76,7 @@ public abstract class AnnotatedTextArrayMixin {
     public abstract ListAttribute<ResolvedEntity> getResolvedEntities();
 
     @JsonIgnore
-    public abstract ListAttribute<RelationshipMention> getRelationMentions();
+    public abstract ListAttribute<RelationshipMention> getRelationshipMentions();
 
     @JsonIgnore
     public abstract ListAttribute<ScriptRegion> getScriptRegions();

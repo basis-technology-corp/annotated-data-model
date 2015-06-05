@@ -104,19 +104,19 @@ public class JsonTest extends AdmAssert {
         builder.entityMentions(emListBuilder.build());
 
         // Build two relation arguments
-        List<RelationshipArgument> relArgs = Lists.newArrayList();
         RelationshipArgument.Builder raBuilder = new RelationshipArgument.Builder(0, 4);
         raBuilder.type("subject");
         raBuilder.argumentId("/free/base/1");
-        relArgs.add(raBuilder.build());
+        RelationshipArgument arg1 = raBuilder.build();
+
         raBuilder = new RelationshipArgument.Builder(10, 14);
         raBuilder.type("toObject");
         raBuilder.argumentId("/free/base/2");
-        relArgs.add(raBuilder.build());
+        RelationshipArgument arg2 = raBuilder.build();
 
         // Build a relation
         ListAttribute.Builder<RelationshipMention> rmListBuilder = new ListAttribute.Builder<RelationshipMention>(RelationshipMention.class);
-        RelationshipMention.Builder rmBuilder = new RelationshipMention.Builder("gave a ride", relArgs);
+        RelationshipMention.Builder rmBuilder = new RelationshipMention.Builder("gave a ride").arg1(arg1).arg2(arg2);
         rmBuilder.relId("/free/base/property0");
         rmBuilder.extendedProperty("rm-ex", "rm-ex-val");
         relationshipMention = rmBuilder.build();
@@ -267,8 +267,9 @@ public class JsonTest extends AdmAssert {
     @Test
     public void roundTrip() throws Exception {
         StringWriter writer = new StringWriter();
-        ObjectMapper mapper = objectMapper();
-        ObjectWriter objectWriter = mapper.writer().withDefaultPrettyPrinter();
+        ObjectMapper mapper1 = objectMapper();
+        ObjectMapper mapper = AnnotatedDataModelModule.setupObjectMapper(mapper1);
+        ObjectWriter objectWriter = mapper.writer();
         objectWriter.writeValue(writer, referenceText);
 
         ObjectReader reader = mapper.reader(AnnotatedText.class);
