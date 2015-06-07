@@ -105,12 +105,12 @@ public class JsonTest extends AdmAssert {
 
         // Build two relation arguments
         RelationshipArgument.Builder raBuilder = new RelationshipArgument.Builder(0, 4);
-        raBuilder.type("subject");
+        raBuilder.argumentPhrase("bla");
         raBuilder.argumentId("/free/base/1");
         RelationshipArgument arg1 = raBuilder.build();
 
         raBuilder = new RelationshipArgument.Builder(10, 14);
-        raBuilder.type("toObject");
+        raBuilder.argumentPhrase("blu");
         raBuilder.argumentId("/free/base/2");
         RelationshipArgument arg2 = raBuilder.build();
 

@@ -381,13 +381,13 @@ public class EqualsTest {
 
     @Test
     public void testRelationArgument() throws Exception {
-        // this one has offsets, type and an argid,
-        RelationshipArgument ra1 = new RelationshipArgument.Builder(0, 1).type("t").argumentId("1").build();
+        // this one has offsets, argumentPhrase and an argid,
+        RelationshipArgument ra1 = new RelationshipArgument.Builder(0, 1).argumentPhrase("t").argumentId("1").build();
         ra1.hashCode();
         assertTrue(ra1.equals(ra1));
 
         // this one doesn't have an argid
-        RelationshipArgument ra2 = new RelationshipArgument.Builder(0, 1).type("t").build();
+        RelationshipArgument ra2 = new RelationshipArgument.Builder(0, 1).argumentPhrase("t").build();
         ra2.hashCode();
         assertTrue(ra2.equals(ra2));
 
@@ -399,9 +399,9 @@ public class EqualsTest {
 
     @Test
     public void testRelationMention() throws Exception {
-        RelationshipArgument _ra1 = new RelationshipArgument.Builder(0, 1).type("t").argumentId("1").build();
-        RelationshipArgument _ra2 = new RelationshipArgument.Builder(0, 1).type("t").build();
-        RelationshipArgument _ra3 = new RelationshipArgument.Builder(0, 1).type("b").build();
+        RelationshipArgument _ra1 = new RelationshipArgument.Builder(0, 1).argumentPhrase("t").argumentId("1").build();
+        RelationshipArgument _ra2 = new RelationshipArgument.Builder(0, 1).argumentPhrase("t").build();
+        RelationshipArgument _ra3 = new RelationshipArgument.Builder(0, 1).argumentPhrase("b").build();
 
 
         // relId intentionally null, all other fields populated.

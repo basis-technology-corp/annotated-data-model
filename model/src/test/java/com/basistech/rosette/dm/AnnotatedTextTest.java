@@ -362,7 +362,7 @@ public class AnnotatedTextTest {
     @Test
     public void testRelationMentions() {
         String argumentId = "/resolved/argument/";
-        String argType = "arg";
+        String argPhrase = "some-noun";
         String relPhrase = "some-verb"; //
 
         AnnotatedText.Builder relationMentionBuilder = new AnnotatedText.Builder();
@@ -370,8 +370,8 @@ public class AnnotatedTextTest {
                 = new ListAttribute.Builder<RelationshipMention>(RelationshipMention.class);
         RelationshipArgument.Builder relationArgumentBuilder1 = new RelationshipArgument.Builder(1, 1);
         RelationshipArgument.Builder relationArgumentBuilder2 = new RelationshipArgument.Builder(2, 2);
-        relationArgumentBuilder1.type(argType + "1").argumentId(argumentId + "1");
-        relationArgumentBuilder2.type(argType + "2").argumentId(argumentId + "2");
+        relationArgumentBuilder1.argumentPhrase(argPhrase + "1").argumentId(argumentId + "1");
+        relationArgumentBuilder2.argumentPhrase(argPhrase + "2").argumentId(argumentId + "2");
 
         ListAttribute.Builder rms = listBuilder.add(new RelationshipMention.Builder(relPhrase).arg1
                 (relationArgumentBuilder1.build()).arg2(relationArgumentBuilder2.build()).build());
@@ -380,8 +380,8 @@ public class AnnotatedTextTest {
 
         RelationshipMention relationshipMention = text.getRelationshipMentions().get(0);
         assertEquals(relPhrase, relationshipMention.getRelPhrase());
-        assertEquals(argType + "1", relationshipMention.getArg1().getType());
-        assertEquals(argType + "2", relationshipMention.getArg2().getType());
+        assertEquals(argPhrase + "1", relationshipMention.getArg1().getArgumentPhrase());
+        assertEquals(argPhrase + "2", relationshipMention.getArg2().getArgumentPhrase());
         assertEquals(relPhrase, relationshipMention.getRelPhrase());
     }
 

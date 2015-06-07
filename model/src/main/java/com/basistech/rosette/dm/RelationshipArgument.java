@@ -22,10 +22,10 @@ import java.util.Map;
 public class RelationshipArgument extends Attribute {
 
     /**
-     * the argument type: subject, object, locative, temporal, etc. At the moment
+     * the argument argumentPhrase: subject, object, locative, temporal, etc. At the moment
      *                    this is free text.
      */
-    private final String type;
+    private final String argumentPhrase;
 
     /**
      * the argument id: placeholder for an identifier from an external knowledge-base the argument resolves to.
@@ -33,14 +33,14 @@ public class RelationshipArgument extends Attribute {
     private final String argumentId;
 
 
-    protected RelationshipArgument(int startOffset, int endOffset, String type, String argumentId, Map<String, Object> extendedProperties) {
+    protected RelationshipArgument(int startOffset, int endOffset, String argumentPhrase, String argumentId, Map<String, Object> extendedProperties) {
         super(startOffset, endOffset, extendedProperties);
-        this.type = type;
+        this.argumentPhrase = argumentPhrase;
         this.argumentId = argumentId;
     }
 
-    public String getType() {
-        return type;
+    public String getArgumentPhrase() {
+        return argumentPhrase;
     }
 
     public String getArgumentId() {
@@ -50,7 +50,7 @@ public class RelationshipArgument extends Attribute {
     @Override
     protected Objects.ToStringHelper toStringHelper() {
         return super.toStringHelper()
-                .add("type", type)
+                .add("argumentPhrase", argumentPhrase)
                 .add("argumentId", argumentId);
     }
 
@@ -73,7 +73,7 @@ public class RelationshipArgument extends Attribute {
             return false;
         }
 
-        if (!type.equals(that.type)) {
+        if (!argumentPhrase.equals(that.argumentPhrase)) {
             return false;
         }
 
@@ -83,21 +83,21 @@ public class RelationshipArgument extends Attribute {
     @Override
     public int hashCode() {
         int result = super.hashCode();
-        result = 31 * result + type.hashCode();
+        result = 31 * result + argumentPhrase.hashCode();
         result = 31 * result + (argumentId != null ? argumentId.hashCode() : 0);
         return result;
     }
 
     public static class Builder extends Attribute.Builder {
-        private String type;
+        private String argumentPhrase;
         private String argumentId;
 
         public Builder(int startOffset, int endOffset) {
             super(startOffset, endOffset);
         }
 
-        public Builder type(String type) {
-            this.type = type;
+        public Builder argumentPhrase(String argumentPhrase) {
+            this.argumentPhrase = argumentPhrase;
             return this;
         }
 
@@ -107,7 +107,7 @@ public class RelationshipArgument extends Attribute {
         }
 
         public RelationshipArgument build() {
-            return new RelationshipArgument(startOffset, endOffset, type, argumentId, extendedProperties);
+            return new RelationshipArgument(startOffset, endOffset, argumentPhrase, argumentId, extendedProperties);
         }
     }
 }
