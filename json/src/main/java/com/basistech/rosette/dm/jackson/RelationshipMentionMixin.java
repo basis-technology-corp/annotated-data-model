@@ -15,6 +15,7 @@
 package com.basistech.rosette.dm.jackson;
 
 import com.basistech.rosette.dm.BaseAttribute;
+import com.basistech.rosette.dm.Evidence;
 import com.basistech.rosette.dm.ListAttribute;
 import com.basistech.rosette.dm.RelationshipArgument;
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -23,6 +24,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.annotation.JsonTypeIdResolver;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -31,7 +33,8 @@ import java.util.Map;
 public abstract class RelationshipMentionMixin {
 
     @JsonCreator
-    RelationshipMentionMixin(@JsonProperty("relPhrase") String relPhrase,
+    RelationshipMentionMixin(@JsonProperty("predPhrase") String predPhrase,
+                             @JsonProperty("evidences") List<Evidence> evidences,
                              @JsonProperty("arguments") Map<String, BaseAttribute> arguments,
                              @JsonProperty("synthetic") boolean synthetic,
                              @JsonProperty("relId") String relId,

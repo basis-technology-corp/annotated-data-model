@@ -4,7 +4,7 @@
  ** and may only be used as permitted under the license agreement under which
  ** it has been distributed, and in no other way.
  **
- ** Copyright (c) 2015 Basis Technology Corporation All rights reserved.
+ ** Copyright (c) 2014 Basis Technology Corporation All rights reserved.
  **
  ** The technical data and information provided herein are provided with
  ** `limited rights', and the computer software provided herein is provided
@@ -14,24 +14,20 @@
 
 package com.basistech.rosette.dm.jackson;
 
-import com.basistech.rosette.dm.Evidence;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.List;
 import java.util.Map;
 
 /**
- * {@link com.basistech.rosette.dm.RelationshipArgument}
+ * {@link com.basistech.rosette.dm.Evidence}
  */
-public abstract class RelationshipArgumentMixin {
+public abstract class EvidenceMixin {
 
     @JsonCreator
-    public RelationshipArgumentMixin(@JsonProperty("argumentPhrase") String argumentPhrase,
-                                     @JsonProperty("evidences") List<Evidence> evidences,
-                                     @JsonProperty("argumentId") String argumentId,
-                                     @JsonProperty("extendedProperties") Map<String, Object> extendedProperties) {
-
+    public EvidenceMixin(@JsonProperty("startOffset") int startOffset,
+                         @JsonProperty("endOffset") int endOffset,
+                         @JsonProperty("extendedProperties") Map<String, Object> extendedProperties) {
     }
 
 

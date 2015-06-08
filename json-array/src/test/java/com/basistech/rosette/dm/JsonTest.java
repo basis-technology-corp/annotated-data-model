@@ -79,12 +79,13 @@ public class JsonTest extends AdmAssert {
         builder.entityMentions(emListBuilder.build());
 
         // Build two relation arguments
-        RelationshipArgument.Builder raBuilder = new RelationshipArgument.Builder(0, 4);
+        RelationshipArgument.Builder raBuilder = new RelationshipArgument.Builder();
         raBuilder.argumentPhrase("bla");
         raBuilder.argumentId("/free/base/1");
+        raBuilder.evidences(Lists.newArrayList(new Evidence.Builder(0,4).build()));
         RelationshipArgument arg1 = raBuilder.build();
 
-        raBuilder = new RelationshipArgument.Builder(10, 14);
+        raBuilder = new RelationshipArgument.Builder();
         raBuilder.argumentPhrase("blu");
         raBuilder.argumentId("/free/base/2");
         RelationshipArgument arg2 = raBuilder.build();
@@ -94,6 +95,7 @@ public class JsonTest extends AdmAssert {
         RelationshipMention.Builder rmBuilder = new RelationshipMention.Builder("gave a ride").arg1(arg1).arg2(arg2);
         rmBuilder.relId("/free/base/property0");
         rmBuilder.extendedProperty("rm-ex", "rm-ex-val");
+        rmBuilder.evidences(Lists.newArrayList(new Evidence.Builder(0, 1).build()));
         relationshipMention = rmBuilder.build();
         rmListBuilder.add(relationshipMention);
         builder.relationshipMentions(rmListBuilder.build());

@@ -368,8 +368,8 @@ public class AnnotatedTextTest {
         AnnotatedText.Builder relationMentionBuilder = new AnnotatedText.Builder();
         ListAttribute.Builder<RelationshipMention> listBuilder
                 = new ListAttribute.Builder<RelationshipMention>(RelationshipMention.class);
-        RelationshipArgument.Builder relationArgumentBuilder1 = new RelationshipArgument.Builder(1, 1);
-        RelationshipArgument.Builder relationArgumentBuilder2 = new RelationshipArgument.Builder(2, 2);
+        RelationshipArgument.Builder relationArgumentBuilder1 = new RelationshipArgument.Builder();
+        RelationshipArgument.Builder relationArgumentBuilder2 = new RelationshipArgument.Builder();
         relationArgumentBuilder1.argumentPhrase(argPhrase + "1").argumentId(argumentId + "1");
         relationArgumentBuilder2.argumentPhrase(argPhrase + "2").argumentId(argumentId + "2");
 
@@ -379,10 +379,10 @@ public class AnnotatedTextTest {
         AnnotatedText text = relationMentionBuilder.build();
 
         RelationshipMention relationshipMention = text.getRelationshipMentions().get(0);
-        assertEquals(relPhrase, relationshipMention.getRelPhrase());
+        assertEquals(relPhrase, relationshipMention.getPredPhrase());
         assertEquals(argPhrase + "1", relationshipMention.getArg1().getArgumentPhrase());
         assertEquals(argPhrase + "2", relationshipMention.getArg2().getArgumentPhrase());
-        assertEquals(relPhrase, relationshipMention.getRelPhrase());
+        assertEquals(relPhrase, relationshipMention.getPredPhrase());
     }
 
 }

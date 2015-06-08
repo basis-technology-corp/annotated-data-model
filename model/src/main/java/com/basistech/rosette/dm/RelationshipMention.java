@@ -16,16 +16,23 @@ package com.basistech.rosette.dm;
 
 import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
+import java.util.List;
 import java.util.Map;
 
 public class RelationshipMention extends BaseAttribute {
 
     /**
-     * A display string representing the relation
+     * A display string representing the predicate
      */
-    private final String relPhrase;
+    private final String predPhrase;
+
+    /**
+     * list of start and end offsets, representing the evidences in the data for a predicate
+     */
+    private final List<Evidence> evidences;
 
     /**
      * The arguments for this relationsip mention, indexed by type.
@@ -44,11 +51,17 @@ public class RelationshipMention extends BaseAttribute {
      */
     private final String relId;
 
-    protected RelationshipMention(String relPhrase, Map<String, BaseAttribute> arguments, boolean synthetic, String relId, Map<String, Object> extendedProperties) {
+    protected RelationshipMention(String predPhrase, List<Evidence> evidences, Map<String, BaseAttribute>
+            arguments, boolean synthetic, String relId, Map<String, Object> extendedProperties) {
         super(extendedProperties);
-        this.relPhrase = relPhrase;
+        this.predPhrase = predPhrase;
         this.synthetic = synthetic;
         this.relId = relId;
+        if (evidences != null) {
+            this.evidences = evidences;
+        } else {
+            this.evidences = Lists.newArrayList();
+        }
         if (arguments != null) {
             this.arguments = ImmutableMap.copyOf(arguments);
         } else {
@@ -56,8 +69,12 @@ public class RelationshipMention extends BaseAttribute {
         }
     }
 
-    public String getRelPhrase() {
-        return relPhrase;
+    public String getPredPhrase() {
+        return predPhrase;
+    }
+
+    public List<Evidence> getEvidences() {
+        return evidences;
     }
 
     public RelationshipArgument getArg1() {
@@ -111,7 +128,8 @@ public class RelationshipMention extends BaseAttribute {
     @Override
     protected Objects.ToStringHelper toStringHelper() {
         return super.toStringHelper()
-                .add("relPhrase", relPhrase)
+                .add("predPhrase", predPhrase)
+                .add("evidences", evidences)
                 .add("arguments", arguments)
                 .add("synthetic", synthetic)
                 .add("relId", relId);
@@ -146,7 +164,11 @@ public class RelationshipMention extends BaseAttribute {
             return false;
         }
 
-        if (!relPhrase.equals(that.relPhrase)) {
+        if (!predPhrase.equals(that.predPhrase)) {
+            return false;
+        }
+
+        if (!evidences.equals(that.getEvidences())) {
             return false;
         }
 
@@ -156,7 +178,8 @@ public class RelationshipMention extends BaseAttribute {
     @Override
     public int hashCode() {
         int result = super.hashCode();
-        result = 31 * result + relPhrase.hashCode();
+        result = 31 * result + predPhrase.hashCode();
+        result = 31 * result + evidences.hashCode();
         result = 31 * result + arguments.hashCode();
         result = 31 * result + (synthetic ? 1 : 0);
         result = 31 * result + (relId != null ? relId.hashCode() : 0);
@@ -165,16 +188,18 @@ public class RelationshipMention extends BaseAttribute {
 
     public static class Builder extends BaseAttribute.Builder {
 
-        private String relPhrase;
+        private String predPhrase;
         private final Map<String, BaseAttribute> arguments = Maps.newHashMap();
         private boolean synthetic;
         private String relId;
+        private List<Evidence> evidences;
 
 
-        public Builder(String relPhrase) {
+        public Builder(String predPhrase) {
             super();
-            this.relPhrase = relPhrase;
+            this.predPhrase = predPhrase;
             this.synthetic = false;
+            this.evidences = Lists.newArrayList();
         }
 
         /**
@@ -185,20 +210,32 @@ public class RelationshipMention extends BaseAttribute {
          */
         public Builder(RelationshipMention toCopy) {
             super(toCopy);
-            this.relPhrase = toCopy.relPhrase;
+            this.predPhrase = toCopy.predPhrase;
             this.arguments.putAll(arguments);
             this.synthetic = toCopy.synthetic;
             this.relId = toCopy.relId;
+            this.evidences = toCopy.evidences;
         }
 
         /**
-         * Specifies a phrase representing the relation
+         * Specifies a phrase representing the predicate
          *
-         * @param relPhrase the relation phrase
+         * @param predPhrase the predicate phrase
          * @return
          */
-        public Builder relPhrase(String relPhrase) {
-            this.relPhrase = relPhrase;
+        public Builder predPhrase(String predPhrase) {
+            this.predPhrase = predPhrase;
+            return this;
+        }
+
+        /**
+         * Specifies a phrase evidences
+         *
+         * @param evidences the relation phrase evidences
+         * @return
+         */
+        public Builder evidences(List<Evidence> evidences) {
+            this.evidences = evidences;
             return this;
         }
 
@@ -328,7 +365,8 @@ public class RelationshipMention extends BaseAttribute {
          * @return the new relation mention.
          */
         public RelationshipMention build() {
-            return new RelationshipMention(relPhrase, arguments, synthetic, relId, extendedProperties);
+            return new RelationshipMention(predPhrase, evidences, arguments, synthetic, relId,
+                    extendedProperties);
         }
     }
 }

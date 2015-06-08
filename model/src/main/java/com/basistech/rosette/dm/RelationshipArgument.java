@@ -16,16 +16,22 @@ package com.basistech.rosette.dm;
 
 
 import com.google.common.base.Objects;
+import com.google.common.collect.Lists;
 
+import java.util.List;
 import java.util.Map;
 
-public class RelationshipArgument extends Attribute {
+public class RelationshipArgument extends BaseAttribute {
 
     /**
-     * the argument argumentPhrase: subject, object, locative, temporal, etc. At the moment
-     *                    this is free text.
+     * A display string representing the argument
      */
     private final String argumentPhrase;
+
+    /**
+     * list of start and end offsets, representing the evidences in the data for a argument
+     */
+    private final List<Evidence> evidences;
 
     /**
      * the argument id: placeholder for an identifier from an external knowledge-base the argument resolves to.
@@ -33,14 +39,24 @@ public class RelationshipArgument extends Attribute {
     private final String argumentId;
 
 
-    protected RelationshipArgument(int startOffset, int endOffset, String argumentPhrase, String argumentId, Map<String, Object> extendedProperties) {
-        super(startOffset, endOffset, extendedProperties);
+    protected RelationshipArgument(String argumentPhrase, List<Evidence> evidences,
+                                   String argumentId, Map<String, Object> extendedProperties) {
+        super(extendedProperties);
         this.argumentPhrase = argumentPhrase;
         this.argumentId = argumentId;
+        if (evidences != null) {
+            this.evidences = evidences;
+        } else {
+            this.evidences = Lists.newArrayList();
+        }
     }
 
     public String getArgumentPhrase() {
         return argumentPhrase;
+    }
+
+    public List<Evidence> getEvidences() {
+        return evidences;
     }
 
     public String getArgumentId() {
@@ -51,6 +67,7 @@ public class RelationshipArgument extends Attribute {
     protected Objects.ToStringHelper toStringHelper() {
         return super.toStringHelper()
                 .add("argumentPhrase", argumentPhrase)
+                .add("evidences", evidences)
                 .add("argumentId", argumentId);
     }
 
@@ -73,7 +90,11 @@ public class RelationshipArgument extends Attribute {
             return false;
         }
 
-        if (!argumentPhrase.equals(that.argumentPhrase)) {
+        if (argumentPhrase != null ? !argumentPhrase.equals(that.argumentPhrase) : that.argumentPhrase != null) {
+            return false;
+        }
+
+        if (evidences != null ? !evidences.equals(that.evidences) : that.evidences != null) {
             return false;
         }
 
@@ -85,15 +106,17 @@ public class RelationshipArgument extends Attribute {
         int result = super.hashCode();
         result = 31 * result + argumentPhrase.hashCode();
         result = 31 * result + (argumentId != null ? argumentId.hashCode() : 0);
+        result = 31 * result + (evidences != null ? evidences.hashCode() : 0);
         return result;
     }
 
-    public static class Builder extends Attribute.Builder {
+    public static class Builder extends BaseAttribute.Builder {
         private String argumentPhrase;
         private String argumentId;
+        private List<Evidence> evidences = Lists.newArrayList();
 
-        public Builder(int startOffset, int endOffset) {
-            super(startOffset, endOffset);
+        public Builder() {
+            super();
         }
 
         public Builder argumentPhrase(String argumentPhrase) {
@@ -106,8 +129,14 @@ public class RelationshipArgument extends Attribute {
             return this;
         }
 
+        public Builder evidences(List<Evidence> evidences) {
+            this.evidences = evidences;
+            return this;
+        }
+
         public RelationshipArgument build() {
-            return new RelationshipArgument(startOffset, endOffset, argumentPhrase, argumentId, extendedProperties);
+            return new RelationshipArgument(argumentPhrase, evidences, argumentId,
+                    extendedProperties);
         }
     }
 }
