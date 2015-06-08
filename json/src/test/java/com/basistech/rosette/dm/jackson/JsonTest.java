@@ -270,8 +270,7 @@ public class JsonTest extends AdmAssert {
     @Test
     public void roundTrip() throws Exception {
         StringWriter writer = new StringWriter();
-        ObjectMapper mapper1 = objectMapper();
-        ObjectMapper mapper = AnnotatedDataModelModule.setupObjectMapper(mapper1);
+        ObjectMapper mapper = AnnotatedDataModelModule.setupObjectMapper(new ObjectMapper());
         ObjectWriter objectWriter = mapper.writer();
         objectWriter.writeValue(writer, referenceText);
 
