@@ -55,15 +55,8 @@ public enum KnownAttribute {
     LIST("list", ListAttribute.class),
     UNKNOWN("unknown", UnknownAttribute.class),
 
-    /**
-     * from {@link com.basistech.rosette.dm.RelationshipArgumentType}
-     */
-    ARG1("arg1", RelationshipArgument.class),
-    ARG2("arg2", RelationshipArgument.class),
-    ARG3("arg3", RelationshipArgument.class),
-    ADJUNCT("adjuncts", RelationshipArgument.class),
-    LOCATIVE("locatives", RelationshipArgument.class),
-    TEMPORAL("temporals", RelationshipArgument.class);
+    RELATION_ARGUMENT("RelationshipArgument", RelationshipArgument.class);
+
 
     private final String jsonTag;
     private final Class<? extends BaseAttribute> attributeClass;

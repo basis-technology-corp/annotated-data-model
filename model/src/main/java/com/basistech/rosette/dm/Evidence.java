@@ -51,28 +51,6 @@ public class Evidence extends Attribute {
             this.endOffset = toCopy.endOffset;
         }
 
-        /**
-         * Specifies the start character offset.
-         *
-         * @param startOffset the start character offset
-         * @return this
-         */
-        public Builder startOffset(int startOffset) {
-            this.startOffset = startOffset;
-            return this;
-        }
-
-        /**
-         * Specifies the end character offset.
-         *
-         * @param endOffset the end offset
-         * @return this
-         */
-        public Builder setEndOffset(int endOffset) {
-            this.endOffset = endOffset;
-            return this;
-        }
-
         public Evidence build() {
             return new Evidence(startOffset, endOffset);
         }
