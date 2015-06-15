@@ -394,8 +394,8 @@ public class ArabicMorphoAnalysis extends MorphoAnalysis {
          * @return this
          */
         public Builder prefixes(List<String> prefixes, List<String> prefixTags) {
-            this.prefixes = prefixes;
-            this.prefixTags = prefixTags;
+            this.prefixes = nullOrList(prefixes);
+            this.prefixTags = nullOrList(prefixTags);
             return this;
         }
 
@@ -418,8 +418,8 @@ public class ArabicMorphoAnalysis extends MorphoAnalysis {
          * @return this
          */
         public Builder stems(List<String> stems, List<String> stemTags) {
-            this.stems = stems;
-            this.stemTags = stemTags;
+            this.stems = nullOrList(stems);
+            this.stemTags = nullOrList(stemTags);
             return this;
         }
 
@@ -442,8 +442,8 @@ public class ArabicMorphoAnalysis extends MorphoAnalysis {
          * @return this
          */
         public Builder suffixes(List<String> suffixes, List<String> suffixTags) {
-            this.suffixes = suffixes;
-            this.suffixTags = suffixTags;
+            this.suffixes = nullOrList(suffixes);
+            this.suffixTags = nullOrList(suffixTags);
             return this;
         }
 
