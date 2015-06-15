@@ -128,6 +128,16 @@ public class HanMorphoAnalysis extends MorphoAnalysis {
         }
 
         /**
+         * Set all the readings for this analysis.
+         * @param readings the readings.
+         * @return this
+         */
+        public Builder readings(List<String> readings) {
+            this.readings = readings;
+            return this;
+        }
+
+        /**
          * Builds an immutable analysis object from the current state of this builder.
          *
          * @return the analysis

@@ -136,6 +136,18 @@ public class KoreanMorphoAnalysis extends MorphoAnalysis {
         }
 
         /**
+         * Sets the morphemes and their tags. The lists must be the same length.
+         * @param morphemes the morphemes.
+         * @param morphemeTags their tags.
+         * @return this.
+         */
+        public Builder morphemes(List<String> morphemes, List<String> morphemeTags) {
+            this.morphemes = morphemes;
+            this.morphemeTags = morphemeTags;
+            return this;
+        }
+
+        /**
          * Builds an immutable analysis object from the current state of this builder.
          *
          * @return the analysis

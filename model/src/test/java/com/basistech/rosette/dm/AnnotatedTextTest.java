@@ -26,6 +26,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotSame;
@@ -172,6 +174,10 @@ public class AnnotatedTextTest {
         assertEquals(".", translations.get(1));
         assertEquals("Dos", translations.get(2));
         assertEquals(".", translations.get(3));
+
+        ttBuilder = new TranslatedTokens.Builder(domain);
+        ttBuilder.translatedTokens(Lists.newArrayList("hello", "dilly"));
+        assertThat(ttBuilder.build().getTranslations(), contains("hello", "dilly"));
     }
 
     @Test
@@ -357,5 +363,39 @@ public class AnnotatedTextTest {
         assertEquals(Integer.valueOf(22), re.getCoreferenceChainId());
         re = new ResolvedEntity.Builder(0, 10, "foo").confidence(3d).build();
         assertEquals(3d, re.getConfidence(), 0);
+    }
+
+    @Test
+    public void tokenLists() throws Exception {
+        Token.Builder tokenBuilder = new Token.Builder(0, 1, "f");
+        tokenBuilder.addNormalized("c");
+        tokenBuilder.normalized(Lists.newArrayList("a", "b"));
+        assertThat(tokenBuilder.build().getNormalized(), contains("a", "b"));
+
+        MorphoAnalysis.Builder maBuilder = new MorphoAnalysis.Builder();
+        tokenBuilder = new Token.Builder(0, 1, "f");
+        tokenBuilder.addAnalysis(maBuilder.build());
+        tokenBuilder.analyses(Lists.<MorphoAnalysis>newArrayList());
+        assertNull(tokenBuilder.build().getAnalyses());
+    }
+
+    @Test
+    public void morphoAnalysisLists() throws Exception {
+        MorphoAnalysis.Builder builder = new MorphoAnalysis.Builder();
+        Token.Builder tokenBuilder = new Token.Builder(0, 1, "d");
+        builder.addComponent(tokenBuilder.build());
+        builder.components(Lists.<Token>newArrayList());
+        assertNull(builder.build().getComponents());
+
+        HanMorphoAnalysis.Builder hmaBuilder = new HanMorphoAnalysis.Builder();
+        hmaBuilder.addReading("bloop");
+        hmaBuilder.readings(Lists.<String>newArrayList());
+        assertNull(hmaBuilder.build().getReadings());
+
+        KoreanMorphoAnalysis.Builder kmaBuilder = new KoreanMorphoAnalysis.Builder();
+        kmaBuilder.addMorpheme("mor", "pheme");
+        kmaBuilder.morphemes(Lists.<String>newArrayList(), Lists.<String>newArrayList());
+        assertNull(kmaBuilder.build().getMorphemes());
+        assertNull(kmaBuilder.build().getMorphemeTags());
     }
 }
