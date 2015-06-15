@@ -181,7 +181,7 @@ public class ResolvedEntity extends Attribute {
          * @return the new resolved entity
          */
         public ResolvedEntity build() {
-            return new ResolvedEntity(startOffset, endOffset, entityId, coreferenceChainId, confidence, extendedProperties);
+            return new ResolvedEntity(startOffset, endOffset, entityId, coreferenceChainId, confidence, extendedProperties.build());
         }
     }
 }

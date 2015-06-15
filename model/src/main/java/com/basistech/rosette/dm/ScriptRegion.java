@@ -109,7 +109,7 @@ public class ScriptRegion extends Attribute {
          * @return the new region
          */
         public ScriptRegion build() {
-            return new ScriptRegion(startOffset, endOffset, script, extendedProperties);
+            return new ScriptRegion(startOffset, endOffset, script, extendedProperties.build());
         }
     }
 }

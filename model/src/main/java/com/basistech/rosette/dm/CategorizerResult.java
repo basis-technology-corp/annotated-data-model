@@ -253,7 +253,7 @@ public class CategorizerResult extends BaseAttribute {
          */
         public CategorizerResult build() {
             return new CategorizerResult(label, score, confidence,
-                explanationSet, perFeatureScores, extendedProperties);
+                explanationSet, perFeatureScores, extendedProperties.build());
         }
     }
 }

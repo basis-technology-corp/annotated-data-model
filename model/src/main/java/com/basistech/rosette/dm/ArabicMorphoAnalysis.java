@@ -461,7 +461,7 @@ public class ArabicMorphoAnalysis extends MorphoAnalysis {
                     prefixTags,
                     stemTags,
                     suffixTags,
-                    extendedProperties);
+                    extendedProperties.build());
         }
     }
 }

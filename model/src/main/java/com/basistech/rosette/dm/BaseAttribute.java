@@ -17,7 +17,6 @@ package com.basistech.rosette.dm;
 import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Maps;
 
 import java.util.List;
 import java.util.Map;
@@ -124,13 +123,13 @@ public abstract class BaseAttribute {
      * Base class for builders for the subclasses of {@link com.basistech.rosette.dm.BaseAttribute}.
      */
     public abstract static class Builder {
-        protected Map<String, Object> extendedProperties;
+        protected ImmutableMap.Builder<String, Object> extendedProperties;
 
         /**
          * Constructs a builder with no data.
          */
         protected Builder() {
-            this.extendedProperties = Maps.newHashMap();
+            this.extendedProperties = ImmutableMap.builder();
         }
 
         /**
@@ -139,8 +138,7 @@ public abstract class BaseAttribute {
          * @param toCopy the object to copy
          */
         protected Builder(BaseAttribute toCopy) {
-            this.extendedProperties = Maps.newHashMap();
-            this.extendedProperties.putAll(toCopy.extendedProperties);
+            this.extendedProperties = ImmutableMap.<String, Object>builder().putAll(toCopy.extendedProperties);
         }
 
         /**
@@ -160,7 +158,7 @@ public abstract class BaseAttribute {
          * @return this.
          */
         public Builder extendedProperties(Map<String, Object> properties) {
-            this.extendedProperties = properties;
+            this.extendedProperties = ImmutableMap.<String, Object>builder().putAll(properties);
             return this;
         }
 

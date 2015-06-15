@@ -315,7 +315,7 @@ public class EntityMention extends Attribute {
          */
         public EntityMention build() {
             return new EntityMention(startOffset, endOffset, entityType, coreferenceChainId, confidence, flags, source,
-                subsource, normalized, extendedProperties);
+                subsource, normalized, extendedProperties.build());
         }
     }
 }

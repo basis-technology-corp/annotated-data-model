@@ -256,7 +256,7 @@ public class Name extends BaseAttribute {
          * @return the new {@linkplain Name}.
          */
         public Name build() {
-            return new Name(text, type, script, languageOfOrigin, languageOfUse, extendedProperties);
+            return new Name(text, type, script, languageOfOrigin, languageOfUse, extendedProperties.build());
         }
     }
 }

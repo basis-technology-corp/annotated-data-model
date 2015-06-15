@@ -242,7 +242,7 @@ public class ListAttribute<Item extends BaseAttribute> extends BaseAttribute imp
          * @return the new list
          */
         public ListAttribute<Item> build() {
-            return new ListAttribute<Item>(itemClass, items, extendedProperties);
+            return new ListAttribute<Item>(itemClass, items, extendedProperties.build());
         }
     }
 }

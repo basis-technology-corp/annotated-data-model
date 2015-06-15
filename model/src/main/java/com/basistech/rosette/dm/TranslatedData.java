@@ -168,7 +168,7 @@ public class TranslatedData extends BaseAttribute {
          * @return a new TranslatedData object.
          */
         public TranslatedData build() {
-            return new TranslatedData(domain, translation, confidence, extendedProperties);
+            return new TranslatedData(domain, translation, confidence, extendedProperties.build());
         }
     }
 }
