@@ -1,5 +1,26 @@
 # Cumulative Release Notes for the Annotated Data Model
 
+## ???
+
+### [COMN-183](http://jira.basistech.net/browse/COMN-183) Rename setEndOffset
+
+`Attribute.Builder.setEndOffset()` was deprecated.  Use the new method
+`Attribute.Builder.endOffset()` instead.
+
+### [COMN-190](http://jira.basistech.net/browse/COMN-190) ADM builders can reset lists
+
+Attribute builders that hold lists now have a setter for the entire
+list, not just the ability to add new elements.  For example, in
+`Token.Builder`:
+
+```
+  public Builder addAnalysis(MorphoAnalysis analysis);
+  public Builder analyses(List<MorphoAnalysis> analyses);  // new
+```
+
+Calling the list setter with an empty list is equivalent to resetting
+the builders list.
+
 ## 1.11.2
 
 ### [COMN-180](http://jira.basistech.net/browse/COMN-180) Remove guava dependency
