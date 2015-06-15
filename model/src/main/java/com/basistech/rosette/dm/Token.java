@@ -253,7 +253,7 @@ public class Token extends Attribute {
          * @return the new token
          */
         public Token build() {
-            return new Token(startOffset, endOffset, text, normalized, source, analyses, extendedProperties.build());
+            return new Token(startOffset, endOffset, text, normalized, source, analyses, buildExtendedProperties());
         }
     }
 }

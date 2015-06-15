@@ -152,23 +152,12 @@ public class TranslatedData extends BaseAttribute {
         }
 
         /**
-         * Adds an extended value key-value pair.
-         *
-         * @param key the key
-         * @param value the value
-         */
-        public Builder extendedProperty(String key, Object value) {
-            super.extendedProperties.put(key, value);
-            return this;
-        }
-
-        /**
          * Builds a new TranslatedData object from the current state of the builder.
          *
          * @return a new TranslatedData object.
          */
         public TranslatedData build() {
-            return new TranslatedData(domain, translation, confidence, extendedProperties.build());
+            return new TranslatedData(domain, translation, confidence, buildExtendedProperties());
         }
     }
 }

@@ -143,7 +143,7 @@ public class HanMorphoAnalysis extends MorphoAnalysis {
          * @return the analysis
          */
         public HanMorphoAnalysis build() {
-            return new HanMorphoAnalysis(partOfSpeech, lemma, components, raw, readings, extendedProperties.build());
+            return new HanMorphoAnalysis(partOfSpeech, lemma, components, raw, readings, buildExtendedProperties());
         }
     }
 }

@@ -148,7 +148,7 @@ public class TranslatedTokens extends BaseAttribute {
          * @return a new TranslatedTokens object.
          */
         public TranslatedTokens build() {
-            return new TranslatedTokens(domain, translations, extendedProperties.build());
+            return new TranslatedTokens(domain, translations, buildExtendedProperties());
         }
     }
 }
