@@ -124,7 +124,7 @@ public abstract class BaseAttribute {
      * Base class for builders for the subclasses of {@link com.basistech.rosette.dm.BaseAttribute}.
      */
     public abstract static class Builder {
-        protected final Map<String, Object> extendedProperties;
+        protected Map<String, Object> extendedProperties;
 
         /**
          * Constructs a builder with no data.
@@ -151,6 +151,16 @@ public abstract class BaseAttribute {
          */
         public Builder extendedProperty(String key, Object value) {
             this.extendedProperties.put(key, value);
+            return this;
+        }
+
+        /**
+         * Replace the entire extended property map.
+         * @param properties a map of extended properties.
+         * @return this.
+         */
+        public Builder extendedProperties(Map<String, Object> properties) {
+            this.extendedProperties = properties;
             return this;
         }
 

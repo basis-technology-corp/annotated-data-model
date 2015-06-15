@@ -207,6 +207,16 @@ public class Token extends Attribute {
         }
 
         /**
+         * Sets the list of normalized forms.
+         * @param normalized the normalized token forms.
+         * @return this.
+         */
+        public Builder normalized(List<String> normalized) {
+            this.normalized = normalized;
+            return this;
+        }
+
+        /**
          * Specifies the source of this token.
          *
          * @param source the source
@@ -224,6 +234,16 @@ public class Token extends Attribute {
          */
         public Builder addAnalysis(MorphoAnalysis analysis) {
             this.analyses.add(analysis);
+            return this;
+        }
+
+        /**
+         * Sets the list of morphological analyses.
+         * @param analyses the analyses.
+         * @return this.
+         */
+        public Builder analyses(List<MorphoAnalysis> analyses) {
+            this.analyses = analyses;
             return this;
         }
 
