@@ -18,8 +18,8 @@ list, not just the ability to add new elements.  For example, in
   public Builder analyses(List<MorphoAnalysis> analyses);  // new
 ```
 
-Calling the list setter with an empty list is equivalent to resetting
-the builders list.
+Calling the list setter with an empty list or null results in an empty
+list in the Builder.
 
 ## 1.11.2
 
