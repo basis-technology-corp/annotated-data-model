@@ -333,6 +333,7 @@ public class ArabicMorphoAnalysis extends MorphoAnalysis {
          *
          * @param prefixLength the number of characters in the prefix
          * @param stemLength the number of characters in the stem
+         * @return this
          */
         public Builder lengths(int prefixLength, int stemLength) {
             this.prefixLength = prefixLength;
@@ -344,6 +345,7 @@ public class ArabicMorphoAnalysis extends MorphoAnalysis {
          * Sets the root for the word.
          *
          * @param root the root, according to semitic linguistics
+         * @return this
          */
         public Builder root(String root) {
             this.root = root;
@@ -354,6 +356,7 @@ public class ArabicMorphoAnalysis extends MorphoAnalysis {
          * Specifies whether the word has an attached definite article.
          *
          * @param definiteArticle true for a definite article
+         * @return this
          */
         public Builder definiteArticle(boolean definiteArticle) {
             this.definiteArticle = definiteArticle;
@@ -364,6 +367,7 @@ public class ArabicMorphoAnalysis extends MorphoAnalysis {
          * Specifies whether the prefixes are strippable (e.g. prepositions).
          *
          * @param strippablePrefix true if strippable
+         * @return this
          */
         public Builder strippablePrefix(boolean strippablePrefix) {
             this.strippablePrefix = strippablePrefix;
@@ -375,10 +379,23 @@ public class ArabicMorphoAnalysis extends MorphoAnalysis {
          *
          * @param prefix the prefix
          * @param prefixTag the part-of-speech for the prefix
+         * @return this
          */
         public Builder addPrefix(String prefix, String prefixTag) {
             prefixes.add(prefix);
             prefixTags.add(prefixTag);
+            return this;
+        }
+
+        /**
+         * Set all the prefixes and their tags. The two lists must be the same length.
+         * @param prefixes  the prefixes.
+         * @param prefixTags the tags for the prefixes.
+         * @return this
+         */
+        public Builder prefixes(List<String> prefixes, List<String> prefixTags) {
+            this.prefixes = prefixes;
+            this.prefixTags = prefixTags;
             return this;
         }
 
@@ -395,6 +412,18 @@ public class ArabicMorphoAnalysis extends MorphoAnalysis {
         }
 
         /**
+         * Set all the stems and their tags. The two lists must be the same length.
+         * @param stems  the prefixes.
+         * @param stemTags the tags for the prefixes.
+         * @return this
+         */
+        public Builder stems(List<String> stems, List<String> stemTags) {
+            this.stems = stems;
+            this.stemTags = stemTags;
+            return this;
+        }
+
+        /**
          * Adds a suffix.
          *
          * @param suffix the suffix
@@ -403,6 +432,18 @@ public class ArabicMorphoAnalysis extends MorphoAnalysis {
         public Builder addSuffix(String suffix, String suffixTag) {
             suffixes.add(suffix);
             suffixTags.add(suffixTag);
+            return this;
+        }
+
+        /**
+         * Set all the suffixes and their tags. The two lists must be the same length.
+         * @param suffixes  the prefixes.
+         * @param suffixes the tags for the prefixes.
+         * @return this
+         */
+        public Builder suffixes(List<String> suffixes, List<String> suffixTags) {
+            this.suffixes = suffixes;
+            this.suffixTags = suffixTags;
             return this;
         }
 
