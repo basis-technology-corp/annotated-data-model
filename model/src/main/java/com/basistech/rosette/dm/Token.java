@@ -212,7 +212,7 @@ public class Token extends Attribute {
          * @return this.
          */
         public Builder normalized(List<String> normalized) {
-            this.normalized = normalized;
+            this.normalized = nullOrList(normalized);
             return this;
         }
 
@@ -243,7 +243,7 @@ public class Token extends Attribute {
          * @return this.
          */
         public Builder analyses(List<MorphoAnalysis> analyses) {
-            this.analyses = analyses;
+            this.analyses = nullOrList(analyses);
             return this;
         }
 

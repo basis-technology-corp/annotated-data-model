@@ -233,7 +233,7 @@ public class MorphoAnalysis extends BaseAttribute {
          * @return this.
          */
         public Builder components(List<Token> components) {
-            this.components = components;
+            this.components = nullOrList(components);
             return this;
         }
 
