@@ -377,6 +377,11 @@ public class AnnotatedTextTest {
         tokenBuilder.addAnalysis(maBuilder.build());
         tokenBuilder.analyses(Lists.<MorphoAnalysis>newArrayList());
         assertNull(tokenBuilder.build().getAnalyses());
+
+        tokenBuilder = new Token.Builder(0, 1, "f");
+        tokenBuilder.analyses(null);
+        tokenBuilder.addAnalysis(maBuilder.build());
+        assertEquals(1, tokenBuilder.build().getAnalyses().size());
     }
 
     @Test

@@ -17,6 +17,7 @@ package com.basistech.rosette.dm;
 import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Lists;
 
 import java.util.List;
 import java.util.Map;
@@ -210,6 +211,14 @@ public abstract class BaseAttribute {
         protected static <T> void addAllToList(List<T> list, List<T> toAdd) {
             if (toAdd != null) {
                 list.addAll(toAdd);
+            }
+        }
+
+        protected static <T> List<T> nullOrList(List<T> newListValue) {
+            if (newListValue == null) {
+                return Lists.newArrayList();
+            } else {
+                return newListValue;
             }
         }
     }

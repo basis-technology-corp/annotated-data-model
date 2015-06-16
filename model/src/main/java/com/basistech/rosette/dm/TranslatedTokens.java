@@ -138,7 +138,7 @@ public class TranslatedTokens extends BaseAttribute {
          * @return this.
          */
         public Builder translatedTokens(List<String> translations) {
-            this.translations = translations;
+            this.translations = nullOrList(translations);
             return this;
         }
 

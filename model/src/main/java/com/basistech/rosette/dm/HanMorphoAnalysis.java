@@ -133,7 +133,7 @@ public class HanMorphoAnalysis extends MorphoAnalysis {
          * @return this
          */
         public Builder readings(List<String> readings) {
-            this.readings = readings;
+            this.readings = nullOrList(readings);
             return this;
         }
 

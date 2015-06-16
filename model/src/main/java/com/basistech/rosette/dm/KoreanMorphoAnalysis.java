@@ -142,8 +142,8 @@ public class KoreanMorphoAnalysis extends MorphoAnalysis {
          * @return this.
          */
         public Builder morphemes(List<String> morphemes, List<String> morphemeTags) {
-            this.morphemes = morphemes;
-            this.morphemeTags = morphemeTags;
+            this.morphemes = nullOrList(morphemes);
+            this.morphemeTags = nullOrList(morphemeTags);
             return this;
         }
 
