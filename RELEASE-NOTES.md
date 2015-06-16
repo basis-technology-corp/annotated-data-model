@@ -2,6 +2,12 @@
 
 ## ???
 
+### [COMN-186](https://basistech.atlassian.net/browse/COMN-186) Optimize copying attributes
+
+There were too many copies of the map behind extendedProperties, which
+exist on every attribute, even if empty.  This showed up in an ADM
+application that did a lot of Token copies.
+
 ### [COMN-183](http://jira.basistech.net/browse/COMN-183) Rename setEndOffset
 
 `Attribute.Builder.setEndOffset()` was deprecated.  Use the new method
