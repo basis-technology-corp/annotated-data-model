@@ -2,6 +2,12 @@
 
 ## ???
 
+### [COMN-189](https://basistech.atlassian.net/browse/COMN-189) Add ComposingAnnotator
+    
+`com.basistech.rosette.dm.util.ComposingAnnotator` provides a function
+needed in RBL-JVM, which is to group a sequence of annotators into a
+single annotator.
+
 ### [COMN-186](https://basistech.atlassian.net/browse/COMN-186) Optimize copying attributes
 
 There were too many copies of the map behind extendedProperties, which

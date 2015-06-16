@@ -24,9 +24,9 @@ import com.basistech.util.LanguageCode;
 import java.util.Map;
 
 /**
- * Annotator delegates to one of a collection of per-language annotators.
+ * An annotator that delegates to one of a collection of per-language annotators.
  */
-class WholeDocumentLanguageDispatchAnnotator implements Annotator {
+public class WholeDocumentLanguageDispatchAnnotator implements Annotator {
     private final Map<LanguageCode, Annotator> delegates;
 
     WholeDocumentLanguageDispatchAnnotator(Map<LanguageCode, Annotator> delegates) {
