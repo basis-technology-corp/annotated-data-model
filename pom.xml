@@ -45,7 +45,6 @@
         <module>shaded</module>
         <module>shaded-test</module>
         <module>script</module>
-        <module>benchmarks</module>
     </modules>
     <dependencyManagement>
         <dependencies>
