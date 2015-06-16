@@ -33,7 +33,9 @@ import java.util.Map;
 public abstract class RelationshipMentionMixin {
 
     @JsonCreator
-    RelationshipMentionMixin(@JsonProperty("predPhrase") String predPhrase,
+    RelationshipMentionMixin(@JsonProperty("startOffset") int startOffset,
+                             @JsonProperty("endOffset") int endOffset,
+                             @JsonProperty("predPhrase") String predPhrase,
                              @JsonProperty("evidences") List<Evidence> evidences,
                              @JsonProperty("arguments") Map<String, BaseAttribute> arguments,
                              @JsonProperty("synthetic") boolean synthetic,

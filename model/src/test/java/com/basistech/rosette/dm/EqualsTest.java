@@ -431,20 +431,21 @@ public class EqualsTest {
 
 
         // relId intentionally null, all other fields populated.
-        RelationshipMention rm1 = new RelationshipMention.Builder("developing software FTW").arg1(_ra1).arg2(_ra2).build();
+        RelationshipMention rm1 = new RelationshipMention.Builder(0, 12, "developing software FTW").arg1(_ra1).arg2
+                (_ra2).build();
         rm1.hashCode();
         assertTrue(rm1.equals(rm1));
         assertNull(rm1.getRelId());
 
         // this guy has different arguments defined
-        RelationshipMention rm2 = new RelationshipMention.Builder("developing software FTW").arg1(_ra3).build();
+        RelationshipMention rm2 = new RelationshipMention.Builder(0, 12, "developing software FTW").arg1(_ra3).build();
         rm2.hashCode();
         assertTrue(rm2.equals(rm2));
         assertFalse(rm1.equals(rm2));
         assertFalse(rm2.equals(rm1));
         assertFalse(rm1.hashCode() == rm2.hashCode());
 
-        rm2 = new RelationshipMention.Builder("developing software FTW").arg1(_ra1).arg2(_ra2).evidences
+        rm2 = new RelationshipMention.Builder(0, 12, "developing software FTW").arg1(_ra1).arg2(_ra2).evidences
                 (Lists.newArrayList(new Evidence.Builder(0, 1).build())).build();
 
         rm2.hashCode();

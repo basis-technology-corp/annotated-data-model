@@ -22,7 +22,7 @@ import com.google.common.collect.Maps;
 import java.util.List;
 import java.util.Map;
 
-public class RelationshipMention extends BaseAttribute {
+public class RelationshipMention extends Attribute {
 
     /**
      * A display string representing the predicate
@@ -51,9 +51,10 @@ public class RelationshipMention extends BaseAttribute {
      */
     private final String relId;
 
-    protected RelationshipMention(String predPhrase, List<Evidence> evidences, Map<String, BaseAttribute>
+    protected RelationshipMention(int startOffset, int endOffset, String predPhrase, List<Evidence> evidences,
+                                  Map<String, BaseAttribute>
             arguments, boolean synthetic, String relId, Map<String, Object> extendedProperties) {
-        super(extendedProperties);
+        super(startOffset, endOffset, extendedProperties);
         this.predPhrase = predPhrase;
         this.synthetic = synthetic;
         this.relId = relId;
@@ -186,7 +187,7 @@ public class RelationshipMention extends BaseAttribute {
         return result;
     }
 
-    public static class Builder extends BaseAttribute.Builder {
+    public static class Builder extends Attribute.Builder {
 
         private String predPhrase;
         private final Map<String, BaseAttribute> arguments = Maps.newHashMap();
@@ -195,8 +196,8 @@ public class RelationshipMention extends BaseAttribute {
         private List<Evidence> evidences;
 
 
-        public Builder(String predPhrase) {
-            super();
+        public Builder(int startOffset, int endOffset, String predPhrase) {
+            super(startOffset, endOffset);
             this.predPhrase = predPhrase;
             this.synthetic = false;
             this.evidences = Lists.newArrayList();
@@ -365,7 +366,7 @@ public class RelationshipMention extends BaseAttribute {
          * @return the new relation mention.
          */
         public RelationshipMention build() {
-            return new RelationshipMention(predPhrase, evidences, arguments, synthetic, relId,
+            return new RelationshipMention(startOffset, endOffset, predPhrase, evidences, arguments, synthetic, relId,
                     extendedProperties);
         }
     }

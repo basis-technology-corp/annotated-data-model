@@ -115,7 +115,8 @@ public class DmJsonUtilsTest extends Assert {
 
         // Build a relation
         ListAttribute.Builder<RelationshipMention> rmListBuilder = new ListAttribute.Builder<RelationshipMention>(RelationshipMention.class);
-        RelationshipMention.Builder rmBuilder = new RelationshipMention.Builder("gave a ride").arg1(arg1).arg2(arg2);
+        RelationshipMention.Builder rmBuilder = new RelationshipMention.Builder(0, 12, "gave a ride").arg1(arg1).arg2
+                (arg2);
         rmBuilder.relId("/free/base/property0");
         rmBuilder.extendedProperty("rm-ex", "rm-ex-val");
         List<Evidence> evList2 = new ArrayList<Evidence>();
