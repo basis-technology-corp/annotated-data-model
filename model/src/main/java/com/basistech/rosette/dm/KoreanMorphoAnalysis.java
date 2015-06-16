@@ -153,7 +153,8 @@ public class KoreanMorphoAnalysis extends MorphoAnalysis {
          * @return the analysis
          */
         public KoreanMorphoAnalysis build() {
-            return new KoreanMorphoAnalysis(partOfSpeech, lemma, components, raw, morphemes, morphemeTags, extendedProperties);
+            return new KoreanMorphoAnalysis(partOfSpeech, lemma, components, raw, morphemes, morphemeTags,
+                    buildExtendedProperties());
         }
     }
 }

@@ -79,7 +79,7 @@ public class Sentence extends Attribute {
          * @return the new sentence
          */
         public Sentence build() {
-            return new Sentence(startOffset, endOffset, extendedProperties);
+            return new Sentence(startOffset, endOffset, buildExtendedProperties());
         }
     }
 }

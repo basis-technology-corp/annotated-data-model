@@ -243,7 +243,7 @@ public class MorphoAnalysis extends BaseAttribute {
          * @return the new analysis
          */
         public MorphoAnalysis build() {
-            return new MorphoAnalysis(partOfSpeech, lemma, components, raw, extendedProperties);
+            return new MorphoAnalysis(partOfSpeech, lemma, components, raw, buildExtendedProperties());
         }
     }
 }

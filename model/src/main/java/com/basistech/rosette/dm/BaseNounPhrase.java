@@ -69,7 +69,7 @@ public class BaseNounPhrase extends Attribute {
          * @return the new analysis object
         */
         public BaseNounPhrase build() {
-            return new BaseNounPhrase(startOffset, endOffset, extendedProperties);
+            return new BaseNounPhrase(startOffset, endOffset, buildExtendedProperties());
         }
     }
 }
