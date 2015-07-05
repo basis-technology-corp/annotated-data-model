@@ -56,12 +56,14 @@ public abstract class Attribute extends BaseAttribute {
         return endOffset;
     }
 
+    //CHECKSTYLE:OFF
     @Override
     protected Objects.ToStringHelper
     toStringHelper() {
         return super.toStringHelper().add("startOffset", startOffset)
                 .add("endOffset", endOffset);
     }
+    //CHECKSTYLE:ON
 
     @Override
     public boolean equals(Object o) {
@@ -143,6 +145,19 @@ public abstract class Attribute extends BaseAttribute {
          * @param endOffset the end offset
          * @return this
          */
+        public Builder endOffset(int endOffset) {
+            this.endOffset = endOffset;
+            return this;
+        }
+
+        /**
+         * Specifies the end character offset.
+         *
+         * @param endOffset the end offset
+         * @return this
+         * @deprecated use {@link #endOffset(int)}
+         */
+        @Deprecated
         public Builder setEndOffset(int endOffset) {
             this.endOffset = endOffset;
             return this;

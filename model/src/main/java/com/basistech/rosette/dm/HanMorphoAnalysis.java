@@ -128,12 +128,22 @@ public class HanMorphoAnalysis extends MorphoAnalysis {
         }
 
         /**
+         * Set all the readings for this analysis.
+         * @param readings the readings.
+         * @return this
+         */
+        public Builder readings(List<String> readings) {
+            this.readings = nullOrList(readings);
+            return this;
+        }
+
+        /**
          * Builds an immutable analysis object from the current state of this builder.
          *
          * @return the analysis
          */
         public HanMorphoAnalysis build() {
-            return new HanMorphoAnalysis(partOfSpeech, lemma, components, raw, readings, extendedProperties);
+            return new HanMorphoAnalysis(partOfSpeech, lemma, components, raw, readings, buildExtendedProperties());
         }
     }
 }

@@ -241,17 +241,6 @@ public class RelationshipMention extends Attribute {
         }
 
         /**
-         * Adds an extended value key-value pair.
-         *
-         * @param key the key
-         * @param value the value
-         */
-        public Builder extendedProperty(String key, Object value) {
-            this.extendedProperties.put(key, value);
-            return this;
-        }
-
-        /**
          * Attaches arg1
          *
          * @param arg1 the arg1
@@ -367,7 +356,7 @@ public class RelationshipMention extends Attribute {
          */
         public RelationshipMention build() {
             return new RelationshipMention(startOffset, endOffset, predPhrase, evidences, arguments, synthetic, relId,
-                    extendedProperties);
+                    buildExtendedProperties());
         }
     }
 }

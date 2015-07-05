@@ -228,12 +228,22 @@ public class MorphoAnalysis extends BaseAttribute {
         }
 
         /**
+         * Sets all of the compound components.
+         * @param components the components.
+         * @return this.
+         */
+        public Builder components(List<Token> components) {
+            this.components = nullOrList(components);
+            return this;
+        }
+
+        /**
          * Builds a new immutable morpho analysis from the current state of the builder.
          *
          * @return the new analysis
          */
         public MorphoAnalysis build() {
-            return new MorphoAnalysis(partOfSpeech, lemma, components, raw, extendedProperties);
+            return new MorphoAnalysis(partOfSpeech, lemma, components, raw, buildExtendedProperties());
         }
     }
 }

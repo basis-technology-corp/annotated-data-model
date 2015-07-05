@@ -161,6 +161,7 @@ public class Name extends BaseAttribute {
         return result;
     }
 
+    //CHECKSTYLE:OFF
     @Override
     protected Objects.ToStringHelper
     toStringHelper() {
@@ -179,6 +180,7 @@ public class Name extends BaseAttribute {
         }
         return builder;
     }
+    //CHECKSTYLE:ON
 
     /**
      * Builder for {@link com.basistech.rosette.dm.Name}.
@@ -256,7 +258,7 @@ public class Name extends BaseAttribute {
          * @return the new {@linkplain Name}.
          */
         public Name build() {
-            return new Name(text, type, script, languageOfOrigin, languageOfUse, extendedProperties);
+            return new Name(text, type, script, languageOfOrigin, languageOfUse, buildExtendedProperties());
         }
     }
 }

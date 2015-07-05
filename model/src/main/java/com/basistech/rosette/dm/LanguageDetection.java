@@ -220,7 +220,7 @@ public class LanguageDetection extends Attribute {
              * @return the detection result
              */
             public DetectionResult build() {
-                return new DetectionResult(language, encoding, script, confidence, extendedProperties);
+                return new DetectionResult(language, encoding, script, confidence, buildExtendedProperties());
             }
         }
     }
@@ -311,7 +311,7 @@ public class LanguageDetection extends Attribute {
          */
         public LanguageDetection build() {
             // we do not null this list when empty. Should we?
-            return new LanguageDetection(startOffset, endOffset, detectionResults, extendedProperties);
+            return new LanguageDetection(startOffset, endOffset, detectionResults, buildExtendedProperties());
         }
     }
 }

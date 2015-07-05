@@ -136,12 +136,25 @@ public class KoreanMorphoAnalysis extends MorphoAnalysis {
         }
 
         /**
+         * Sets the morphemes and their tags. The lists must be the same length.
+         * @param morphemes the morphemes.
+         * @param morphemeTags their tags.
+         * @return this.
+         */
+        public Builder morphemes(List<String> morphemes, List<String> morphemeTags) {
+            this.morphemes = nullOrList(morphemes);
+            this.morphemeTags = nullOrList(morphemeTags);
+            return this;
+        }
+
+        /**
          * Builds an immutable analysis object from the current state of this builder.
          *
          * @return the analysis
          */
         public KoreanMorphoAnalysis build() {
-            return new KoreanMorphoAnalysis(partOfSpeech, lemma, components, raw, morphemes, morphemeTags, extendedProperties);
+            return new KoreanMorphoAnalysis(partOfSpeech, lemma, components, raw, morphemes, morphemeTags,
+                    buildExtendedProperties());
         }
     }
 }

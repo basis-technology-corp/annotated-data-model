@@ -1,5 +1,38 @@
 # Cumulative Release Notes for the Annotated Data Model
 
+## ???
+
+### [COMN-189](https://basistech.atlassian.net/browse/COMN-189) Add ComposingAnnotator
+    
+`com.basistech.rosette.dm.util.ComposingAnnotator` provides a function
+needed in RBL-JVM, which is to group a sequence of annotators into a
+single annotator.
+
+### [COMN-186](https://basistech.atlassian.net/browse/COMN-186) Optimize copying attributes
+
+There were too many copies of the map behind extendedProperties, which
+exist on every attribute, even if empty.  This showed up in an ADM
+application that did a lot of Token copies.
+
+### [COMN-183](http://jira.basistech.net/browse/COMN-183) Rename setEndOffset
+
+`Attribute.Builder.setEndOffset()` was deprecated.  Use the new method
+`Attribute.Builder.endOffset()` instead.
+
+### [COMN-190](http://jira.basistech.net/browse/COMN-190) ADM builders can reset lists
+
+Attribute builders that hold lists now have a setter for the entire
+list, not just the ability to add new elements.  For example, in
+`Token.Builder`:
+
+```
+  public Builder addAnalysis(MorphoAnalysis analysis);
+  public Builder analyses(List<MorphoAnalysis> analyses);  // new
+```
+
+Calling the list setter with an empty list or null results in an empty
+list in the Builder.
+
 ## 1.11.2
 
 ### [COMN-180](http://jira.basistech.net/browse/COMN-180) Remove guava dependency

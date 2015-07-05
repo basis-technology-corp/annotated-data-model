@@ -136,7 +136,7 @@ public class RelationshipArgument extends BaseAttribute {
 
         public RelationshipArgument build() {
             return new RelationshipArgument(argumentPhrase, evidences, argumentId,
-                    extendedProperties);
+                    buildExtendedProperties());
         }
     }
 }

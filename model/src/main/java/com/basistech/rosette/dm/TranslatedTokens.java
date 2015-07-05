@@ -133,12 +133,22 @@ public class TranslatedTokens extends BaseAttribute {
         }
 
         /**
+         * Set all of the translations for this token.
+         * @param translations the translations.
+         * @return this.
+         */
+        public Builder translatedTokens(List<String> translations) {
+            this.translations = nullOrList(translations);
+            return this;
+        }
+
+        /**
          * Builds a new TranslatedTokens object from the current state of the builder.
          *
          * @return a new TranslatedTokens object.
          */
         public TranslatedTokens build() {
-            return new TranslatedTokens(domain, translations, extendedProperties);
+            return new TranslatedTokens(domain, translations, buildExtendedProperties());
         }
     }
 }

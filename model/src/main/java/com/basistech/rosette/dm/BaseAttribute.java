@@ -17,7 +17,7 @@ package com.basistech.rosette.dm;
 import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Maps;
+import com.google.common.collect.Lists;
 
 import java.util.List;
 import java.util.Map;
@@ -38,7 +38,11 @@ public abstract class BaseAttribute {
 
     protected BaseAttribute(Map<String, Object> extendedProperties) {
         if (extendedProperties != null) {
-            this.extendedProperties = ImmutableMap.copyOf(extendedProperties);
+            if (extendedProperties instanceof ImmutableMap) {
+                this.extendedProperties = extendedProperties;
+            } else {
+                this.extendedProperties = ImmutableMap.copyOf(extendedProperties);
+            }
         } else {
             this.extendedProperties = ImmutableMap.of();
         }
@@ -124,13 +128,17 @@ public abstract class BaseAttribute {
      * Base class for builders for the subclasses of {@link com.basistech.rosette.dm.BaseAttribute}.
      */
     public abstract static class Builder {
-        protected final Map<String, Object> extendedProperties;
+        private ImmutableMap.Builder<String, Object> extendedPropertiesBuilder;
+        private ImmutableMap<String, Object> extendedPropertiesToCopy;
 
         /**
          * Constructs a builder with no data.
          */
         protected Builder() {
-            this.extendedProperties = Maps.newHashMap();
+            /* Usually we don't have any. So start with an empty map, which the constructor above will 'copy'
+             * cheaply due to optimization inside ImmutableMap.
+             */
+            this.extendedPropertiesToCopy = ImmutableMap.of();
         }
 
         /**
@@ -139,8 +147,23 @@ public abstract class BaseAttribute {
          * @param toCopy the object to copy
          */
         protected Builder(BaseAttribute toCopy) {
-            this.extendedProperties = Maps.newHashMap();
-            this.extendedProperties.putAll(toCopy.extendedProperties);
+            /* Just treat the copy as an immutable item until the caller asks us to change it. */
+            this.extendedPropertiesToCopy = (ImmutableMap<String, Object>) toCopy.extendedProperties;
+        }
+
+        /**
+         * Cook up a map to pass to the constructor.
+         * If we have an unmodified map to 'copy', we just use it. Otherwise, we build from the builder.
+         * @return the map.
+         */
+        protected Map<String, Object> buildExtendedProperties() {
+            if (extendedPropertiesToCopy != null) {
+                return extendedPropertiesToCopy;
+            } else if (extendedPropertiesBuilder != null) {
+                return extendedPropertiesBuilder.build();
+            } else {
+                return null;
+            }
         }
 
         /**
@@ -150,7 +173,32 @@ public abstract class BaseAttribute {
          * @param value the value
          */
         public Builder extendedProperty(String key, Object value) {
-            this.extendedProperties.put(key, value);
+            if (extendedPropertiesBuilder == null) {
+                /* if we don't have a builder yet, forget 'toCopy' in favor of a builder. */
+                extendedPropertiesBuilder = ImmutableMap.builder();
+                if (extendedPropertiesToCopy != null) {
+                    extendedPropertiesBuilder.putAll(extendedPropertiesToCopy);
+                    extendedPropertiesToCopy = null;
+                }
+            }
+            this.extendedPropertiesBuilder.put(key, value);
+            return this;
+        }
+
+        /**
+         * Replace the entire extended property map.
+         * @param properties a map of extended properties.
+         * @return this.
+         */
+        public Builder extendedProperties(Map<String, Object> properties) {
+            /* Turn this into the version we copy. */
+            if (properties instanceof ImmutableMap) {
+                this.extendedPropertiesToCopy = (ImmutableMap<String, Object>) properties;
+            } else {
+                this.extendedPropertiesToCopy = ImmutableMap.copyOf(properties);
+            }
+            /* No builder. */
+            this.extendedPropertiesBuilder = null;
             return this;
         }
 
@@ -163,6 +211,14 @@ public abstract class BaseAttribute {
         protected static <T> void addAllToList(List<T> list, List<T> toAdd) {
             if (toAdd != null) {
                 list.addAll(toAdd);
+            }
+        }
+
+        protected static <T> List<T> nullOrList(List<T> newListValue) {
+            if (newListValue == null) {
+                return Lists.newArrayList();
+            } else {
+                return newListValue;
             }
         }
     }
