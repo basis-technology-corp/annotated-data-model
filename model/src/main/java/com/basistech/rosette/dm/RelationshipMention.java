@@ -241,6 +241,17 @@ public class RelationshipMention extends Attribute {
         }
 
         /**
+         * Adds an extended value key-value pair.
+         *
+         * @param key the key
+         * @param value the value
+         */
+        public Builder extendedProperty(String key, Object value) {
+            super.extendedProperty(key, value);
+            return this;
+        }
+
+        /**
          * Attaches arg1
          *
          * @param arg1 the arg1
