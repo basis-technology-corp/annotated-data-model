@@ -366,7 +366,7 @@ public class AnnotatedTextTest {
     }
 
     @Test
-    public void testRelationMentions() {
+    public void relationMentions() {
         String argumentId = "/resolved/argument/";
         String argPhrase = "some-noun";
         String relPhrase = "some-verb"; //
@@ -391,7 +391,7 @@ public class AnnotatedTextTest {
         assertEquals(relPhrase, relationshipMention.getPredPhrase());
     }
 
-
+    @Test
     public void tokenLists() throws Exception {
         Token.Builder tokenBuilder = new Token.Builder(0, 1, "f");
         tokenBuilder.addNormalized("c");
