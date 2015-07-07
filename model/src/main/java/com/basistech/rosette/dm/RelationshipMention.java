@@ -58,11 +58,7 @@ public class RelationshipMention extends Attribute {
         this.predPhrase = predPhrase;
         this.synthetic = synthetic;
         this.relId = relId;
-        if (evidences != null) {
-            this.evidences = evidences;
-        } else {
-            this.evidences = Lists.newArrayList();
-        }
+        this.evidences = listOrNull(evidences);
         if (arguments != null) {
             this.arguments = ImmutableMap.copyOf(arguments);
         } else {
@@ -165,11 +161,11 @@ public class RelationshipMention extends Attribute {
             return false;
         }
 
-        if (!predPhrase.equals(that.predPhrase)) {
+        if (predPhrase != null ? !predPhrase.equals(that.predPhrase) : that.predPhrase != null) {
             return false;
         }
 
-        if (!evidences.equals(that.getEvidences())) {
+        if (evidences != null ? !evidences.equals(that.getEvidences()) : that.evidences != null) {
             return false;
         }
 
@@ -179,8 +175,8 @@ public class RelationshipMention extends Attribute {
     @Override
     public int hashCode() {
         int result = super.hashCode();
-        result = 31 * result + predPhrase.hashCode();
-        result = 31 * result + evidences.hashCode();
+        result = 31 * result + (predPhrase != null ? predPhrase.hashCode() : 0);
+        result = 31 * result + (evidences != null ? evidences.hashCode() : 0);
         result = 31 * result + arguments.hashCode();
         result = 31 * result + (synthetic ? 1 : 0);
         result = 31 * result + (relId != null ? relId.hashCode() : 0);

@@ -17,6 +17,13 @@ package com.basistech.rosette.dm;
 
 import java.util.Map;
 
+/**
+ * An Evidence.
+ * Evidence for a relationship mention component, pointing to the exact part of the raw text that implied there is an
+ * argument or predicate phrase around.
+ *
+ * Note that Evidence have no properties of their own.
+ */
 public class Evidence extends Attribute {
 
     protected Evidence(int startOffset, int endOffset) {
@@ -27,6 +34,9 @@ public class Evidence extends Attribute {
         super(startOffset, endOffset, extendedProperties);
     }
 
+    /**
+     * Builder for Evidence attributes.
+     */
     public static class Builder extends Attribute.Builder {
 
         /**
@@ -51,6 +61,11 @@ public class Evidence extends Attribute {
             this.endOffset = toCopy.endOffset;
         }
 
+        /**
+         * Creates an immutable evidence from the current state of the builder.
+         *
+         * @return the new evidence
+         */
         public Evidence build() {
             return new Evidence(startOffset, endOffset);
         }
