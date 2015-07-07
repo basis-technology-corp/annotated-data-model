@@ -396,7 +396,7 @@ public class EqualsTest {
     }
 
     @Test
-    public void testRelationArgument() throws Exception {
+    public void relationArgument() throws Exception {
         // this one has offsets, argumentPhrase and an argid,
         RelationshipArgument ra1 = new RelationshipArgument.Builder().argumentPhrase("t").argumentId("1").build();
         ra1.hashCode();
@@ -424,7 +424,7 @@ public class EqualsTest {
     }
 
     @Test
-    public void testRelationMention() throws Exception {
+    public void relationMention() throws Exception {
         RelationshipArgument _ra1 = new RelationshipArgument.Builder().argumentPhrase("t").argumentId("1").build();
         RelationshipArgument _ra2 = new RelationshipArgument.Builder().argumentPhrase("t").build();
         RelationshipArgument _ra3 = new RelationshipArgument.Builder().argumentPhrase("b").build();

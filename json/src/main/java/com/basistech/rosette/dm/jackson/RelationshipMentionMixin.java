@@ -14,15 +14,10 @@
 
 package com.basistech.rosette.dm.jackson;
 
-import com.basistech.rosette.dm.BaseAttribute;
 import com.basistech.rosette.dm.Evidence;
-import com.basistech.rosette.dm.ListAttribute;
 import com.basistech.rosette.dm.RelationshipArgument;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.databind.annotation.JsonTypeIdResolver;
 
 import java.util.List;
 import java.util.Map;
@@ -37,33 +32,15 @@ public abstract class RelationshipMentionMixin {
                              @JsonProperty("endOffset") int endOffset,
                              @JsonProperty("predPhrase") String predPhrase,
                              @JsonProperty("evidences") List<Evidence> evidences,
-                             @JsonProperty("arguments") Map<String, BaseAttribute> arguments,
+                             @JsonProperty("arg1") RelationshipArgument arg1,
+                             @JsonProperty("arg2") RelationshipArgument arg2,
+                             @JsonProperty("arg3") RelationshipArgument arg3,
+                             @JsonProperty("adjuncts") List<RelationshipArgument> adjuncts,
+                             @JsonProperty("locatives") List<RelationshipArgument> locatives,
+                             @JsonProperty("temporals") List<RelationshipArgument> temporals,
                              @JsonProperty("synthetic") boolean synthetic,
                              @JsonProperty("relId") String relId,
                              @JsonProperty("extendedProperties") Map<String, Object> extendedProperties) {
 
     }
-
-    @JsonTypeInfo(use = JsonTypeInfo.Id.CUSTOM, include = JsonTypeInfo.As.PROPERTY, property = "type")
-    @JsonTypeIdResolver(DmTypeIdResolver.class)
-    public abstract Map<String, BaseAttribute> getArguments();
-
-    @JsonIgnore
-    public abstract RelationshipArgument getArg1();
-
-    @JsonIgnore
-    public abstract RelationshipArgument getArg2();
-
-    @JsonIgnore
-    public abstract RelationshipArgument getArg3();
-
-    @JsonIgnore
-    public abstract ListAttribute<RelationshipArgument> getAdjuncts();
-
-    @JsonIgnore
-    public abstract ListAttribute<RelationshipArgument> getLocatives();
-
-    @JsonIgnore
-    public abstract ListAttribute<RelationshipArgument> getTemporals();
-
 }

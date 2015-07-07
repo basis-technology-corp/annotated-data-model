@@ -15,9 +15,7 @@
 package com.basistech.rosette.dm;
 
 import com.google.common.base.Objects;
-import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 
 import java.util.List;
 import java.util.Map;
@@ -35,9 +33,20 @@ public class RelationshipMention extends Attribute {
     private final List<Evidence> evidences;
 
     /**
-     * The arguments for this relationsip mention, indexed by type.
+     * First argument.
      */
-    private final Map<String, BaseAttribute> arguments;
+    private final RelationshipArgument arg1;
+    /**
+     * Second argument.
+     */
+    private final RelationshipArgument arg2;
+    /**
+     * Third argument.
+     */
+    private final RelationshipArgument arg3;
+    private final List<RelationshipArgument> adjuncts;
+    private final List<RelationshipArgument> locatives;
+    private final List<RelationshipArgument> temporals;
 
     /**
      * Specifies whether the relation appears in the sentence (synthetic=false)
@@ -52,18 +61,24 @@ public class RelationshipMention extends Attribute {
     private final String relId;
 
     protected RelationshipMention(int startOffset, int endOffset, String predPhrase, List<Evidence> evidences,
-                                  Map<String, BaseAttribute>
-            arguments, boolean synthetic, String relId, Map<String, Object> extendedProperties) {
+                                  RelationshipArgument arg1,
+                                  RelationshipArgument arg2,
+                                  RelationshipArgument arg3,
+                                  List<RelationshipArgument> adjuncts,
+                                  List<RelationshipArgument> locatives,
+                                  List<RelationshipArgument> temporals,
+                                  boolean synthetic, String relId, Map<String, Object> extendedProperties) {
         super(startOffset, endOffset, extendedProperties);
         this.predPhrase = predPhrase;
         this.synthetic = synthetic;
         this.relId = relId;
         this.evidences = listOrNull(evidences);
-        if (arguments != null) {
-            this.arguments = ImmutableMap.copyOf(arguments);
-        } else {
-            this.arguments = ImmutableMap.of();
-        }
+        this.arg1 = arg1;
+        this.arg2 = arg2;
+        this.arg3 = arg3;
+        this.adjuncts = listOrNull(adjuncts);
+        this.locatives = listOrNull(locatives);
+        this.temporals = listOrNull(temporals);
     }
 
     public String getPredPhrase() {
@@ -75,27 +90,27 @@ public class RelationshipMention extends Attribute {
     }
 
     public RelationshipArgument getArg1() {
-        return (RelationshipArgument) arguments.get(RelationshipArgumentType.ARG1.key());
+        return arg1;
     }
 
     public RelationshipArgument getArg2() {
-        return (RelationshipArgument) arguments.get(RelationshipArgumentType.ARG2.key());
+        return arg2;
     }
 
     public RelationshipArgument getArg3() {
-        return (RelationshipArgument) arguments.get(RelationshipArgumentType.ARG3.key());
+        return arg3;
     }
 
-    public ListAttribute<RelationshipArgument> getAdjuncts() {
-        return (ListAttribute<RelationshipArgument>) arguments.get(RelationshipArgumentType.ADJUNCT.key());
+    public List<RelationshipArgument> getAdjuncts() {
+        return adjuncts;
     }
 
-    public ListAttribute<RelationshipArgument> getLocatives() {
-        return (ListAttribute<RelationshipArgument>) arguments.get(RelationshipArgumentType.LOCATIVE.key());
+    public List<RelationshipArgument> getLocatives() {
+        return locatives;
     }
 
-    public ListAttribute<RelationshipArgument> getTemporals() {
-        return (ListAttribute<RelationshipArgument>) arguments.get(RelationshipArgumentType.TEMPORAL.key());
+    public List<RelationshipArgument> getTemporals() {
+        return temporals;
     }
 
     public String getRelId() {
@@ -106,28 +121,17 @@ public class RelationshipMention extends Attribute {
         return synthetic;
     }
 
-    /**
-     * Returns all of the arguments of this relation mention. For the defined arguments,
-     * the keys will be values from {@link RelationshipArgumentType#key()}. The values
-     * are polymorphic; the subclass of {@link BaseAttribute} depends
-     * on the attribute.  Applications should usually prefer to use the
-     * convenience accessors (e.g. {@code getArg1}) instead, to avoid the
-     * need for a cast.
-     *
-     * @return all of the arguments
-     *
-     * @adm.ignore
-     */
-    public Map<String, BaseAttribute> getArguments() {
-        return arguments;
-    }
-
     @Override
     protected Objects.ToStringHelper toStringHelper() {
         return super.toStringHelper()
                 .add("predPhrase", predPhrase)
                 .add("evidences", evidences)
-                .add("arguments", arguments)
+                .add("arg1", arg1)
+                .add("arg2", arg2)
+                .add("arg3", arg3)
+                .add("adjuncts", adjuncts)
+                .add("locatives", locatives)
+                .add("temporals", temporals)
                 .add("synthetic", synthetic)
                 .add("relId", relId);
 
@@ -153,7 +157,27 @@ public class RelationshipMention extends Attribute {
             return false;
         }
 
-        if (!arguments.equals(that.arguments)) {
+        if (arg1 != null ? !arg1.equals(that.arg1) : that.arg1 != null) {
+            return false;
+        }
+
+        if (arg2 != null ? !arg2.equals(that.arg2) : that.arg2 != null) {
+            return false;
+        }
+
+        if (arg3 != null ? !arg3.equals(that.arg3) : that.arg3 != null) {
+            return false;
+        }
+
+        if (adjuncts != null ? !adjuncts.equals(that.adjuncts) : that.adjuncts != null) {
+            return false;
+        }
+
+        if (locatives != null ? !locatives.equals(that.locatives) : that.locatives != null) {
+            return false;
+        }
+
+        if (temporals != null ? !temporals.equals(that.temporals) : that.temporals != null) {
             return false;
         }
 
@@ -177,7 +201,12 @@ public class RelationshipMention extends Attribute {
         int result = super.hashCode();
         result = 31 * result + (predPhrase != null ? predPhrase.hashCode() : 0);
         result = 31 * result + (evidences != null ? evidences.hashCode() : 0);
-        result = 31 * result + arguments.hashCode();
+        result = 31 * result + (arg1 != null ? arg1.hashCode() : 0);
+        result = 31 * result + (arg2 != null ? arg2.hashCode() : 0);
+        result = 31 * result + (arg3 != null ? arg3.hashCode() : 0);
+        result = 31 * result + (adjuncts != null ? adjuncts.hashCode() : 0);
+        result = 31 * result + (locatives != null ? locatives.hashCode() : 0);
+        result = 31 * result + (temporals != null ? temporals.hashCode() : 0);
         result = 31 * result + (synthetic ? 1 : 0);
         result = 31 * result + (relId != null ? relId.hashCode() : 0);
         return result;
@@ -186,17 +215,25 @@ public class RelationshipMention extends Attribute {
     public static class Builder extends Attribute.Builder {
 
         private String predPhrase;
-        private final Map<String, BaseAttribute> arguments = Maps.newHashMap();
+        private RelationshipArgument arg1;
+        private RelationshipArgument arg2;
+        private RelationshipArgument arg3;
+        private List<RelationshipArgument> adjuncts;
+        private List<RelationshipArgument> locatives;
+        private List<RelationshipArgument> temporals;
+
         private boolean synthetic;
         private String relId;
         private List<Evidence> evidences;
-
 
         public Builder(int startOffset, int endOffset, String predPhrase) {
             super(startOffset, endOffset);
             this.predPhrase = predPhrase;
             this.synthetic = false;
             this.evidences = Lists.newArrayList();
+            this.adjuncts = Lists.newArrayList();
+            this.locatives = Lists.newArrayList();
+            this.temporals = Lists.newArrayList();
         }
 
         /**
@@ -208,7 +245,12 @@ public class RelationshipMention extends Attribute {
         public Builder(RelationshipMention toCopy) {
             super(toCopy);
             this.predPhrase = toCopy.predPhrase;
-            this.arguments.putAll(arguments);
+            arg1 = toCopy.arg1;
+            arg2 = toCopy.arg2;
+            arg3 = toCopy.arg3;
+            addAllToList(adjuncts, toCopy.adjuncts);
+            addAllToList(locatives, toCopy.locatives);
+            addAllToList(temporals, toCopy.temporals);
             this.synthetic = toCopy.synthetic;
             this.relId = toCopy.relId;
             this.evidences = toCopy.evidences;
@@ -254,7 +296,7 @@ public class RelationshipMention extends Attribute {
          * @return this
          */
         public Builder arg1(RelationshipArgument arg1) {
-            arguments.put(RelationshipArgumentType.ARG1.key(), arg1);
+            this.arg1 = arg1;
             return this;
         }
 
@@ -265,7 +307,7 @@ public class RelationshipMention extends Attribute {
          * @return this
          */
         public Builder arg2(RelationshipArgument arg2) {
-            arguments.put(RelationshipArgumentType.ARG2.key(), arg2);
+            this.arg2 = arg2;
             return this;
         }
 
@@ -276,7 +318,7 @@ public class RelationshipMention extends Attribute {
          * @return this
          */
         public Builder arg3(RelationshipArgument arg3) {
-            arguments.put(RelationshipArgumentType.ARG3.key(), arg3);
+            this.arg3 = arg3;
             return this;
         }
 
@@ -287,7 +329,18 @@ public class RelationshipMention extends Attribute {
          * @return this
          */
         public Builder adjuncts(ListAttribute<RelationshipArgument> adjuncts) {
-            arguments.put(RelationshipArgumentType.ADJUNCT.key(), adjuncts);
+            this.adjuncts = Lists.newArrayList();
+            addAllToList(this.adjuncts, adjuncts);
+            return this;
+        }
+
+        /**
+         * Add an adjunct.
+         * @param adjunct the adjunct
+         * @return this
+         */
+        public Builder addAdjuct(RelationshipArgument adjunct) {
+            adjuncts.add(adjunct);
             return this;
         }
 
@@ -298,7 +351,18 @@ public class RelationshipMention extends Attribute {
          * @return this
          */
         public Builder locatives(ListAttribute<RelationshipArgument> locatives) {
-            arguments.put(RelationshipArgumentType.LOCATIVE.key(), locatives);
+            this.locatives = Lists.newArrayList();
+            addAllToList(this.locatives, locatives);
+            return this;
+        }
+
+        /**
+         * Add a locative.
+         * @param locative the locative
+         * @return this
+         */
+        public Builder addLocative(RelationshipArgument locative) {
+            locatives.add(locative);
             return this;
         }
 
@@ -309,29 +373,19 @@ public class RelationshipMention extends Attribute {
          * @return this
          */
         public Builder temporals(ListAttribute<RelationshipArgument> temporals) {
-            arguments.put(RelationshipArgumentType.TEMPORAL.key(), temporals);
+            this.temporals = Lists.newArrayList();
+            addAllToList(this.temporals, temporals);
             return this;
         }
 
         /**
-         * Adds an argument.
-         *
-         * @param type       the attribute key.
-         * @param arg the argument/s. Replaces any previous value for this key.
+         * Add a temporal.
+         * @param temporal the temporal
          * @return this
          */
-        Builder attribute(RelationshipArgumentType type, BaseAttribute arg) {
-            arguments.put(type.key(), arg);
+        public Builder addTemporal(RelationshipArgument temporal) {
+            locatives.add(temporal);
             return this;
-        }
-
-        /**
-         * Returns the current arguments.
-         *
-         * @return the current arguments
-         */
-        public Map<String, BaseAttribute> attributes() {
-            return arguments;
         }
 
         /**
@@ -362,7 +416,15 @@ public class RelationshipMention extends Attribute {
          * @return the new relation mention.
          */
         public RelationshipMention build() {
-            return new RelationshipMention(startOffset, endOffset, predPhrase, evidences, arguments, synthetic, relId,
+            return new RelationshipMention(startOffset, endOffset, predPhrase, evidences,
+                    arg1,
+                    arg2,
+                    arg3,
+                    adjuncts,
+                    locatives,
+                    temporals,
+                    synthetic,
+                    relId,
                     buildExtendedProperties());
         }
     }
