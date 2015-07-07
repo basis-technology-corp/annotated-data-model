@@ -56,14 +56,11 @@ public abstract class Attribute extends BaseAttribute {
         return endOffset;
     }
 
-    //CHECKSTYLE:OFF
     @Override
-    protected Objects.ToStringHelper
-    toStringHelper() {
+    protected Objects.ToStringHelper toStringHelper() {
         return super.toStringHelper().add("startOffset", startOffset)
                 .add("endOffset", endOffset);
     }
-    //CHECKSTYLE:ON
 
     @Override
     public boolean equals(Object o) {

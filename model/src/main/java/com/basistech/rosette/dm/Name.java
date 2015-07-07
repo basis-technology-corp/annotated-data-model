@@ -161,10 +161,8 @@ public class Name extends BaseAttribute {
         return result;
     }
 
-    //CHECKSTYLE:OFF
     @Override
-    protected Objects.ToStringHelper
-    toStringHelper() {
+    protected Objects.ToStringHelper toStringHelper() {
         Objects.ToStringHelper builder = super.toStringHelper().add("text", text);
         if (type != null) {
             builder.add("type", type);
@@ -180,7 +178,6 @@ public class Name extends BaseAttribute {
         }
         return builder;
     }
-    //CHECKSTYLE:ON
 
     /**
      * Builder for {@link com.basistech.rosette.dm.Name}.
