@@ -3,11 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>adm-json-benchmark</artifactId>
     <name>adm-json-benchmark</name>
-    <version>1.11.3-SNAPSHOT</version>
+    <version>1.12.0-SNAPSHOT</version>
     <parent>
         <groupId>com.basistech</groupId>
         <artifactId>annotated-data-model</artifactId>
-        <version>1.11.3-SNAPSHOT</version>
+        <version>1.12.0-SNAPSHOT</version>
     </parent>
     <dependencies>
         <dependency>
