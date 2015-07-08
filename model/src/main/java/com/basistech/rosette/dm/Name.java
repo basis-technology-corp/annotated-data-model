@@ -162,8 +162,7 @@ public class Name extends BaseAttribute {
     }
 
     @Override
-    protected Objects.ToStringHelper
-    toStringHelper() {
+    protected Objects.ToStringHelper toStringHelper() {
         Objects.ToStringHelper builder = super.toStringHelper().add("text", text);
         if (type != null) {
             builder.add("type", type);

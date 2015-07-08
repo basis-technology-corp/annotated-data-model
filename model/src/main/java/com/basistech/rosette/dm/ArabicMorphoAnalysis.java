@@ -438,7 +438,7 @@ public class ArabicMorphoAnalysis extends MorphoAnalysis {
         /**
          * Set all the suffixes and their tags. The two lists must be the same length.
          * @param suffixes  the prefixes.
-         * @param suffixes the tags for the prefixes.
+         * @param suffixTags the tags for the prefixes.
          * @return this
          */
         public Builder suffixes(List<String> suffixes, List<String> suffixTags) {

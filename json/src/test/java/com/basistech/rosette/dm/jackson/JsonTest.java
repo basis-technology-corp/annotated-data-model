@@ -20,11 +20,14 @@ import com.basistech.rosette.dm.BaseAttribute;
 import com.basistech.rosette.dm.BaseNounPhrase;
 import com.basistech.rosette.dm.CategorizerResult;
 import com.basistech.rosette.dm.EntityMention;
+import com.basistech.rosette.dm.Evidence;
 import com.basistech.rosette.dm.HanMorphoAnalysis;
 import com.basistech.rosette.dm.KoreanMorphoAnalysis;
 import com.basistech.rosette.dm.LanguageDetection;
 import com.basistech.rosette.dm.ListAttribute;
 import com.basistech.rosette.dm.MorphoAnalysis;
+import com.basistech.rosette.dm.RelationshipArgument;
+import com.basistech.rosette.dm.RelationshipMention;
 import com.basistech.rosette.dm.ResolvedEntity;
 import com.basistech.rosette.dm.ScriptRegion;
 import com.basistech.rosette.dm.Sentence;
@@ -58,6 +61,7 @@ public class JsonTest extends AdmAssert {
     public static final String THIS_IS_THE_TERRIER_SHOT_TO_BOSTON = "This is the terrier shot to Boston.";
     private BaseNounPhrase baseNounPhrase;
     private EntityMention entityMention;
+    private RelationshipMention relationshipMention;
     private ResolvedEntity resolvedEntity;
     private LanguageDetection languageDetectionRegion;
     private LanguageDetection languageDetection;
@@ -99,6 +103,29 @@ public class JsonTest extends AdmAssert {
         entityMention = emBuilder.build();
         emListBuilder.add(entityMention);
         builder.entityMentions(emListBuilder.build());
+
+        // Build two relation arguments
+        RelationshipArgument.Builder raBuilder = new RelationshipArgument.Builder();
+        raBuilder.argumentPhrase("bla");
+        raBuilder.argumentId("/free/base/1");
+        raBuilder.evidences(Lists.newArrayList(new Evidence.Builder(0, 4).build()));
+        RelationshipArgument arg1 = raBuilder.build();
+
+        raBuilder = new RelationshipArgument.Builder();
+        raBuilder.argumentPhrase("blu");
+        raBuilder.argumentId("/free/base/2");
+        RelationshipArgument arg2 = raBuilder.build();
+
+        // Build a relation
+        ListAttribute.Builder<RelationshipMention> rmListBuilder = new ListAttribute.Builder<RelationshipMention>(RelationshipMention.class);
+        RelationshipMention.Builder rmBuilder = new RelationshipMention.Builder(0, 12, "gave a ride").arg1(arg1).arg2
+                (arg2);
+        rmBuilder.relId("/free/base/property0");
+        rmBuilder.extendedProperty("rm-ex", "rm-ex-val");
+        rmBuilder.evidences(Lists.newArrayList(new Evidence.Builder(0, 1).build()));
+        relationshipMention = rmBuilder.build();
+        rmListBuilder.add(relationshipMention);
+        builder.relationshipMentions(rmListBuilder.build());
 
         ListAttribute.Builder<ResolvedEntity> reListBuilder = new ListAttribute.Builder<ResolvedEntity>(ResolvedEntity.class);
         ResolvedEntity.Builder reBuilder = new ResolvedEntity.Builder(27, 33, "Q100");
@@ -244,8 +271,8 @@ public class JsonTest extends AdmAssert {
     @Test
     public void roundTrip() throws Exception {
         StringWriter writer = new StringWriter();
-        ObjectMapper mapper = objectMapper();
-        ObjectWriter objectWriter = mapper.writer().withDefaultPrettyPrinter();
+        ObjectMapper mapper = AnnotatedDataModelModule.setupObjectMapper(new ObjectMapper());
+        ObjectWriter objectWriter = mapper.writer();
         objectWriter.writeValue(writer, referenceText);
 
         ObjectReader reader = mapper.reader(AnnotatedText.class);
@@ -262,6 +289,12 @@ public class JsonTest extends AdmAssert {
         assertEquals(1, emList.size());
         EntityMention em = emList.get(0);
         assertEquals(entityMention, em);
+
+        ListAttribute<RelationshipMention> rmList = read.getRelationshipMentions();
+        assertNotNull(rmList);
+        assertEquals(1, rmList.size());
+        RelationshipMention rm = rmList.get(0);
+        assertEquals(relationshipMention, rm);
 
         ListAttribute<ResolvedEntity> resolvedEntityList = read.getResolvedEntities();
         assertNotNull(resolvedEntityList);

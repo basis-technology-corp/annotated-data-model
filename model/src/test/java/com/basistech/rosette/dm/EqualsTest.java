@@ -17,11 +17,7 @@ package com.basistech.rosette.dm;
 import com.basistech.util.ISO15924;
 import com.basistech.util.LanguageCode;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import org.junit.Test;
-
-
-import java.util.Map;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
@@ -360,7 +356,7 @@ public class EqualsTest {
     }
 
     @Test
-    public void resolvedEntity() throws Exception {
+    public void testResolvedEntity() throws Exception {
         ResolvedEntity re1 = new ResolvedEntity.Builder(0, 10, "foo").build();
         re1.hashCode();
         assertTrue(re1.equals(re1));
@@ -382,10 +378,84 @@ public class EqualsTest {
         re1 = new ResolvedEntity.Builder(0, 10, "foo").confidence(1.0d).coreferenceChainId(3).build();
         re1.hashCode();
         assertTrue(re1.equals(re1));
+    }
+
+    @Test
+    public void testEvidence() throws Exception {
+        Evidence e1 = new Evidence.Builder(0,1).build();
+        e1.hashCode();
+        assertTrue(e1.equals(e1));
+
+        Evidence e2 = new Evidence.Builder(0,2).build();
+        e2.hashCode();
+        assertTrue(e2.equals(e2));
+
+        assertFalse(e1.equals(e2));
+        assertFalse(e2.equals(e1));
+        assertFalse(e1.hashCode() == e2.hashCode());
+    }
+
+    @Test
+    public void relationArgument() throws Exception {
+        // this one has offsets, argumentPhrase and an argid,
+        RelationshipArgument ra1 = new RelationshipArgument.Builder().argumentPhrase("t").argumentId("1").build();
+        ra1.hashCode();
+        assertTrue(ra1.equals(ra1));
+
+        // this one doesn't have an argid
+        RelationshipArgument ra2 = new RelationshipArgument.Builder().argumentPhrase("t").build();
+        ra2.hashCode();
+        assertTrue(ra2.equals(ra2));
+
+        assertNull(ra2.getArgumentId());
+        assertFalse(ra1.equals(ra2));
+        assertFalse(ra2.equals(ra1));
+        assertFalse(ra1.hashCode() == ra2.hashCode());
+
+        // this one has evidence
+        ra2 = new RelationshipArgument.Builder().argumentPhrase("t").argumentId("1").evidences(Lists.newArrayList
+                (new Evidence.Builder(0, 1).build())).build();
+        ra2.hashCode();
+        assertTrue(ra2.equals(ra2));
+
+        assertFalse(ra1.equals(ra2));
+        assertFalse(ra2.equals(ra1));
+        assertFalse(ra1.hashCode() == ra2.hashCode());
+    }
+
+    @Test
+    public void relationMention() throws Exception {
+        RelationshipArgument _ra1 = new RelationshipArgument.Builder().argumentPhrase("t").argumentId("1").build();
+        RelationshipArgument _ra2 = new RelationshipArgument.Builder().argumentPhrase("t").build();
+        RelationshipArgument _ra3 = new RelationshipArgument.Builder().argumentPhrase("b").build();
 
 
+        // relId intentionally null, all other fields populated.
+        RelationshipMention rm1 = new RelationshipMention.Builder(0, 12, "developing software FTW").arg1(_ra1).arg2
+                (_ra2).build();
+        rm1.hashCode();
+        assertTrue(rm1.equals(rm1));
+        assertNull(rm1.getRelId());
 
+        // this guy has different arguments defined
+        RelationshipMention rm2 = new RelationshipMention.Builder(0, 12, "developing software FTW").arg1(_ra3).build();
+        rm2.hashCode();
+        assertTrue(rm2.equals(rm2));
+        assertFalse(rm1.equals(rm2));
+        assertFalse(rm2.equals(rm1));
+        assertFalse(rm1.hashCode() == rm2.hashCode());
 
+        rm2 = new RelationshipMention.Builder(0, 12, "developing software FTW").arg1(_ra1).arg2(_ra2).evidences
+                (Lists.newArrayList(new Evidence.Builder(0, 1).build())).build();
+
+        rm2.hashCode();
+        assertTrue(rm2.equals(rm2));
+        assertFalse(rm1.equals(rm2));
+        assertFalse(rm2.equals(rm1));
+        assertFalse(rm1.hashCode() == rm2.hashCode());
 
     }
+
+
+
 }

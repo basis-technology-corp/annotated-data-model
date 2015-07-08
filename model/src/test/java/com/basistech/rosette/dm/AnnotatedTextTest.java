@@ -366,6 +366,32 @@ public class AnnotatedTextTest {
     }
 
     @Test
+    public void relationMentions() {
+        String argumentId = "/resolved/argument/";
+        String argPhrase = "some-noun";
+        String relPhrase = "some-verb"; //
+
+        AnnotatedText.Builder relationMentionBuilder = new AnnotatedText.Builder();
+        ListAttribute.Builder<RelationshipMention> listBuilder
+                = new ListAttribute.Builder<RelationshipMention>(RelationshipMention.class);
+        RelationshipArgument.Builder relationArgumentBuilder1 = new RelationshipArgument.Builder();
+        RelationshipArgument.Builder relationArgumentBuilder2 = new RelationshipArgument.Builder();
+        relationArgumentBuilder1.argumentPhrase(argPhrase + "1").argumentId(argumentId + "1");
+        relationArgumentBuilder2.argumentPhrase(argPhrase + "2").argumentId(argumentId + "2");
+
+        ListAttribute.Builder rms = listBuilder.add(new RelationshipMention.Builder(0, 12, relPhrase).arg1
+                (relationArgumentBuilder1.build()).arg2(relationArgumentBuilder2.build()).build());
+        relationMentionBuilder.relationshipMentions(rms.build());
+        AnnotatedText text = relationMentionBuilder.build();
+
+        RelationshipMention relationshipMention = text.getRelationshipMentions().get(0);
+        assertEquals(relPhrase, relationshipMention.getPredPhrase());
+        assertEquals(argPhrase + "1", relationshipMention.getArg1().getArgumentPhrase());
+        assertEquals(argPhrase + "2", relationshipMention.getArg2().getArgumentPhrase());
+        assertEquals(relPhrase, relationshipMention.getPredPhrase());
+    }
+
+    @Test
     public void tokenLists() throws Exception {
         Token.Builder tokenBuilder = new Token.Builder(0, 1, "f");
         tokenBuilder.addNormalized("c");
