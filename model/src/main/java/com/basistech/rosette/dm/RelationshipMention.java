@@ -20,6 +20,15 @@ import com.google.common.collect.Lists;
 import java.util.List;
 import java.util.Map;
 
+/**
+ *
+ * An Relationship Mention
+ * Relationship mention describes a relationship between arguments in a sentence and a predicate that connects them.
+ *
+ * Relationship mention start and end offsets point to the region in the data that the mention was extracted from,
+ * it could be a sentence, clause, or string boundaries without a linguistic meaning.
+ *
+ */
 public class RelationshipMention extends Attribute {
 
     /**

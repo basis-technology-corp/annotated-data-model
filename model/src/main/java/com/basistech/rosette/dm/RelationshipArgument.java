@@ -21,6 +21,12 @@ import com.google.common.collect.Lists;
 import java.util.List;
 import java.util.Map;
 
+/**
+ *
+ * An Relationship Argument
+ * Relationship argument is a component of relationship mention, bounded to the relationship mention's predicate.
+ *
+ */
 public class RelationshipArgument extends BaseAttribute {
 
     /**
@@ -44,11 +50,7 @@ public class RelationshipArgument extends BaseAttribute {
         super(extendedProperties);
         this.argumentPhrase = argumentPhrase;
         this.argumentId = argumentId;
-        if (evidences != null) {
-            this.evidences = evidences;
-        } else {
-            this.evidences = Lists.newArrayList();
-        }
+        this.evidences = listOrNull(evidences);
     }
 
     public String getArgumentPhrase() {
