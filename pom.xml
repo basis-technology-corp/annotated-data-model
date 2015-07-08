@@ -41,8 +41,6 @@
         <module>json-array</module>
         <module>model-osgi</module>
         <module>json-osgi</module>
-        <module>shaded</module>
-        <module>shaded-test</module>
         <module>script</module>
     </modules>
     <dependencyManagement>
