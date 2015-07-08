@@ -348,7 +348,7 @@ public class RelationshipMention extends Attribute {
          * @param adjunct the adjunct
          * @return this
          */
-        public Builder addAdjuct(RelationshipArgument adjunct) {
+        public Builder addAdjunct(RelationshipArgument adjunct) {
             adjuncts.add(adjunct);
             return this;
         }
