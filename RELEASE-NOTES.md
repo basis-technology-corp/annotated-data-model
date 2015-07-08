@@ -2,6 +2,10 @@
 
 ## 1.12.0
 
+### [COMN-199](https://basistech.atlassian.net/browse/COMN-199) Remove adm-shaded
+
+adm-shaded was a mistake.
+
 ### [COMN-198](https://basistech.atlassian.net/browse/COMN-198) Add  Relationship Support
     
 This also includes a move to basis parent 57.0.0, and so a requirement
