@@ -393,7 +393,7 @@ public class RelationshipMention extends Attribute {
          * @return this
          */
         public Builder addTemporal(RelationshipArgument temporal) {
-            locatives.add(temporal);
+            temporals.add(temporal);
             return this;
         }
 
