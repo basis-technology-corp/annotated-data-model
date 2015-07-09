@@ -145,23 +145,6 @@ use shade for itself.
 
 ````
 
-### adm-shaded ###
-
-This combines adm-model and adm-json into a package with no declared
-dependencies, by using the Maven shade plugin on adm-model and
-adm-json. As a result, it offers only a minimal json API from the
-class com.basistech.rosette.dm.DmJsonUtils. This is suitable for code
-that is delivered to SDK customers (REX-JE springs to mind).
-
-```
-<dependency>
-    <groupId>com.basistech</groupId>
-    <artifactId>adm-shaded</artifactId>
-    <version>1.9.100</version>
-</dependency>
-
-```
-
 ### adm-tools ###
 
 This project includes the classes to convert AbstractResultAccess
