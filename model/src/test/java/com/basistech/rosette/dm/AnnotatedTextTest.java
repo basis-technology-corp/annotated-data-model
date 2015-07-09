@@ -378,9 +378,9 @@ public class AnnotatedTextTest {
         relationArgumentBuilder1.argumentPhrase(argPhrase + "1").argumentId(argumentId + "1");
         relationArgumentBuilder2.argumentPhrase(argPhrase + "2").argumentId(argumentId + "2");
 
-        ListAttribute.Builder<RelationshipMention> rms = listBuilder.add(new RelationshipMention.Builder(0, 12, relPhrase).arg1
+        listBuilder.add(new RelationshipMention.Builder(0, 12, relPhrase).arg1
                 (relationArgumentBuilder1.build()).arg2(relationArgumentBuilder2.build()).build());
-        relationMentionBuilder.relationshipMentions(rms.build());
+        relationMentionBuilder.relationshipMentions(listBuilder.build());
         AnnotatedText text = relationMentionBuilder.build();
 
         RelationshipMention relationshipMention = text.getRelationshipMentions().get(0);
