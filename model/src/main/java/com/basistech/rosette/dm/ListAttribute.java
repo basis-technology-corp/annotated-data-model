@@ -220,7 +220,7 @@ public class ListAttribute<Item extends BaseAttribute> extends BaseAttribute imp
          * @param item the item to add
          * @return this
          */
-        public Builder add(Item item) {
+        public Builder<Item> add(Item item) {
             items.add(item);
             return this;
         }
@@ -231,7 +231,7 @@ public class ListAttribute<Item extends BaseAttribute> extends BaseAttribute imp
          * @param items all the items
          * @return this
          */
-        public Builder setItems(List<Item> items) {
+        public Builder<Item> setItems(List<Item> items) {
             this.items.addAll(items);
             return this;
         }
@@ -242,7 +242,7 @@ public class ListAttribute<Item extends BaseAttribute> extends BaseAttribute imp
          * @return the new list
          */
         public ListAttribute<Item> build() {
-            return new ListAttribute<Item>(itemClass, items, buildExtendedProperties());
+            return new ListAttribute<>(itemClass, items, buildExtendedProperties());
         }
     }
 }

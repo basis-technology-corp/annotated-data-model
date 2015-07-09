@@ -41,7 +41,7 @@ public class AnnotatedTextTest {
         String rawText = "One.  Two.  ";
         AnnotatedText.Builder builder = new AnnotatedText.Builder().data(rawText);
 
-        ListAttribute.Builder<Sentence> sentenceListBuilder = new ListAttribute.Builder<Sentence>(Sentence.class);
+        ListAttribute.Builder<Sentence> sentenceListBuilder = new ListAttribute.Builder<>(Sentence.class);
         Sentence.Builder sbBuilder = new Sentence.Builder(0, 6);
         sentenceListBuilder.add(sbBuilder.build());
         sbBuilder = new Sentence.Builder(6, 12);
@@ -67,7 +67,7 @@ public class AnnotatedTextTest {
         AnnotatedText.Builder builder = new AnnotatedText.Builder().data(rawText);
 
         ListAttribute.Builder<TranslatedData> translatedDataBuilder =
-            new ListAttribute.Builder<TranslatedData>(TranslatedData.class);
+            new ListAttribute.Builder<>(TranslatedData.class);
 
         TextDomain domain = new TextDomain(ISO15924.Latn, LanguageCode.GERMAN, TransliterationScheme.NATIVE);
         TranslatedData.Builder tdBuilder = new TranslatedData.Builder(domain, germanText);
@@ -112,7 +112,7 @@ public class AnnotatedTextTest {
         String rawText = "One.  Two.  ";
         AnnotatedText.Builder builder = new AnnotatedText.Builder().data(rawText);
 
-        ListAttribute.Builder<Token> tokenListBuilder = new ListAttribute.Builder<Token>(Token.class);
+        ListAttribute.Builder<Token> tokenListBuilder = new ListAttribute.Builder<>(Token.class);
         Token.Builder tbBuilder = new Token.Builder(0, 3, "One");
         tokenListBuilder.add(tbBuilder.build());
         tbBuilder = new Token.Builder(3, 4, ".");
@@ -125,7 +125,7 @@ public class AnnotatedTextTest {
         builder.tokens(tokenListBuilder.build());
 
         ListAttribute.Builder<TranslatedTokens> translatedTokensListBuilder = 
-            new ListAttribute.Builder<TranslatedTokens>(TranslatedTokens.class);
+            new ListAttribute.Builder<>(TranslatedTokens.class);
 
         TextDomain domain = new TextDomain(ISO15924.Latn, LanguageCode.GERMAN, TransliterationScheme.NATIVE);
         TranslatedTokens.Builder ttBuilder = new TranslatedTokens.Builder(domain);
@@ -188,8 +188,7 @@ public class AnnotatedTextTest {
         int[] bnpFromARA = {0, 1, 2, 3};
         int[] tokenOffsets = {0, 3, 3, 4, 6, 10, 10, 11};
         AnnotatedText.Builder builder = new AnnotatedText.Builder().data(rawText);
-        // TODO: we want to use a .class here for Generic reasons, but we want to end up with a vanilla String in the Json.
-        ListAttribute.Builder<BaseNounPhrase> attrBuilder = new ListAttribute.Builder<BaseNounPhrase>(BaseNounPhrase.class);
+        ListAttribute.Builder<BaseNounPhrase> attrBuilder = new ListAttribute.Builder<>(BaseNounPhrase.class);
         for (int i = 0; i < bnpFromARA.length; i += 2) {
             BaseNounPhrase.Builder bnpBuilder = new BaseNounPhrase.Builder(tokenOffsets, bnpFromARA[i], bnpFromARA[i + 1]);
             attrBuilder.add(bnpBuilder.build());
@@ -214,7 +213,7 @@ public class AnnotatedTextTest {
         AnnotatedText.Builder builder = new AnnotatedText.Builder().data(rawText);
         int[] entities = {0, 1, 65536, 2, 3, 65536};
         int[] tokenOffsets = {0, 3, 7, 13};
-        ListAttribute.Builder<EntityMention> emListBuilder = new ListAttribute.Builder<EntityMention>(EntityMention.class);
+        ListAttribute.Builder<EntityMention> emListBuilder = new ListAttribute.Builder<>(EntityMention.class);
         for (int i = 0; i < entities.length / 3; i++) {
             int startOffset = tokenOffsets[i * 2];
             int endOffset = tokenOffsets[i * 2 + 1];
@@ -236,7 +235,7 @@ public class AnnotatedTextTest {
         String rawText = "from Boston and Chicago";
         //int[] tokenOffsets = {0, 4, 5, 11, 12, 15, 16, 23};
         AnnotatedText.Builder builder = new AnnotatedText.Builder().data(rawText);
-        ListAttribute.Builder<ResolvedEntity> reListBuilder = new ListAttribute.Builder<ResolvedEntity>(ResolvedEntity.class);
+        ListAttribute.Builder<ResolvedEntity> reListBuilder = new ListAttribute.Builder<>(ResolvedEntity.class);
 
         ResolvedEntity.Builder re1Builder = new ResolvedEntity.Builder(5, 11, "Q100");
         reListBuilder.add(re1Builder.build());
@@ -276,7 +275,7 @@ public class AnnotatedTextTest {
     public void testCategorizerResults() {
         AnnotatedText.Builder builder = new AnnotatedText.Builder();
         ListAttribute.Builder<CategorizerResult> listBuilder
-            = new ListAttribute.Builder<CategorizerResult>(CategorizerResult.class);
+            = new ListAttribute.Builder<>(CategorizerResult.class);
         listBuilder.add(new CategorizerResult.Builder("SPORTS", 0.1).build());
         Map<String, Double> perFeatureScores = Maps.newHashMap();
         perFeatureScores.put("foo", 1.2);
@@ -306,7 +305,7 @@ public class AnnotatedTextTest {
     public void testSentimentResults() {
         AnnotatedText.Builder builder = new AnnotatedText.Builder();
         ListAttribute.Builder<CategorizerResult> listBuilder
-            = new ListAttribute.Builder<CategorizerResult>(CategorizerResult.class);
+            = new ListAttribute.Builder<>(CategorizerResult.class);
         listBuilder.add(new CategorizerResult.Builder("positive", 0.1).build());
         Map<String, Double> perFeatureScores = Maps.newHashMap();
         perFeatureScores.put("foo", 1.2);
@@ -373,13 +372,13 @@ public class AnnotatedTextTest {
 
         AnnotatedText.Builder relationMentionBuilder = new AnnotatedText.Builder();
         ListAttribute.Builder<RelationshipMention> listBuilder
-                = new ListAttribute.Builder<RelationshipMention>(RelationshipMention.class);
+                = new ListAttribute.Builder<>(RelationshipMention.class);
         RelationshipArgument.Builder relationArgumentBuilder1 = new RelationshipArgument.Builder();
         RelationshipArgument.Builder relationArgumentBuilder2 = new RelationshipArgument.Builder();
         relationArgumentBuilder1.argumentPhrase(argPhrase + "1").argumentId(argumentId + "1");
         relationArgumentBuilder2.argumentPhrase(argPhrase + "2").argumentId(argumentId + "2");
 
-        ListAttribute.Builder rms = listBuilder.add(new RelationshipMention.Builder(0, 12, relPhrase).arg1
+        ListAttribute.Builder<RelationshipMention> rms = listBuilder.add(new RelationshipMention.Builder(0, 12, relPhrase).arg1
                 (relationArgumentBuilder1.build()).arg2(relationArgumentBuilder2.build()).build());
         relationMentionBuilder.relationshipMentions(rms.build());
         AnnotatedText text = relationMentionBuilder.build();
