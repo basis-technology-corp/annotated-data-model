@@ -1,5 +1,10 @@
 # Cumulative Release Notes for the Annotated Data Model
 
+## 1.12.1
+
+Rerelease with 57.0.1 as parent, so that it looks for common 35.0.0
+instead of 34.x.x. Let this be a lesson to us in picking version numbers.
+
 ## 1.12.0
 
 ### [COMN-199](https://basistech.atlassian.net/browse/COMN-199) Remove adm-shaded
