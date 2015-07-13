@@ -79,25 +79,29 @@ public class JsonTest extends AdmAssert {
         builder.entityMentions(emListBuilder.build());
 
         // Build two relation arguments
-        RelationshipArgument.Builder raBuilder = new RelationshipArgument.Builder();
-        raBuilder.argumentPhrase("bla");
-        raBuilder.argumentId("/free/base/1");
-        raBuilder.evidences(Lists.newArrayList(new Evidence.Builder(0,4).build()));
-        RelationshipArgument arg1 = raBuilder.build();
+        RelationshipComponent.Builder raBuilder = new RelationshipComponent.Builder();
+        raBuilder.phrase("bla");
+        raBuilder.resolutionId("/free/base/1");
+        raBuilder.evidences(Lists.newArrayList(new Evidence.Builder(0, 4).build()));
+        RelationshipComponent arg1 = raBuilder.build();
 
-        raBuilder = new RelationshipArgument.Builder();
-        raBuilder.argumentPhrase("blu");
-        raBuilder.argumentId("/free/base/2");
-        RelationshipArgument arg2 = raBuilder.build();
+        raBuilder = new RelationshipComponent.Builder();
+        raBuilder.phrase("blu");
+        raBuilder.resolutionId("/free/base/2");
+        RelationshipComponent arg2 = raBuilder.build();
+
+        raBuilder = new RelationshipComponent.Builder();
+        raBuilder.phrase("bli");
+        raBuilder.resolutionId("/free/base/3");
+        raBuilder.evidences(Lists.newArrayList(new Evidence.Builder(5, 6).build(), new Evidence.Builder(6, 7).build()));
+        RelationshipComponent pred = raBuilder.build();
 
         // Build a relation
         ListAttribute.Builder<RelationshipMention> rmListBuilder = new ListAttribute.Builder<RelationshipMention>(RelationshipMention.class);
-        RelationshipMention.Builder rmBuilder = new RelationshipMention.Builder(0, 12, "gave a ride").arg1(arg1).arg2
+        RelationshipMention.Builder rmBuilder = new RelationshipMention.Builder(0, 12).predicate(pred).arg1(arg1).arg2
                 (arg2);
-        rmBuilder.relId("/free/base/property0");
         rmBuilder.extendedProperty("rm-ex", "rm-ex-val");
         rmBuilder.relationshipSource("statistical rules:42");
-        rmBuilder.evidences(Lists.newArrayList(new Evidence.Builder(0, 1).build()));
         relationshipMention = rmBuilder.build();
         rmListBuilder.add(relationshipMention);
         builder.relationshipMentions(rmListBuilder.build());

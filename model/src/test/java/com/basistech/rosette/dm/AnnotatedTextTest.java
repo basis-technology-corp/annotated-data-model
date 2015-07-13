@@ -373,21 +373,22 @@ public class AnnotatedTextTest {
         AnnotatedText.Builder relationMentionBuilder = new AnnotatedText.Builder();
         ListAttribute.Builder<RelationshipMention> listBuilder
                 = new ListAttribute.Builder<>(RelationshipMention.class);
-        RelationshipArgument.Builder relationArgumentBuilder1 = new RelationshipArgument.Builder();
-        RelationshipArgument.Builder relationArgumentBuilder2 = new RelationshipArgument.Builder();
-        relationArgumentBuilder1.argumentPhrase(argPhrase + "1").argumentId(argumentId + "1");
-        relationArgumentBuilder2.argumentPhrase(argPhrase + "2").argumentId(argumentId + "2");
+        RelationshipComponent.Builder relationArgumentBuilder1 = new RelationshipComponent.Builder();
+        RelationshipComponent.Builder relationArgumentBuilder2 = new RelationshipComponent.Builder();
+        RelationshipComponent.Builder relationArgumentBuilder3 = new RelationshipComponent.Builder();
+        relationArgumentBuilder1.phrase(argPhrase + "1").resolutionId(argumentId + "1");
+        relationArgumentBuilder2.phrase(argPhrase + "2").resolutionId(argumentId + "2");
+        relationArgumentBuilder3.phrase(relPhrase);
 
-        listBuilder.add(new RelationshipMention.Builder(0, 12, relPhrase).arg1
+        listBuilder.add(new RelationshipMention.Builder(0, 12).predicate(relationArgumentBuilder3.build()).arg1
                 (relationArgumentBuilder1.build()).arg2(relationArgumentBuilder2.build()).build());
         relationMentionBuilder.relationshipMentions(listBuilder.build());
         AnnotatedText text = relationMentionBuilder.build();
 
         RelationshipMention relationshipMention = text.getRelationshipMentions().get(0);
-        assertEquals(relPhrase, relationshipMention.getPredPhrase());
-        assertEquals(argPhrase + "1", relationshipMention.getArg1().getArgumentPhrase());
-        assertEquals(argPhrase + "2", relationshipMention.getArg2().getArgumentPhrase());
-        assertEquals(relPhrase, relationshipMention.getPredPhrase());
+        assertEquals(relPhrase, relationshipMention.getPredicate().getPhrase());
+        assertEquals(argPhrase + "1", relationshipMention.getArg1().getPhrase());
+        assertEquals(argPhrase + "2", relationshipMention.getArg2().getPhrase());
     }
 
     @Test

@@ -23,54 +23,54 @@ import java.util.Map;
 
 /**
  *
- * An Relationship Argument
- * Relationship argument is a component of relationship mention, bounded to the relationship mention's predicate.
+ * An Relationship Component
+ * Relationship component is a component of relationship mention, such as argument or predicate.
  *
  */
-public class RelationshipArgument extends BaseAttribute {
+public class RelationshipComponent extends BaseAttribute {
 
     /**
-     * A display string representing the argument
+     * A display string representing the component
      */
-    private final String argumentPhrase;
+    private final String phrase;
 
     /**
-     * list of start and end offsets, representing the evidences in the data for a argument
+     * list of start and end offsets, representing the evidences in the data for a component
      */
     private final List<Evidence> evidences;
 
     /**
-     * the argument id: placeholder for an identifier from an external knowledge-base the argument resolves to.
+     * the resolution id: placeholder for an identifier from an external knowledge-base the argument resolves to.
      */
-    private final String argumentId;
+    private final String resolutionId;
 
 
-    protected RelationshipArgument(String argumentPhrase, List<Evidence> evidences,
-                                   String argumentId, Map<String, Object> extendedProperties) {
+    protected RelationshipComponent(String phrase, List<Evidence> evidences,
+                                    String resolutionId, Map<String, Object> extendedProperties) {
         super(extendedProperties);
-        this.argumentPhrase = argumentPhrase;
-        this.argumentId = argumentId;
+        this.phrase = phrase;
+        this.resolutionId = resolutionId;
         this.evidences = listOrNull(evidences);
     }
 
-    public String getArgumentPhrase() {
-        return argumentPhrase;
+    public String getPhrase() {
+        return phrase;
     }
 
     public List<Evidence> getEvidences() {
         return evidences;
     }
 
-    public String getArgumentId() {
-        return argumentId;
+    public String getResolutionId() {
+        return resolutionId;
     }
 
     @Override
     protected Objects.ToStringHelper toStringHelper() {
         return super.toStringHelper()
-                .add("argumentPhrase", argumentPhrase)
+                .add("phrase", phrase)
                 .add("evidences", evidences)
-                .add("argumentId", argumentId);
+                .add("resolutionId", resolutionId);
     }
 
 
@@ -86,13 +86,13 @@ public class RelationshipArgument extends BaseAttribute {
             return false;
         }
 
-        RelationshipArgument that = (RelationshipArgument) o;
+        RelationshipComponent that = (RelationshipComponent) o;
 
-        if (argumentId != null ? !argumentId.equals(that.argumentId) : that.argumentId != null) {
+        if (resolutionId != null ? !resolutionId.equals(that.resolutionId) : that.resolutionId != null) {
             return false;
         }
 
-        if (argumentPhrase != null ? !argumentPhrase.equals(that.argumentPhrase) : that.argumentPhrase != null) {
+        if (phrase != null ? !phrase.equals(that.phrase) : that.phrase != null) {
             return false;
         }
 
@@ -106,28 +106,28 @@ public class RelationshipArgument extends BaseAttribute {
     @Override
     public int hashCode() {
         int result = super.hashCode();
-        result = 31 * result + argumentPhrase.hashCode();
-        result = 31 * result + (argumentId != null ? argumentId.hashCode() : 0);
+        result = 31 * result + phrase.hashCode();
+        result = 31 * result + (resolutionId != null ? resolutionId.hashCode() : 0);
         result = 31 * result + (evidences != null ? evidences.hashCode() : 0);
         return result;
     }
 
     public static class Builder extends BaseAttribute.Builder {
-        private String argumentPhrase;
-        private String argumentId;
+        private String phrase;
+        private String resolutionId;
         private List<Evidence> evidences = Lists.newArrayList();
 
         public Builder() {
             super();
         }
 
-        public Builder argumentPhrase(String argumentPhrase) {
-            this.argumentPhrase = argumentPhrase;
+        public Builder phrase(String phrase) {
+            this.phrase = phrase;
             return this;
         }
 
-        public Builder argumentId(String argumentId) {
-            this.argumentId = argumentId;
+        public Builder resolutionId(String resolutionId) {
+            this.resolutionId = resolutionId;
             return this;
         }
 
@@ -136,8 +136,8 @@ public class RelationshipArgument extends BaseAttribute {
             return this;
         }
 
-        public RelationshipArgument build() {
-            return new RelationshipArgument(argumentPhrase, evidences, argumentId,
+        public RelationshipComponent build() {
+            return new RelationshipComponent(phrase, evidences, resolutionId,
                     buildExtendedProperties());
         }
     }

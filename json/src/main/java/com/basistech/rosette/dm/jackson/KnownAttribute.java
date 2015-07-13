@@ -20,7 +20,7 @@ import com.basistech.rosette.dm.CategorizerResult;
 import com.basistech.rosette.dm.EntityMention;
 import com.basistech.rosette.dm.LanguageDetection;
 import com.basistech.rosette.dm.ListAttribute;
-import com.basistech.rosette.dm.RelationshipArgument;
+import com.basistech.rosette.dm.RelationshipComponent;
 import com.basistech.rosette.dm.RelationshipMention;
 import com.basistech.rosette.dm.ResolvedEntity;
 import com.basistech.rosette.dm.ScriptRegion;
@@ -55,7 +55,7 @@ public enum KnownAttribute {
     LIST("list", ListAttribute.class),
     UNKNOWN("unknown", UnknownAttribute.class),
 
-    RELATION_ARGUMENT("RelationshipArgument", RelationshipArgument.class);
+    RELATION_ARGUMENT("RelationshipComponent", RelationshipComponent.class);
 
 
     private final String jsonTag;
