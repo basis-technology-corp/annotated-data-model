@@ -96,6 +96,7 @@ public class JsonTest extends AdmAssert {
                 (arg2);
         rmBuilder.relId("/free/base/property0");
         rmBuilder.extendedProperty("rm-ex", "rm-ex-val");
+        rmBuilder.relationshipSource("statistical rules:42");
         rmBuilder.evidences(Lists.newArrayList(new Evidence.Builder(0, 1).build()));
         relationshipMention = rmBuilder.build();
         rmListBuilder.add(relationshipMention);

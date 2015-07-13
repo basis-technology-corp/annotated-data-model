@@ -454,6 +454,16 @@ public class EqualsTest {
         assertFalse(rm2.equals(rm1));
         assertFalse(rm1.hashCode() == rm2.hashCode());
 
+        // this guy has relId and source
+        RelationshipMention rm3 = new RelationshipMention.Builder(0, 12, "developing software FTW").arg1(_ra3).relId
+                ("/free/base/property0\"").relationshipSource("statistical rules:42").build();
+        rm2.hashCode();
+        assertTrue(rm3.equals(rm3));
+        assertFalse(rm3.equals(rm2));
+        assertFalse(rm3.equals(rm1));
+        assertFalse(rm3.hashCode() == rm2.hashCode());
+
+
     }
 
 

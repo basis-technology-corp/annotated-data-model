@@ -58,6 +58,11 @@ public class RelationshipMention extends Attribute {
     private final List<RelationshipArgument> temporals;
 
     /**
+     * A display string representing the extractor that generated the relationshipMention
+     */
+    private final String relationshipSource;
+
+    /**
      * placeholder for an identifier from an external knowledge-base the predicate resolves to.
      */
     private final String relId;
@@ -69,9 +74,10 @@ public class RelationshipMention extends Attribute {
                                   List<RelationshipArgument> adjuncts,
                                   List<RelationshipArgument> locatives,
                                   List<RelationshipArgument> temporals,
-                                  String relId, Map<String, Object> extendedProperties) {
+                                  String relationshipSource, String relId, Map<String, Object> extendedProperties) {
         super(startOffset, endOffset, extendedProperties);
         this.predPhrase = predPhrase;
+        this.relationshipSource = relationshipSource;
         this.relId = relId;
         this.evidences = listOrNull(evidences);
         this.arg1 = arg1;
@@ -114,6 +120,10 @@ public class RelationshipMention extends Attribute {
         return temporals;
     }
 
+    public String getRelationshipSource() {
+        return relationshipSource;
+    }
+
     public String getRelId() {
         return relId;
     }
@@ -129,6 +139,7 @@ public class RelationshipMention extends Attribute {
                 .add("adjuncts", adjuncts)
                 .add("locatives", locatives)
                 .add("temporals", temporals)
+                .add("relationshipSource", relationshipSource)
                 .add("relId", relId);
 
     }
@@ -173,6 +184,10 @@ public class RelationshipMention extends Attribute {
             return false;
         }
 
+        if (relationshipSource != null ? !relationshipSource.equals(that.relationshipSource) : that.relationshipSource != null) {
+            return false;
+        }
+
         if (relId != null ? !relId.equals(that.relId) : that.relId != null) {
             return false;
         }
@@ -199,6 +214,7 @@ public class RelationshipMention extends Attribute {
         result = 31 * result + (adjuncts != null ? adjuncts.hashCode() : 0);
         result = 31 * result + (locatives != null ? locatives.hashCode() : 0);
         result = 31 * result + (temporals != null ? temporals.hashCode() : 0);
+        result = 31 * result + (relationshipSource != null ? relationshipSource.hashCode() : 0);
         result = 31 * result + (relId != null ? relId.hashCode() : 0);
         return result;
     }
@@ -213,6 +229,7 @@ public class RelationshipMention extends Attribute {
         private List<RelationshipArgument> locatives;
         private List<RelationshipArgument> temporals;
 
+        private String relationshipSource;
         private String relId;
         private List<Evidence> evidences;
 
@@ -240,6 +257,7 @@ public class RelationshipMention extends Attribute {
             addAllToList(adjuncts, toCopy.adjuncts);
             addAllToList(locatives, toCopy.locatives);
             addAllToList(temporals, toCopy.temporals);
+            this.relationshipSource = toCopy.relationshipSource;
             this.relId = toCopy.relId;
             this.evidences = toCopy.evidences;
         }
@@ -379,6 +397,17 @@ public class RelationshipMention extends Attribute {
         /**
          * Specifies the relation id.
          *
+         * @param relationshipSource the he extractor that generated the relationshipMention.
+         * @return this
+         */
+        public Builder relationshipSource(String relationshipSource) {
+            this.relationshipSource = relationshipSource;
+            return this;
+        }
+
+        /**
+         * Specifies the relation id.
+         *
          * @param relId the relation id.
          * @return this
          */
@@ -401,7 +430,7 @@ public class RelationshipMention extends Attribute {
                     locatives,
                     temporals,
                     relId,
-                    buildExtendedProperties());
+                    relationshipSource, buildExtendedProperties());
         }
     }
 }
