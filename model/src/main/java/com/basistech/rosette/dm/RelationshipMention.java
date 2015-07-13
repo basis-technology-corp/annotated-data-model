@@ -58,13 +58,6 @@ public class RelationshipMention extends Attribute {
     private final List<RelationshipArgument> temporals;
 
     /**
-     * Specifies whether the relation appears in the sentence (synthetic=false)
-     * or whether it is based on a syntactic configuration like apposition or
-     * possessives.
-     */
-    private final boolean synthetic;
-
-    /**
      * placeholder for an identifier from an external knowledge-base the predicate resolves to.
      */
     private final String relId;
@@ -76,10 +69,9 @@ public class RelationshipMention extends Attribute {
                                   List<RelationshipArgument> adjuncts,
                                   List<RelationshipArgument> locatives,
                                   List<RelationshipArgument> temporals,
-                                  boolean synthetic, String relId, Map<String, Object> extendedProperties) {
+                                  String relId, Map<String, Object> extendedProperties) {
         super(startOffset, endOffset, extendedProperties);
         this.predPhrase = predPhrase;
-        this.synthetic = synthetic;
         this.relId = relId;
         this.evidences = listOrNull(evidences);
         this.arg1 = arg1;
@@ -126,10 +118,6 @@ public class RelationshipMention extends Attribute {
         return relId;
     }
 
-    public boolean getSynthetic() {
-        return synthetic;
-    }
-
     @Override
     protected Objects.ToStringHelper toStringHelper() {
         return super.toStringHelper()
@@ -141,7 +129,6 @@ public class RelationshipMention extends Attribute {
                 .add("adjuncts", adjuncts)
                 .add("locatives", locatives)
                 .add("temporals", temporals)
-                .add("synthetic", synthetic)
                 .add("relId", relId);
 
     }
@@ -161,10 +148,6 @@ public class RelationshipMention extends Attribute {
         }
 
         RelationshipMention that = (RelationshipMention) o;
-
-        if (synthetic != that.synthetic) {
-            return false;
-        }
 
         if (arg1 != null ? !arg1.equals(that.arg1) : that.arg1 != null) {
             return false;
@@ -216,7 +199,6 @@ public class RelationshipMention extends Attribute {
         result = 31 * result + (adjuncts != null ? adjuncts.hashCode() : 0);
         result = 31 * result + (locatives != null ? locatives.hashCode() : 0);
         result = 31 * result + (temporals != null ? temporals.hashCode() : 0);
-        result = 31 * result + (synthetic ? 1 : 0);
         result = 31 * result + (relId != null ? relId.hashCode() : 0);
         return result;
     }
@@ -231,14 +213,12 @@ public class RelationshipMention extends Attribute {
         private List<RelationshipArgument> locatives;
         private List<RelationshipArgument> temporals;
 
-        private boolean synthetic;
         private String relId;
         private List<Evidence> evidences;
 
         public Builder(int startOffset, int endOffset, String predPhrase) {
             super(startOffset, endOffset);
             this.predPhrase = predPhrase;
-            this.synthetic = false;
             this.evidences = Lists.newArrayList();
             this.adjuncts = Lists.newArrayList();
             this.locatives = Lists.newArrayList();
@@ -260,7 +240,6 @@ public class RelationshipMention extends Attribute {
             addAllToList(adjuncts, toCopy.adjuncts);
             addAllToList(locatives, toCopy.locatives);
             addAllToList(temporals, toCopy.temporals);
-            this.synthetic = toCopy.synthetic;
             this.relId = toCopy.relId;
             this.evidences = toCopy.evidences;
         }
@@ -398,17 +377,6 @@ public class RelationshipMention extends Attribute {
         }
 
         /**
-         * Specifies whether the relation is synthetic or textual.
-         *
-         * @param synthetic flag indicating whether the relation is synthetic or textual.
-         * @return this
-         */
-        public Builder synthetic(boolean synthetic) {
-            this.synthetic = synthetic;
-            return this;
-        }
-
-        /**
          * Specifies the relation id.
          *
          * @param relId the relation id.
@@ -432,7 +400,6 @@ public class RelationshipMention extends Attribute {
                     adjuncts,
                     locatives,
                     temporals,
-                    synthetic,
                     relId,
                     buildExtendedProperties());
         }

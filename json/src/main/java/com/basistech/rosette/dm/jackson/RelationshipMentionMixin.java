@@ -38,7 +38,6 @@ public abstract class RelationshipMentionMixin {
                              @JsonProperty("adjuncts") List<RelationshipArgument> adjuncts,
                              @JsonProperty("locatives") List<RelationshipArgument> locatives,
                              @JsonProperty("temporals") List<RelationshipArgument> temporals,
-                             @JsonProperty("synthetic") boolean synthetic,
                              @JsonProperty("relId") String relId,
                              @JsonProperty("extendedProperties") Map<String, Object> extendedProperties) {
 
