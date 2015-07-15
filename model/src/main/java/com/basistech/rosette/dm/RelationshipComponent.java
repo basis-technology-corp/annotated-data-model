@@ -28,16 +28,16 @@ import java.util.Map;
 public class RelationshipComponent extends BaseAttribute {
 
     private final String phrase;
-    private final List<Evidence> evidences;
-    private final String resolutionId;
+    private final List<Extent> extents;
+    private final String identifier;
 
 
-    protected RelationshipComponent(String phrase, List<Evidence> evidences,
-                                    String resolutionId, Map<String, Object> extendedProperties) {
+    protected RelationshipComponent(String phrase, List<Extent> extents,
+                                    String identifier, Map<String, Object> extendedProperties) {
         super(extendedProperties);
         this.phrase = phrase;
-        this.resolutionId = resolutionId;
-        this.evidences = listOrNull(evidences);
+        this.identifier = identifier;
+        this.extents = listOrNull(extents);
     }
 
     /**
@@ -50,12 +50,12 @@ public class RelationshipComponent extends BaseAttribute {
     }
 
     /**
-     * Returns a list of start and end offsets, which serve as evidences in the data for a component.
+     * Returns a list of start and end offsets, which serve as extents in the data for a component.
      *
      * @return a list of start and end offsets
      */
-    public List<Evidence> getEvidences() {
-        return evidences;
+    public List<Extent> getExtents() {
+        return extents;
     }
 
     /**
@@ -64,16 +64,16 @@ public class RelationshipComponent extends BaseAttribute {
      *
      * @return an textual identifier of a "real world" entity
      */
-    public String getResolutionId() {
-        return resolutionId;
+    public String getIdentifier() {
+        return identifier;
     }
 
     @Override
     protected Objects.ToStringHelper toStringHelper() {
         return super.toStringHelper()
                 .add("phrase", phrase)
-                .add("evidences", evidences)
-                .add("resolutionId", resolutionId);
+                .add("extents", extents)
+                .add("identifier", identifier);
     }
 
 
@@ -91,7 +91,7 @@ public class RelationshipComponent extends BaseAttribute {
 
         RelationshipComponent that = (RelationshipComponent) o;
 
-        if (resolutionId != null ? !resolutionId.equals(that.resolutionId) : that.resolutionId != null) {
+        if (identifier != null ? !identifier.equals(that.identifier) : that.identifier != null) {
             return false;
         }
 
@@ -99,7 +99,7 @@ public class RelationshipComponent extends BaseAttribute {
             return false;
         }
 
-        if (evidences != null ? !evidences.equals(that.evidences) : that.evidences != null) {
+        if (extents != null ? !extents.equals(that.extents) : that.extents != null) {
             return false;
         }
 
@@ -110,15 +110,15 @@ public class RelationshipComponent extends BaseAttribute {
     public int hashCode() {
         int result = super.hashCode();
         result = 31 * result + phrase.hashCode();
-        result = 31 * result + (resolutionId != null ? resolutionId.hashCode() : 0);
-        result = 31 * result + (evidences != null ? evidences.hashCode() : 0);
+        result = 31 * result + (identifier != null ? identifier.hashCode() : 0);
+        result = 31 * result + (extents != null ? extents.hashCode() : 0);
         return result;
     }
 
     public static class Builder extends BaseAttribute.Builder {
         private String phrase;
         private String resolutionId;
-        private List<Evidence> evidences = Lists.newArrayList();
+        private List<Extent> extents = Lists.newArrayList();
 
         public Builder() {
             super();
@@ -134,13 +134,13 @@ public class RelationshipComponent extends BaseAttribute {
             return this;
         }
 
-        public Builder evidences(List<Evidence> evidences) {
-            this.evidences = evidences;
+        public Builder extents(List<Extent> extents) {
+            this.extents = extents;
             return this;
         }
 
         public RelationshipComponent build() {
-            return new RelationshipComponent(phrase, evidences, resolutionId,
+            return new RelationshipComponent(phrase, extents, resolutionId,
                     buildExtendedProperties());
         }
     }

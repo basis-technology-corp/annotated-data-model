@@ -27,29 +27,23 @@ import java.util.Map;
 public class RelationshipMention extends Attribute {
 
     private final RelationshipComponent predicate;
-    private final RelationshipComponent arg1;
-    private final RelationshipComponent arg2;
-    private final RelationshipComponent arg3;
+    private final List<RelationshipComponent> arguments;
     private final List<RelationshipComponent> adjuncts;
     private final List<RelationshipComponent> locatives;
     private final List<RelationshipComponent> temporals;
-    private final String relationshipSource;
+    private final String source;
 
     protected RelationshipMention(int startOffset, int endOffset,
                                   RelationshipComponent predicate,
-                                  RelationshipComponent arg1,
-                                  RelationshipComponent arg2,
-                                  RelationshipComponent arg3,
+                                  List<RelationshipComponent> arguments,
                                   List<RelationshipComponent> adjuncts,
                                   List<RelationshipComponent> locatives,
                                   List<RelationshipComponent> temporals,
-                                  String relationshipSource, Map<String, Object> extendedProperties) {
+                                  String source, Map<String, Object> extendedProperties) {
         super(startOffset, endOffset, extendedProperties);
-        this.relationshipSource = relationshipSource;
+        this.source = source;
         this.predicate = predicate;
-        this.arg1 = arg1;
-        this.arg2 = arg2;
-        this.arg3 = arg3;
+        this.arguments = listOrNull(arguments);
         this.adjuncts = listOrNull(adjuncts);
         this.locatives = listOrNull(locatives);
         this.temporals = listOrNull(temporals);
@@ -70,7 +64,10 @@ public class RelationshipMention extends Attribute {
      * @return the first argument
      */
     public RelationshipComponent getArg1() {
-        return arg1;
+        if (arguments != null && arguments.size() > 0) {
+            return arguments.get(0);
+        }
+        return null;
     }
 
     /**
@@ -80,7 +77,10 @@ public class RelationshipMention extends Attribute {
      * @return the second argument
      */
     public RelationshipComponent getArg2() {
-        return arg2;
+        if (arguments != null && arguments.size() > 1) {
+            return arguments.get(1);
+        }
+        return null;
     }
 
     /**
@@ -89,7 +89,19 @@ public class RelationshipMention extends Attribute {
      * @return the third  argument
      */
     public RelationshipComponent getArg3() {
-        return arg3;
+        if (arguments != null && arguments.size() > 2) {
+            return arguments.get(2);
+        }
+        return null;
+    }
+
+    /**
+     * Returns a list of arguments.
+     *
+     * @return a list of arguments
+     */
+    public List<RelationshipComponent> getArguments() {
+        return arguments;
     }
 
     /**
@@ -127,21 +139,19 @@ public class RelationshipMention extends Attribute {
      *
      * @return the relationship extraction source
      */
-    public String getRelationshipSource() {
-        return relationshipSource;
+    public String getSource() {
+        return source;
     }
 
     @Override
     protected Objects.ToStringHelper toStringHelper() {
         return super.toStringHelper()
                 .add("predicate", predicate)
-                .add("arg1", arg1)
-                .add("arg2", arg2)
-                .add("arg3", arg3)
+                .add("arguments", getArguments())
                 .add("adjuncts", adjuncts)
                 .add("locatives", locatives)
                 .add("temporals", temporals)
-                .add("relationshipSource", relationshipSource);
+                .add("source", source);
 
     }
 
@@ -165,15 +175,7 @@ public class RelationshipMention extends Attribute {
             return false;
         }
 
-        if (arg1 != null ? !arg1.equals(that.arg1) : that.arg1 != null) {
-            return false;
-        }
-
-        if (arg2 != null ? !arg2.equals(that.arg2) : that.arg2 != null) {
-            return false;
-        }
-
-        if (arg3 != null ? !arg3.equals(that.arg3) : that.arg3 != null) {
+        if (arguments != null ? !arguments.equals(that.arguments) : that.arguments != null) {
             return false;
         }
 
@@ -189,7 +191,7 @@ public class RelationshipMention extends Attribute {
             return false;
         }
 
-        if (relationshipSource != null ? !relationshipSource.equals(that.relationshipSource) : that.relationshipSource != null) {
+        if (source != null ? !source.equals(that.source) : that.source != null) {
             return false;
         }
 
@@ -200,27 +202,23 @@ public class RelationshipMention extends Attribute {
     public int hashCode() {
         int result = super.hashCode();
         result = 31 * result + (predicate != null ? predicate.hashCode() : 0);
-        result = 31 * result + (arg1 != null ? arg1.hashCode() : 0);
-        result = 31 * result + (arg2 != null ? arg2.hashCode() : 0);
-        result = 31 * result + (arg3 != null ? arg3.hashCode() : 0);
+        result = 31 * result + (arguments != null ? arguments.hashCode() : 0);
         result = 31 * result + (adjuncts != null ? adjuncts.hashCode() : 0);
         result = 31 * result + (locatives != null ? locatives.hashCode() : 0);
         result = 31 * result + (temporals != null ? temporals.hashCode() : 0);
-        result = 31 * result + (relationshipSource != null ? relationshipSource.hashCode() : 0);
+        result = 31 * result + (source != null ? source.hashCode() : 0);
         return result;
     }
 
     public static class Builder extends Attribute.Builder {
 
         private RelationshipComponent predicate;
-        private RelationshipComponent arg1;
-        private RelationshipComponent arg2;
-        private RelationshipComponent arg3;
+        private List<RelationshipComponent> arguments;
         private List<RelationshipComponent> adjuncts;
         private List<RelationshipComponent> locatives;
         private List<RelationshipComponent> temporals;
 
-        private String relationshipSource;
+        private String source;
 
         /**
          * Constructs a builder with the minimal required information for an relationship mentions.
@@ -233,6 +231,7 @@ public class RelationshipMention extends Attribute {
          */
         public Builder(int startOffset, int endOffset) {
             super(startOffset, endOffset);
+            this.arguments = Lists.newArrayList();
             this.adjuncts = Lists.newArrayList();
             this.locatives = Lists.newArrayList();
             this.temporals = Lists.newArrayList();
@@ -247,13 +246,11 @@ public class RelationshipMention extends Attribute {
         public Builder(RelationshipMention toCopy) {
             super(toCopy);
             predicate = toCopy.predicate;
-            arg1 = toCopy.arg1;
-            arg2 = toCopy.arg2;
-            arg3 = toCopy.arg3;
+            addAllToList(arguments, toCopy.arguments);
             addAllToList(adjuncts, toCopy.adjuncts);
             addAllToList(locatives, toCopy.locatives);
             addAllToList(temporals, toCopy.temporals);
-            this.relationshipSource = toCopy.relationshipSource;
+            this.source = toCopy.source;
         }
 
         /**
@@ -285,7 +282,7 @@ public class RelationshipMention extends Attribute {
          * @return this
          */
         public Builder arg1(RelationshipComponent arg1) {
-            this.arg1 = arg1;
+            this.arguments.add(0, arg1);
             return this;
         }
 
@@ -296,7 +293,7 @@ public class RelationshipMention extends Attribute {
          * @return this
          */
         public Builder arg2(RelationshipComponent arg2) {
-            this.arg2 = arg2;
+            this.arguments.add(1, arg2);
             return this;
         }
 
@@ -307,7 +304,18 @@ public class RelationshipMention extends Attribute {
          * @return this
          */
         public Builder arg3(RelationshipComponent arg3) {
-            this.arg3 = arg3;
+            this.arguments.add(2, arg3);
+            return this;
+        }
+
+        /**
+         * Attaches a list of arguments
+         *
+         * @param arguments the arguments
+         * @return this
+         */
+        public Builder arguments(List<RelationshipComponent> arguments) {
+            addAllToList(this.arguments, arguments);
             return this;
         }
 
@@ -317,7 +325,7 @@ public class RelationshipMention extends Attribute {
          * @param adjuncts the adjuncts
          * @return this
          */
-        public Builder adjuncts(ListAttribute<RelationshipComponent> adjuncts) {
+        public Builder adjuncts(List<RelationshipComponent> adjuncts) {
             this.adjuncts = Lists.newArrayList();
             addAllToList(this.adjuncts, adjuncts);
             return this;
@@ -340,7 +348,7 @@ public class RelationshipMention extends Attribute {
          * @param locatives the locatives
          * @return this
          */
-        public Builder locatives(ListAttribute<RelationshipComponent> locatives) {
+        public Builder locatives(List<RelationshipComponent> locatives) {
             this.locatives = Lists.newArrayList();
             addAllToList(this.locatives, locatives);
             return this;
@@ -363,7 +371,7 @@ public class RelationshipMention extends Attribute {
          * @param temporals the temporals
          * @return this
          */
-        public Builder temporals(ListAttribute<RelationshipComponent> temporals) {
+        public Builder temporals(List<RelationshipComponent> temporals) {
             this.temporals = Lists.newArrayList();
             addAllToList(this.temporals, temporals);
             return this;
@@ -383,11 +391,11 @@ public class RelationshipMention extends Attribute {
         /**
          * Specifies the relation id.
          *
-         * @param relationshipSource the he extractor that generated the relationshipMention.
+         * @param source the he extractor that generated the relationshipMention.
          * @return this
          */
-        public Builder relationshipSource(String relationshipSource) {
-            this.relationshipSource = relationshipSource;
+        public Builder source(String source) {
+            this.source = source;
             return this;
         }
 
@@ -399,13 +407,11 @@ public class RelationshipMention extends Attribute {
         public RelationshipMention build() {
             return new RelationshipMention(startOffset, endOffset,
                     predicate,
-                    arg1,
-                    arg2,
-                    arg3,
+                    arguments,
                     adjuncts,
                     locatives,
                     temporals,
-                    relationshipSource, buildExtendedProperties());
+                    source, buildExtendedProperties());
         }
     }
 }

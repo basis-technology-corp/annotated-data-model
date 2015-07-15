@@ -16,6 +16,7 @@ package com.basistech.rosette.dm.jackson;
 
 import com.basistech.rosette.dm.RelationshipComponent;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
@@ -30,14 +31,21 @@ public abstract class RelationshipMentionMixin {
     RelationshipMentionMixin(@JsonProperty("startOffset") int startOffset,
                              @JsonProperty("endOffset") int endOffset,
                              @JsonProperty("predicate") RelationshipComponent predicate,
-                             @JsonProperty("arg1") RelationshipComponent arg1,
-                             @JsonProperty("arg2") RelationshipComponent arg2,
-                             @JsonProperty("arg3") RelationshipComponent arg3,
+                             @JsonProperty("arguments") List<RelationshipComponent> arguments,
                              @JsonProperty("adjuncts") List<RelationshipComponent> adjuncts,
                              @JsonProperty("locatives") List<RelationshipComponent> locatives,
                              @JsonProperty("temporals") List<RelationshipComponent> temporals,
-                             @JsonProperty("relationshipSource") String relationshipSource,
+                             @JsonProperty("source") String source,
                              @JsonProperty("extendedProperties") Map<String, Object> extendedProperties) {
 
     }
+
+    @JsonIgnore
+    public abstract RelationshipComponent getArg1();
+
+    @JsonIgnore
+    public abstract RelationshipComponent getArg2();
+
+    @JsonIgnore
+    public abstract RelationshipComponent getArg3();
 }

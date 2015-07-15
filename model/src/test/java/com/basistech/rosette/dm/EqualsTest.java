@@ -382,11 +382,11 @@ public class EqualsTest {
 
     @Test
     public void testEvidence() throws Exception {
-        Evidence e1 = new Evidence.Builder(0,1).build();
+        Extent e1 = new Extent.Builder(0,1).build();
         e1.hashCode();
         assertTrue(e1.equals(e1));
 
-        Evidence e2 = new Evidence.Builder(0,2).build();
+        Extent e2 = new Extent.Builder(0,2).build();
         e2.hashCode();
         assertTrue(e2.equals(e2));
 
@@ -407,14 +407,14 @@ public class EqualsTest {
         ra2.hashCode();
         assertTrue(ra2.equals(ra2));
 
-        assertNull(ra2.getResolutionId());
+        assertNull(ra2.getIdentifier());
         assertFalse(ra1.equals(ra2));
         assertFalse(ra2.equals(ra1));
         assertFalse(ra1.hashCode() == ra2.hashCode());
 
         // this one has evidence
-        ra2 = new RelationshipComponent.Builder().phrase("t").resolutionId("1").evidences(Lists.newArrayList
-                (new Evidence.Builder(0, 1).build())).build();
+        ra2 = new RelationshipComponent.Builder().phrase("t").resolutionId("1").extents(Lists.newArrayList
+                (new Extent.Builder(0, 1).build())).build();
         ra2.hashCode();
         assertTrue(ra2.equals(ra2));
 
@@ -429,8 +429,8 @@ public class EqualsTest {
         RelationshipComponent _ra2 = new RelationshipComponent.Builder().phrase("t").build();
         RelationshipComponent _ra3 = new RelationshipComponent.Builder().phrase("b").build();
         RelationshipComponent _p = new RelationshipComponent.Builder().phrase("p").build();
-        RelationshipComponent _p2 = new RelationshipComponent.Builder().phrase("p").evidences
-                (Lists.newArrayList(new Evidence.Builder(2, 3).build())).build();
+        RelationshipComponent _p2 = new RelationshipComponent.Builder().phrase("p")
+                .extents(Lists.newArrayList(new Extent.Builder(2, 3).build())).build();
 
 
 
@@ -457,7 +457,7 @@ public class EqualsTest {
         assertFalse(rm1.hashCode() == rm2.hashCode());
 
         // this guy has relId and source
-        RelationshipMention rm3 = new RelationshipMention.Builder(0, 12).predicate(_p2).arg1(_ra3).relationshipSource("statistical rules:42").build();
+        RelationshipMention rm3 = new RelationshipMention.Builder(0, 12).predicate(_p2).arg1(_ra3).source("statistical rules:42").build();
         rm2.hashCode();
         assertTrue(rm3.equals(rm3));
         assertFalse(rm3.equals(rm2));

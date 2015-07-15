@@ -20,7 +20,7 @@ import com.basistech.rosette.dm.BaseAttribute;
 import com.basistech.rosette.dm.BaseNounPhrase;
 import com.basistech.rosette.dm.CategorizerResult;
 import com.basistech.rosette.dm.EntityMention;
-import com.basistech.rosette.dm.Evidence;
+import com.basistech.rosette.dm.Extent;
 import com.basistech.rosette.dm.HanMorphoAnalysis;
 import com.basistech.rosette.dm.KoreanMorphoAnalysis;
 import com.basistech.rosette.dm.LanguageDetection;
@@ -108,7 +108,7 @@ public class JsonTest extends AdmAssert {
         RelationshipComponent.Builder raBuilder = new RelationshipComponent.Builder();
         raBuilder.phrase("bla");
         raBuilder.resolutionId("/free/base/1");
-        raBuilder.evidences(Lists.newArrayList(new Evidence.Builder(0, 4).build()));
+        raBuilder.extents(Lists.newArrayList(new Extent.Builder(0, 4).build()));
         RelationshipComponent arg1 = raBuilder.build();
 
         raBuilder = new RelationshipComponent.Builder();
@@ -119,7 +119,7 @@ public class JsonTest extends AdmAssert {
         raBuilder = new RelationshipComponent.Builder();
         raBuilder.phrase("bli");
         raBuilder.resolutionId("/free/base/3");
-        raBuilder.evidences(Lists.newArrayList(new Evidence.Builder(5, 6).build(), new Evidence.Builder(6, 7).build()));
+        raBuilder.extents(Lists.newArrayList(new Extent.Builder(5, 6).build(), new Extent.Builder(6, 7).build()));
         RelationshipComponent pred = raBuilder.build();
 
         // Build a relation
@@ -127,7 +127,7 @@ public class JsonTest extends AdmAssert {
         RelationshipMention.Builder rmBuilder = new RelationshipMention.Builder(0, 12).predicate(pred).arg1(arg1).arg2
                 (arg2);
         rmBuilder.extendedProperty("rm-ex", "rm-ex-val");
-        rmBuilder.relationshipSource("statistical rules:42");
+        rmBuilder.source("statistical rules:42");
         relationshipMention = rmBuilder.build();
         rmListBuilder.add(relationshipMention);
         builder.relationshipMentions(rmListBuilder.build());

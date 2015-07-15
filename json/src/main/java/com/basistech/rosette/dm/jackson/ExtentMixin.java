@@ -20,14 +20,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Map;
 
 /**
- * {@link com.basistech.rosette.dm.Evidence}
+ * {@link com.basistech.rosette.dm.Extent}
  */
-public abstract class EvidenceMixin {
+public abstract class ExtentMixin {
 
     @JsonCreator
-    public EvidenceMixin(@JsonProperty("startOffset") int startOffset,
-                         @JsonProperty("endOffset") int endOffset,
-                         @JsonProperty("extendedProperties") Map<String, Object> extendedProperties) {
+    public ExtentMixin(@JsonProperty("startOffset") int startOffset,
+                       @JsonProperty("endOffset") int endOffset,
+                       @JsonProperty("extendedProperties") Map<String, Object> extendedProperties) {
     }
 
 
