@@ -18,11 +18,10 @@ package com.basistech.rosette.dm;
 import java.util.Map;
 
 /**
- * An Evidence.
- * Evidence for a relationship mention component, pointing to the exact part of the raw text that implied there is an
- * argument or predicate phrase around.
- *
- * Note that Evidence have no properties of their own.
+ * An evidence for a relationship mention component, pointing to the exact span in the raw text that implies
+ * the existence of this component
+ * The offsets refer to a half-open range of characters (UTF-16 elements)
+ * Note that Evidences have no properties of their own.
  */
 public class Evidence extends Attribute {
 

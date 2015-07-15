@@ -22,39 +22,17 @@ import java.util.Map;
 
 /**
  *
- * An Relationship Mention
- * Relationship mention describes a relationship between arguments in a sentence and a predicate that connects them.
- *
- * Relationship mention start and end offsets point to the region in the data that the mention was extracted from,
- * it could be a sentence, clause, or string boundaries without a linguistic meaning.
- *
+ * A Relationship Mention describes arguments in a sentence and a predicate that connects them.
  */
 public class RelationshipMention extends Attribute {
 
-    /**
-     * Predicate.
-     */
     private final RelationshipComponent predicate;
-
-    /**
-     * First argument.
-     */
     private final RelationshipComponent arg1;
-    /**
-     * Second argument.
-     */
     private final RelationshipComponent arg2;
-    /**
-     * Third argument.
-     */
     private final RelationshipComponent arg3;
     private final List<RelationshipComponent> adjuncts;
     private final List<RelationshipComponent> locatives;
     private final List<RelationshipComponent> temporals;
-
-    /**
-     * A display string representing the extractor that generated the relationshipMention
-     */
     private final String relationshipSource;
 
     protected RelationshipMention(int startOffset, int endOffset,
@@ -77,34 +55,78 @@ public class RelationshipMention extends Attribute {
         this.temporals = listOrNull(temporals);
     }
 
+    /**
+     * Returns the predicate. A predicate is usually the main verb, property or action that is expressed by the text.
+     *
+     * @return the predicate of the relationship
+     */
     public RelationshipComponent getPredicate() {
         return predicate;
     }
 
+    /**
+     * Returns the first argument. The first argument is usually the subject, agent or main actor of the relationship.
+     *
+     * @return the first argument
+     */
     public RelationshipComponent getArg1() {
         return arg1;
     }
 
+    /**
+     * Returns the second argument. The second argument complements the predicate and is usually the object, theme or
+     * patient of the relationship.
+     *
+     * @return the second argument
+     */
     public RelationshipComponent getArg2() {
         return arg2;
     }
 
+    /**
+     * Returns the third argument. The third argument is usually an additional object in ditransitive verbs.
+     *
+     * @return the third  argument
+     */
     public RelationshipComponent getArg3() {
         return arg3;
     }
 
+    /**
+     * Returns a list of adjuncts. Adjuncts contain all optional parts of a relationship which are not temporal or
+     * locative expressions.
+     *
+     * @return a list of adjuncts
+     */
     public List<RelationshipComponent> getAdjuncts() {
         return adjuncts;
     }
 
+    /**
+     * Returns a list of locative expressions. Locatives usually express the locations the action expressed by
+     * the relationship took place.
+     *
+     * @return a list of locative expressions
+     */
     public List<RelationshipComponent> getLocatives() {
         return locatives;
     }
 
+    /**
+     * Returns a list of temporal expressions. Temporals usually express the time in which the action expressed by
+     * the relationship took place.
+     *
+     * @return a list of termporal expressions
+     */
     public List<RelationshipComponent> getTemporals() {
         return temporals;
     }
 
+    /**
+     * Returns the relationship extraction device that produced this mention.  For example, "statistical", "rules"
+     *
+     * @return the relationship extraction source
+     */
     public String getRelationshipSource() {
         return relationshipSource;
     }
@@ -200,6 +222,15 @@ public class RelationshipMention extends Attribute {
 
         private String relationshipSource;
 
+        /**
+         * Constructs a builder with the minimal required information for an relationship mentions.
+         *
+         * Relationship mention start and end offsets point to the region in the data that the mention was extracted from,
+         * it could be a sentence, clause, or string boundaries without any linguistic meaning.
+         *
+         * @param startOffset the start offset in the text, in characters
+         * @param endOffset the end offset in the text, in characters
+         */
         public Builder(int startOffset, int endOffset) {
             super(startOffset, endOffset);
             this.adjuncts = Lists.newArrayList();
@@ -208,7 +239,7 @@ public class RelationshipMention extends Attribute {
         }
 
         /**
-         * Constructs a builder by copying values from an existing resolved entity.
+         * Constructs a builder by copying values from an existing relationship mention.
          *
          * @param toCopy the object to create
          * @adm.ignore
@@ -240,7 +271,7 @@ public class RelationshipMention extends Attribute {
          * Attaches predicate
          *
          * @param predicate the predicate
-         * @return predicate
+         * @return this
          */
         public Builder predicate(RelationshipComponent predicate) {
             this.predicate = predicate;
@@ -294,6 +325,7 @@ public class RelationshipMention extends Attribute {
 
         /**
          * Add an adjunct.
+         *
          * @param adjunct the adjunct
          * @return this
          */
@@ -316,6 +348,7 @@ public class RelationshipMention extends Attribute {
 
         /**
          * Add a locative.
+         *
          * @param locative the locative
          * @return this
          */
@@ -338,6 +371,7 @@ public class RelationshipMention extends Attribute {
 
         /**
          * Add a temporal.
+         *
          * @param temporal the temporal
          * @return this
          */

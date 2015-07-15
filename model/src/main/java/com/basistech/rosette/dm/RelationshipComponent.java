@@ -22,26 +22,13 @@ import java.util.List;
 import java.util.Map;
 
 /**
- *
- * An Relationship Component
- * Relationship component is a component of relationship mention, such as argument or predicate.
+ * A Relationship Component: a building block of a relationship mention, such as an argument, predicate or adjunct.
  *
  */
 public class RelationshipComponent extends BaseAttribute {
 
-    /**
-     * A display string representing the component
-     */
     private final String phrase;
-
-    /**
-     * list of start and end offsets, representing the evidences in the data for a component
-     */
     private final List<Evidence> evidences;
-
-    /**
-     * the resolution id: placeholder for an identifier from an external knowledge-base the argument resolves to.
-     */
     private final String resolutionId;
 
 
@@ -53,14 +40,30 @@ public class RelationshipComponent extends BaseAttribute {
         this.evidences = listOrNull(evidences);
     }
 
+    /**
+     * Returns a display string representing the component.
+     *
+     * @return a display string representing the component
+     */
     public String getPhrase() {
         return phrase;
     }
 
+    /**
+     * Returns a list of start and end offsets, which serve as evidences in the data for a component.
+     *
+     * @return a list of start and end offsets
+     */
     public List<Evidence> getEvidences() {
         return evidences;
     }
 
+    /**
+     * Returns a textual identifier from an external database of "real world" entity, property or value this component
+     * refers (or "resolves") to.
+     *
+     * @return an textual identifier of a "real world" entity
+     */
     public String getResolutionId() {
         return resolutionId;
     }
