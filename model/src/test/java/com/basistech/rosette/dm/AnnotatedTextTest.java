@@ -376,8 +376,8 @@ public class AnnotatedTextTest {
         RelationshipComponent.Builder relationArgumentBuilder1 = new RelationshipComponent.Builder();
         RelationshipComponent.Builder relationArgumentBuilder2 = new RelationshipComponent.Builder();
         RelationshipComponent.Builder relationArgumentBuilder3 = new RelationshipComponent.Builder();
-        relationArgumentBuilder1.phrase(argPhrase + "1").resolutionId(argumentId + "1");
-        relationArgumentBuilder2.phrase(argPhrase + "2").resolutionId(argumentId + "2");
+        relationArgumentBuilder1.phrase(argPhrase + "1").identifier(argumentId + "1");
+        relationArgumentBuilder2.phrase(argPhrase + "2").identifier(argumentId + "2");
         relationArgumentBuilder3.phrase(relPhrase);
 
         listBuilder.add(new RelationshipMention.Builder(0, 12).predicate(relationArgumentBuilder3.build()).arg1

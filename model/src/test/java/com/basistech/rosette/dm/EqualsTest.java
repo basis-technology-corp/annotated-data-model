@@ -398,7 +398,9 @@ public class EqualsTest {
     @Test
     public void relationArgument() throws Exception {
         // this one has offsets, phrase and an argid,
-        RelationshipComponent ra1 = new RelationshipComponent.Builder().phrase("t").resolutionId("1").build();
+        RelationshipComponent ra1 = new RelationshipComponent.Builder()
+                .phrase("t")
+                .identifier("1").build();
         ra1.hashCode();
         assertTrue(ra1.equals(ra1));
 
@@ -413,8 +415,11 @@ public class EqualsTest {
         assertFalse(ra1.hashCode() == ra2.hashCode());
 
         // this one has evidence
-        ra2 = new RelationshipComponent.Builder().phrase("t").resolutionId("1").extents(Lists.newArrayList
-                (new Extent.Builder(0, 1).build())).build();
+        ra2 = new RelationshipComponent.Builder()
+                .phrase("t")
+                .identifier("1")
+                .extents(Lists.newArrayList(new Extent.Builder(0, 1).build()))
+                .build();
         ra2.hashCode();
         assertTrue(ra2.equals(ra2));
 
@@ -425,7 +430,7 @@ public class EqualsTest {
 
     @Test
     public void relationMention() throws Exception {
-        RelationshipComponent _ra1 = new RelationshipComponent.Builder().phrase("t").resolutionId("1").build();
+        RelationshipComponent _ra1 = new RelationshipComponent.Builder().phrase("t").identifier("1").build();
         RelationshipComponent _ra2 = new RelationshipComponent.Builder().phrase("t").build();
         RelationshipComponent _ra3 = new RelationshipComponent.Builder().phrase("b").build();
         RelationshipComponent _p = new RelationshipComponent.Builder().phrase("p").build();
