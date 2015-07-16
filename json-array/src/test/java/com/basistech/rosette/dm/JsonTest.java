@@ -81,18 +81,18 @@ public class JsonTest extends AdmAssert {
         // Build two relation arguments
         RelationshipComponent.Builder raBuilder = new RelationshipComponent.Builder();
         raBuilder.phrase("bla");
-        raBuilder.resolutionId("/free/base/1");
+        raBuilder.identifier("/free/base/1");
         raBuilder.extents(Lists.newArrayList(new Extent.Builder(0, 4).build()));
         RelationshipComponent arg1 = raBuilder.build();
 
         raBuilder = new RelationshipComponent.Builder();
         raBuilder.phrase("blu");
-        raBuilder.resolutionId("/free/base/2");
+        raBuilder.identifier("/free/base/2");
         RelationshipComponent arg2 = raBuilder.build();
 
         raBuilder = new RelationshipComponent.Builder();
         raBuilder.phrase("bli");
-        raBuilder.resolutionId("/free/base/3");
+        raBuilder.identifier("/free/base/3");
         raBuilder.extents(Lists.newArrayList(new Extent.Builder(5, 6).build(), new Extent.Builder(6, 7).build()));
         RelationshipComponent pred = raBuilder.build();
 

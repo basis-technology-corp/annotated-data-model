@@ -15,10 +15,10 @@
 package com.basistech.rosette.dm;
 
 import com.google.common.base.Objects;
-import com.google.common.collect.Lists;
 
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  *
@@ -27,26 +27,32 @@ import java.util.Map;
 public class RelationshipMention extends Attribute {
 
     private final RelationshipComponent predicate;
-    private final List<RelationshipComponent> arguments;
-    private final List<RelationshipComponent> adjuncts;
-    private final List<RelationshipComponent> locatives;
-    private final List<RelationshipComponent> temporals;
+    private final RelationshipComponent arg1;
+    private final RelationshipComponent arg2;
+    private final RelationshipComponent arg3;
+    private final Set<RelationshipComponent> adjuncts;
+    private final Set<RelationshipComponent> locatives;
+    private final Set<RelationshipComponent> temporals;
     private final String source;
 
     protected RelationshipMention(int startOffset, int endOffset,
                                   RelationshipComponent predicate,
-                                  List<RelationshipComponent> arguments,
-                                  List<RelationshipComponent> adjuncts,
-                                  List<RelationshipComponent> locatives,
-                                  List<RelationshipComponent> temporals,
+                                  RelationshipComponent arg1,
+                                  RelationshipComponent arg2,
+                                  RelationshipComponent arg3,
+                                  Set<RelationshipComponent> adjuncts,
+                                  Set<RelationshipComponent> locatives,
+                                  Set<RelationshipComponent> temporals,
                                   String source, Map<String, Object> extendedProperties) {
         super(startOffset, endOffset, extendedProperties);
         this.source = source;
         this.predicate = predicate;
-        this.arguments = listOrNull(arguments);
-        this.adjuncts = listOrNull(adjuncts);
-        this.locatives = listOrNull(locatives);
-        this.temporals = listOrNull(temporals);
+        this.arg1 = arg1;
+        this.arg2 = arg2;
+        this.arg3 = arg3;
+        this.adjuncts = setOrNull(adjuncts);
+        this.locatives = setOrNull(locatives);
+        this.temporals = setOrNull(temporals);
     }
 
     /**
@@ -64,10 +70,7 @@ public class RelationshipMention extends Attribute {
      * @return the first argument
      */
     public RelationshipComponent getArg1() {
-        if (arguments != null && arguments.size() > 0) {
-            return arguments.get(0);
-        }
-        return null;
+        return arg1;
     }
 
     /**
@@ -77,10 +80,7 @@ public class RelationshipMention extends Attribute {
      * @return the second argument
      */
     public RelationshipComponent getArg2() {
-        if (arguments != null && arguments.size() > 1) {
-            return arguments.get(1);
-        }
-        return null;
+        return arg2;
     }
 
     /**
@@ -89,48 +89,36 @@ public class RelationshipMention extends Attribute {
      * @return the third  argument
      */
     public RelationshipComponent getArg3() {
-        if (arguments != null && arguments.size() > 2) {
-            return arguments.get(2);
-        }
-        return null;
+        return arg3;
     }
 
     /**
-     * Returns a list of arguments.
-     *
-     * @return a list of arguments
-     */
-    public List<RelationshipComponent> getArguments() {
-        return arguments;
-    }
-
-    /**
-     * Returns a list of adjuncts. Adjuncts contain all optional parts of a relationship which are not temporal or
+     * Returns a set of adjuncts. Adjuncts contain all optional parts of a relationship which are not temporal or
      * locative expressions.
      *
-     * @return a list of adjuncts
+     * @return a set of adjuncts
      */
-    public List<RelationshipComponent> getAdjuncts() {
+    public Set<RelationshipComponent> getAdjuncts() {
         return adjuncts;
     }
 
     /**
-     * Returns a list of locative expressions. Locatives usually express the locations the action expressed by
+     * Returns a set of locative expressions. Locatives usually express the locations the action expressed by
      * the relationship took place.
      *
-     * @return a list of locative expressions
+     * @return a set of locative expressions
      */
-    public List<RelationshipComponent> getLocatives() {
+    public Set<RelationshipComponent> getLocatives() {
         return locatives;
     }
 
     /**
-     * Returns a list of temporal expressions. Temporals usually express the time in which the action expressed by
+     * Returns a set of temporal expressions. Temporals usually express the time in which the action expressed by
      * the relationship took place.
      *
-     * @return a list of termporal expressions
+     * @return a set of termporal expressions
      */
-    public List<RelationshipComponent> getTemporals() {
+    public Set<RelationshipComponent> getTemporals() {
         return temporals;
     }
 
@@ -147,7 +135,9 @@ public class RelationshipMention extends Attribute {
     protected Objects.ToStringHelper toStringHelper() {
         return super.toStringHelper()
                 .add("predicate", predicate)
-                .add("arguments", getArguments())
+                .add("arg1", arg1)
+                .add("arg2", arg2)
+                .add("arg3", arg3)
                 .add("adjuncts", adjuncts)
                 .add("locatives", locatives)
                 .add("temporals", temporals)
@@ -175,7 +165,15 @@ public class RelationshipMention extends Attribute {
             return false;
         }
 
-        if (arguments != null ? !arguments.equals(that.arguments) : that.arguments != null) {
+        if (arg1 != null ? !arg1.equals(that.arg1) : that.arg1 != null) {
+            return false;
+        }
+
+        if (arg2 != null ? !arg2.equals(that.arg2) : that.arg2 != null) {
+            return false;
+        }
+
+        if (arg3 != null ? !arg3.equals(that.arg3) : that.arg3 != null) {
             return false;
         }
 
@@ -202,7 +200,9 @@ public class RelationshipMention extends Attribute {
     public int hashCode() {
         int result = super.hashCode();
         result = 31 * result + (predicate != null ? predicate.hashCode() : 0);
-        result = 31 * result + (arguments != null ? arguments.hashCode() : 0);
+        result = 31 * result + (arg1 != null ? arg1.hashCode() : 0);
+        result = 31 * result + (arg2 != null ? arg2.hashCode() : 0);
+        result = 31 * result + (arg3 != null ? arg3.hashCode() : 0);
         result = 31 * result + (adjuncts != null ? adjuncts.hashCode() : 0);
         result = 31 * result + (locatives != null ? locatives.hashCode() : 0);
         result = 31 * result + (temporals != null ? temporals.hashCode() : 0);
@@ -213,10 +213,12 @@ public class RelationshipMention extends Attribute {
     public static class Builder extends Attribute.Builder {
 
         private RelationshipComponent predicate;
-        private List<RelationshipComponent> arguments;
-        private List<RelationshipComponent> adjuncts;
-        private List<RelationshipComponent> locatives;
-        private List<RelationshipComponent> temporals;
+        private RelationshipComponent arg1;
+        private RelationshipComponent arg2;
+        private RelationshipComponent arg3;
+        private Set<RelationshipComponent> adjuncts;
+        private Set<RelationshipComponent> locatives;
+        private Set<RelationshipComponent> temporals;
 
         private String source;
 
@@ -231,10 +233,9 @@ public class RelationshipMention extends Attribute {
          */
         public Builder(int startOffset, int endOffset) {
             super(startOffset, endOffset);
-            this.arguments = Lists.newArrayList();
-            this.adjuncts = Lists.newArrayList();
-            this.locatives = Lists.newArrayList();
-            this.temporals = Lists.newArrayList();
+            this.adjuncts = new HashSet<>();
+            this.locatives = new HashSet<>();
+            this.temporals = new HashSet<>();
         }
 
         /**
@@ -246,10 +247,12 @@ public class RelationshipMention extends Attribute {
         public Builder(RelationshipMention toCopy) {
             super(toCopy);
             predicate = toCopy.predicate;
-            addAllToList(arguments, toCopy.arguments);
-            addAllToList(adjuncts, toCopy.adjuncts);
-            addAllToList(locatives, toCopy.locatives);
-            addAllToList(temporals, toCopy.temporals);
+            arg1 = toCopy.arg1;
+            arg2 = toCopy.arg2;
+            arg3 = toCopy.arg3;
+            addAllToSet(adjuncts, toCopy.adjuncts);
+            addAllToSet(locatives, toCopy.locatives);
+            addAllToSet(temporals, toCopy.temporals);
             this.source = toCopy.source;
         }
 
@@ -282,7 +285,7 @@ public class RelationshipMention extends Attribute {
          * @return this
          */
         public Builder arg1(RelationshipComponent arg1) {
-            this.arguments.add(0, arg1);
+            this.arg1 = arg1;
             return this;
         }
 
@@ -293,7 +296,7 @@ public class RelationshipMention extends Attribute {
          * @return this
          */
         public Builder arg2(RelationshipComponent arg2) {
-            this.arguments.add(1, arg2);
+            this.arg2 = arg2;
             return this;
         }
 
@@ -304,18 +307,7 @@ public class RelationshipMention extends Attribute {
          * @return this
          */
         public Builder arg3(RelationshipComponent arg3) {
-            this.arguments.add(2, arg3);
-            return this;
-        }
-
-        /**
-         * Attaches a list of arguments
-         *
-         * @param arguments the arguments
-         * @return this
-         */
-        public Builder arguments(List<RelationshipComponent> arguments) {
-            addAllToList(this.arguments, arguments);
+            this.arg3 = arg3;
             return this;
         }
 
@@ -325,9 +317,9 @@ public class RelationshipMention extends Attribute {
          * @param adjuncts the adjuncts
          * @return this
          */
-        public Builder adjuncts(List<RelationshipComponent> adjuncts) {
-            this.adjuncts = Lists.newArrayList();
-            addAllToList(this.adjuncts, adjuncts);
+        public Builder adjuncts(Set<RelationshipComponent> adjuncts) {
+            this.adjuncts = new HashSet<>();
+            addAllToSet(this.adjuncts, adjuncts);
             return this;
         }
 
@@ -348,9 +340,9 @@ public class RelationshipMention extends Attribute {
          * @param locatives the locatives
          * @return this
          */
-        public Builder locatives(List<RelationshipComponent> locatives) {
-            this.locatives = Lists.newArrayList();
-            addAllToList(this.locatives, locatives);
+        public Builder locatives(Set<RelationshipComponent> locatives) {
+            this.locatives = new HashSet<>();
+            addAllToSet(this.locatives, locatives);
             return this;
         }
 
@@ -371,9 +363,9 @@ public class RelationshipMention extends Attribute {
          * @param temporals the temporals
          * @return this
          */
-        public Builder temporals(List<RelationshipComponent> temporals) {
-            this.temporals = Lists.newArrayList();
-            addAllToList(this.temporals, temporals);
+        public Builder temporals(Set<RelationshipComponent> temporals) {
+            this.temporals = new HashSet<>();
+            addAllToSet(this.temporals, temporals);
             return this;
         }
 
@@ -407,7 +399,9 @@ public class RelationshipMention extends Attribute {
         public RelationshipMention build() {
             return new RelationshipMention(startOffset, endOffset,
                     predicate,
-                    arguments,
+                    arg1,
+                    arg2,
+                    arg3,
                     adjuncts,
                     locatives,
                     temporals,
