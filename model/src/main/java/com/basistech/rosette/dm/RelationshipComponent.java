@@ -117,7 +117,7 @@ public class RelationshipComponent extends BaseAttribute {
 
     public static class Builder extends BaseAttribute.Builder {
         private String phrase;
-        private String resolutionId;
+        private String identifier;
         private List<Extent> extents = Lists.newArrayList();
 
         public Builder() {
@@ -129,8 +129,8 @@ public class RelationshipComponent extends BaseAttribute {
             return this;
         }
 
-        public Builder resolutionId(String resolutionId) {
-            this.resolutionId = resolutionId;
+        public Builder identifier(String identifier) {
+            this.identifier = identifier;
             return this;
         }
 
@@ -140,7 +140,7 @@ public class RelationshipComponent extends BaseAttribute {
         }
 
         public RelationshipComponent build() {
-            return new RelationshipComponent(phrase, extents, resolutionId,
+            return new RelationshipComponent(phrase, extents, identifier,
                     buildExtendedProperties());
         }
     }
