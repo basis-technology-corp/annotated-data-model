@@ -1,5 +1,11 @@
 # Cumulative Release Notes for the Annotated Data Model
 
+## 1.13.0
+
+## [RELAX-112](https://basistech.atlassian.net/browse/RELAX-112)
+   Rework of the relationship classes. *not* compatible, but nothing
+   touches them outside of relax, yet.
+
 ## 1.12.1
 
 Rerelease with 57.0.1 as parent, so that it looks for common 35.0.0
