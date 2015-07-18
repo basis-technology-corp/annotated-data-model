@@ -58,7 +58,7 @@ public class ExtendedPropertyTest extends AdmAssert {
         //                012345678901234567890
         String rawText = "Cuthbert Girdlestone";
         AnnotatedText.Builder builder = new AnnotatedText.Builder().data(rawText);
-        ListAttribute.Builder<EntityMention> emListBuilder = new ListAttribute.Builder<EntityMention>(EntityMention.class);
+        ListAttribute.Builder<EntityMention> emListBuilder = new ListAttribute.Builder<>(EntityMention.class);
         EntityMention.Builder emBuilder = new EntityMention.Builder(0, 20, "PERSON");
         emBuilder.extendedProperty("extra_key", "extra_value");
         emListBuilder.add(emBuilder.build());
@@ -79,7 +79,7 @@ public class ExtendedPropertyTest extends AdmAssert {
         //                012345678901234567890
         String rawText = "Cuthbert Girdlestone";
         AnnotatedText.Builder builder = new AnnotatedText.Builder().data(rawText);
-        ListAttribute.Builder<EntityMention> emListBuilder = new ListAttribute.Builder<EntityMention>(EntityMention.class);
+        ListAttribute.Builder<EntityMention> emListBuilder = new ListAttribute.Builder<>(EntityMention.class);
         EntityMention.Builder emBuilder = new EntityMention.Builder(0, 20, "PERSON");
         emListBuilder.extendedProperty("extra_key", "extra_value");
         emListBuilder.add(emBuilder.build());

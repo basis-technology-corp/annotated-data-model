@@ -467,8 +467,8 @@ public class TextWrapper {
      * Provides a fast way to get a sentence number for a given index. For example,
      * if sentenceBounderies = {5, 11, 20} then for the token in index 12 the method returns 2
      * (i.e., the third sentence).
-     * @param sentenceBoundaries
-     * @param tokenIndex
+     * @param sentenceBoundaries a collection of sentences boundary offset positions
+     * @param tokenIndex the index of a token
      * @return The index in sentenceBoundaries that refers to the first token of tokenIndex's next sentence
      * (which we refer to as sentence number). Note that the method returns sentenceBoundaries.length if tokenIndex
      * is greater than the last index.

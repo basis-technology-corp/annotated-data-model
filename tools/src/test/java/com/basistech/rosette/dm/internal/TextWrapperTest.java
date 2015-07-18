@@ -145,7 +145,7 @@ public class TextWrapperTest {
         String rawText = "from Boston and Chicago";
         //int[] tokenOffsets = {0, 4, 5, 11, 12, 15, 16, 23};
         AnnotatedText.Builder builder = new AnnotatedText.Builder().data(rawText);
-        ListAttribute.Builder<ResolvedEntity> reListBuilder = new ListAttribute.Builder<ResolvedEntity>(ResolvedEntity.class);
+        ListAttribute.Builder<ResolvedEntity> reListBuilder = new ListAttribute.Builder<>(ResolvedEntity.class);
 
         ResolvedEntity.Builder re1Builder = new ResolvedEntity.Builder(5, 11, "Q100");
         re1Builder.coreferenceChainId(0);
@@ -191,10 +191,10 @@ public class TextWrapperTest {
         // could.  MutableResultAccess in RES *does* require correct operation
         // with missing sentences.
         AnnotatedText.Builder builder = new AnnotatedText.Builder().data("Bill");
-        ListAttribute.Builder<Token> tokenListBuilder = new ListAttribute.Builder<Token>(Token.class);
+        ListAttribute.Builder<Token> tokenListBuilder = new ListAttribute.Builder<>(Token.class);
         tokenListBuilder.add(new Token.Builder(0, 4, "Bill").build());
         builder.tokens(tokenListBuilder.build());
-        ListAttribute.Builder<EntityMention> emListBuilder = new ListAttribute.Builder<EntityMention>(EntityMention.class);
+        ListAttribute.Builder<EntityMention> emListBuilder = new ListAttribute.Builder<>(EntityMention.class);
         EntityMention.Builder emBuilder = new EntityMention.Builder(0, 4, "PERSON");
         emBuilder.normalized("Bill");
         emListBuilder.add(emBuilder.build());
@@ -235,7 +235,7 @@ public class TextWrapperTest {
         AnnotatedText.Builder builder = new AnnotatedText.Builder();
         //            012345678901234567890123456789012345678901234567890
         builder.data("George Washington, John Adams. Hello there George.");
-        ListAttribute.Builder<EntityMention> emListBuilder = new ListAttribute.Builder<EntityMention>(EntityMention.class);
+        ListAttribute.Builder<EntityMention> emListBuilder = new ListAttribute.Builder<>(EntityMention.class);
         emListBuilder.add(new EntityMention.Builder(0, 17, "PERSON").build());
         emListBuilder.add(new EntityMention.Builder(19, 29, "PERSON").build());
         emListBuilder.add(new EntityMention.Builder(43, 49, "PERSON").build());
@@ -247,7 +247,7 @@ public class TextWrapperTest {
     public void testSentencesWithoutTokens() throws Exception {
         AnnotatedText.Builder builder = new AnnotatedText.Builder();
         builder.data("foo");
-        ListAttribute.Builder<Sentence> sentListBuilder = new ListAttribute.Builder<Sentence>(Sentence.class);
+        ListAttribute.Builder<Sentence> sentListBuilder = new ListAttribute.Builder<>(Sentence.class);
         sentListBuilder.add(new Sentence.Builder(0, 3).build());
         builder.sentences(sentListBuilder.build());
         builder.build();
