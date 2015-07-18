@@ -14,13 +14,12 @@
 
 package com.basistech.rosette.dm.jackson;
 
-import com.basistech.rosette.dm.Evidence;
-import com.basistech.rosette.dm.RelationshipArgument;
+import com.basistech.rosette.dm.RelationshipComponent;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * {@link com.basistech.rosette.dm.RelationshipMention}
@@ -30,16 +29,14 @@ public abstract class RelationshipMentionMixin {
     @JsonCreator
     RelationshipMentionMixin(@JsonProperty("startOffset") int startOffset,
                              @JsonProperty("endOffset") int endOffset,
-                             @JsonProperty("predPhrase") String predPhrase,
-                             @JsonProperty("evidences") List<Evidence> evidences,
-                             @JsonProperty("arg1") RelationshipArgument arg1,
-                             @JsonProperty("arg2") RelationshipArgument arg2,
-                             @JsonProperty("arg3") RelationshipArgument arg3,
-                             @JsonProperty("adjuncts") List<RelationshipArgument> adjuncts,
-                             @JsonProperty("locatives") List<RelationshipArgument> locatives,
-                             @JsonProperty("temporals") List<RelationshipArgument> temporals,
-                             @JsonProperty("synthetic") boolean synthetic,
-                             @JsonProperty("relId") String relId,
+                             @JsonProperty("predicate") RelationshipComponent predicate,
+                             @JsonProperty("arg1") RelationshipComponent arg1,
+                             @JsonProperty("arg2") RelationshipComponent arg2,
+                             @JsonProperty("arg3") RelationshipComponent arg3,
+                             @JsonProperty("adjuncts") Set<RelationshipComponent> adjuncts,
+                             @JsonProperty("locatives") Set<RelationshipComponent> locatives,
+                             @JsonProperty("temporals") Set<RelationshipComponent> temporals,
+                             @JsonProperty("source") String source,
                              @JsonProperty("extendedProperties") Map<String, Object> extendedProperties) {
 
     }

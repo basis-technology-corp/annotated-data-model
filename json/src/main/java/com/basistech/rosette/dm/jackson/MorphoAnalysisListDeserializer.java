@@ -45,7 +45,7 @@ public final class MorphoAnalysisListDeserializer extends JsonDeserializer<List<
     private static final Set<String> ARABIC_FIELDS;
 
     static {
-        ImmutableSet.Builder<String> builder = new ImmutableSet.Builder<String>();
+        ImmutableSet.Builder<String> builder = new ImmutableSet.Builder<>();
         for (Field field : ArabicMorphoAnalysis.class.getDeclaredFields()) {
             try {
                 MorphoAnalysis.class.getDeclaredField(field.getName());

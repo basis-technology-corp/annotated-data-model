@@ -94,7 +94,8 @@ public class Mention {
     }
 
     public boolean isChainedTo(Mention other) {
-        return getIndocChainId() == other.getIndocChainId();
+        Integer indocChainId = getIndocChainId();
+        return indocChainId != null && indocChainId.equals(other.getIndocChainId());
     }
 
     public String toString() {

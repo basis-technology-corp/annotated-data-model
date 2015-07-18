@@ -18,24 +18,23 @@ package com.basistech.rosette.dm;
 import java.util.Map;
 
 /**
- * An Evidence.
- * Evidence for a relationship mention component, pointing to the exact part of the raw text that implied there is an
- * argument or predicate phrase around.
- *
- * Note that Evidence have no properties of their own.
+ * An evidence for a relationship mention component, pointing to the exact span in the raw text that implies
+ * the existence of this component
+ * The offsets refer to a half-open range of characters (UTF-16 elements)
+ * Note that Extents have no properties of their own.
  */
-public class Evidence extends Attribute {
+public class Extent extends Attribute {
 
-    protected Evidence(int startOffset, int endOffset) {
+    protected Extent(int startOffset, int endOffset) {
         super(startOffset, endOffset);
     }
 
-    protected Evidence(int startOffset, int endOffset, Map<String, Object> extendedProperties) {
+    protected Extent(int startOffset, int endOffset, Map<String, Object> extendedProperties) {
         super(startOffset, endOffset, extendedProperties);
     }
 
     /**
-     * Builder for Evidence attributes.
+     * Builder for Extent attributes.
      */
     public static class Builder extends Attribute.Builder {
 
@@ -62,12 +61,12 @@ public class Evidence extends Attribute {
         }
 
         /**
-         * Creates an immutable evidence from the current state of the builder.
+         * Creates an immutable extent from the current state of the builder.
          *
-         * @return the new evidence
+         * @return the new extent
          */
-        public Evidence build() {
-            return new Evidence(startOffset, endOffset);
+        public Extent build() {
+            return new Extent(startOffset, endOffset);
         }
     }
 }

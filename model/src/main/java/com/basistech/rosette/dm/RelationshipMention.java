@@ -15,134 +15,133 @@
 package com.basistech.rosette.dm;
 
 import com.google.common.base.Objects;
-import com.google.common.collect.Lists;
 
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  *
- * An Relationship Mention
- * Relationship mention describes a relationship between arguments in a sentence and a predicate that connects them.
- *
- * Relationship mention start and end offsets point to the region in the data that the mention was extracted from,
- * it could be a sentence, clause, or string boundaries without a linguistic meaning.
- *
+ * A Relationship Mention describes arguments in a sentence and a predicate that connects them.
  */
 public class RelationshipMention extends Attribute {
 
-    /**
-     * A display string representing the predicate
-     */
-    private final String predPhrase;
+    private final RelationshipComponent predicate;
+    private final RelationshipComponent arg1;
+    private final RelationshipComponent arg2;
+    private final RelationshipComponent arg3;
+    private final Set<RelationshipComponent> adjuncts;
+    private final Set<RelationshipComponent> locatives;
+    private final Set<RelationshipComponent> temporals;
+    private final String source;
 
-    /**
-     * list of start and end offsets, representing the evidences in the data for a predicate
-     */
-    private final List<Evidence> evidences;
-
-    /**
-     * First argument.
-     */
-    private final RelationshipArgument arg1;
-    /**
-     * Second argument.
-     */
-    private final RelationshipArgument arg2;
-    /**
-     * Third argument.
-     */
-    private final RelationshipArgument arg3;
-    private final List<RelationshipArgument> adjuncts;
-    private final List<RelationshipArgument> locatives;
-    private final List<RelationshipArgument> temporals;
-
-    /**
-     * Specifies whether the relation appears in the sentence (synthetic=false)
-     * or whether it is based on a syntactic configuration like apposition or
-     * possessives.
-     */
-    private final boolean synthetic;
-
-    /**
-     * placeholder for an identifier from an external knowledge-base the predicate resolves to.
-     */
-    private final String relId;
-
-    protected RelationshipMention(int startOffset, int endOffset, String predPhrase, List<Evidence> evidences,
-                                  RelationshipArgument arg1,
-                                  RelationshipArgument arg2,
-                                  RelationshipArgument arg3,
-                                  List<RelationshipArgument> adjuncts,
-                                  List<RelationshipArgument> locatives,
-                                  List<RelationshipArgument> temporals,
-                                  boolean synthetic, String relId, Map<String, Object> extendedProperties) {
+    protected RelationshipMention(int startOffset, int endOffset,
+                                  RelationshipComponent predicate,
+                                  RelationshipComponent arg1,
+                                  RelationshipComponent arg2,
+                                  RelationshipComponent arg3,
+                                  Set<RelationshipComponent> adjuncts,
+                                  Set<RelationshipComponent> locatives,
+                                  Set<RelationshipComponent> temporals,
+                                  String source, Map<String, Object> extendedProperties) {
         super(startOffset, endOffset, extendedProperties);
-        this.predPhrase = predPhrase;
-        this.synthetic = synthetic;
-        this.relId = relId;
-        this.evidences = listOrNull(evidences);
+        this.source = source;
+        this.predicate = predicate;
         this.arg1 = arg1;
         this.arg2 = arg2;
         this.arg3 = arg3;
-        this.adjuncts = listOrNull(adjuncts);
-        this.locatives = listOrNull(locatives);
-        this.temporals = listOrNull(temporals);
+        this.adjuncts = setOrNull(adjuncts);
+        this.locatives = setOrNull(locatives);
+        this.temporals = setOrNull(temporals);
     }
 
-    public String getPredPhrase() {
-        return predPhrase;
+    /**
+     * Returns the predicate. A predicate is usually the main verb, property or action that is expressed by the text.
+     *
+     * @return the predicate of the relationship
+     */
+    public RelationshipComponent getPredicate() {
+        return predicate;
     }
 
-    public List<Evidence> getEvidences() {
-        return evidences;
-    }
-
-    public RelationshipArgument getArg1() {
+    /**
+     * Returns the first argument. The first argument is usually the subject, agent or main actor of the relationship.
+     *
+     * @return the first argument
+     */
+    public RelationshipComponent getArg1() {
         return arg1;
     }
 
-    public RelationshipArgument getArg2() {
+    /**
+     * Returns the second argument. The second argument complements the predicate and is usually the object, theme or
+     * patient of the relationship.
+     *
+     * @return the second argument
+     */
+    public RelationshipComponent getArg2() {
         return arg2;
     }
 
-    public RelationshipArgument getArg3() {
+    /**
+     * Returns the third argument. The third argument is usually an additional object in ditransitive verbs.
+     *
+     * @return the third  argument
+     */
+    public RelationshipComponent getArg3() {
         return arg3;
     }
 
-    public List<RelationshipArgument> getAdjuncts() {
+    /**
+     * Returns a set of adjuncts. Adjuncts contain all optional parts of a relationship which are not temporal or
+     * locative expressions.
+     *
+     * @return a set of adjuncts
+     */
+    public Set<RelationshipComponent> getAdjuncts() {
         return adjuncts;
     }
 
-    public List<RelationshipArgument> getLocatives() {
+    /**
+     * Returns a set of locative expressions. Locatives usually express the locations the action expressed by
+     * the relationship took place.
+     *
+     * @return a set of locative expressions
+     */
+    public Set<RelationshipComponent> getLocatives() {
         return locatives;
     }
 
-    public List<RelationshipArgument> getTemporals() {
+    /**
+     * Returns a set of temporal expressions. Temporals usually express the time in which the action expressed by
+     * the relationship took place.
+     *
+     * @return a set of termporal expressions
+     */
+    public Set<RelationshipComponent> getTemporals() {
         return temporals;
     }
 
-    public String getRelId() {
-        return relId;
-    }
-
-    public boolean getSynthetic() {
-        return synthetic;
+    /**
+     * Returns the relationship extraction device that produced this mention.  For example, "statistical", "rules"
+     *
+     * @return the relationship extraction source
+     */
+    public String getSource() {
+        return source;
     }
 
     @Override
     protected Objects.ToStringHelper toStringHelper() {
         return super.toStringHelper()
-                .add("predPhrase", predPhrase)
-                .add("evidences", evidences)
+                .add("predicate", predicate)
                 .add("arg1", arg1)
                 .add("arg2", arg2)
                 .add("arg3", arg3)
                 .add("adjuncts", adjuncts)
                 .add("locatives", locatives)
                 .add("temporals", temporals)
-                .add("synthetic", synthetic)
-                .add("relId", relId);
+                .add("source", source);
 
     }
 
@@ -162,7 +161,7 @@ public class RelationshipMention extends Attribute {
 
         RelationshipMention that = (RelationshipMention) o;
 
-        if (synthetic != that.synthetic) {
+        if (predicate != null ? !predicate.equals(that.predicate) : that.predicate != null) {
             return false;
         }
 
@@ -190,15 +189,7 @@ public class RelationshipMention extends Attribute {
             return false;
         }
 
-        if (relId != null ? !relId.equals(that.relId) : that.relId != null) {
-            return false;
-        }
-
-        if (predPhrase != null ? !predPhrase.equals(that.predPhrase) : that.predPhrase != null) {
-            return false;
-        }
-
-        if (evidences != null ? !evidences.equals(that.getEvidences()) : that.evidences != null) {
+        if (source != null ? !source.equals(that.source) : that.source != null) {
             return false;
         }
 
@@ -208,83 +199,61 @@ public class RelationshipMention extends Attribute {
     @Override
     public int hashCode() {
         int result = super.hashCode();
-        result = 31 * result + (predPhrase != null ? predPhrase.hashCode() : 0);
-        result = 31 * result + (evidences != null ? evidences.hashCode() : 0);
+        result = 31 * result + (predicate != null ? predicate.hashCode() : 0);
         result = 31 * result + (arg1 != null ? arg1.hashCode() : 0);
         result = 31 * result + (arg2 != null ? arg2.hashCode() : 0);
         result = 31 * result + (arg3 != null ? arg3.hashCode() : 0);
         result = 31 * result + (adjuncts != null ? adjuncts.hashCode() : 0);
         result = 31 * result + (locatives != null ? locatives.hashCode() : 0);
         result = 31 * result + (temporals != null ? temporals.hashCode() : 0);
-        result = 31 * result + (synthetic ? 1 : 0);
-        result = 31 * result + (relId != null ? relId.hashCode() : 0);
+        result = 31 * result + (source != null ? source.hashCode() : 0);
         return result;
     }
 
     public static class Builder extends Attribute.Builder {
 
-        private String predPhrase;
-        private RelationshipArgument arg1;
-        private RelationshipArgument arg2;
-        private RelationshipArgument arg3;
-        private List<RelationshipArgument> adjuncts;
-        private List<RelationshipArgument> locatives;
-        private List<RelationshipArgument> temporals;
+        private RelationshipComponent predicate;
+        private RelationshipComponent arg1;
+        private RelationshipComponent arg2;
+        private RelationshipComponent arg3;
+        private Set<RelationshipComponent> adjuncts;
+        private Set<RelationshipComponent> locatives;
+        private Set<RelationshipComponent> temporals;
 
-        private boolean synthetic;
-        private String relId;
-        private List<Evidence> evidences;
+        private String source;
 
-        public Builder(int startOffset, int endOffset, String predPhrase) {
+        /**
+         * Constructs a builder with the minimal required information for an relationship mentions.
+         *
+         * Relationship mention start and end offsets point to the region in the data that the mention was extracted from,
+         * it could be a sentence, clause, or string boundaries without any linguistic meaning.
+         *
+         * @param startOffset the start offset in the text, in characters
+         * @param endOffset the end offset in the text, in characters
+         */
+        public Builder(int startOffset, int endOffset) {
             super(startOffset, endOffset);
-            this.predPhrase = predPhrase;
-            this.synthetic = false;
-            this.evidences = Lists.newArrayList();
-            this.adjuncts = Lists.newArrayList();
-            this.locatives = Lists.newArrayList();
-            this.temporals = Lists.newArrayList();
+            this.adjuncts = new HashSet<>();
+            this.locatives = new HashSet<>();
+            this.temporals = new HashSet<>();
         }
 
         /**
-         * Constructs a builder by copying values from an existing resolved entity.
+         * Constructs a builder by copying values from an existing relationship mention.
          *
          * @param toCopy the object to create
          * @adm.ignore
          */
         public Builder(RelationshipMention toCopy) {
             super(toCopy);
-            this.predPhrase = toCopy.predPhrase;
+            predicate = toCopy.predicate;
             arg1 = toCopy.arg1;
             arg2 = toCopy.arg2;
             arg3 = toCopy.arg3;
-            addAllToList(adjuncts, toCopy.adjuncts);
-            addAllToList(locatives, toCopy.locatives);
-            addAllToList(temporals, toCopy.temporals);
-            this.synthetic = toCopy.synthetic;
-            this.relId = toCopy.relId;
-            this.evidences = toCopy.evidences;
-        }
-
-        /**
-         * Specifies a phrase representing the predicate
-         *
-         * @param predPhrase the predicate phrase
-         * @return
-         */
-        public Builder predPhrase(String predPhrase) {
-            this.predPhrase = predPhrase;
-            return this;
-        }
-
-        /**
-         * Specifies a phrase evidences
-         *
-         * @param evidences the relation phrase evidences
-         * @return
-         */
-        public Builder evidences(List<Evidence> evidences) {
-            this.evidences = evidences;
-            return this;
+            addAllToSet(adjuncts, toCopy.adjuncts);
+            addAllToSet(locatives, toCopy.locatives);
+            addAllToSet(temporals, toCopy.temporals);
+            this.source = toCopy.source;
         }
 
         /**
@@ -299,12 +268,23 @@ public class RelationshipMention extends Attribute {
         }
 
         /**
+         * Attaches predicate
+         *
+         * @param predicate the predicate
+         * @return this
+         */
+        public Builder predicate(RelationshipComponent predicate) {
+            this.predicate = predicate;
+            return this;
+        }
+
+        /**
          * Attaches arg1
          *
          * @param arg1 the arg1
          * @return this
          */
-        public Builder arg1(RelationshipArgument arg1) {
+        public Builder arg1(RelationshipComponent arg1) {
             this.arg1 = arg1;
             return this;
         }
@@ -315,7 +295,7 @@ public class RelationshipMention extends Attribute {
          * @param arg2 the arg2
          * @return this
          */
-        public Builder arg2(RelationshipArgument arg2) {
+        public Builder arg2(RelationshipComponent arg2) {
             this.arg2 = arg2;
             return this;
         }
@@ -326,7 +306,7 @@ public class RelationshipMention extends Attribute {
          * @param arg3 the arg3
          * @return this
          */
-        public Builder arg3(RelationshipArgument arg3) {
+        public Builder arg3(RelationshipComponent arg3) {
             this.arg3 = arg3;
             return this;
         }
@@ -337,18 +317,19 @@ public class RelationshipMention extends Attribute {
          * @param adjuncts the adjuncts
          * @return this
          */
-        public Builder adjuncts(ListAttribute<RelationshipArgument> adjuncts) {
-            this.adjuncts = Lists.newArrayList();
-            addAllToList(this.adjuncts, adjuncts);
+        public Builder adjuncts(Set<RelationshipComponent> adjuncts) {
+            this.adjuncts = new HashSet<>();
+            addAllToSet(this.adjuncts, adjuncts);
             return this;
         }
 
         /**
          * Add an adjunct.
+         *
          * @param adjunct the adjunct
          * @return this
          */
-        public Builder addAdjunct(RelationshipArgument adjunct) {
+        public Builder addAdjunct(RelationshipComponent adjunct) {
             adjuncts.add(adjunct);
             return this;
         }
@@ -359,18 +340,19 @@ public class RelationshipMention extends Attribute {
          * @param locatives the locatives
          * @return this
          */
-        public Builder locatives(ListAttribute<RelationshipArgument> locatives) {
-            this.locatives = Lists.newArrayList();
-            addAllToList(this.locatives, locatives);
+        public Builder locatives(Set<RelationshipComponent> locatives) {
+            this.locatives = new HashSet<>();
+            addAllToSet(this.locatives, locatives);
             return this;
         }
 
         /**
          * Add a locative.
+         *
          * @param locative the locative
          * @return this
          */
-        public Builder addLocative(RelationshipArgument locative) {
+        public Builder addLocative(RelationshipComponent locative) {
             locatives.add(locative);
             return this;
         }
@@ -381,41 +363,31 @@ public class RelationshipMention extends Attribute {
          * @param temporals the temporals
          * @return this
          */
-        public Builder temporals(ListAttribute<RelationshipArgument> temporals) {
-            this.temporals = Lists.newArrayList();
-            addAllToList(this.temporals, temporals);
+        public Builder temporals(Set<RelationshipComponent> temporals) {
+            this.temporals = new HashSet<>();
+            addAllToSet(this.temporals, temporals);
             return this;
         }
 
         /**
          * Add a temporal.
+         *
          * @param temporal the temporal
          * @return this
          */
-        public Builder addTemporal(RelationshipArgument temporal) {
+        public Builder addTemporal(RelationshipComponent temporal) {
             temporals.add(temporal);
-            return this;
-        }
-
-        /**
-         * Specifies whether the relation is synthetic or textual.
-         *
-         * @param synthetic flag indicating whether the relation is synthetic or textual.
-         * @return this
-         */
-        public Builder synthetic(boolean synthetic) {
-            this.synthetic = synthetic;
             return this;
         }
 
         /**
          * Specifies the relation id.
          *
-         * @param relId the relation id.
+         * @param source the extractor that generated the relationshipMention.
          * @return this
          */
-        public Builder relId(String relId) {
-            this.relId = relId;
+        public Builder source(String source) {
+            this.source = source;
             return this;
         }
 
@@ -425,16 +397,15 @@ public class RelationshipMention extends Attribute {
          * @return the new relation mention.
          */
         public RelationshipMention build() {
-            return new RelationshipMention(startOffset, endOffset, predPhrase, evidences,
+            return new RelationshipMention(startOffset, endOffset,
+                    predicate,
                     arg1,
                     arg2,
                     arg3,
                     adjuncts,
                     locatives,
                     temporals,
-                    synthetic,
-                    relId,
-                    buildExtendedProperties());
+                    source, buildExtendedProperties());
         }
     }
 }

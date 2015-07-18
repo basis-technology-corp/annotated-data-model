@@ -58,14 +58,14 @@ public class JsonTest extends AdmAssert {
         AnnotatedText.Builder builder = new AnnotatedText.Builder();
         builder.data(THIS_IS_THE_TERRIER_SHOT_TO_BOSTON);
         /* Zen text: make me one with everything. */
-        ListAttribute.Builder<BaseNounPhrase> bnpListBuilder = new ListAttribute.Builder<BaseNounPhrase>(BaseNounPhrase.class);
+        ListAttribute.Builder<BaseNounPhrase> bnpListBuilder = new ListAttribute.Builder<>(BaseNounPhrase.class);
         BaseNounPhrase.Builder bnpBuilder = new BaseNounPhrase.Builder(8, 19);
         bnpBuilder.extendedProperty("bnp-ex", "bnp-ex-val");
         baseNounPhrase = bnpBuilder.build();
         bnpListBuilder.add(baseNounPhrase);
         builder.baseNounPhrases(bnpListBuilder.build());
 
-        ListAttribute.Builder<EntityMention> emListBuilder = new ListAttribute.Builder<EntityMention>(EntityMention.class);
+        ListAttribute.Builder<EntityMention> emListBuilder = new ListAttribute.Builder<>(EntityMention.class);
         EntityMention.Builder emBuilder = new EntityMention.Builder(27, 33, "place");
         emBuilder.flags(42);
         emBuilder.normalized("bahston");
@@ -79,29 +79,34 @@ public class JsonTest extends AdmAssert {
         builder.entityMentions(emListBuilder.build());
 
         // Build two relation arguments
-        RelationshipArgument.Builder raBuilder = new RelationshipArgument.Builder();
-        raBuilder.argumentPhrase("bla");
-        raBuilder.argumentId("/free/base/1");
-        raBuilder.evidences(Lists.newArrayList(new Evidence.Builder(0,4).build()));
-        RelationshipArgument arg1 = raBuilder.build();
+        RelationshipComponent.Builder raBuilder = new RelationshipComponent.Builder();
+        raBuilder.phrase("bla");
+        raBuilder.identifier("/free/base/1");
+        raBuilder.extents(Lists.newArrayList(new Extent.Builder(0, 4).build()));
+        RelationshipComponent arg1 = raBuilder.build();
 
-        raBuilder = new RelationshipArgument.Builder();
-        raBuilder.argumentPhrase("blu");
-        raBuilder.argumentId("/free/base/2");
-        RelationshipArgument arg2 = raBuilder.build();
+        raBuilder = new RelationshipComponent.Builder();
+        raBuilder.phrase("blu");
+        raBuilder.identifier("/free/base/2");
+        RelationshipComponent arg2 = raBuilder.build();
+
+        raBuilder = new RelationshipComponent.Builder();
+        raBuilder.phrase("bli");
+        raBuilder.identifier("/free/base/3");
+        raBuilder.extents(Lists.newArrayList(new Extent.Builder(5, 6).build(), new Extent.Builder(6, 7).build()));
+        RelationshipComponent pred = raBuilder.build();
 
         // Build a relation
-        ListAttribute.Builder<RelationshipMention> rmListBuilder = new ListAttribute.Builder<RelationshipMention>(RelationshipMention.class);
-        RelationshipMention.Builder rmBuilder = new RelationshipMention.Builder(0, 12, "gave a ride").arg1(arg1).arg2
+        ListAttribute.Builder<RelationshipMention> rmListBuilder = new ListAttribute.Builder<>(RelationshipMention.class);
+        RelationshipMention.Builder rmBuilder = new RelationshipMention.Builder(0, 12).predicate(pred).arg1(arg1).arg2
                 (arg2);
-        rmBuilder.relId("/free/base/property0");
         rmBuilder.extendedProperty("rm-ex", "rm-ex-val");
-        rmBuilder.evidences(Lists.newArrayList(new Evidence.Builder(0, 1).build()));
+        rmBuilder.source("statistical rules:42");
         relationshipMention = rmBuilder.build();
         rmListBuilder.add(relationshipMention);
         builder.relationshipMentions(rmListBuilder.build());
 
-        ListAttribute.Builder<ResolvedEntity> reListBuilder = new ListAttribute.Builder<ResolvedEntity>(ResolvedEntity.class);
+        ListAttribute.Builder<ResolvedEntity> reListBuilder = new ListAttribute.Builder<>(ResolvedEntity.class);
         ResolvedEntity.Builder reBuilder = new ResolvedEntity.Builder(27, 33, "Q100");
         reBuilder.coreferenceChainId(43);
         reBuilder.confidence(1.0);
@@ -110,7 +115,7 @@ public class JsonTest extends AdmAssert {
         reListBuilder.add(resolvedEntity);
         builder.resolvedEntities(reListBuilder.build());
 
-        ListAttribute.Builder<LanguageDetection> ldListBuilder = new ListAttribute.Builder<LanguageDetection>(LanguageDetection.class);
+        ListAttribute.Builder<LanguageDetection> ldListBuilder = new ListAttribute.Builder<>(LanguageDetection.class);
         List<LanguageDetection.DetectionResult> dets = Lists.newArrayList();
         dets.add(new LanguageDetection.DetectionResult.Builder(LanguageCode.ENGLISH).encoding("utf-8").script(ISO15924.Latn).confidence(1.0).build());
         LanguageDetection.Builder ldBuilder = new LanguageDetection.Builder(0, builder.data().length(), dets);
@@ -126,21 +131,21 @@ public class JsonTest extends AdmAssert {
         languageDetection = ldBuilder.build();
         builder.wholeDocumentLanguageDetection(ldBuilder.build());
 
-        ListAttribute.Builder<ScriptRegion> srListBuilder = new ListAttribute.Builder<ScriptRegion>(ScriptRegion.class);
+        ListAttribute.Builder<ScriptRegion> srListBuilder = new ListAttribute.Builder<>(ScriptRegion.class);
         ScriptRegion.Builder srBuilder = new ScriptRegion.Builder(0, builder.data().length(), ISO15924.Latn);
         srBuilder.extendedProperty("sr-ex", "sr-ex-val");
         scriptRegion = srBuilder.build();
         srListBuilder.add(scriptRegion);
         builder.scriptRegions(srListBuilder.build());
 
-        ListAttribute.Builder<Sentence> sentListBuilder = new ListAttribute.Builder<Sentence>(Sentence.class);
+        ListAttribute.Builder<Sentence> sentListBuilder = new ListAttribute.Builder<>(Sentence.class);
         Sentence.Builder sentBuilder = new Sentence.Builder(0, 8);
         sentBuilder.extendedProperty("sb-ex", "sb-ex-val");
         sentence = sentBuilder.build();
         sentListBuilder.add(sentence);
         builder.sentences(sentListBuilder.build());
 
-        ListAttribute.Builder<Token> tokenListBuilder = new ListAttribute.Builder<Token>(Token.class);
+        ListAttribute.Builder<Token> tokenListBuilder = new ListAttribute.Builder<>(Token.class);
         Token.Builder tokenBuilder = new Token.Builder(0, 4, "This");
         tokenBuilder.source("test");
         tokenBuilder.addNormalized("abnormal");
@@ -185,7 +190,7 @@ public class JsonTest extends AdmAssert {
         builder.tokens(tokenListBuilder.build());
 
         ListAttribute.Builder<TranslatedData> translatedDataBuilder =
-            new ListAttribute.Builder<TranslatedData>(TranslatedData.class);
+            new ListAttribute.Builder<>(TranslatedData.class);
 
         TextDomain germanDomain = new TextDomain(ISO15924.Latn, LanguageCode.GERMAN, TransliterationScheme.NATIVE);
         String germanText = "Ein.  Zwei.";
@@ -200,7 +205,7 @@ public class JsonTest extends AdmAssert {
         builder.translatedData(translatedDataBuilder.build());
 
         ListAttribute.Builder<TranslatedTokens> translatedTokensListBuilder =
-            new ListAttribute.Builder<TranslatedTokens>(TranslatedTokens.class);
+            new ListAttribute.Builder<>(TranslatedTokens.class);
 
         TranslatedTokens.Builder ttBuilder = new TranslatedTokens.Builder(germanDomain);
         ttBuilder.addTranslatedToken("Ein");
@@ -220,7 +225,7 @@ public class JsonTest extends AdmAssert {
         builder.translatedTokens(translatedTokensListBuilder.build());
 
         ListAttribute.Builder<CategorizerResult> crBuilder
-            = new ListAttribute.Builder<CategorizerResult>(CategorizerResult.class);
+            = new ListAttribute.Builder<>(CategorizerResult.class);
         Map<String, Double> perFeatureScores = Maps.newHashMap();
         perFeatureScores.put("foo", 1.2);
         perFeatureScores.put("bar", -2.4);
@@ -231,7 +236,7 @@ public class JsonTest extends AdmAssert {
         crBuilder.add(categoryResult);
         builder.categorizerResults(crBuilder.build());
 
-        crBuilder = new ListAttribute.Builder<CategorizerResult>(CategorizerResult.class);
+        crBuilder = new ListAttribute.Builder<>(CategorizerResult.class);
         sentimentResult = new CategorizerResult.Builder("negative", -0.2)
             .confidence(0.3)
             .explanationSet(Lists.newArrayList("foo", "bar"))

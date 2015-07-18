@@ -56,8 +56,8 @@ public class ComposingAnnotator implements Annotator {
     @Override
     public AnnotatedText annotate(AnnotatedText input) throws RosetteException {
         AnnotatedText at = input;
-        for (int x = 0; x < annotators.size(); x++) {
-            at = annotators.get(x).annotate(at);
+        for (Annotator annotator : annotators) {
+            at = annotator.annotate(at);
         }
         return at;
     }

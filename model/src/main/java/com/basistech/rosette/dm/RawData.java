@@ -42,7 +42,7 @@ public class RawData {
         this.data = data.asReadOnlyBuffer();
         Map<String, List<String>> tmpMetaData;
         if (metadata == null) {
-            tmpMetaData = new HashMap<String, List<String>>();
+            tmpMetaData = new HashMap<>();
         } else {
             tmpMetaData = metadata;
         }

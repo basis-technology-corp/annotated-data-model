@@ -14,7 +14,7 @@
 
 package com.basistech.rosette.dm.jackson;
 
-import com.basistech.rosette.dm.Evidence;
+import com.basistech.rosette.dm.Extent;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -22,15 +22,15 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * {@link com.basistech.rosette.dm.RelationshipArgument}
+ * {@link com.basistech.rosette.dm.RelationshipComponent}
  */
-public abstract class RelationshipArgumentMixin {
+public abstract class RelationshipComponentMixin {
 
     @JsonCreator
-    public RelationshipArgumentMixin(@JsonProperty("argumentPhrase") String argumentPhrase,
-                                     @JsonProperty("evidences") List<Evidence> evidences,
-                                     @JsonProperty("argumentId") String argumentId,
-                                     @JsonProperty("extendedProperties") Map<String, Object> extendedProperties) {
+    public RelationshipComponentMixin(@JsonProperty("phrase") String phrase,
+                                      @JsonProperty("extents") List<Extent> extents,
+                                      @JsonProperty("identifier") String resolutionId,
+                                      @JsonProperty("extendedProperties") Map<String, Object> extendedProperties) {
 
     }
 

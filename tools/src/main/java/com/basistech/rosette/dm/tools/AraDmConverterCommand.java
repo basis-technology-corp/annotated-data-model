@@ -40,8 +40,8 @@ import java.util.List;
  * CLI for converting ARA to ADM.
  */
 public final class AraDmConverterCommand {
-    private static enum SHAPE { JSON, ARRAY }
-    private static enum FORMAT { JSON, SMILE, CBOR }
+    private enum SHAPE { JSON, ARRAY }
+    private enum FORMAT { JSON, SMILE, CBOR }
 
     @Option(name = "-outputDirectory", metaVar = "OUTPUT_DIR", usage = "output directory")
     File outputDirectory;

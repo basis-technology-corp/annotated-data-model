@@ -54,7 +54,7 @@ public class ListAttributeArrayDeserializer extends JsonDeserializer<ListAttribu
         }
         Class<? extends BaseAttribute> itemClass = attribute.attributeClass();
 
-        ListAttribute.Builder<BaseAttribute> builder = new ListAttribute.Builder<BaseAttribute>(attribute.attributeClass());
+        ListAttribute.Builder<BaseAttribute> builder = new ListAttribute.Builder<>(attribute.attributeClass());
         List<BaseAttribute> items = Lists.newArrayList();
 
         if (jp.nextToken() != JsonToken.START_ARRAY) {

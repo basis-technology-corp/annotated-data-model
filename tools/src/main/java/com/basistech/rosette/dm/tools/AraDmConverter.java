@@ -66,7 +66,7 @@ public final class AraDmConverter {
     // for the whole doc, it is always the first region.
     private static void buildLanguageDetections(AbstractResultAccess ara, AnnotatedText.Builder builder) {
         addRLIResults(ara, builder);
-        ListAttribute.Builder<LanguageDetection> attrBuilder = new ListAttribute.Builder<LanguageDetection>(LanguageDetection.class);
+        ListAttribute.Builder<LanguageDetection> attrBuilder = new ListAttribute.Builder<>(LanguageDetection.class);
         addRLBLResults(ara, builder, attrBuilder);
         builder.languageDetectionRegions(attrBuilder.build());
     }
@@ -112,7 +112,7 @@ public final class AraDmConverter {
 
     private static void buildBaseNounPhrase(AbstractResultAccess ara, AnnotatedText.Builder builder) {
         if (ara.getBaseNounPhrase() != null) {
-            ListAttribute.Builder<BaseNounPhrase> attrBuilder = new ListAttribute.Builder<BaseNounPhrase>(BaseNounPhrase.class);
+            ListAttribute.Builder<BaseNounPhrase> attrBuilder = new ListAttribute.Builder<>(BaseNounPhrase.class);
             int[] baseNounPhrase = ara.getBaseNounPhrase();
             int[] tokenOffsets = ara.getTokenOffset();
             for (int i = 0; i < baseNounPhrase.length; i += 2) {
@@ -125,7 +125,7 @@ public final class AraDmConverter {
 
     private static void buildScriptRegions(AbstractResultAccess ara, AnnotatedText.Builder builder) {
         if (ara.getScriptRegion() != null) {
-            ListAttribute.Builder<ScriptRegion> listBuilder = new ListAttribute.Builder<ScriptRegion>(ScriptRegion.class);
+            ListAttribute.Builder<ScriptRegion> listBuilder = new ListAttribute.Builder<>(ScriptRegion.class);
             int[] scriptRegion = ara.getScriptRegion();
             for (int i = 0; i < scriptRegion.length; i += 3) {
                 ScriptRegion.Builder srBuilder = new ScriptRegion.Builder(scriptRegion[i], scriptRegion[i + 1], ISO15924.lookupByNumeric(scriptRegion[i + 2]));
@@ -141,7 +141,7 @@ public final class AraDmConverter {
         // attempt to make sure they are aligned.
         if (ara.getSentenceBoundaries() != null) {
             int[] tokenOffsets = ara.getTokenOffset();
-            ListAttribute.Builder<Sentence> sentListBuilder = new ListAttribute.Builder<Sentence>(Sentence.class);
+            ListAttribute.Builder<Sentence> sentListBuilder = new ListAttribute.Builder<>(Sentence.class);
             int start = 0;
             for (int endToken : ara.getSentenceBoundaries()) {
                 // This is the start character of the token that begins the next sentence.
@@ -155,7 +155,7 @@ public final class AraDmConverter {
             }
             builder.sentences(sentListBuilder.build());
         } else if (ara.getTextBoundaries() != null) {
-            ListAttribute.Builder<Sentence> sentListBuilder = new ListAttribute.Builder<Sentence>(Sentence.class);
+            ListAttribute.Builder<Sentence> sentListBuilder = new ListAttribute.Builder<>(Sentence.class);
             int start = 0;
             for (int end : ara.getTextBoundaries()) {
                 Sentence.Builder sentBuilder = new Sentence.Builder(start, end);
@@ -169,7 +169,7 @@ public final class AraDmConverter {
     private static void buildEntityMentions(AbstractResultAccess ara, AnnotatedText.Builder builder) {
         int[] entities = ara.getNamedEntity();
         if (entities != null) {
-            ListAttribute.Builder<EntityMention> emListBuilder = new ListAttribute.Builder<EntityMention>(EntityMention.class);
+            ListAttribute.Builder<EntityMention> emListBuilder = new ListAttribute.Builder<>(EntityMention.class);
             int namedEntityCount = entities.length / 3;
             for (int x = 0; x < namedEntityCount; x++) {
                 emListBuilder.add(buildOneEntityMention(ara, x));
@@ -215,7 +215,7 @@ public final class AraDmConverter {
 
     private static void buildTokens(AbstractResultAccess ara, AnnotatedText.Builder builder) {
         if (ara.getTokens() != null) {
-            ListAttribute.Builder<Token> tokenListBuilder = new ListAttribute.Builder<Token>(Token.class);
+            ListAttribute.Builder<Token> tokenListBuilder = new ListAttribute.Builder<>(Token.class);
             int tokenCount = ara.getTokens().length;
 
             for (int x = 0; x < tokenCount; x++) {

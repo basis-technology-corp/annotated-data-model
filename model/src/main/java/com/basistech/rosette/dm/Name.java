@@ -223,7 +223,7 @@ public class Name extends BaseAttribute {
         /**
          * Specify the script of the text of a name.
          * @param script script identifier. Null is interpreted as {@link com.basistech.util.ISO15924#Zyyy}.
-         * @return
+         * @return this
          */
         public Builder script(ISO15924 script) {
             this.script = script;

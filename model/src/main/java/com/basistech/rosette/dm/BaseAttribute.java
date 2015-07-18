@@ -17,10 +17,13 @@ package com.basistech.rosette.dm;
 import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Base class for attributes that annotate text.  Each attribute contains
@@ -125,6 +128,22 @@ public abstract class BaseAttribute {
     }
 
     /**
+     * Utility method for the 'no empty sets' convention. Takes a set,
+     * if empty returns null, else returns a copy of the set.  Use this
+     * in constructors of the the immutable objects, not in their builders.
+     * @param setToBuild the list
+     * @param <T> the type of the list
+     * @return a list, or null.
+     */
+    protected static <T> Set<T> setOrNull(Set<T> setToBuild) {
+        // note: Guava's nullable business is an option here, but it's a lot to drag in at the moment.
+        if (setToBuild == null || setToBuild.size() == 0) {
+            return null;
+        } else {
+            return ImmutableSet.copyOf(setToBuild);
+        }
+    }
+    /**
      * Base class for builders for the subclasses of {@link com.basistech.rosette.dm.BaseAttribute}.
      */
     public abstract static class Builder {
@@ -214,11 +233,31 @@ public abstract class BaseAttribute {
             }
         }
 
+        /**
+         * Add all the entries of a set to another set, but don't NPE if the 'to be added' collection is null.
+         * @param set set to add to.
+         * @param toAdd set to add.
+         * @param <T> type of elements.
+         */
+        protected static <T> void addAllToSet(Set<T> set, Set<T> toAdd) {
+            if (toAdd != null) {
+                set.addAll(toAdd);
+            }
+        }
+
         protected static <T> List<T> nullOrList(List<T> newListValue) {
             if (newListValue == null) {
                 return Lists.newArrayList();
             } else {
                 return newListValue;
+            }
+        }
+
+        protected static <T> Set<T> nullOrSet(Set<T> newSetValue) {
+            if (newSetValue == null) {
+                return Sets.newHashSet();
+            } else {
+                return newSetValue;
             }
         }
     }

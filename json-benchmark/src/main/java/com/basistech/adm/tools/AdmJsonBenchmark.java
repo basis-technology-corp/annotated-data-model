@@ -36,7 +36,7 @@ import java.util.concurrent.TimeUnit;
 import static com.codahale.metrics.MetricRegistry.name;
 
 /**
- * Created by benson on 9/26/14.
+ * A simple benchmark to compare json alternatives.
  */
 public final class AdmJsonBenchmark {
     private AdmJsonBenchmark() {

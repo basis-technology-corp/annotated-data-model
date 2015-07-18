@@ -112,7 +112,7 @@ public final class ExtractAdmsFromMongoDump {
         @SuppressWarnings("unchecked")
         private ListAttribute<Token> stripTokens(BaseAttribute value) {
             List<Token> tokens = (List<Token>)value;
-            ListAttribute.Builder<Token> listBuilder = new ListAttribute.Builder<Token>(Token.class);
+            ListAttribute.Builder<Token> listBuilder = new ListAttribute.Builder<>(Token.class);
             for (Token token : tokens) {
                 Token.Builder tokenBuilder = new Token.Builder(token.getStartOffset(), token.getEndOffset(), token.getText());
                 if (token.getAnalyses() != null) {

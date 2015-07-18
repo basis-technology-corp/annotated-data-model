@@ -28,7 +28,7 @@ import java.util.List;
 public class ListAttributeTest extends AdmAssert {
     @Test
     public void list() throws Exception {
-        ListAttribute.Builder<Sentence> listBuilder = new ListAttribute.Builder<Sentence>(Sentence.class);
+        ListAttribute.Builder<Sentence> listBuilder = new ListAttribute.Builder<>(Sentence.class);
         listBuilder.add(new Sentence.Builder(0, 10).build());
         listBuilder.add(new Sentence.Builder(10, 20).build());
         listBuilder.extendedProperty("ek", "ev");
@@ -42,7 +42,7 @@ public class ListAttributeTest extends AdmAssert {
 
     @Test
     public void inContext() throws Exception {
-        ListAttribute.Builder<Sentence> listBuilder = new ListAttribute.Builder<Sentence>(Sentence.class);
+        ListAttribute.Builder<Sentence> listBuilder = new ListAttribute.Builder<>(Sentence.class);
         listBuilder.add(new Sentence.Builder(0, 10).build());
         listBuilder.add(new Sentence.Builder(10, 20).build());
         listBuilder.extendedProperty("ek", "ev");

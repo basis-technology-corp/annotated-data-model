@@ -33,7 +33,7 @@ public class DefaultValuesVisibleTest extends AdmAssert {
     public void checkVisible() throws Exception {
         AnnotatedText.Builder builder = new AnnotatedText.Builder();
         builder.data("George Washington slept here.");
-        ListAttribute.Builder<EntityMention> mentionListBuilder = new ListAttribute.Builder<EntityMention>(EntityMention.class);
+        ListAttribute.Builder<EntityMention> mentionListBuilder = new ListAttribute.Builder<>(EntityMention.class);
         //int startOffset, int endOffset, String entityType)
         EntityMention.Builder mentionBuilder = new EntityMention.Builder(0, 17, "politician");
         mentionBuilder.coreferenceChainId(null); // null is the official default, but null is never rendered, default or not.
