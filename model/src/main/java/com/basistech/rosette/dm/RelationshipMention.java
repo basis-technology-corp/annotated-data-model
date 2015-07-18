@@ -383,7 +383,7 @@ public class RelationshipMention extends Attribute {
         /**
          * Specifies the relation id.
          *
-         * @param source the he extractor that generated the relationshipMention.
+         * @param source the extractor that generated the relationshipMention.
          * @return this
          */
         public Builder source(String source) {
