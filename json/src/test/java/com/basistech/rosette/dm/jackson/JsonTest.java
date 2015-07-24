@@ -274,6 +274,41 @@ public class JsonTest extends AdmAssert {
     }
 
     @Test
+    public void dataPlainString() throws Exception {
+        CharSequence fancyCharSequence = new CharSequence() {
+            private final String data = "Hello Polly";
+
+            public String getExtraneousInfo() {
+                return "What is this doing here?";
+            }
+
+            @Override
+            public int length() {
+                return data.length();
+            }
+
+            @Override
+            public char charAt(int index) {
+                return data.charAt(index);
+            }
+
+            @Override
+            public CharSequence subSequence(int start, int end) {
+                return data.substring(start, end);
+            }
+        };
+
+        AnnotatedText.Builder builder = new AnnotatedText.Builder();
+        builder.data(fancyCharSequence);
+        AnnotatedText text = builder.build();
+        StringWriter writer = new StringWriter();
+        ObjectMapper mapper = AnnotatedDataModelModule.setupObjectMapper(new ObjectMapper());
+        ObjectWriter objectWriter = mapper.writer();
+        objectWriter.writeValue(writer, text);
+        assertFalse(writer.toString().contains("What is this doing here"));
+    }
+
+    @Test
     public void roundTrip() throws Exception {
         StringWriter writer = new StringWriter();
         ObjectMapper mapper = AnnotatedDataModelModule.setupObjectMapper(new ObjectMapper());

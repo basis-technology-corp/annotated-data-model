@@ -33,6 +33,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.annotation.JsonTypeIdResolver;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 
 import java.util.List;
 import java.util.Map;
@@ -53,6 +54,9 @@ public abstract class AnnotatedTextMixin {
     @JsonTypeInfo(use = JsonTypeInfo.Id.CUSTOM, include = JsonTypeInfo.As.PROPERTY, property = "type")
     @JsonTypeIdResolver(DmTypeIdResolver.class)
     public abstract Map<String, BaseAttribute> getAttributes();
+
+    @JsonSerialize(using = ToStringSerializer.class)
+    public abstract CharSequence getData();
 
     @JsonIgnore
     public abstract ListAttribute<Token> getTokens();
