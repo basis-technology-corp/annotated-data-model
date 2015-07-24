@@ -273,6 +273,7 @@ public class JsonTest extends AdmAssert {
         referenceText = builder.build();
     }
 
+    /* See ROS-76. */
     @Test
     public void dataPlainString() throws Exception {
         CharSequence fancyCharSequence = new CharSequence() {

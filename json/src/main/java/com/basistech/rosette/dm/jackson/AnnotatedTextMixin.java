@@ -55,6 +55,7 @@ public abstract class AnnotatedTextMixin {
     @JsonTypeIdResolver(DmTypeIdResolver.class)
     public abstract Map<String, BaseAttribute> getAttributes();
 
+    /* prevent Jackson from serializing a complex object here. */
     @JsonSerialize(using = ToStringSerializer.class)
     public abstract CharSequence getData();
 
