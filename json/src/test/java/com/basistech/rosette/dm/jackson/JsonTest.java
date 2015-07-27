@@ -297,6 +297,11 @@ public class JsonTest extends AdmAssert {
             public CharSequence subSequence(int start, int end) {
                 return data.substring(start, end);
             }
+
+            @Override
+            public String toString() {
+                return data;
+            }
         };
 
         AnnotatedText.Builder builder = new AnnotatedText.Builder();
@@ -307,6 +312,7 @@ public class JsonTest extends AdmAssert {
         ObjectWriter objectWriter = mapper.writer();
         objectWriter.writeValue(writer, text);
         assertFalse(writer.toString().contains("What is this doing here"));
+        assertTrue(writer.toString().contains("Hello Polly"));
     }
 
     @Test
