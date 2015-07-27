@@ -1,5 +1,15 @@
 # Cumulative Release Notes for the Annotated Data Model
 
+## ???
+
+### [ROS-76](https://basistech.atlassian.net/browse/ROS-76) Fix serialization for CharSequence
+
+If an AnnotatedText was constructed with a special CharSequence
+(rather than just a string), the serialized form could contain
+extraneous fields from the non-String object, which couldn't be
+deserialized.  This change forces the serialziation to use just the
+toString representation of the CharSequence.
+
 ## 1.13.0
 
 ## [RELAX-112](https://basistech.atlassian.net/browse/RELAX-112)
