@@ -22,10 +22,9 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
-                <version>2.9</version>
                 <executions>
                     <execution>
-                        <id>copy</id>
+                        <id>copy-bundles</id>
                         <phase>generate-test-resources</phase>
                         <goals>
                             <goal>copy-dependencies</goal>
@@ -62,7 +61,7 @@
                 <artifactId>maven-bundle-plugin</artifactId>
                 <extensions>true</extensions>
                 <configuration>
-                  <instructions>
+                    <instructions>
                         <Embed-Dependency>adm-json;inline=true,adm-json-array;inline=true</Embed-Dependency>
                         <Import-Package>com.basistech.rosette.dm.jackson,*</Import-Package>
                         <Export-Package>com.basistech.rosette.dm.jackson</Export-Package>
@@ -72,7 +71,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
-                <version>2.18</version>
+                <version>${maven-surefire-plugin.version}</version>
                 <executions>
                     <execution>
                         <goals>
@@ -93,6 +92,29 @@
     </build>
     <dependencies>
         <dependency>
+            <!-- preserve this as a transitive dependency in spite of
+             'provided' on adm-model -->
+            <groupId>com.basistech</groupId>
+            <artifactId>common-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.commons</groupId>
+          <artifactId>commons-math3</artifactId>
+          <version>3.3</version>
+        </dependency>
+        <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>adm-model-osgi</artifactId>
             <version>${project.version}</version>
@@ -101,22 +123,25 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>adm-json</artifactId>
             <version>${project.version}</version>
+            <!-- avoid transitive dependency -->
+            <scope>provided</scope>
             <exclusions>
-              <exclusion>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>adm-model</artifactId>
-              </exclusion>
+                <exclusion>
+                    <groupId>${project.groupId}</groupId>
+                    <artifactId>adm-model</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>adm-json-array</artifactId>
             <version>${project.version}</version>
+            <scope>provided</scope>
             <exclusions>
-              <exclusion>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>adm-model</artifactId>
-              </exclusion>
+                <exclusion>
+                    <groupId>${project.groupId}</groupId>
+                    <artifactId>adm-model</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
         <dependency>
@@ -126,7 +151,7 @@
         <dependency>
             <groupId>com.basistech</groupId>
             <artifactId>pax-exam-test-composite</artifactId>
-            <version>0.0.2</version>
+            <version>0.0.4</version>
             <scope>test</scope>
         </dependency>
         <dependency>
