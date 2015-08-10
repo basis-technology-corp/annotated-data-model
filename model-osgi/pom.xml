@@ -22,10 +22,9 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
-                <version>2.9</version>
                 <executions>
                     <execution>
-                        <id>copy</id>
+                        <id>copy-bundles</id>
                         <phase>generate-test-resources</phase>
                         <goals>
                             <goal>copy-dependencies</goal>
@@ -73,7 +72,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
-                <version>2.18</version>
+                <version>${maven-surefire-plugin.version}</version>
                 <executions>
                     <execution>
                         <goals>
@@ -94,9 +93,17 @@
     </build>
     <dependencies>
         <dependency>
+          <!-- preserve this as a transitive dependency in spite of
+               'provided' on adm-model -->
+          <groupId>com.basistech</groupId>
+          <artifactId>common-api</artifactId>
+        </dependency>
+        <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>adm-model</artifactId>
             <version>${project.version}</version>
+            <!-- avoid transitive dependency, since we embed it.-->
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.google.guava</groupId>
@@ -110,7 +117,7 @@
         <dependency>
             <groupId>com.basistech</groupId>
             <artifactId>pax-exam-test-composite</artifactId>
-            <version>0.0.2</version>
+            <version>0.0.4</version>
             <scope>test</scope>
         </dependency>
         <dependency>
