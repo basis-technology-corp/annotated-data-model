@@ -152,6 +152,13 @@
             <groupId>com.basistech</groupId>
             <artifactId>pax-exam-test-composite</artifactId>
             <version>0.0.4</version>
+            <type>pom</type>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.basistech.osgi</groupId>
+            <artifactId>rosette-osgi-test-support</artifactId>
+            <version>1.0.2</version>
             <scope>test</scope>
         </dependency>
         <dependency>

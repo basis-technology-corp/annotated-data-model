@@ -17,7 +17,7 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>adm-json-osgi</artifactId>
+            <artifactId>adm-json</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>

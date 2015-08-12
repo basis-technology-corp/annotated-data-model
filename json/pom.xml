@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>adm-json-osgi</artifactId>
-    <name>adm-json-osgi</name>
+    <artifactId>adm-json</artifactId>
+    <name>adm-json</name>
     <version>1.14.0-SNAPSHOT</version>
     <packaging>bundle</packaging>
     <description>OSGi bundle with the ADM's Jackson customizations.</description>
@@ -77,8 +77,8 @@
                 <configuration>
                     <instructions>
                         <Bundle-Version>${osgi-version}</Bundle-Version>
-                        <Import-Package>com.basistech.rosette.dm.jackson,*</Import-Package>
-                        <Export-Package>com.basistech.rosette.dm.jackson</Export-Package>
+                        <Import-Package>com.basistech.rosette.dm.jackson,com.basistech.rosette.dm.jackson.array,*</Import-Package>
+                        <Export-Package>com.basistech.rosette.dm.jackson,com.basistech.rosette.dm.jackson.array</Export-Package>
                         <Include-Resource>{META-INF/maven/dependencies.properties=${project.build.directory}/classes/META-INF/maven/dependencies.properties};{maven-resources}</Include-Resource>
                     </instructions>
                 </configuration>
@@ -164,6 +164,13 @@
             <groupId>com.basistech</groupId>
             <artifactId>pax-exam-test-composite</artifactId>
             <version>0.0.4</version>
+            <type>pom</type>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.basistech.osgi</groupId>
+            <artifactId>rosette-osgi-test-support</artifactId>
+            <version>1.0.2</version>
             <scope>test</scope>
         </dependency>
         <dependency>

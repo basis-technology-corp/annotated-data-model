@@ -34,11 +34,11 @@
     </properties>
     <modules>
         <module>taglets</module>
+        <module>model-osgi</module>
         <module>model</module>
+        <module>json</module>
         <module>json-benchmark</module>
         <module>tools</module>
-        <module>model-osgi</module>
-        <module>json-osgi</module>
         <module>script</module>
     </modules>
     <dependencyManagement>
