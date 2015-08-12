@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <artifactId>annotated-data-model</artifactId>
-    <version>1.13.2-SNAPSHOT</version>
+    <version>1.14.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <parent>
         <groupId>com.basistech</groupId>
@@ -35,7 +35,6 @@
     <modules>
         <module>taglets</module>
         <module>model</module>
-        <module>json</module>
         <module>json-benchmark</module>
         <module>tools</module>
         <module>model-osgi</module>
@@ -66,6 +65,22 @@
                     <!-- ID for text-analytics staging profile -->
                     <stagingProfileId>1dd11ca8866422</stagingProfileId>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>classpath</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>build-classpath</goal>
+                        </goals>
+                        <configuration>
+                            <outputFile>${project.build.directory}/classpath.txt</outputFile>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
         <pluginManagement>

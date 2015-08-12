@@ -18,6 +18,10 @@ import com.basistech.rosette.dm.AnnotatedText;
 import com.basistech.rosette.dm.ArabicMorphoAnalysis;
 import com.basistech.rosette.dm.HanMorphoAnalysis;
 import com.basistech.rosette.dm.KoreanMorphoAnalysis;
+import com.basistech.rosette.dm.internal.TextWrapper;
+import com.basistech.rosette.dm.util.ComposingAnnotator;
+import com.basistech.rosette.dm.util.WholeDocumentLanguageDispatchAnnotator;
+import com.basistech.rosette.dm.util.WholeDocumentLanguageDispatchAnnotatorBuilder;
 
 /**
  * The maven shade plugin, in 'minimize' mode, is only useful if some class
@@ -30,5 +34,9 @@ public class DummyTouchAdm {
     ArabicMorphoAnalysis arabicMorphoAnalysis;
     HanMorphoAnalysis hanMorphoAnalysis;
     KoreanMorphoAnalysis koreanMorphoAnalysis;
+    TextWrapper textWrapper;
+    ComposingAnnotator composingAnnotator;
+    WholeDocumentLanguageDispatchAnnotator wholeDocumentLanguageDispatchAnnotator;
+    WholeDocumentLanguageDispatchAnnotatorBuilder wholeDocumentLanguageDispatchAnnotatorBuilder;
     //CHECKSTYLE:ON
 }
