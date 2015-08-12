@@ -80,6 +80,7 @@
                         <Embed-Dependency>adm-json;inline=true,adm-json-array;inline=true</Embed-Dependency>
                         <Import-Package>com.basistech.rosette.dm.jackson,*</Import-Package>
                         <Export-Package>com.basistech.rosette.dm.jackson</Export-Package>
+                        <Include-Resource>{META-INF/maven/dependencies.properties=${project.build.directory}/classes/META-INF/maven/dependencies.properties};{maven-resources}</Include-Resource>
                     </instructions>
                 </configuration>
             </plugin>
