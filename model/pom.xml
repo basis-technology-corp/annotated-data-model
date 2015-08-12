@@ -12,6 +12,11 @@
     <description>Rosette Data Model for Text and Annotations.</description>
     <dependencies>
         <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>adm-model-osgi</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
             <groupId>com.basistech</groupId>
             <artifactId>common-api</artifactId>
         </dependency>
@@ -19,77 +24,9 @@
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
         </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.googlecode.jmockit</groupId>
-            <artifactId>jmockit</artifactId>
-            <version>1.7</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.hamcrest</groupId>
-            <artifactId>hamcrest-core</artifactId>
-            <version>1.3</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.hamcrest</groupId>
-            <artifactId>hamcrest-library</artifactId>
-            <version>1.3</version>
-            <scope>test</scope>
-        </dependency>
     </dependencies>
     <build>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-javadoc-plugin</artifactId>
-                    <configuration>
-                        <show>public</show>
-                        <!-- adm.ignore is a custom tag used to note that
-                           some things don't get seen by codegen. -->
-                        <tags>
-                            <tag>
-                                <name>adm.ignore</name>
-                                <placement>X</placement>
-                            </tag>
-                        </tags>
-                        <taglets>
-                            <taglet>
-                                <tagletClass>com.basistech.dm.taglets.JavaTaglet</tagletClass>
-                            </taglet>
-                        </taglets>
-                        <tagletArtifact>
-                            <groupId>${project.groupId}</groupId>
-                            <artifactId>adm-taglets</artifactId>
-                            <version>${project.version}</version>
-                        </tagletArtifact>
-                    </configuration>
-                </plugin>
-            </plugins>
-        </pluginManagement>
         <plugins>
-          <!-- build the unshaded jar. -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>2.5</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                        <configuration>
-                            <classifier>unshaded-guava</classifier>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
             <plugin>
                 <!--  We will shade guava, to simplify deployment, avoid version conflicts -->
                 <groupId>org.apache.maven.plugins</groupId>
@@ -101,10 +38,12 @@
                             <goal>shade</goal>
                         </goals>
                         <configuration>
-                            <minimizeJar>true</minimizeJar>
+                          <minimizeJar>true</minimizeJar>
+                          <promoteTransitiveDependencies>true</promoteTransitiveDependencies>
                             <artifactSet>
-                                <includes>
+                              <includes>
                                     <include>com.google.guava:guava</include>
+                                    <include>${project.groupId}:adm-model-osgi</include>
                                 </includes>
                             </artifactSet>
                             <relocations>
@@ -118,6 +57,12 @@
                             <filters>
                                 <filter>
                                     <artifact>com.google.guava:guava</artifact>
+                                    <excludes>
+                                        <exclude>META-INF/**</exclude>
+                                    </excludes>
+                                </filter>
+                                <filter>
+                                    <artifact>${project.groupId}:adm-model-osgi</artifact>
                                     <excludes>
                                         <exclude>META-INF/**</exclude>
                                     </excludes>

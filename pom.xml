@@ -38,7 +38,6 @@
         <module>json</module>
         <module>json-benchmark</module>
         <module>tools</module>
-        <module>json-array</module>
         <module>model-osgi</module>
         <module>json-osgi</module>
         <module>script</module>
