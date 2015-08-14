@@ -99,11 +99,7 @@ public class RelationshipComponent extends BaseAttribute {
             return false;
         }
 
-        if (extents != null ? !extents.equals(that.extents) : that.extents != null) {
-            return false;
-        }
-
-        return true;
+        return !(extents != null ? !extents.equals(that.extents) : that.extents != null);
     }
 
     @Override

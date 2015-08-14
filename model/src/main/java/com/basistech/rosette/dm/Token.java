@@ -112,11 +112,7 @@ public class Token extends Attribute {
         if (source != null ? !source.equals(token.source) : token.source != null) {
             return false;
         }
-        if (text != null ? !text.equals(token.text) : token.text != null) {
-            return false;
-        }
-
-        return true;
+        return !(text != null ? !text.equals(token.text) : token.text != null);
     }
 
     @Override

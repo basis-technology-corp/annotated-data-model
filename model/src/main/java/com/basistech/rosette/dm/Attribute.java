@@ -79,11 +79,7 @@ public abstract class Attribute extends BaseAttribute {
         if (endOffset != attribute.endOffset) {
             return false;
         }
-        if (startOffset != attribute.startOffset) {
-            return false;
-        }
-
-        return true;
+        return startOffset == attribute.startOffset;
     }
 
     @Override

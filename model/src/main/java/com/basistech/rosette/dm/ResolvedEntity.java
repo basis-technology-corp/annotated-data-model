@@ -86,11 +86,7 @@ public class ResolvedEntity extends Attribute {
         if (coreferenceChainId != null ? !coreferenceChainId.equals(that.coreferenceChainId) : that.coreferenceChainId != null) {
             return false;
         }
-        if (!entityId.equals(that.entityId)) {
-            return false;
-        }
-
-        return true;
+        return entityId.equals(that.entityId);
     }
 
     @Override

@@ -158,11 +158,8 @@ public class EntityMention extends Attribute {
         if (source != null ? !source.equals(that.source) : that.source != null) {
             return false;
         }
-        if (subsource != null ? !subsource.equals(that.subsource) : that.subsource != null) {
-            return false;
-        }
+        return !(subsource != null ? !subsource.equals(that.subsource) : that.subsource != null);
 
-        return true;
     }
 
     @Override
