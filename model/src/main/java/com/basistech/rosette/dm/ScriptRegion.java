@@ -54,11 +54,7 @@ public class ScriptRegion extends Attribute {
 
         ScriptRegion that = (ScriptRegion) o;
 
-        if (script != that.script) {
-            return false;
-        }
-
-        return true;
+        return script == that.script;
     }
 
     @Override

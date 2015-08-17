@@ -189,11 +189,7 @@ public class RelationshipMention extends Attribute {
             return false;
         }
 
-        if (source != null ? !source.equals(that.source) : that.source != null) {
-            return false;
-        }
-
-        return true;
+        return !(source != null ? !source.equals(that.source) : that.source != null);
     }
 
     @Override

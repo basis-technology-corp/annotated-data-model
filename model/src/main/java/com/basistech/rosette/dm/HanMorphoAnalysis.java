@@ -68,11 +68,8 @@ public class HanMorphoAnalysis extends MorphoAnalysis {
             return that.readings == null;
         }
 
-        if (!readings.equals(that.readings)) {
-            return false;
-        }
+        return readings.equals(that.readings);
 
-        return true;
     }
 
     @Override

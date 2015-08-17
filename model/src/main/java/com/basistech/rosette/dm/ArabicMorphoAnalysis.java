@@ -233,11 +233,8 @@ public class ArabicMorphoAnalysis extends MorphoAnalysis {
         if (suffixTags != null ? !suffixTags.equals(that.suffixTags) : that.suffixTags != null) {
             return false;
         }
-        if (suffixes != null ? !suffixes.equals(that.suffixes) : that.suffixes != null) {
-            return false;
-        }
+        return !(suffixes != null ? !suffixes.equals(that.suffixes) : that.suffixes != null);
 
-        return true;
     }
 
     @Override

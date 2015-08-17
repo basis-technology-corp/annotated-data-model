@@ -112,11 +112,8 @@ public class LanguageDetection extends Attribute {
             if (language != that.language) {
                 return false;
             }
-            if (script != that.script) {
-                return false;
-            }
+            return script == that.script;
 
-            return true;
         }
 
         @Override
@@ -261,11 +258,7 @@ public class LanguageDetection extends Attribute {
 
         LanguageDetection that = (LanguageDetection) o;
 
-        if (!detectionResults.equals(that.detectionResults)) {
-            return false;
-        }
-
-        return true;
+        return detectionResults.equals(that.detectionResults);
     }
 
     @Override
