@@ -34,6 +34,7 @@ public class RelationshipMention extends Attribute {
     private final Set<RelationshipComponent> locatives;
     private final Set<RelationshipComponent> temporals;
     private final String source;
+    private final Double confidence;
 
     protected RelationshipMention(int startOffset, int endOffset,
                                   RelationshipComponent predicate,
@@ -43,9 +44,11 @@ public class RelationshipMention extends Attribute {
                                   Set<RelationshipComponent> adjuncts,
                                   Set<RelationshipComponent> locatives,
                                   Set<RelationshipComponent> temporals,
-                                  String source, Map<String, Object> extendedProperties) {
+                                  String source,
+                                  double confidence, Map<String, Object> extendedProperties) {
         super(startOffset, endOffset, extendedProperties);
         this.source = source;
+        this.confidence = confidence;
         this.predicate = predicate;
         this.arg1 = arg1;
         this.arg2 = arg2;
@@ -53,6 +56,7 @@ public class RelationshipMention extends Attribute {
         this.adjuncts = setOrNull(adjuncts);
         this.locatives = setOrNull(locatives);
         this.temporals = setOrNull(temporals);
+
     }
 
     /**
@@ -131,6 +135,24 @@ public class RelationshipMention extends Attribute {
         return source;
     }
 
+    /**
+     * Returns the confidence value for the mention
+     *
+     * @return confidence value
+     */
+    public double getConfidence() {
+        return confidence;
+    }
+
+    /**
+     * Returns true if the predicate is synthetic (eg is not represented by the text)
+     *
+     * @return boolean
+     */
+    public boolean hasSyntheticPredicate() {
+        return predicate.getExtents().size() == 0;
+    }
+
     @Override
     protected Objects.ToStringHelper toStringHelper() {
         return super.toStringHelper()
@@ -141,7 +163,8 @@ public class RelationshipMention extends Attribute {
                 .add("adjuncts", adjuncts)
                 .add("locatives", locatives)
                 .add("temporals", temporals)
-                .add("source", source);
+                .add("source", source)
+                .add("confidence", confidence);
 
     }
 
@@ -189,6 +212,10 @@ public class RelationshipMention extends Attribute {
             return false;
         }
 
+        if (confidence != null ? !confidence.equals(that.confidence) : that.confidence != null) {
+            return false;
+        }
+
         return !(source != null ? !source.equals(that.source) : that.source != null);
     }
 
@@ -203,6 +230,7 @@ public class RelationshipMention extends Attribute {
         result = 31 * result + (locatives != null ? locatives.hashCode() : 0);
         result = 31 * result + (temporals != null ? temporals.hashCode() : 0);
         result = 31 * result + (source != null ? source.hashCode() : 0);
+        result = 31 * result + (confidence != null ? confidence.hashCode() : 0);
         return result;
     }
 
@@ -217,6 +245,7 @@ public class RelationshipMention extends Attribute {
         private Set<RelationshipComponent> temporals;
 
         private String source;
+        private double confidence;
 
         /**
          * Constructs a builder with the minimal required information for an relationship mentions.
@@ -250,6 +279,7 @@ public class RelationshipMention extends Attribute {
             addAllToSet(locatives, toCopy.locatives);
             addAllToSet(temporals, toCopy.temporals);
             this.source = toCopy.source;
+            this.confidence = toCopy.confidence;
         }
 
         /**
@@ -388,6 +418,18 @@ public class RelationshipMention extends Attribute {
         }
 
         /**
+         * Specifies the confidence value for this mention.
+         *
+         * @param confidence the confidence value
+         * @return this
+         */
+        public Builder confidence(double confidence) {
+            this.confidence = confidence;
+            return this;
+        }
+
+
+        /**
          * Returns an immutable relation mention from the current state of the builder.
          *
          * @return the new relation mention.
@@ -401,7 +443,8 @@ public class RelationshipMention extends Attribute {
                     adjuncts,
                     locatives,
                     temporals,
-                    source, buildExtendedProperties());
+                    source,
+                    confidence, buildExtendedProperties());
         }
     }
 }
