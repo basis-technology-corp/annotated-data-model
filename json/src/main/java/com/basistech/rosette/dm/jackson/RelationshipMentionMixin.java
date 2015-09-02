@@ -37,7 +37,7 @@ public abstract class RelationshipMentionMixin {
                              @JsonProperty("locatives") Set<RelationshipComponent> locatives,
                              @JsonProperty("temporals") Set<RelationshipComponent> temporals,
                              @JsonProperty("source") String source,
-                             @JsonProperty("confidence") double confidence,
+                             @JsonProperty("confidence") Double confidence,
                              @JsonProperty("extendedProperties") Map<String, Object> extendedProperties) {
 
     }

@@ -45,7 +45,7 @@ public class RelationshipMention extends Attribute {
                                   Set<RelationshipComponent> locatives,
                                   Set<RelationshipComponent> temporals,
                                   String source,
-                                  double confidence, Map<String, Object> extendedProperties) {
+                                  Double confidence, Map<String, Object> extendedProperties) {
         super(startOffset, endOffset, extendedProperties);
         this.source = source;
         this.confidence = confidence;
@@ -140,7 +140,7 @@ public class RelationshipMention extends Attribute {
      *
      * @return confidence value
      */
-    public double getConfidence() {
+    public Double getConfidence() {
         return confidence;
     }
 
@@ -150,7 +150,7 @@ public class RelationshipMention extends Attribute {
      * @return boolean
      */
     public boolean hasSyntheticPredicate() {
-        return predicate.getExtents().size() == 0;
+        return predicate.getExtents().isEmpty();
     }
 
     @Override
@@ -245,7 +245,7 @@ public class RelationshipMention extends Attribute {
         private Set<RelationshipComponent> temporals;
 
         private String source;
-        private double confidence;
+        private Double confidence;
 
         /**
          * Constructs a builder with the minimal required information for an relationship mentions.
@@ -423,7 +423,7 @@ public class RelationshipMention extends Attribute {
          * @param confidence the confidence value
          * @return this
          */
-        public Builder confidence(double confidence) {
+        public Builder confidence(Double confidence) {
             this.confidence = confidence;
             return this;
         }
