@@ -271,6 +271,9 @@ public class RelationshipMention extends Attribute {
          */
         public Builder(RelationshipMention toCopy) {
             super(toCopy);
+            this.adjuncts = new HashSet<>();
+            this.locatives = new HashSet<>();
+            this.temporals = new HashSet<>();
             predicate = toCopy.predicate;
             arg1 = toCopy.arg1;
             arg2 = toCopy.arg2;
