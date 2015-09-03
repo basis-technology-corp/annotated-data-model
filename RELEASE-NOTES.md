@@ -2,7 +2,10 @@
 
 ## ???
 
-### [RELAX-139] (https://basistech.atlassian.net/browse/ROS-76) Fixing  a crash in the copy builder of RelationshipMention
+### [RELAX-143] (https://basistech.atlassian.net/browse/RELAX-143) Add relationship fields.
+
+
+### [RELAX-139] (https://basistech.atlassian.net/browse/RELAX-139) Fixing  a crash in the copy builder of RelationshipMention
   Missing initializations
   
 
