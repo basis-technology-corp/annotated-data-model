@@ -1,6 +1,17 @@
 # Cumulative Release Notes for the Annotated Data Model
 
-## ???
+## 1.13.2
+
+### [RELAX-143] (https://basistech.atlassian.net/browse/RELAX-143) Add relationship fields.
+
+
+### [RELAX-139] (https://basistech.atlassian.net/browse/RELAX-139) Fixing  a crash in the copy builder of RelationshipMention
+  Missing initializations
+  
+
+### [ROS-88](https://basistech.atlassian.net/browse/ROS-88) Parent  57.1.1
+    
+## 1.13.1    
 
 ### [ROS-76](https://basistech.atlassian.net/browse/ROS-76) Fix serialization for CharSequence
 
