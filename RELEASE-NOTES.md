@@ -2,6 +2,12 @@
 
 ## ???
 
+### [RELAX-139] (https://basistech.atlassian.net/browse/ROS-76) Fixing  a crash in the copy builder of RelationshipMention
+  Missing initializations
+  
+
+### [ROS-88](https://basistech.atlassian.net/browse/ROS-88) Parent 57.1.1
+
 ### [ROS-76](https://basistech.atlassian.net/browse/ROS-76) Fix serialization for CharSequence
 
 If an AnnotatedText was constructed with a special CharSequence
