@@ -88,11 +88,8 @@ public abstract class BaseAttribute {
 
         BaseAttribute that = (BaseAttribute) o;
 
-        if (!extendedProperties.equals(that.extendedProperties)) {
-            return false;
-        }
+        return extendedProperties.equals(that.extendedProperties);
 
-        return true;
     }
 
     protected Objects.ToStringHelper toStringHelper() {

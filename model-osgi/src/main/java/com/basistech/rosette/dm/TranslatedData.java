@@ -83,11 +83,7 @@ public class TranslatedData extends BaseAttribute {
         if (!domain.equals(that.domain)) {
             return false;
         }
-        if (!translation.equals(that.translation)) {
-            return false;
-        }
-
-        return true;
+        return translation.equals(that.translation);
     }
 
     @Override

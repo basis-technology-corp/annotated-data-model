@@ -119,11 +119,7 @@ public class MorphoAnalysis extends BaseAttribute {
         if (partOfSpeech != null ? !partOfSpeech.equals(that.partOfSpeech) : that.partOfSpeech != null) {
             return false;
         }
-        if (raw != null ? !raw.equals(that.raw) : that.raw != null) {
-            return false;
-        }
-
-        return true;
+        return !(raw != null ? !raw.equals(that.raw) : that.raw != null);
     }
 
     @Override

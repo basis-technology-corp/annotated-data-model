@@ -71,11 +71,8 @@ public class KoreanMorphoAnalysis extends MorphoAnalysis {
         if (morphemeTags != null ? !morphemeTags.equals(that.morphemeTags) : that.morphemeTags != null) {
             return false;
         }
-        if (morphemes != null ? !morphemes.equals(that.morphemes) : that.morphemes != null) {
-            return false;
-        }
+        return !(morphemes != null ? !morphemes.equals(that.morphemes) : that.morphemes != null);
 
-        return true;
     }
 
     @Override

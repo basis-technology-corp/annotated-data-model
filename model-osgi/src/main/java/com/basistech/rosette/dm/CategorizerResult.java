@@ -156,11 +156,8 @@ public class CategorizerResult extends BaseAttribute {
         if (perFeatureScores != null ? !perFeatureScores.equals(that.perFeatureScores) : that.perFeatureScores != null) {
             return false;
         }
-        if (score != null ? !score.equals(that.score) : that.score != null) {
-            return false;
-        }
+        return !(score != null ? !score.equals(that.score) : that.score != null);
 
-        return true;
     }
 
     @Override

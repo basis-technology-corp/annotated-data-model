@@ -143,11 +143,7 @@ public class Name extends BaseAttribute {
         if (!text.equals(name.text)) {
             return false;
         }
-        if (type != null ? !type.equals(name.type) : name.type != null) {
-            return false;
-        }
-
-        return true;
+        return !(type != null ? !type.equals(name.type) : name.type != null);
     }
 
     @Override

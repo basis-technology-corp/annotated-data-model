@@ -69,11 +69,7 @@ public class TranslatedTokens extends BaseAttribute {
         if (domain != null ? !domain.equals(that.domain) : that.domain != null) {
             return false;
         }
-        if (translations != null ? !translations.equals(that.translations) : that.translations != null) {
-            return false;
-        }
-
-        return true;
+        return !(translations != null ? !translations.equals(that.translations) : that.translations != null);
     }
 
     @Override
