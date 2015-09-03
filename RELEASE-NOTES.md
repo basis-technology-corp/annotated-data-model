@@ -1,6 +1,6 @@
 # Cumulative Release Notes for the Annotated Data Model
 
-## ???
+## 1.13.2
 
 ### [RELAX-143] (https://basistech.atlassian.net/browse/RELAX-143) Add relationship fields.
 
