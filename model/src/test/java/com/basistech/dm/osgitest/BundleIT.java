@@ -44,7 +44,7 @@ public class BundleIT {
 
         return OsgiTestUtil.standardPaxExamConfig(new File(projectBuildDirectory),
                 projectVersion,
-                "adm-model-osgi",
+                "adm-model",
                 false);
     }
 
