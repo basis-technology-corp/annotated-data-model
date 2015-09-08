@@ -12,19 +12,14 @@
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>adm-model</artifactId>
+            <artifactId>adm-model-osgi</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>adm-json</artifactId>
             <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>adm-json-array</artifactId>
-            <version>${project.version}</version>
-        </dependency>
+      </dependency>
       <dependency>
         <groupId>com.basistech</groupId>
         <artifactId>rlp-java-blackboard</artifactId>

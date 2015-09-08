@@ -34,13 +34,11 @@
     </properties>
     <modules>
         <module>taglets</module>
+        <module>model-osgi</module>
         <module>model</module>
         <module>json</module>
         <module>json-benchmark</module>
         <module>tools</module>
-        <module>json-array</module>
-        <module>model-osgi</module>
-        <module>json-osgi</module>
         <module>script</module>
     </modules>
     <dependencyManagement>
@@ -67,6 +65,22 @@
                     <!-- ID for text-analytics staging profile -->
                     <stagingProfileId>1dd11ca8866422</stagingProfileId>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>classpath</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>build-classpath</goal>
+                        </goals>
+                        <configuration>
+                            <outputFile>${project.build.directory}/classpath.txt</outputFile>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
         <pluginManagement>

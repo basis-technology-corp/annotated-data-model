@@ -1,5 +1,20 @@
 # Cumulative Release Notes for the Annotated Data Model
 
+## ??
+
+### [ROS-87](https://basistech.atlassian.net/browse/ROS-87) OSGi/shade improvements
+
+adm-json-array was integrated into adm-json.  adm-json was made into
+an OSGi bundle.  It still functions outside of OSGi but you must
+provide the guava dependency.
+
+adm-json-osgi was removed.  New packages were added to adm-json:
+com.basistech.rosette.dm.json.plain and
+com.basistech.rosette.dm.json.array.
+
+adm-model-osgi no longer contains a shaded copy of guava, it just
+imports it via OSGi metadata.
+
 ## 1.13.2
 
 ### [RELAX-143] (https://basistech.atlassian.net/browse/RELAX-143) Add relationship fields.
