@@ -8,7 +8,8 @@ adm-json-array was integrated into adm-json.  adm-json was made into
 an OSGi bundle.  It still functions outside of OSGi but you must
 provide the guava dependency.
 
-adm-json-osgi was removed.  New packages were added to adm-json:
+adm-json-osgi was removed.  The package
+com.basistech.rosette.dm.jackson was removed and replaced with
 com.basistech.rosette.dm.json.plain and
 com.basistech.rosette.dm.json.array.
 
