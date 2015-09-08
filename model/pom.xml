@@ -11,6 +11,12 @@
         <version>1.13.3-SNAPSHOT</version>
     </parent>
     <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
       <pluginManagement>
             <plugins>
                 <plugin>
@@ -41,12 +47,7 @@
             </plugins>
         </pluginManagement>
 
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-                <filtering>true</filtering>
-            </resource>
-        </resources>
+
         <plugins>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
@@ -104,7 +105,7 @@
                             <artifactSet>
                                 <includes>
                                     <include>com.google.guava:guava</include>
-                                    <include>${project.groupId}:adm-model-osgi</include>
+                                    <include>${project.groupId}:adm-model</include>
                                 </includes>
                             </artifactSet>
                             <relocations>
@@ -193,6 +194,11 @@
             <groupId>com.googlecode.jmockit</groupId>
             <artifactId>jmockit</artifactId>
             <version>1.7</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
