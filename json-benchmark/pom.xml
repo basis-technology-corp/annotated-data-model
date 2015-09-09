@@ -12,7 +12,7 @@
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>adm-model-osgi</artifactId>
+            <artifactId>adm-model</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
