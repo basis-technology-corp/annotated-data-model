@@ -1,6 +1,14 @@
 # Cumulative Release Notes for the Annotated Data Model
 
-## ??
+###  [ROS-97](https://basistech.atlassian.net/browse/ROS-97) More   OSGi/shade improvements
+     
+We got rid of the adm-model-osgi vs. adm-model distinction. There's
+just adm-model with OSGi metadata. The MANIFEST is maintained by
+configuration in the pom.xml.
+
+The shading removed in ROS-87 is back here; the one adm-model jar does
+shade Guava.
+
 
 ### [ROS-87](https://basistech.atlassian.net/browse/ROS-87) OSGi/shade improvements
 
