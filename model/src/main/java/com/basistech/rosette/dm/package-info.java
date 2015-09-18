@@ -77,6 +77,7 @@
  * </p>
  * {@adm.java}
  */
+@RosetteSystemBundlePackage
 package com.basistech.rosette.dm;
 
 /*
@@ -87,3 +88,5 @@ The following is not true (yet) but is preserved here for future work.
  *     All of the information for the attribute is delivered to the extended properties of this object.
  * </p>
  */
+
+import com.basistech.rosette.RosetteSystemBundlePackage;

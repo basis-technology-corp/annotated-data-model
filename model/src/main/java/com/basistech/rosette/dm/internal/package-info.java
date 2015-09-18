@@ -18,4 +18,7 @@
  * This package contains internal, though public, classes that are not meant to
  * be used by clients of the ADM.  Use at your peril - they may change at will.
  */
+@RosetteSystemBundlePackage
 package com.basistech.rosette.dm.internal;
+
+import com.basistech.rosette.RosetteSystemBundlePackage;
