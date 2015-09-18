@@ -19,8 +19,6 @@
  * <h2>AnnotatedText</h2>
  * <p>
  *  The root of the model is the {@link com.basistech.rosette.dm.AnnotatedText} class.
- *  {@adm.java}This implements {@link java.lang.CharSequence}
- *  and stores annotations that refer to subsequences.{@adm.java}
  * </p>
  * <h2>KnownAttribute</h2>
  * <p>

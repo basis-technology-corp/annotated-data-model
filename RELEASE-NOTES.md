@@ -1,5 +1,9 @@
 # Cumulative Release Notes for the Annotated Data Model
 
+###  [ROS-178](https://basistech.atlassian.net/browse/ROS-178) 
+  AnnotateText no longer `implements CharSequence`. Callers will need
+  to use `getData()` to get to the textual data.
+
 ###  [ROS-159](https://basistech.atlassian.net/browse/ROS-159) stop serializing null values.
 
 ### no jira: updated to parent 57.1.2, thus using Jackson 2.6.2.
