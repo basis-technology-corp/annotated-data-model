@@ -1,5 +1,13 @@
 # Cumulative Release Notes for the Annotated Data Model
 
+## 1.14.0
+
+*Note:* This release changes the inventory of components that are
+ built here, and makes 'interesting' API changes. There are no more
+ '-osgi' jar files; the necessary OSGi metadata is in the jars that
+ need it. When moving to this version, please be sure to take
+ advantage of AbstractAnnotator and note the switch to Jackson 2.6.2.
+
 ### [ROS-39](https://basistech.atlassian.net/browse/ROS-39) 
   Throw an appropriate Jackson exception (InvalidFormatException) when we encounter a bad
   ISO-639 code.
