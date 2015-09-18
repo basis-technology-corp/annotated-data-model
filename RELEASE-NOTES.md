@@ -1,5 +1,8 @@
 # Cumulative Release Notes for the Annotated Data Model
 
+###  [ROS-161](https://basistech.atlassian.net/browse/ROS-161) 
+  Annotator.annotate no longer declares `throws RosetteException`.
+
 ###  [ROS-178](https://basistech.atlassian.net/browse/ROS-178) 
   AnnotateText no longer `implements CharSequence`. Callers will need
   to use `getData()` to get to the textual data.

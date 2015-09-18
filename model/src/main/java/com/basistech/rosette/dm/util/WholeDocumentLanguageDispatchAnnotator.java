@@ -14,7 +14,6 @@
 
 package com.basistech.rosette.dm.util;
 
-import com.basistech.rosette.RosetteException;
 import com.basistech.rosette.RosetteUnsupportedLanguageException;
 import com.basistech.rosette.dm.AnnotatedText;
 import com.basistech.rosette.dm.Annotator;
@@ -25,6 +24,9 @@ import java.util.Map;
 
 /**
  * An annotator that delegates to one of a collection of per-language annotators.
+ * This picks the annotator based on the first detected language, and has no provision
+ * to dispatch 'other' languages as if they are unknown. If the best detected
+ * language is not in the map, this throws {@link RosetteUnsupportedLanguageException}.
  */
 public class WholeDocumentLanguageDispatchAnnotator implements Annotator {
     private final Map<LanguageCode, Annotator> delegates;
@@ -34,12 +36,12 @@ public class WholeDocumentLanguageDispatchAnnotator implements Annotator {
     }
 
     @Override
-    public AnnotatedText annotate(CharSequence input) throws RosetteException {
+    public AnnotatedText annotate(CharSequence input) {
         throw new UnsupportedOperationException("No AnnotatedText provided.");
     }
 
     @Override
-    public AnnotatedText annotate(AnnotatedText input) throws RosetteException {
+    public AnnotatedText annotate(AnnotatedText input) {
         LanguageDetection languageDetection = input.getWholeTextLanguageDetection();
         if (languageDetection == null || languageDetection.getDetectionResults().size() == 0) {
             throw new IllegalArgumentException("No whole document language detection in the input.");

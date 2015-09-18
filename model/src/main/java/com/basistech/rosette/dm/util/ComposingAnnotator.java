@@ -14,7 +14,6 @@
 
 package com.basistech.rosette.dm.util;
 
-import com.basistech.rosette.RosetteException;
 import com.basistech.rosette.dm.AnnotatedText;
 import com.basistech.rosette.dm.Annotator;
 
@@ -42,10 +41,9 @@ public class ComposingAnnotator implements Annotator {
      * annotator through the remaining annotators.
      * @param input data to process
      * @return the result of the last annotator.
-     * @throws RosetteException
      */
     @Override
-    public AnnotatedText annotate(CharSequence input) throws RosetteException {
+    public AnnotatedText annotate(CharSequence input) {
         AnnotatedText at = annotators.get(0).annotate(input);
         for (int x = 1; x < annotators.size(); x++) {
             at = annotators.get(x).annotate(at);
@@ -54,7 +52,7 @@ public class ComposingAnnotator implements Annotator {
     }
 
     @Override
-    public AnnotatedText annotate(AnnotatedText input) throws RosetteException {
+    public AnnotatedText annotate(AnnotatedText input) {
         AnnotatedText at = input;
         for (Annotator annotator : annotators) {
             at = annotator.annotate(at);
