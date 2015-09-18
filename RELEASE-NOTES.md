@@ -1,5 +1,10 @@
 # Cumulative Release Notes for the Annotated Data Model
 
+###  [ROS-39](https://basistech.atlassian.net/browse/ROS-39) 
+  Throw an appropriate Jackson exception when we encounter a bad
+  ISO-639 code.
+
+
 ### no jira: add AbstractAnnotator to avoid repeated code to map from
     String to AnnotatedText.
 
