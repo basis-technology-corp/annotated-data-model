@@ -324,7 +324,7 @@ public class JsonTest extends AdmAssert {
         ObjectWriter objectWriter = mapper.writer();
         objectWriter.writeValue(writer, referenceText);
 
-        ObjectReader reader = mapper.reader(AnnotatedText.class);
+        ObjectReader reader = mapper.readerFor(AnnotatedText.class);
         AnnotatedText read = reader.readValue(writer.toString());
 
         ListAttribute<BaseNounPhrase> bnpList = read.getBaseNounPhrases();

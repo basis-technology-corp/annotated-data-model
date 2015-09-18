@@ -15,14 +15,14 @@
 package com.basistech.rosette.dm.jackson;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.databind.DatabindContext;
 import com.fasterxml.jackson.databind.JavaType;
-import com.fasterxml.jackson.databind.jsontype.TypeIdResolver;
-import com.fasterxml.jackson.databind.type.TypeFactory;
+import com.fasterxml.jackson.databind.jsontype.impl.TypeIdResolverBase;
 
 /**
  * Jackson custom type info resolver for the data model.
  */
-public class DmTypeIdResolver implements TypeIdResolver {
+public class DmTypeIdResolver extends TypeIdResolverBase {
 
     @Override
     public void init(JavaType javaType) {
@@ -41,18 +41,12 @@ public class DmTypeIdResolver implements TypeIdResolver {
     }
 
     @Override
-    public String idFromBaseType() {
-        throw new RuntimeException("Unsupported serialization case");
-    }
-
-    @Override
-    public JavaType typeFromId(String key) {
-        KnownAttribute attribute = KnownAttribute.getAttributeForKey(key);
+    public JavaType typeFromId(DatabindContext context, String id) {
+        KnownAttribute attribute = KnownAttribute.getAttributeForKey(id);
         if (attribute == null) {
             attribute = KnownAttribute.UNKNOWN; // extension mechanism, build a BaseAttribute.
         }
-
-        return TypeFactory.defaultInstance().constructType(attribute.attributeClass());
+        return context.constructType(attribute.attributeClass());
     }
 
     @Override

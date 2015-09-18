@@ -12,25 +12,26 @@
  ** 7-104.9(a).
  ******************************************************************************/
 
-package com.basistech.rosette.dm.json.plain;
+package com.basistech.rosette.dm.jackson;
 
-import com.basistech.rosette.dm.AnnotatedText;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectReader;
-import org.junit.Test;
+import com.basistech.util.LanguageCode;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.SerializerProvider;
 
-import java.io.File;
+import java.io.IOException;
 
 /**
- * Tests of the complex code that speeds up morpho analysis deserialization.
+ * Jackson serializer for LanguageCode used as a key.
  */
-public class MorphoDeserializerTest extends AdmAssert {
+public class LanguageCodeKeySerializer extends JsonSerializer<LanguageCode> {
+    @Override
+    public void serialize(LanguageCode languageCode, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
+        jsonGenerator.writeFieldName(languageCode.ISO639_3());
+    }
 
-    @Test
-    public void comn130() throws Exception {
-        ObjectMapper mapper = objectMapper();
-        ObjectReader reader = mapper.readerFor(AnnotatedText.class);
-        // threw
-        reader.readValue(new File("test-data/comn-130-adm.json"));
+    @Override
+    public Class<LanguageCode> handledType() {
+        return LanguageCode.class;
     }
 }

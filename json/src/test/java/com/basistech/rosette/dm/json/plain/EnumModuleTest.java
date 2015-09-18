@@ -66,7 +66,7 @@ public class EnumModuleTest {
         Map<LanguageCode, String> deser = mapper.readValue("{\"zho\": \"dumpling\"}", new TypeReference<Map<LanguageCode, String>>() { });
         assertEquals(map, deser);
         // Note: Jackson assumes that maps have homogeneous key types and does not notice the serializer without this extra level of spec.
-        String json = mapper.writerWithType(new TypeReference<Map<LanguageCode, String>>() { }).writeValueAsString(map);
+        String json = mapper.writerFor(new TypeReference<Map<LanguageCode, String>>() { }).writeValueAsString(map);
         assertTrue(json.contains("zho")); // and not, by implication, CHINESE.
     }
 

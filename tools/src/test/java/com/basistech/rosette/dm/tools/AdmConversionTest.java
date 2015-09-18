@@ -104,7 +104,7 @@ public class AdmConversionTest extends Assert {
 
         //System.out.println(jsonContainer.toString("utf-8"));
 
-        ObjectReader reader = mapper.reader(AnnotatedText.class);
+        ObjectReader reader = mapper.readerFor(AnnotatedText.class);
         AnnotatedText deserializedText = reader.readValue(jsonContainer.toByteArray());
 
         assertEquals(text.length(), deserializedText.length());
@@ -125,7 +125,7 @@ public class AdmConversionTest extends Assert {
 
         //System.out.println(jsonContainer.toString("utf-8"));
 
-        ObjectReader reader = mapper.reader(AnnotatedText.class);
+        ObjectReader reader = mapper.readerFor(AnnotatedText.class);
         AnnotatedText deserializedText = reader.readValue(jsonContainer.toByteArray());
 
         assertEquals(text.length(), deserializedText.length());
@@ -146,7 +146,7 @@ public class AdmConversionTest extends Assert {
 
         //System.out.println(jsonContainer.toString("utf-8"));
 
-        ObjectReader reader = mapper.reader(AnnotatedText.class);
+        ObjectReader reader = mapper.readerFor(AnnotatedText.class);
         AnnotatedText deserializedText = reader.readValue(jsonContainer.toByteArray());
 
         assertEquals(text.length(), deserializedText.length());

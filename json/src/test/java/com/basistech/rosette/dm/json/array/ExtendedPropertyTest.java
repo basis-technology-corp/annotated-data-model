@@ -45,7 +45,7 @@ public class ExtendedPropertyTest extends AdmAssert {
         ByteArrayOutputStream jsonBlob = new ByteArrayOutputStream();
         writer.writeValue(jsonBlob, token);
 
-        ObjectReader reader = mapper.reader(Token.class);
+        ObjectReader reader = mapper.readerFor(Token.class);
         // just see if we get an exception for now.
         Token token2 = reader.readValue(jsonBlob.toByteArray());
         assertEquals("abcdefg", token2.getText());
@@ -91,7 +91,7 @@ public class ExtendedPropertyTest extends AdmAssert {
         ObjectWriter objectWriter = mapper.writerWithDefaultPrettyPrinter();
         Writer sw = new StringWriter();
         objectWriter.writeValue(sw, text);
-        ObjectReader reader = mapper.reader(AnnotatedText.class);
+        ObjectReader reader = mapper.readerFor(AnnotatedText.class);
         AnnotatedText deserialized = reader.readValue(sw.toString());
         assertEquals("extra_value", deserialized.getEntityMentions().getExtendedProperties().get("extra_key"));
     }
@@ -111,7 +111,7 @@ public class ExtendedPropertyTest extends AdmAssert {
         ObjectWriter objectWriter = mapper.writerWithDefaultPrettyPrinter();
         Writer sw = new StringWriter();
         objectWriter.writeValue(sw, tokBuilder.build());
-        ObjectReader reader = mapper.reader(Token.class);
+        ObjectReader reader = mapper.readerFor(Token.class);
         Token deserialized = reader.readValue(sw.toString());
         HanMorphoAnalysis ma1 = (HanMorphoAnalysis)deserialized.getAnalyses().get(0);
         assertEquals("ink", ma1.getExtendedProperties().get("spill"));
