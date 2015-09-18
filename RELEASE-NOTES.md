@@ -1,6 +1,10 @@
 # Cumulative Release Notes for the Annotated Data Model
 
-###  [ROS-97](https://basistech.atlassian.net/browse/ROS-97) More   OSGi/shade improvements
+###  [ROS-159](https://basistech.atlassian.net/browse/ROS-159) stop serializing null values.
+
+### no jira: updated to parent 57.1.2, thus using Jackson 2.6.2.
+
+###  [ROS-97](https://basistech.atlassian.net/browse/ROS-97) More OSGi/shade improvements
      
 We got rid of the adm-model-osgi vs. adm-model distinction. There's
 just adm-model with OSGi metadata. The MANIFEST is maintained by
