@@ -35,7 +35,7 @@ public class EnumModule extends SimpleModule {
     public void setupModule(SetupContext context) {
         context.setMixInAnnotations(LanguageCode.class, LanguageCodeMixin.class);
         SimpleSerializers keySerializers = new SimpleSerializers();
-        keySerializers.addSerializer(new LanguageCodeSerializer());
+        keySerializers.addSerializer(new LanguageCodeKeySerializer());
         context.addKeySerializers(keySerializers);
         // We don't need one for ISO15924.
         // We might want one some day for TextDomain?

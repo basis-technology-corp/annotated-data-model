@@ -15,29 +15,23 @@
 package com.basistech.rosette.dm.jackson;
 
 import com.basistech.util.LanguageCode;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import com.fasterxml.jackson.databind.exc.InvalidFormatException;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.SerializerProvider;
 
 import java.io.IOException;
 
 /**
- * Arrange for {@link com.basistech.util.LanguageCode} to serialize as its ISO-639-3 code.
+ * Jackson serializer for LanguageCode used as a key.
  */
-public class LanguageCodeDeserializer extends StdDeserializer<LanguageCode> {
-
-    public LanguageCodeDeserializer() {
-        super(LanguageCode.class);
+public class LanguageCodeKeySerializer extends JsonSerializer<LanguageCode> {
+    @Override
+    public void serialize(LanguageCode languageCode, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
+        jsonGenerator.writeFieldName(languageCode.ISO639_3());
     }
 
     @Override
-    public LanguageCode deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
-        String code = jp.getText();
-        try {
-            return LanguageCode.lookupByISO639(code);
-        } catch (IllegalArgumentException e) {
-            throw new InvalidFormatException("Undefined ISO-639 language code", jp.getCurrentLocation(), code, LanguageCode.class);
-        }
+    public Class<LanguageCode> handledType() {
+        return LanguageCode.class;
     }
 }

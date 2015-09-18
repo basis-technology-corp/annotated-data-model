@@ -14,8 +14,6 @@
 
 package com.basistech.rosette.dm;
 
-import com.basistech.rosette.RosetteException;
-
 /**
  * An {@code Annotator} annotates text with attributes.  Typical annotations
  * are tokens, script/language regions, morphological analyses, sentences,
@@ -31,9 +29,8 @@ public interface Annotator {
      *
      * @param input data to process
      * @return annotated data
-     * @throws RosetteException
      */
-    AnnotatedText annotate(CharSequence input) throws RosetteException;
+    AnnotatedText annotate(CharSequence input);
 
     /**
      * Annotates an existing text object with additional attributes.
@@ -43,7 +40,6 @@ public interface Annotator {
      *
      * @param input data to process
      * @return annotated data
-     * @throws RosetteException
      */
-    AnnotatedText annotate(AnnotatedText input) throws RosetteException;
+    AnnotatedText annotate(AnnotatedText input);
 }

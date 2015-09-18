@@ -24,8 +24,7 @@ import java.util.Map;
 
 /**
  * The root of the data model. An {@code AnnotatedText} is blob of text and its attributes.
- * {@code AnnotatedText} objects implement {@link java.lang.CharSequence}, to give direct access
- * to the text. The attributes are available from {@link #getAttributes()}, as well as from
+ * The attributes are available from {@link #getAttributes()}, as well as from
  * some convenience accessors, such as {@link #getTokens()} or {@link #getEntityMentions()}.
  * <p/>
  * Generally, offsets used in the data model are character (UTF-16 elements) offsets into the
@@ -41,7 +40,7 @@ import java.util.Map;
  * Json (or XML or other representations) by applying a reflection-based toolkit 'as-is'.
  * For Json, and Java, the 'adm-json' module provides the supported serialization.
  */
-public class AnnotatedText implements CharSequence {
+public class AnnotatedText {
     private final CharSequence data;
     /* The attributes for this text, indexed by type.
      * Only one attribute of a type is permitted, thus the concept
@@ -80,42 +79,6 @@ public class AnnotatedText implements CharSequence {
      */
     public CharSequence getData() {
         return data;
-    }
-
-    /**
-     * Returns the length of the character data for this text.
-     *
-     * @return the length of the character data for this text.
-     * @see CharSequence#length()
-     */
-    @Override
-    public int length() {
-        return data.length();
-    }
-
-    /**
-     * Returns the character at the given index.
-     *
-     * @param index the index
-     * @return the character
-     * @see CharSequence#charAt(int)
-     */
-    @Override
-    public char charAt(int index) {
-        return data.charAt(index);
-    }
-
-    /**
-     * Returns a sub-sequence of the text.
-     *
-     * @param start start index
-     * @param end end index
-     * @return the sub-sequence
-     * @see CharSequence#subSequence(int, int)
-     */
-    @Override
-    public CharSequence subSequence(int start, int end) {
-        return data.subSequence(start, end);
     }
 
     /**

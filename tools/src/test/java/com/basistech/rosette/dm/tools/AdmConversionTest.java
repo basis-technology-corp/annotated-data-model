@@ -104,10 +104,10 @@ public class AdmConversionTest extends Assert {
 
         //System.out.println(jsonContainer.toString("utf-8"));
 
-        ObjectReader reader = mapper.reader(AnnotatedText.class);
+        ObjectReader reader = mapper.readerFor(AnnotatedText.class);
         AnnotatedText deserializedText = reader.readValue(jsonContainer.toByteArray());
 
-        assertEquals(text.length(), deserializedText.length());
+        assertEquals(text.getData().length(), deserializedText.getData().length());
         assertEquals(text.getData(), deserializedText.getData());
         // we need about 1000 additional assertions in here.
     }
@@ -125,10 +125,10 @@ public class AdmConversionTest extends Assert {
 
         //System.out.println(jsonContainer.toString("utf-8"));
 
-        ObjectReader reader = mapper.reader(AnnotatedText.class);
+        ObjectReader reader = mapper.readerFor(AnnotatedText.class);
         AnnotatedText deserializedText = reader.readValue(jsonContainer.toByteArray());
 
-        assertEquals(text.length(), deserializedText.length());
+        assertEquals(text.getData().length(), deserializedText.getData().length());
         assertEquals(text.getData(), deserializedText.getData());
     }
 
@@ -146,10 +146,10 @@ public class AdmConversionTest extends Assert {
 
         //System.out.println(jsonContainer.toString("utf-8"));
 
-        ObjectReader reader = mapper.reader(AnnotatedText.class);
+        ObjectReader reader = mapper.readerFor(AnnotatedText.class);
         AnnotatedText deserializedText = reader.readValue(jsonContainer.toByteArray());
 
-        assertEquals(text.length(), deserializedText.length());
+        assertEquals(text.getData().length(), deserializedText.getData().length());
         assertEquals(text.getData(), deserializedText.getData());
     }
 
@@ -177,7 +177,7 @@ public class AdmConversionTest extends Assert {
     public void testEmptyString() throws IOException {
         AbstractResultAccess ara = deserialize(new File("../model/data/empty.json"));
         AnnotatedText text = AraDmConverter.convert(ara);
-        assertEquals(0, text.length());
+        assertEquals(0, text.getData().length());
         assertEquals(0, text.getTokens().size());
     }
 
@@ -185,7 +185,7 @@ public class AdmConversionTest extends Assert {
     public void testWhitespace() throws IOException {
         AbstractResultAccess ara = deserialize(new File("../model/data/whitespace.json"));
         AnnotatedText text = AraDmConverter.convert(ara);
-        assertTrue(text.length() > 0);
+        assertTrue(text.getData().length() > 0);
         assertEquals(0, text.getTokens().size());
     }
 
@@ -229,7 +229,7 @@ public class AdmConversionTest extends Assert {
         AnnotatedText text = AraDmConverter.convert(ara);
         LanguageDetection result = text.getWholeTextLanguageDetection();
         assertEquals(0, result.getStartOffset());
-        assertEquals(text.length(), result.getEndOffset());
+        assertEquals(text.getData().length(), result.getEndOffset());
 
         assertEquals(1, result.getDetectionResults().size());
         assertEquals(LanguageCode.ENGLISH, result.getDetectionResults().get(0).getLanguage());

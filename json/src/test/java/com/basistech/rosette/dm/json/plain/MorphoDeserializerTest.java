@@ -29,7 +29,7 @@ public class MorphoDeserializerTest extends AdmAssert {
     @Test
     public void comn130() throws Exception {
         ObjectMapper mapper = objectMapper();
-        ObjectReader reader = mapper.reader(AnnotatedText.class);
+        ObjectReader reader = mapper.readerFor(AnnotatedText.class);
         // threw
         reader.readValue(new File("test-data/comn-130-adm.json"));
     }

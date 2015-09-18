@@ -244,7 +244,7 @@ public class TextWrapper {
         if (tokenCount > 0) {
             int charStart = tokens.get(startToken).getStartOffset();
             int charEnd = tokens.get(endToken - 1).getEndOffset();
-            return text.subSequence(charStart, charEnd).toString();
+            return text.getData().subSequence(charStart, charEnd).toString();
         }
         return text.toString();
     }
