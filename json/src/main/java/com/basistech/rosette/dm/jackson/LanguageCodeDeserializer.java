@@ -18,6 +18,7 @@ import com.basistech.util.LanguageCode;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 
 import java.io.IOException;
 
@@ -33,6 +34,10 @@ public class LanguageCodeDeserializer extends StdDeserializer<LanguageCode> {
     @Override
     public LanguageCode deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
         String code = jp.getText();
-        return LanguageCode.lookupByISO639(code);
+        try {
+            return LanguageCode.lookupByISO639(code);
+        } catch (IllegalArgumentException e) {
+            throw new InvalidFormatException("Undefined ISO-639 language code", jp.getCurrentLocation(), code, LanguageCode.class);
+        }
     }
 }
