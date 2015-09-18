@@ -1,5 +1,8 @@
 # Cumulative Release Notes for the Annotated Data Model
 
+### no jira: add AbstractAnnotator to avoid repeated code to map from
+    String to AnnotatedText.
+
 ###  [ROS-161](https://basistech.atlassian.net/browse/ROS-161) 
   Annotator.annotate no longer declares `throws RosetteException`.
 
