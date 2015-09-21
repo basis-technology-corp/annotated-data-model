@@ -1,5 +1,10 @@
 # Cumulative Release Notes for the Annotated Data Model
 
+## 1.14.1
+
+### [RELAX-119](https://basistech.atlassian.net/browse/RELAX-119)
+    hasSyntheticPredicate should check for null extents.
+
 ## 1.14.0
 
 *Note:* This release changes the inventory of components that are
