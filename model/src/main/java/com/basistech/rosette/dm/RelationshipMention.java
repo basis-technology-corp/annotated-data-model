@@ -150,7 +150,7 @@ public class RelationshipMention extends Attribute {
      * @return boolean
      */
     public boolean hasSyntheticPredicate() {
-        return predicate.getExtents().isEmpty();
+        return predicate.getExtents() == null || predicate.getExtents().isEmpty();
     }
 
     @Override
