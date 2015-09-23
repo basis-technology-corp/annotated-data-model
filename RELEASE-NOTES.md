@@ -23,7 +23,7 @@
 ### [ROS-161](https://basistech.atlassian.net/browse/ROS-161) 
   Annotator.annotate no longer declares `throws RosetteException`.
 
-### [ROS-178](https://basistech.atlassian.net/browse/ROS-178) 
+### [ROS-78](https://basistech.atlassian.net/browse/ROS-78) 
   AnnotateText no longer `implements CharSequence`. Callers will need
   to use `getData()` to get to the textual data.
 
