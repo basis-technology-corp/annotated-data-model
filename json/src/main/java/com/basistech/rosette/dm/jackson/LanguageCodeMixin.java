@@ -17,7 +17,7 @@ package com.basistech.rosette.dm.jackson;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
-@JsonSerialize(using = LanguageCodeSerializer.class, keyUsing = LanguageCodeSerializer.class)
+@JsonSerialize(using = LanguageCodeSerializer.class, keyUsing = LanguageCodeKeySerializer.class)
 @JsonDeserialize(using = LanguageCodeDeserializer.class)
 public enum LanguageCodeMixin {
 }

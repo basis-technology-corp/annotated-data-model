@@ -18,7 +18,7 @@
                 <filtering>true</filtering>
             </resource>
         </resources>
-      <pluginManagement>
+        <pluginManagement>
             <plugins>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -47,8 +47,6 @@
                 </plugin>
             </plugins>
         </pluginManagement>
-
-
         <plugins>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
@@ -126,29 +124,29 @@
                                 </filter>
                             </filters>
                             <transformers>
-                            <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                <manifestEntries>
-                                    <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
-                                    <Built-By>Basis Technology Corp.</Built-By>
-                                    <Bundle-Description>Annotated Data Model</Bundle-Description>
-                                    <Bundle-DocURL>http://basistech.com</Bundle-DocURL>
-                                    <Bundle-Name>adm-model</Bundle-Name>
-                                    <Bundle-Vendor>Basis Technology Corp.</Bundle-Vendor>
-                                    <Bundle-Version>${osgi-version}</Bundle-Version>
-                                    <Export-Package>com.basistech.rosette.dm;version="${parsedVersion.majorVersion}.${parsedVersion.minorVersion}.${parsedVersion.incrementalVersion}",com.basistech.rosette.dm.util;version="${parsedVersion.majorVersion}.${parsedVersion.minorVersion}.${parsedVersion.incrementalVersion}";uses:="com.basistech.rosette,com.basistech.util",com.basistech.rosette.dm.internal;version="${parsedVersion.majorVersion}.${parsedVersion.minorVersion}.${parsedVersion.incrementalVersion}";uses:="com.basistech.util"</Export-Package>
-                                    <Implementation-Title>adm-model</Implementation-Title>
-                                    <Implementation-Vendor>Basis Technology Corp.</Implementation-Vendor>
-                                    <Implementation-Vendor-Id>com.basistech</Implementation-Vendor-Id>
-                                    <Implementation-Version>${project.version}</Implementation-Version>
-                                    <Import-Package>com.basistech.rosette,com.basistech.util;version="[35.1,36)"</Import-Package>
-                                    <Require-Capability>osgi.ee;filter:="(&amp;(osgi.ee=JavaSE)(version=1.7))"</Require-Capability>
-                                </manifestEntries>
-                            </transformer>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <manifestEntries>
+                                        <Bundle-ManifestVersion>2</Bundle-ManifestVersion>
+                                        <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+                                        <Built-By>Basis Technology Corp.</Built-By>
+                                        <Bundle-Description>Annotated Data Model</Bundle-Description>
+                                        <Bundle-DocURL>http://basistech.com</Bundle-DocURL>
+                                        <Bundle-Name>adm-model</Bundle-Name>
+                                        <Bundle-Vendor>Basis Technology Corp.</Bundle-Vendor>
+                                        <Bundle-Version>${osgi-version}</Bundle-Version>
+                                        <Export-Package>com.basistech.rosette.dm;version="${parsedVersion.majorVersion}.${parsedVersion.minorVersion}.${parsedVersion.incrementalVersion}",com.basistech.rosette.dm.util;version="${parsedVersion.majorVersion}.${parsedVersion.minorVersion}.${parsedVersion.incrementalVersion}";uses:="com.basistech.rosette,com.basistech.util",com.basistech.rosette.dm.internal;version="${parsedVersion.majorVersion}.${parsedVersion.minorVersion}.${parsedVersion.incrementalVersion}";uses:="com.basistech.util"</Export-Package>
+                                        <Implementation-Title>adm-model</Implementation-Title>
+                                        <Implementation-Vendor>Basis Technology Corp.</Implementation-Vendor>
+                                        <Implementation-Vendor-Id>com.basistech</Implementation-Vendor-Id>
+                                        <Implementation-Version>${project.version}</Implementation-Version>
+                                        <Import-Package>com.basistech.rosette,com.basistech.util;version="[35.1,36)"</Import-Package>
+                                        <Require-Capability>osgi.ee;filter:="(&amp;(osgi.ee=JavaSE)(version=1.7))"</Require-Capability>
+                                    </manifestEntries>
+                                </transformer>
                             </transformers>
                         </configuration>
                     </execution>
                 </executions>
-
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -168,7 +166,6 @@
                     </execution>
                 </executions>
             </plugin>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
@@ -193,8 +190,8 @@
     </build>
     <dependencies>
         <dependency>
-          <groupId>com.basistech</groupId>
-          <artifactId>common-api</artifactId>
+            <groupId>com.basistech</groupId>
+            <artifactId>common-api</artifactId>
         </dependency>
         <dependency>
             <groupId>com.google.guava</groupId>
