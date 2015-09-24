@@ -16,6 +16,7 @@ package com.basistech.rosette.dm.jackson;
 
 import com.basistech.util.LanguageCode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleKeyDeserializers;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.module.SimpleSerializers;
 
@@ -37,6 +38,8 @@ public class EnumModule extends SimpleModule {
         SimpleSerializers keySerializers = new SimpleSerializers();
         keySerializers.addSerializer(new LanguageCodeKeySerializer());
         context.addKeySerializers(keySerializers);
+        SimpleKeyDeserializers keyDeserializers = new SimpleKeyDeserializers();
+        keyDeserializers.addDeserializer(LanguageCode.class, new LanguageCodeKeyDeserializer());
         // We don't need one for ISO15924.
         // We might want one some day for TextDomain?
     }

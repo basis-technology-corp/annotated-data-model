@@ -18,6 +18,6 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 @JsonSerialize(using = LanguageCodeSerializer.class, keyUsing = LanguageCodeKeySerializer.class)
-@JsonDeserialize(using = LanguageCodeDeserializer.class)
+@JsonDeserialize(using = LanguageCodeDeserializer.class, keyUsing = LanguageCodeKeyDeserializer.class)
 public enum LanguageCodeMixin {
 }
