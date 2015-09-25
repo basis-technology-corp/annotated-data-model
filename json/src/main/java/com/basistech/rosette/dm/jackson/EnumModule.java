@@ -67,9 +67,7 @@ public class EnumModule extends SimpleModule {
      * the correct deserializer when deserializing a map where there is a customized
      * deserializer for the key. The code in createContextual is a copy of the
      * method sitting in the Jackson repo teed up for 2.6.3. We can get rid of this when
-     * that is released. Note that this may cause Jackson to ignore some complex customizations
-     * on Map&lt;Object, ?&gt;
-     */
+     * that is released. */
     private static class PatchedMapDeserializer extends MapDeserializer {
 
         public PatchedMapDeserializer(JavaType mapType, ValueInstantiator valueInstantiator, KeyDeserializer keyDeser, JsonDeserializer<Object> valueDeser, TypeDeserializer valueTypeDeser) {
