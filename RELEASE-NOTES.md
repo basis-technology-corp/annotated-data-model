@@ -1,5 +1,12 @@
 # Cumulative Release Notes for the Annotated Data Model
 
+## 1.14.2
+
+* [ROS-98](https://basistech.atlassian.net/browse/ROS-98)
+  Apply workarounds to bugs in Jackson 2.6.2.
+* [ROS-166]  (https://basistech.atlassian.net/browse/ROS-98)
+  Use new parent that uses maven-bundle-plugin 3.0.0.
+
 ## 1.14.1
 
 ### [RELAX-119](https://basistech.atlassian.net/browse/RELAX-119)
