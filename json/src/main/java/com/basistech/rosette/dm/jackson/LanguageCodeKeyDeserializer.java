@@ -30,7 +30,7 @@ public class LanguageCodeKeyDeserializer extends KeyDeserializer {
         try {
             return LanguageCode.lookupByISO639(key);
         } catch (IllegalArgumentException e) {
-            throw ctxt.weirdKeyException(LanguageCode.class, "Undefined ISO-639 language code", key);
+            throw ctxt.weirdKeyException(LanguageCode.class, key, "Undefined ISO-639 language code");
         }
     }
 }

@@ -35,7 +35,7 @@ public class LanguageCodeDeserializer extends FromStringDeserializer<LanguageCod
         try {
             return LanguageCode.lookupByISO639(value);
         } catch (IllegalArgumentException e) {
-            throw ctxt.weirdKeyException(LanguageCode.class, "Undefined ISO-639 language code", value);
+            throw ctxt.weirdKeyException(LanguageCode.class, value, "Undefined ISO-639 language code");
         }
     }
 }
