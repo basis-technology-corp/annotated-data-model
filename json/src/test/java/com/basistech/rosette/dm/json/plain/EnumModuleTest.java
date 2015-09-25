@@ -18,13 +18,20 @@ import com.basistech.rosette.dm.jackson.EnumModule;
 import com.basistech.util.ISO15924;
 import com.basistech.util.LanguageCode;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Maps;
+import com.google.common.io.Resources;
+import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
+import java.net.URL;
 import java.util.Map;
+import java.util.Set;
 
+import static junit.framework.TestCase.assertNotNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -74,5 +81,59 @@ public class EnumModuleTest {
     public void iso15924() throws Exception {
         ISO15924 iso = mapper.readValue("\"Latn\"", ISO15924.class);
         assertEquals(ISO15924.Latn, iso);
+    }
+
+    @Ignore("jackson-databind issue 749")
+    @Test
+    public void troubleWithKeys() throws Exception {
+        URL dataRes = Resources.getResource(EnumModuleTest.class, "enum-module-map.json");
+        ObjectMapper plainObjectMapper = new ObjectMapper();
+        JsonNode tree = plainObjectMapper.readTree(dataRes);
+        ObjectMapper fancyObjectMapper = EnumModule.setupObjectMapper(new ObjectMapper());
+        // this line is might throw with Jackson 2.6.2.
+        Map<LanguageCode, Set<String>> map = fancyObjectMapper.convertValue(tree, new TypeReference<Map<LanguageCode, Set<String>>>() {
+        });
+        assertNotNull(map);
+    }
+
+
+    public enum TestEnum {
+        replacements;
+    }
+
+    public static class TestBean {
+        private Map<LanguageCode, Map<String, String>> replacements;
+
+        public Map<LanguageCode, Map<String, String>> getReplacements() {
+            return replacements;
+        }
+
+        public void setReplacements(Map<LanguageCode, Map<String, String>> replacements) {
+            this.replacements = replacements;
+        }
+    }
+
+
+    /* Note the use of an EnumMap in here to work around a Jackson 2.6.2 issue.
+     * We could do better with a complex customer serializer for Map<Object, Object>
+     * in the adm project. */
+    @Test
+    public void nestedMaps() throws Exception {
+        Map<LanguageCode, Map<String, String>> replacements = Maps.newEnumMap(LanguageCode.class);
+        Map<String, String> engRepl = Maps.newHashMap();
+        engRepl.put("1", "one");
+        engRepl.put("2", "two");
+        replacements.put(LanguageCode.ENGLISH, engRepl);
+        Map<String, String> fraRepl = Maps.newHashMap();
+        fraRepl.put("1", "un");
+        fraRepl.put("2", "deux");
+        replacements.put(LanguageCode.FRENCH, fraRepl);
+        Map<TestEnum, Object> factoryConfigMap = Maps.newHashMap();
+        factoryConfigMap.put(TestEnum.replacements, replacements);
+        ObjectMapper fancyObjectMapper = EnumModule.setupObjectMapper(new ObjectMapper());
+        JsonNode tree = fancyObjectMapper.valueToTree(factoryConfigMap);
+        assertNotNull(tree);
+        TestBean bean = fancyObjectMapper.convertValue(tree, new TypeReference<TestBean>() {});
+        assertEquals("one", bean.getReplacements().get(LanguageCode.ENGLISH).get("1"));
     }
 }
