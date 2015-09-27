@@ -18,6 +18,7 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
+import com.fasterxml.jackson.databind.ser.impl.PropertySerializerMap;
 import com.fasterxml.jackson.databind.ser.std.StdKeySerializer;
 
 import java.io.IOException;
@@ -32,17 +33,22 @@ import java.io.IOException;
  */
 class DynamicKeySerializer extends JsonSerializer<Object> {
     private final StdKeySerializer stdKeySerializer = new StdKeySerializer();
+    private PropertySerializerMap serializerCache = PropertySerializerMap.emptyForRootValues();
 
     @Override
     public void serialize(Object value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
         Class<?> valueClass = value.getClass();
-        JavaType type = serializers.getTypeFactory().constructType(valueClass);
-        JsonSerializer<Object> ser = serializers.findKeySerializer(type, null);
-        if (ser.getClass() == DynamicKeySerializer.class) {
-            stdKeySerializer.serialize(value, gen, serializers);;
-        } else {
-            ser.serialize(value, gen, serializers);
+        JsonSerializer<Object> ser = serializerCache.serializerFor(valueClass);
+        if (ser == null) {
+            JavaType type = serializers.getTypeFactory().constructType(valueClass);
+            ser = serializers.findKeySerializer(type, null);
+            if (ser.getClass() == DynamicKeySerializer.class) {
+                // oops, we found ourself. This happens for any type that isn't specially registered.
+                ser = stdKeySerializer;
+            }
+            serializerCache.addSerializer(valueClass, ser);
         }
+        ser.serialize(value, gen, serializers);
     }
 
     @Override
