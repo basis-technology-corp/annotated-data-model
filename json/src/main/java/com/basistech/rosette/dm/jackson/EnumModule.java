@@ -15,7 +15,6 @@
 package com.basistech.rosette.dm.jackson;
 
 import com.basistech.util.LanguageCode;
-import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.AnnotationIntrospector;
 import com.fasterxml.jackson.databind.BeanDescription;
 import com.fasterxml.jackson.databind.BeanProperty;
@@ -24,11 +23,8 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.KeyDeserializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationConfig;
-import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.deser.ContextualKeyDeserializer;
 import com.fasterxml.jackson.databind.deser.ValueInstantiator;
 import com.fasterxml.jackson.databind.deser.impl.CreatorCollector;
@@ -36,16 +32,12 @@ import com.fasterxml.jackson.databind.deser.std.MapDeserializer;
 import com.fasterxml.jackson.databind.introspect.AnnotatedConstructor;
 import com.fasterxml.jackson.databind.introspect.AnnotatedMember;
 import com.fasterxml.jackson.databind.jsontype.TypeDeserializer;
-import com.fasterxml.jackson.databind.jsontype.TypeSerializer;
 import com.fasterxml.jackson.databind.module.SimpleDeserializers;
 import com.fasterxml.jackson.databind.module.SimpleKeyDeserializers;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.module.SimpleSerializers;
-import com.fasterxml.jackson.databind.ser.std.MapSerializer;
-import com.fasterxml.jackson.databind.ser.std.StdKeySerializer;
 import com.fasterxml.jackson.databind.type.MapType;
 
-import java.io.IOException;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -124,51 +116,6 @@ public class EnumModule extends SimpleModule {
     }
 
     /**
-     * This class is how we plug the above into Jackson.
-     */
-    private static class CustomSerializers extends SimpleSerializers {
-
-        private JsonSerializer<?> fallbackMapSerializer(SerializationConfig config, MapType type, BeanDescription beanDesc, JsonSerializer<Object> keySerializer, TypeSerializer elementTypeSerializer, JsonSerializer<Object> elementValueSerializer) {
-            return super.findMapSerializer(config, type, beanDesc, keySerializer, elementTypeSerializer, elementValueSerializer);
-        }
-
-        @Override
-        public JsonSerializer<?> findMapSerializer(SerializationConfig config, MapType type, BeanDescription beanDesc, JsonSerializer<Object> keySerializer, TypeSerializer elementTypeSerializer, JsonSerializer<Object> elementValueSerializer) {
-            if (type.getKeyType().getRawClass() == Object.class || type.getKeyType().getRawClass() == Enum.class) {
-                return MapSerializer.construct(null, type, false, elementTypeSerializer, new DynamicKeySerializer(), elementValueSerializer, null);
-            } else {
-                return fallbackMapSerializer(config, type, beanDesc, keySerializer, elementTypeSerializer, elementValueSerializer);
-            }
-        }
-    }
-
-    /*
-     * This is part of a workaround to https://github.com/FasterXML/jackson-databind/issues/943, in which
-     * Jackson does not examine the specific type of each Map key for possible custom serialization
-     * when it has no field/TypeReference type information. We hope for a fix in 2.6.3 but there are no guarantees.
-     * Note that this has a bit of impact on all serializations of Map&lt;?, ?&gt;.
-     */
-    private static class DynamicKeySerializer extends JsonSerializer<Object> {
-
-        private LanguageCodeKeySerializer languageCodeSerializer;
-        private StdKeySerializer stdKeySerializer;
-
-        DynamicKeySerializer() {
-            languageCodeSerializer = new LanguageCodeKeySerializer();
-            stdKeySerializer = new StdKeySerializer();
-        }
-
-        @Override
-        public void serialize(Object value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
-            if (value.getClass() == LanguageCode.class) {
-                languageCodeSerializer.serialize((LanguageCode)value, gen, serializers);
-            } else {
-                stdKeySerializer.serialize(value, gen, serializers);
-            }
-        }
-    }
-
-    /**
      * This plugs in the above.
      */
     @SuppressWarnings("unchecked")
@@ -209,10 +156,10 @@ public class EnumModule extends SimpleModule {
         context.setMixInAnnotations(LanguageCode.class, LanguageCodeMixin.class);
         SimpleSerializers keySerializers = new SimpleSerializers();
         keySerializers.addSerializer(new LanguageCodeKeySerializer());
+        keySerializers.addSerializer(Object.class, new DynamicKeySerializer());
         context.addKeySerializers(keySerializers);
         SimpleKeyDeserializers keyDeserializers = new SimpleKeyDeserializers();
         keyDeserializers.addDeserializer(LanguageCode.class, new LanguageCodeKeyDeserializer());
-        context.addSerializers(new CustomSerializers());
         context.addDeserializers(new CustomDeserializers());
     }
 

@@ -83,7 +83,6 @@ public class EnumModuleTest {
         assertEquals(ISO15924.Latn, iso);
     }
 
-    @Ignore("jackson-databind issue 749")
     @Test
     public void troubleWithKeys() throws Exception {
         URL dataRes = Resources.getResource(EnumModuleTest.class, "enum-module-map.json");
@@ -95,7 +94,6 @@ public class EnumModuleTest {
         });
         assertNotNull(map);
     }
-
 
     public enum TestEnum {
         replacements;
