@@ -378,6 +378,11 @@ public class EqualsTest {
         re1 = new ResolvedEntity.Builder(0, 10, "foo").confidence(1.0d).coreferenceChainId(3).build();
         re1.hashCode();
         assertTrue(re1.equals(re1));
+
+        re1 = new ResolvedEntity.Builder(0, 10, "foo").confidence(1.0d).coreferenceChainId(3)
+            .sentimentCategory("positive").sentimentConfidence(0.9).build();
+        re1.hashCode();
+        assertTrue(re1.equals(re1));
     }
 
     @Test

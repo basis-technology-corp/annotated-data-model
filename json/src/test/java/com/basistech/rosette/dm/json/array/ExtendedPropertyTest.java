@@ -70,7 +70,6 @@ public class ExtendedPropertyTest extends AdmAssert {
 
         ObjectWriter objectWriter = mapper.writerWithDefaultPrettyPrinter();
         String json = objectWriter.writeValueAsString(text);
-        System.out.println(json);
         AnnotatedText deserialized = mapper.readValue(json, AnnotatedText.class);
         assertEquals("extra_value", deserialized.getEntityMentions().get(0).getExtendedProperties().get("extra_key"));
     }
