@@ -1,5 +1,12 @@
 # Cumulative Release Notes for the Annotated Data Model
 
+## ??? 1.15.0 because we added to the api?
+
+### [ROS-181](https://basistech.atlassian.net/browse/ROS-181) add entity-level sentiment
+
+ResolvedEntity now has slots for sentimentCategory (e.g. "positive",
+"negative", "neutral") and a sentimentConfidence.
+
 ## 1.14.2
 
 * [ROS-98](https://basistech.atlassian.net/browse/ROS-98)

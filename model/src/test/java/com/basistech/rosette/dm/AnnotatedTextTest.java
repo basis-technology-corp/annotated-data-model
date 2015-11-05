@@ -365,6 +365,16 @@ public class AnnotatedTextTest {
     }
 
     @Test
+    public void resolvedEntityWithSentiment() throws Exception {
+        ResolvedEntity re = new ResolvedEntity.Builder(0, 10, "foo")
+            .sentimentCategory("positive").sentimentConfidence(0.9).build();
+        assertNull(re.getConfidence());
+        assertNull(re.getCoreferenceChainId());
+        assertEquals("positive", re.getSentimentCategory());
+        assertEquals(0.9, re.getSentimentConfidence(), 0);
+    }
+
+    @Test
     public void relationMentions() {
         String argumentId = "/resolved/argument/";
         String argPhrase = "some-noun";

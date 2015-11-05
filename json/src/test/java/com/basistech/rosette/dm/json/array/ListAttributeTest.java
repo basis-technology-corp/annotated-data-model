@@ -56,7 +56,6 @@ public class ListAttributeTest extends AdmAssert {
         atBuilder.sentences(sentList);
         AnnotatedText annotatedText = atBuilder.build();
         String json = objectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(annotatedText);
-        System.out.println(json);
         AnnotatedText readBack = objectMapper().readValue(json, AnnotatedText.class);
         // we don't have an equals() that is useful for AnnotatedText
         assertEquals(annotatedText.getData(), readBack.getData());
@@ -81,7 +80,6 @@ public class ListAttributeTest extends AdmAssert {
         AnnotatedText annotatedText = builder.build();
 
         String json = objectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(annotatedText);
-        System.out.println(json);
         AnnotatedText readBack = objectMapper().readValue(json, AnnotatedText.class);
         // we don't have an equals() that is useful for AnnotatedText
         assertEquals(annotatedText.getData(), readBack.getData());
@@ -100,7 +98,6 @@ public class ListAttributeTest extends AdmAssert {
         ldBuilder.extendedProperty("ldw-ex", "ldw-ex-val");
         LanguageDetection languageDetection = ldBuilder.build();
         String json = objectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(languageDetection);
-        System.out.println(json);
         LanguageDetection readBack = objectMapper().readValue(json, LanguageDetection.class);
         assertEquals(languageDetection, readBack);
     }
