@@ -38,7 +38,7 @@ public class ListAttributeTest extends AdmAssert {
         listBuilder.extendedProperty("ek", "ev");
         ListAttribute<Sentence> sentList = listBuilder.build();
         String json = objectMapper().writeValueAsString(sentList);
-        ListAttribute<Sentence> readBack = objectMapper().readValue(json, new TypeReference<ListAttribute<Sentence>>() {});
+        ListAttribute<Sentence> readBack = objectMapper().readValue(json, new TypeReference<ListAttribute<Sentence>>() { });
         // well, try round-trip.
         // this is the simple case, we'll also have to try it inside an AnnotatedText in another test case.
         assertEquals(sentList, readBack);

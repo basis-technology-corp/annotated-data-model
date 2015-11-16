@@ -36,10 +36,7 @@ import org.ops4j.pax.exam.spi.reactors.ExamReactorStrategy;
 import org.ops4j.pax.exam.spi.reactors.PerClass;
 
 import java.io.File;
-import java.io.IOException;
-import java.net.URL;
 import java.util.List;
-import java.util.Properties;
 
 /**
  * IT to show that the OSGi bundle works somewhat.
@@ -93,7 +90,7 @@ public class BundleIT {
         Assert.assertFalse(node.has("languageOfOrigin"));
         Assert.assertFalse(node.has("languageOfUse"));
 
-        List<Name> readBack = mapper.readValue(json, new TypeReference<List<Name>>(){ });
+        List<Name> readBack = mapper.readValue(json, new TypeReference<List<Name>>() { });
         Assert.assertEquals(names, readBack);
     }
 }

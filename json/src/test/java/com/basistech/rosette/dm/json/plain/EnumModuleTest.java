@@ -22,17 +22,15 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Maps;
 import com.google.common.io.Resources;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.net.URL;
 import java.util.Map;
 import java.util.Set;
 
-import static junit.framework.TestCase.assertNotNull;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -131,7 +129,7 @@ public class EnumModuleTest {
         ObjectMapper fancyObjectMapper = EnumModule.setupObjectMapper(new ObjectMapper());
         JsonNode tree = fancyObjectMapper.valueToTree(factoryConfigMap);
         assertNotNull(tree);
-        TestBean bean = fancyObjectMapper.convertValue(tree, new TypeReference<TestBean>() {});
+        TestBean bean = fancyObjectMapper.convertValue(tree, new TypeReference<TestBean>() { });
         assertEquals("one", bean.getReplacements().get(LanguageCode.ENGLISH).get("1"));
     }
 }

@@ -57,6 +57,7 @@ import java.util.Map;
 /**
  *
  */
+//CHECKSTYLE:OFF
 public class JsonTest extends AdmAssert {
 
     public static final String THIS_IS_THE_TERRIER_SHOT_TO_BOSTON = "This is the terrier shot to Boston.";

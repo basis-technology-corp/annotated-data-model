@@ -48,6 +48,7 @@ public class EqualsTest {
         }
     }
 
+    //CHECKSTYLE:OFF
     @Test
     public void morphAnalysisBase() throws Exception {
         MorphoAnalysis.Builder maBuilder = new MorphoAnalysis.Builder();

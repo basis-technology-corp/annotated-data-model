@@ -249,18 +249,21 @@ public class AdmConversionTest extends Assert {
 
         LanguageDetection.DetectionResult result;
 
-        int fullLength = text.getWholeTextLanguageDetection().getEndOffset() -
+        int fullLength = text.getWholeTextLanguageDetection().getEndOffset()
+                -
                 text.getWholeTextLanguageDetection().getStartOffset();
         result = text.getWholeTextLanguageDetection().getDetectionResults().get(0);
         assertEquals(LanguageCode.SIMPLIFIED_CHINESE, result.getLanguage());
         assertEquals(ISO15924.Hans, result.getScript());
 
-        int length0 = text.getLanguageDetectionRegions().get(0).getEndOffset() -
+        int length0 = text.getLanguageDetectionRegions().get(0).getEndOffset()
+                -
             text.getLanguageDetectionRegions().get(0).getStartOffset();
         result = text.getLanguageDetectionRegions().get(0).getDetectionResults().get(0);
         assertEquals(LanguageCode.CATALAN, result.getLanguage());
 
-        int length1 = text.getLanguageDetectionRegions().get(1).getEndOffset() -
+        int length1 = text.getLanguageDetectionRegions().get(1).getEndOffset()
+                -
             text.getLanguageDetectionRegions().get(1).getStartOffset();
         result = text.getLanguageDetectionRegions().get(1).getDetectionResults().get(0);
         assertEquals(LanguageCode.SIMPLIFIED_CHINESE, result.getLanguage());
@@ -337,35 +340,64 @@ public class AdmConversionTest extends Assert {
     }
 
     private EntityMention testNamedEntitySourceAndSubsourceHelper(String namedEntitySourceString) throws IOException {
-        String json = "{" +
-                "  'NamedEntitySourceString': [" +
-                "  '" + namedEntitySourceString + "'" +
-                "  ]," +
-                "  'NormalizedNamedEntity': [" +
-                "    'Arlington'" +
-                "  ]," +
-                "  'NamedEntityTypeString': [" +
-                "    'LOCATION'" +
-                "  ]," +
-                "  'TokenOffset': [" +
-                "    0," +
-                "    2," +
-                "    3," +
-                "    12" +
-                "  ]," +
-                "  'NamedEntity': [" +
-                "    1," +
-                "    2," +
-                "    196608" +
-                "  ]," +
-                "  'Tokens': [" +
-                "    'In'," +
-                "    'Arlington'" +
-                "  ]," +
-                "  'RawText': 'In Arlington'," +
-                "  'NamedEntitySource': [" +
-                "    33554436" +
-                "  ]" +
+        String json = "{"
+                +
+                "  'NamedEntitySourceString': ["
+                +
+                "  '" + namedEntitySourceString + "'"
+                +
+                "  ],"
+                +
+                "  'NormalizedNamedEntity': ["
+                +
+                "    'Arlington'"
+                +
+                "  ],"
+                +
+                "  'NamedEntityTypeString': ["
+                +
+                "    'LOCATION'"
+                +
+                "  ],"
+                +
+                "  'TokenOffset': ["
+                +
+                "    0,"
+                +
+                "    2,"
+                +
+                "    3,"
+                +
+                "    12"
+                +
+                "  ],"
+                +
+                "  'NamedEntity': ["
+                +
+                "    1,"
+                +
+                "    2,"
+                +
+                "    196608"
+                +
+                "  ],"
+                +
+                "  'Tokens': ["
+                +
+                "    'In',"
+                +
+                "    'Arlington'"
+                +
+                "  ],"
+                +
+                "  'RawText': 'In Arlington',"
+                +
+                "  'NamedEntitySource': ["
+                +
+                "    33554436"
+                +
+                "  ]"
+                +
                 "}";
         json = json.replace("'", "\"");
         AbstractResultAccess ara = deserialize(json);

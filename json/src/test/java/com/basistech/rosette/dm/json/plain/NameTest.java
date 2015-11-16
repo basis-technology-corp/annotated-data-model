@@ -51,7 +51,7 @@ public class NameTest extends AdmAssert {
         assertFalse(node.has("languageOfOrigin"));
         assertFalse(node.has("languageOfUse"));
 
-        List<Name> readBack = mapper.readValue(json, new TypeReference<List<Name>>(){ });
+        List<Name> readBack = mapper.readValue(json, new TypeReference<List<Name>>() { });
         assertEquals(names, readBack);
     }
 }

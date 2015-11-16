@@ -62,14 +62,13 @@ public class EnumModule extends SimpleModule {
      * that is released. */
     private static class PatchedMapDeserializer extends MapDeserializer {
 
-        public PatchedMapDeserializer(JavaType mapType, ValueInstantiator valueInstantiator, KeyDeserializer keyDeser, JsonDeserializer<Object> valueDeser, TypeDeserializer valueTypeDeser) {
+        PatchedMapDeserializer(JavaType mapType, ValueInstantiator valueInstantiator, KeyDeserializer keyDeser, JsonDeserializer<Object> valueDeser, TypeDeserializer valueTypeDeser) {
             super(mapType, valueInstantiator, keyDeser, valueDeser, valueTypeDeser);
         }
 
         @Override
         public JsonDeserializer<?> createContextual(DeserializationContext ctxt,
-                                                    BeanProperty property) throws JsonMappingException
-        {
+                                                    BeanProperty property) throws JsonMappingException {
             KeyDeserializer kd = _keyDeserializer;
             if (kd == null) {
                 if (_mapType.getKeyType().getRawClass() == LanguageCode.class) {
