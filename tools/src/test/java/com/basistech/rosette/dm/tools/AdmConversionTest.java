@@ -341,64 +341,35 @@ public class AdmConversionTest extends Assert {
 
     private EntityMention testNamedEntitySourceAndSubsourceHelper(String namedEntitySourceString) throws IOException {
         String json = "{"
-                +
-                "  'NamedEntitySourceString': ["
-                +
-                "  '" + namedEntitySourceString + "'"
-                +
-                "  ],"
-                +
-                "  'NormalizedNamedEntity': ["
-                +
-                "    'Arlington'"
-                +
-                "  ],"
-                +
-                "  'NamedEntityTypeString': ["
-                +
-                "    'LOCATION'"
-                +
-                "  ],"
-                +
-                "  'TokenOffset': ["
-                +
-                "    0,"
-                +
-                "    2,"
-                +
-                "    3,"
-                +
-                "    12"
-                +
-                "  ],"
-                +
-                "  'NamedEntity': ["
-                +
-                "    1,"
-                +
-                "    2,"
-                +
-                "    196608"
-                +
-                "  ],"
-                +
-                "  'Tokens': ["
-                +
-                "    'In',"
-                +
-                "    'Arlington'"
-                +
-                "  ],"
-                +
-                "  'RawText': 'In Arlington',"
-                +
-                "  'NamedEntitySource': ["
-                +
-                "    33554436"
-                +
-                "  ]"
-                +
-                "}";
+                + "  'NamedEntitySourceString': ["
+                + "  '" + namedEntitySourceString + "'"
+                + "  ],"
+                + "  'NormalizedNamedEntity': ["
+                + "    'Arlington'"
+                + "  ],"
+                + "  'NamedEntityTypeString': ["
+                + "    'LOCATION'"
+                + "  ],"
+                + "  'TokenOffset': ["
+                + "    0,"
+                + "    2,"
+                + "    3,"
+                + "    12"
+                + "  ],"
+                + "  'NamedEntity': ["
+                + "    1,"
+                + "    2,"
+                + "    196608"
+                + "  ],"
+                + "  'Tokens': ["
+                + "    'In',"
+                + "    'Arlington'"
+                + "  ],"
+                + "  'RawText': 'In Arlington',"
+                + "  'NamedEntitySource': ["
+                + "    33554436"
+                + "  ]"
+                + "}";
         json = json.replace("'", "\"");
         AbstractResultAccess ara = deserialize(json);
         AnnotatedText text = AraDmConverter.convert(ara);
