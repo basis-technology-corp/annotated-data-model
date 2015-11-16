@@ -288,7 +288,7 @@ public class TextWrapper {
             private Set<Integer> chainIds;
             private Iterator<Integer> chainIdIterator;
 
-            public LongestMentionIterator() {
+            LongestMentionIterator() {
                 ImmutableSortedSet.Builder<Integer> builder = ImmutableSortedSet.naturalOrder();
                 if (text.getEntityMentions() != null) {
                     for (EntityMention m : text.getEntityMentions()) {
@@ -365,7 +365,7 @@ public class TextWrapper {
         private int startEntityIndex;
         private int endEntityIndex;
 
-        public MentionIterable(int startEntityIndex, int endEntityIndex) {
+        MentionIterable(int startEntityIndex, int endEntityIndex) {
             this.startEntityIndex = startEntityIndex;
             this.endEntityIndex = endEntityIndex;
             if (this.startEntityIndex < 0) {
@@ -386,7 +386,7 @@ public class TextWrapper {
             private int endEntityIndex;
 
 
-            public MentionIterator(int startEntityIndex, int endEntityIndex) {
+            MentionIterator(int startEntityIndex, int endEntityIndex) {
                 this.currentEntityIndex = startEntityIndex;
                 this.endEntityIndex = endEntityIndex;
             }

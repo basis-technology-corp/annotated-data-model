@@ -42,7 +42,7 @@ public class MorphoListTest extends AdmAssert {
         List<MorphoAnalysis> list = Lists.newArrayList(ma);
         json = objectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(list);
         System.out.println(json);
-        List<MorphoAnalysis> readBackList = objectMapper().readValue(json, new TypeReference<List<MorphoAnalysis>>() {});
+        List<MorphoAnalysis> readBackList = objectMapper().readValue(json, new TypeReference<List<MorphoAnalysis>>() { });
         assertEquals(list, readBackList);
     }
 

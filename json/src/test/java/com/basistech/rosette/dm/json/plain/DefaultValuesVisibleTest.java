@@ -1,5 +1,3 @@
-package com.basistech.rosette.dm.json.plain;
-
 /******************************************************************************
  ** This data and information is proprietary to, and a valuable trade secret
  ** of, Basis Technology Corp.  It is given in confidence by Basis Technology
@@ -13,6 +11,9 @@ package com.basistech.rosette.dm.json.plain;
  ** with `restricted rights' as those terms are defined in DAR and ASPR
  ** 7-104.9(a).
  ******************************************************************************/
+
+
+package com.basistech.rosette.dm.json.plain;
 
 import com.basistech.rosette.dm.AnnotatedText;
 import com.basistech.rosette.dm.EntityMention;

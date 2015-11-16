@@ -4,12 +4,12 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>adm-model</artifactId>
     <name>adm-model</name>
-    <version>1.14.3-SNAPSHOT</version>
+    <version>1.15.0-SNAPSHOT</version>
     <description>ADM data model.</description>
     <parent>
         <groupId>com.basistech</groupId>
         <artifactId>annotated-data-model</artifactId>
-        <version>1.14.3-SNAPSHOT</version>
+        <version>1.15.0-SNAPSHOT</version>
     </parent>
     <build>
         <resources>
@@ -139,7 +139,7 @@
                                         <Implementation-Vendor>Basis Technology Corp.</Implementation-Vendor>
                                         <Implementation-Vendor-Id>com.basistech</Implementation-Vendor-Id>
                                         <Implementation-Version>${project.version}</Implementation-Version>
-                                        <Import-Package>com.basistech.rosette,com.basistech.util;version="[35.1,36)"</Import-Package>
+                                        <Import-Package>com.basistech.rosette,com.basistech.util;version="[35.2,36)"</Import-Package>
                                         <Require-Capability>osgi.ee;filter:="(&amp;(osgi.ee=JavaSE)(version=1.7))"</Require-Capability>
                                     </manifestEntries>
                                 </transformer>

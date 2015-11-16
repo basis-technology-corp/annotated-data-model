@@ -44,7 +44,7 @@ public class ListAttributeDeserializerTest extends AdmAssert {
          * a list of tokens not in an AnnotatedText. There's no 'type' handling, just our
          * custom itemType to worry over.
          */
-        ListAttribute<Token> tokens = mapper.readValue(new File("test-data/ordered-list.json"), new TypeReference<ListAttribute<Token>>(){});
+        ListAttribute<Token> tokens = mapper.readValue(new File("test-data/ordered-list.json"), new TypeReference<ListAttribute<Token>>() { });
         assertEquals(3, tokens.size());
         for (Object token : tokens) {
             assertTrue(token instanceof Token);
@@ -74,7 +74,7 @@ public class ListAttributeDeserializerTest extends AdmAssert {
          * a list of tokens not in an AnnotatedText. There's no 'type' handling, just our
          * custom itemType to worry over.
          */
-        ListAttribute<Token> tokens = mapper.readValue(new File("test-data/disordered-list.json"), new TypeReference<ListAttribute<Token>>(){});
+        ListAttribute<Token> tokens = mapper.readValue(new File("test-data/disordered-list.json"), new TypeReference<ListAttribute<Token>>() { });
         assertEquals(3, tokens.size());
         for (Object token : tokens) {
             assertTrue(token instanceof Token);

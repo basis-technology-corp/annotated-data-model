@@ -84,7 +84,7 @@ public final class ExtractAdmsFromMongoDump {
         private final ObjectMapper mapper;
         private final List<AnnotatedText> texts;
 
-        public VoidLineProcessor(ObjectMapper mapper, List<AnnotatedText> texts) {
+        VoidLineProcessor(ObjectMapper mapper, List<AnnotatedText> texts) {
             this.mapper = mapper;
             this.texts = texts;
         }

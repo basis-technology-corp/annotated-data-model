@@ -1,15 +1,15 @@
 /******************************************************************************
- ** This data and information is proprietary to, and a valuable trade secret
- ** of, Basis Technology Corp.  It is given in confidence by Basis Technology
- ** and may only be used as permitted under the license agreement under which
- ** it has been distributed, and in no other way.
- **
- ** Copyright (c) 2014 Basis Technology Corporation All rights reserved.
- **
- ** The technical data and information provided herein are provided with
- ** `limited rights', and the computer software provided herein is provided
- ** with `restricted rights' as those terms are defined in DAR and ASPR
- ** 7-104.9(a).
+ * * This data and information is proprietary to, and a valuable trade secret
+ * * of, Basis Technology Corp.  It is given in confidence by Basis Technology
+ * * and may only be used as permitted under the license agreement under which
+ * * it has been distributed, and in no other way.
+ * *
+ * * Copyright (c) 2014 Basis Technology Corporation All rights reserved.
+ * *
+ * * The technical data and information provided herein are provided with
+ * * `limited rights', and the computer software provided herein is provided
+ * * with `restricted rights' as those terms are defined in DAR and ASPR
+ * * 7-104.9(a).
  ******************************************************************************/
 
 package com.basistech.rosette.dm.json.array;
@@ -112,22 +112,23 @@ public final class CompareJsons {
             }
         }, "Plain");
         runWithFormat(texts, new FactoryFactory() {
-                    @Override
-                    public JsonFactory newFactory() {
-                        return new SmileFactory();
-                    }
-                },
-                "SMILE");
+                @Override
+                public JsonFactory newFactory() {
+                    return new SmileFactory();
+                }
+            },
+            "SMILE");
 
         runWithFormat(texts, new FactoryFactory() {
-                    @Override
-                    public JsonFactory newFactory() {
-                        return new CBORFactory();
-                    }
-                },
-                "CBOR");
+                @Override
+                public JsonFactory newFactory() {
+                    return new CBORFactory();
+                }
+            },
+            "CBOR");
     }
 
+    //CHECKSTYLE:OFF
     private static void runWithFormat(AnnotatedText[] texts, FactoryFactory factoryFactory, String format) throws IOException {
 
         MetricRegistry metrics = new MetricRegistry();
@@ -286,7 +287,7 @@ public final class CompareJsons {
     private static void snappyDecompress(byte[] data) {
         try {
             Snappy.uncompress(data);
-        }  catch (IOException e) {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
