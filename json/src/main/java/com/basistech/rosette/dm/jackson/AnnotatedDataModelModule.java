@@ -37,6 +37,7 @@ import com.basistech.rosette.dm.Sentence;
 import com.basistech.rosette.dm.Token;
 import com.basistech.rosette.dm.TranslatedData;
 import com.basistech.rosette.dm.TranslatedTokens;
+import com.basistech.util.jackson.EnumModule;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 /**

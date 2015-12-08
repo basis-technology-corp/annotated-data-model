@@ -37,9 +37,6 @@ import com.basistech.rosette.dm.UnknownAttribute;
  * {@link com.basistech.rosette.dm.RelationshipMention} for the known attributes.
  */
 public enum KnownAttribute {
-    /**
-     * from {@link com.basistech.rosette.dm.AttributeKey}
-     */
     BASE_NOUN_PHRASE("baseNounPhrases", BaseNounPhrase.class),
     ENTITY_MENTION("entityMentions", EntityMention.class),
     RELATIONSHIP_MENTION("relationshipMentions", RelationshipMention.class),
@@ -54,7 +51,6 @@ public enum KnownAttribute {
     SENTIMENT_RESULT("sentimentResults", CategorizerResult.class),
     LIST("list", ListAttribute.class),
     UNKNOWN("unknown", UnknownAttribute.class),
-
     RELATION_ARGUMENT("RelationshipComponent", RelationshipComponent.class);
 
 

@@ -221,8 +221,8 @@ public class TextWrapper {
     }
 
     /**
-     * Returns a substring of the raw text. If startToken < 0, 0 is used.
-     * If endToken > tokenCount, tokenCount is used.
+     * Returns a substring of the raw text. If {@code startToken < 0}, 0 is used.
+     * If {@code endToken > tokenCount}, tokenCount is used.
      *
      * @param startToken start token index
      * @param endToken end token index
@@ -330,8 +330,8 @@ public class TextWrapper {
     }
 
     /**
-     * Returns a range of mentions. If startEntityIndex < 0, 0 is used.
-     * If endEntityIndex > numMentions, numMentions is used.
+     * Returns a range of mentions. If {@code startEntityIndex < 0}, 0 is used.
+     * If {@code endEntityIndex > numMentions}, numMentions is used.
      *
      * @param startEntityIndex start index
      * @param endEntityIndex end index
@@ -457,7 +457,7 @@ public class TextWrapper {
      * Returns the sentence number containing the token.
      *
      * @param tokenIndex token index
-     * @return sentence number of token. This is guaranteed to be >= 0.
+     * @return sentence number of token. This is guaranteed to be {@code >= 0}.
      */
     public int getSentenceForToken(int tokenIndex) {
         return sentDetectionUsingBinarySearch(sentenceTokenEnds, tokenIndex);

@@ -26,7 +26,7 @@ import java.util.Map;
  * Hello.  World
  * </pre>
  * the first sentence is at offsets [0, 8), and the second at [8, 14).
- * <p/>
+ * <br>
  * Note that sentences have no properties of their own.
  */
 public class Sentence extends Attribute {

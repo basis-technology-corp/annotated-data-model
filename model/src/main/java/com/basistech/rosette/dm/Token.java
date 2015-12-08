@@ -216,6 +216,7 @@ public class Token extends Attribute {
          * Specifies the source of this token.
          *
          * @param source the source
+         * @return this
          */
         public Builder source(String source) {
             this.source = source;
