@@ -1,5 +1,13 @@
 # Cumulative Release Notes for the Annotated Data Model
 
+## 1.15.1
+
+### [ROS-186](https://basistech.atlassian.net/browse/ROS-186) enum
+ module moved out.
+
+The `EnumModule` is now part of common-api; also pick up the fact that
+common-api has an independent version.
+
 ## 1.15.0 because we added to the api
 
 ### [ROS-183](https://basistech.atlassian.net/browse/ROS-183) new parent
