@@ -17,6 +17,8 @@ package com.basistech.rosette.dm.jackson;
 import com.basistech.rosette.dm.LanguageDetection;
 import com.basistech.util.ISO15924;
 import com.basistech.util.LanguageCode;
+import com.basistech.util.jackson.LanguageCodeDeserializer;
+import com.basistech.util.jackson.LanguageCodeSerializationConverter;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;

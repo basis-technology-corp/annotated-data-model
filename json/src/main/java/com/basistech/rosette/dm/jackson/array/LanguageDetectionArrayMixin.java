@@ -15,10 +15,10 @@
 package com.basistech.rosette.dm.jackson.array;
 
 import com.basistech.rosette.dm.LanguageDetection;
-import com.basistech.rosette.dm.jackson.LanguageCodeDeserializer;
-import com.basistech.rosette.dm.jackson.LanguageCodeSerializationConverter;
 import com.basistech.util.ISO15924;
 import com.basistech.util.LanguageCode;
+import com.basistech.util.jackson.LanguageCodeDeserializer;
+import com.basistech.util.jackson.LanguageCodeSerializationConverter;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;

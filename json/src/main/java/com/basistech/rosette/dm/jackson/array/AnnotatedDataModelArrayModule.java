@@ -43,7 +43,6 @@ import com.basistech.rosette.dm.jackson.AttributeMixin;
 import com.basistech.rosette.dm.jackson.BaseNounPhraseMixin;
 import com.basistech.rosette.dm.jackson.CategorizerResultMixin;
 import com.basistech.rosette.dm.jackson.EntityMentionMixin;
-import com.basistech.rosette.dm.jackson.EnumModule;
 import com.basistech.rosette.dm.jackson.HanMorphoAnalysisMixin;
 import com.basistech.rosette.dm.jackson.KoreanMorphoAnalysisMixin;
 import com.basistech.rosette.dm.jackson.MorphoAnalysisMixin;
@@ -54,6 +53,7 @@ import com.basistech.rosette.dm.jackson.ScriptRegionMixin;
 import com.basistech.rosette.dm.jackson.SentenceMixin;
 import com.basistech.rosette.dm.jackson.TranslatedDataMixin;
 import com.basistech.rosette.dm.jackson.TranslatedTokensMixin;
+import com.basistech.util.jackson.EnumModule;
 import com.fasterxml.jackson.databind.ObjectMapper;
 /**
  * Jackson module to configure Json serialization and deserialization for the
