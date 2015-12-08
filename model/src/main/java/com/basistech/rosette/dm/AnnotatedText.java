@@ -26,7 +26,7 @@ import java.util.Map;
  * The root of the data model. An {@code AnnotatedText} is blob of text and its attributes.
  * The attributes are available from {@link #getAttributes()}, as well as from
  * some convenience accessors, such as {@link #getTokens()} or {@link #getEntityMentions()}.
- * <p/>
+ * <br>
  * Generally, offsets used in the data model are character (UTF-16 elements) offsets into the
  * original text.  Offset ranges are always half-open.  For example:
  * <pre>
@@ -34,7 +34,7 @@ import java.util.Map;
  * Hello world
  * </pre>
  * The token "Hello" has start offset 0 and end offset 5.
- * <p/>
+ * <br>
  * A note on serialization: due to the internal structure of this class and the classes
  * that make up the model, we do not recommend that applications serialize this to
  * Json (or XML or other representations) by applying a reflection-based toolkit 'as-is'.

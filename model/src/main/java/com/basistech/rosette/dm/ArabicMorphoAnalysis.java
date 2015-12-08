@@ -25,7 +25,7 @@ import java.util.Map;
  * a stem, and a suffix, where any of these components could be empty.  This
  * class stores the prefix length and the stem length.  The suffix length can
  * be deduced from these and the length of the original token.
- * <p/>
+ * <br>
  * The component parts themselves can be subdivided into sub-components.  Each
  * sub-component has an associated tag.  For example, one of the possible
  * analyses for "wAlktb" (Buckwalter transliteration for "and the books") looks
@@ -401,6 +401,7 @@ public class ArabicMorphoAnalysis extends MorphoAnalysis {
          *
          * @param stem the stem
          * @param stemTag the part-of-speech for the stem
+         * @return this
          */
         public Builder addStem(String stem, String stemTag) {
             stems.add(stem);
@@ -425,6 +426,7 @@ public class ArabicMorphoAnalysis extends MorphoAnalysis {
          *
          * @param suffix the suffix
          * @param suffixTag the part-of-speech for the suffix
+         * @return this
          */
         public Builder addSuffix(String suffix, String suffixTag) {
             suffixes.add(suffix);

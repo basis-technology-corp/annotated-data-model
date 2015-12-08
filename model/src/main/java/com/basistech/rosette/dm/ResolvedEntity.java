@@ -186,6 +186,7 @@ public class ResolvedEntity extends Attribute {
          * Specifies the entity unique ID.
          *
          * @param entityId the ID
+         * @return this
          */
         public Builder entityId(String entityId) {
             this.entityId = entityId;

@@ -187,6 +187,7 @@ public abstract class BaseAttribute {
          *
          * @param key the key
          * @param value the value
+         * @return this
          */
         public Builder extendedProperty(String key, Object value) {
             if (extendedPropertiesBuilder == null) {
