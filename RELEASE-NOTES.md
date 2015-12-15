@@ -1,12 +1,27 @@
 # Cumulative Release Notes for the Annotated Data Model
 
+## 1.16.0
+
+### [ROS-198](https://basistech.atlassian.net/browse/ROS-198) entity-level sentiment refactored
+
+ResolvedEntity sentimentCategory and sentimentConfidence have been
+moved into a CategorizerResult, which also has an explanationSet.
+Also pull in new textanalytics parent version 57.2.13.
+
 ## 1.15.1
 
 ### [ROS-186](https://basistech.atlassian.net/browse/ROS-186) enum
  module moved out.
 
 The `EnumModule` is now part of common-api; also pick up the fact that
-common-api has an independent version.
+common-api has an independent version.  Code changes are required
+since the package has changed from:
+
+  com.basistech.rosette.dm.jackson.EnumModule
+
+to
+
+  com.basistech.util.jackson.EnumModule
 
 ## 1.15.0 because we added to the api
 

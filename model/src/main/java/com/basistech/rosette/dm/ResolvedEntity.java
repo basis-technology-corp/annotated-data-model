@@ -31,27 +31,25 @@ public class ResolvedEntity extends Attribute {
     //I prefer 'chainId' over 'coreferenceChainId' but picked the latter to make it consistent with EntityMention
     private final Integer coreferenceChainId;
     private final Double confidence;
-    private final String sentimentCategory;
-    private final Double sentimentConfidence;
+    private final CategorizerResult sentiment;
 
     // for json compatibility on ADM without sentiment fields
     protected ResolvedEntity(int startOffset, int endOffset, String entityId,
                              Integer coreferenceChainId, Double confidence,
                              Map<String, Object> extendedProperties) {
         this(startOffset, endOffset, entityId, coreferenceChainId, confidence,
-            null, null, extendedProperties);
+            null, extendedProperties);
     }
 
     protected ResolvedEntity(int startOffset, int endOffset, String entityId,
                              Integer coreferenceChainId, Double confidence,
-                             String sentimentCategory, Double sentimentConfidence,
+                             CategorizerResult sentiment,
                              Map<String, Object> extendedProperties) {
         super(startOffset, endOffset, extendedProperties);
         this.entityId = entityId;
         this.coreferenceChainId = coreferenceChainId;
         this.confidence = confidence;
-        this.sentimentCategory = sentimentCategory;
-        this.sentimentConfidence = sentimentConfidence;
+        this.sentiment = sentiment;
     }
 
     /**
@@ -68,6 +66,7 @@ public class ResolvedEntity extends Attribute {
      *
      * @return the in-document coreference chain ID for this entity, or null if there is none
      */
+
     public Integer getCoreferenceChainId() {
         return coreferenceChainId;
     }
@@ -82,21 +81,12 @@ public class ResolvedEntity extends Attribute {
     }
 
     /**
-     * Returns the sentiment category for this entity, or null if not computed.
+     * Returns the sentiment of this entity, or null if not computed.
      *
-     * @return the sentiment category for this entity, or null if not computed
+     * @return the sentiment of this entity, or null if not computed.
      */
-    public String getSentimentCategory() {
-        return sentimentCategory;
-    }
-
-    /**
-     * Returns the confidence of the sentiment for this resolved entity, or null if not computed.
-     *
-     * @return the confidence of the sentiment for this resolved entity, or null if not computed.
-     */
-    public Double getSentimentConfidence() {
-        return sentimentConfidence;
+    public CategorizerResult getSentiment() {
+        return sentiment;
     }
 
     // hmm, what *really* belongs in equals and hashCode?  maybe just entityId?
@@ -115,9 +105,7 @@ public class ResolvedEntity extends Attribute {
         if (coreferenceChainId != null ? !coreferenceChainId.equals(that.coreferenceChainId) : that.coreferenceChainId != null)
             return false;
         if (confidence != null ? !confidence.equals(that.confidence) : that.confidence != null) return false;
-        if (sentimentCategory != null ? !sentimentCategory.equals(that.sentimentCategory) : that.sentimentCategory != null)
-            return false;
-        return !(sentimentConfidence != null ? !sentimentConfidence.equals(that.sentimentConfidence) : that.sentimentConfidence != null);
+        return sentiment != null ? sentiment.equals(that.sentiment) : that.sentiment == null;
         //CHECKSTYLE:ON
     }
 
@@ -129,8 +117,7 @@ public class ResolvedEntity extends Attribute {
         result = 31 * result + (entityId != null ? entityId.hashCode() : 0);
         result = 31 * result + (coreferenceChainId != null ? coreferenceChainId.hashCode() : 0);
         result = 31 * result + (confidence != null ? confidence.hashCode() : 0);
-        result = 31 * result + (sentimentCategory != null ? sentimentCategory.hashCode() : 0);
-        result = 31 * result + (sentimentConfidence != null ? sentimentConfidence.hashCode() : 0);
+        result = 31 * result + (sentiment != null ? sentiment.hashCode() : 0);
         return result;
         //CHECKSTYLE:ON
     }
@@ -141,8 +128,7 @@ public class ResolvedEntity extends Attribute {
                 .add("entityId", entityId)
                 .add("confidence", confidence)
                 .add("coreferenceChainId", coreferenceChainId)
-                .add("sentimentCategory", sentimentCategory)
-                .add("sentimentConfidence", sentimentConfidence);
+                .add("sentiment", sentiment);
     }
 
     /**
@@ -152,8 +138,7 @@ public class ResolvedEntity extends Attribute {
         private String entityId;
         private Double confidence; // NAN?
         private Integer coreferenceChainId;
-        private String sentimentCategory;
-        private Double sentimentConfidence;
+        private CategorizerResult sentiment;
 
         /**
          * Constructs a builder from the required values.
@@ -178,8 +163,7 @@ public class ResolvedEntity extends Attribute {
             this.entityId = toCopy.entityId;
             this.confidence = toCopy.confidence;
             this.coreferenceChainId = toCopy.coreferenceChainId;
-            this.sentimentCategory = toCopy.sentimentCategory;
-            this.sentimentConfidence = toCopy.sentimentConfidence;
+            this.sentiment = toCopy.sentiment;
         }
 
         /**
@@ -216,24 +200,13 @@ public class ResolvedEntity extends Attribute {
         }
 
         /**
-         * Specifies the sentiment category.
+         * Specifies the sentiment.
          *
-         * @param sentimentCategory the sentiment category
+         * @param sentiment the sentiment
          * @return this
          */
-        public Builder sentimentCategory(String sentimentCategory) {
-            this.sentimentCategory = sentimentCategory;
-            return this;
-        }
-
-        /**
-         * Specifies the confidence of the sentiment.
-         *
-         * @param sentimentConfidence confidence of the sentiment
-         * @return this
-         */
-        public Builder sentimentConfidence(double sentimentConfidence) {
-            this.sentimentConfidence = sentimentConfidence;
+        public Builder sentiment(CategorizerResult sentiment) {
+            this.sentiment = sentiment;
             return this;
         }
 
@@ -244,7 +217,7 @@ public class ResolvedEntity extends Attribute {
          */
         public ResolvedEntity build() {
             return new ResolvedEntity(startOffset, endOffset, entityId, coreferenceChainId, confidence,
-                sentimentCategory, sentimentConfidence, buildExtendedProperties());
+                sentiment, buildExtendedProperties());
         }
     }
 }

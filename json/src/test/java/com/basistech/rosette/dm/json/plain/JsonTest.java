@@ -139,8 +139,7 @@ public class JsonTest extends AdmAssert {
         ResolvedEntity.Builder reBuilder = new ResolvedEntity.Builder(27, 33, "Q100");
         reBuilder.coreferenceChainId(43);
         reBuilder.confidence(1.0);
-        reBuilder.sentimentCategory("positive");
-        reBuilder.sentimentConfidence(1.0);
+        reBuilder.sentiment(new CategorizerResult.Builder("positive", null).confidence(1.0).build());
         reBuilder.extendedProperty("re-ex", "re-ex-val");
         resolvedEntity = reBuilder.build();
         reListBuilder.add(resolvedEntity);
