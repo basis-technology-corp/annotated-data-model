@@ -6,7 +6,7 @@
 
 ResolvedEntity sentimentCategory and sentimentConfidence have been
 moved into a CategorizerResult, which also has an explanationSet.
-Also pull in new textanalytics parent version 57.2.13.
+Also pull in new textanalytics parent version 57.2.14.
 
 ## 1.15.1
 
