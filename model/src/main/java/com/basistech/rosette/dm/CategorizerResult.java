@@ -190,6 +190,7 @@ public class CategorizerResult extends BaseAttribute {
         public Builder(String label, Double score) {
             super();
             this.label = label;
+            // in retrospect, we probably should have made score optional
             this.score = score;
         }
 

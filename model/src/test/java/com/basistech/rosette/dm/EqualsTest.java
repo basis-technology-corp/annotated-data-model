@@ -380,8 +380,9 @@ public class EqualsTest {
         re1.hashCode();
         assertTrue(re1.equals(re1));
 
+        CategorizerResult sentiment = new CategorizerResult.Builder("positive", null).confidence(0.9).build();
         re1 = new ResolvedEntity.Builder(0, 10, "foo").confidence(1.0d).coreferenceChainId(3)
-            .sentimentCategory("positive").sentimentConfidence(0.9).build();
+            .sentiment(sentiment).build();
         re1.hashCode();
         assertTrue(re1.equals(re1));
     }

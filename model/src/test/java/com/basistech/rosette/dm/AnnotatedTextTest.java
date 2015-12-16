@@ -366,12 +366,14 @@ public class AnnotatedTextTest {
 
     @Test
     public void resolvedEntityWithSentiment() throws Exception {
+        CategorizerResult sentiment = new CategorizerResult.Builder("positive", null)
+            .confidence(0.9).build();
         ResolvedEntity re = new ResolvedEntity.Builder(0, 10, "foo")
-            .sentimentCategory("positive").sentimentConfidence(0.9).build();
+            .sentiment(sentiment).build();
         assertNull(re.getConfidence());
         assertNull(re.getCoreferenceChainId());
-        assertEquals("positive", re.getSentimentCategory());
-        assertEquals(0.9, re.getSentimentConfidence(), 0);
+        assertEquals("positive", re.getSentiment().getLabel());
+        assertEquals(0.9, re.getSentiment().getConfidence(), 0);
     }
 
     @Test
