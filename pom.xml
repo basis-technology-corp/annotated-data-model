@@ -7,7 +7,7 @@
     <parent>
         <groupId>com.basistech</groupId>
         <artifactId>textanalytics</artifactId>
-        <version>57.2.14</version>
+        <version>58.0.0</version>
     </parent>
     <description>
       Data model for text and its annotations.
@@ -40,16 +40,6 @@
         <module>tools</module>
         <module>script</module>
     </modules>
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>junit</groupId>
-                <artifactId>junit</artifactId>
-                <version>4.11</version>
-                <scope>test</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
     <build>
         <plugins>
             <plugin>
@@ -68,7 +58,7 @@
             <plugin>
                 <groupId>com.basistech</groupId>
                 <artifactId>bbh-maven-plugin</artifactId>
-                <version>1.0.0</version>
+                <version>1.0.1</version>
                 <executions>
                     <execution>
                         <id>osgi-version</id>
