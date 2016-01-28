@@ -566,6 +566,15 @@ itself.  "Texas" also forms a chain of length 1.
     // 3: [48, 53], 3, LOCATION, Texas
 
 
+Relationship Mentions
+---------------------
+
+::
+
+    String s = "George Bush lived in Washington. Bush lives in Text now.";
+    AnnotatedTest output = annotator.annotate(s);
+    System.out.print(new PlainTextADMOutputFormatter().apply(output));
+
 Resolved Entity
 ---------------
 
