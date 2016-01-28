@@ -143,7 +143,7 @@ public abstract class BaseAttribute {
     /**
      * Base class for builders for the subclasses of {@link com.basistech.rosette.dm.BaseAttribute}.
      */
-    public abstract static class Builder {
+    public abstract static class Builder<T extends BaseAttribute> {
         private ImmutableMap.Builder<String, Object> extendedPropertiesBuilder;
         private ImmutableMap<String, Object> extendedPropertiesToCopy;
 
@@ -189,7 +189,7 @@ public abstract class BaseAttribute {
          * @param value the value
          * @return this
          */
-        public Builder extendedProperty(String key, Object value) {
+        public Builder<T> extendedProperty(String key, Object value) {
             if (extendedPropertiesBuilder == null) {
                 /* if we don't have a builder yet, forget 'toCopy' in favor of a builder. */
                 extendedPropertiesBuilder = ImmutableMap.builder();
@@ -207,7 +207,7 @@ public abstract class BaseAttribute {
          * @param properties a map of extended properties.
          * @return this.
          */
-        public Builder extendedProperties(Map<String, Object> properties) {
+        public Builder<T> extendedProperties(Map<String, Object> properties) {
             /* Turn this into the version we copy. */
             if (properties instanceof ImmutableMap) {
                 this.extendedPropertiesToCopy = (ImmutableMap<String, Object>) properties;

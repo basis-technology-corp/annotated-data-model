@@ -426,8 +426,8 @@ public class AnnotatedTextTest {
     public void morphoAnalysisLists() throws Exception {
         MorphoAnalysis.Builder builder = new MorphoAnalysis.Builder();
         Token.Builder tokenBuilder = new Token.Builder(0, 1, "d");
-        builder.addComponent(tokenBuilder.build());
-        builder.components(Lists.<Token>newArrayList());
+        builder.addComponent(tokenBuilder.build())
+                .components(Lists.<Token>newArrayList());
         assertNull(builder.build().getComponents());
 
         HanMorphoAnalysis.Builder hmaBuilder = new HanMorphoAnalysis.Builder();

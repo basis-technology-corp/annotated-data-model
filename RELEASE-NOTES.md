@@ -1,5 +1,13 @@
 # Cumulative Release Notes for the Annotated Data Model
 
+### 1.17.0
+
+##  [ROS-204](https://basistech.atlassian.net/browse/ROS-204): new
+    common libs.
+
+##  [ROS-205](https://basistech.atlassian.net/browse/ROS-205): make
+    builders of polymorphic classes use generics to return the right type.
+
 ## 1.16.0
 
 ### [ROS-198](https://basistech.atlassian.net/browse/ROS-198) entity-level sentiment refactored

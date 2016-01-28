@@ -147,7 +147,7 @@ public class MorphoAnalysis extends BaseAttribute {
     /**
      * Builder for {@link com.basistech.rosette.dm.MorphoAnalysis}.
      */
-    public static class Builder extends BaseAttribute.Builder {
+    public static class Builder<T extends MorphoAnalysis> extends BaseAttribute.Builder {
         protected String partOfSpeech;
         protected String lemma;
         protected List<Token> components;
@@ -185,7 +185,7 @@ public class MorphoAnalysis extends BaseAttribute {
          * @param partOfSpeech the part-of-speech
          * @return this
          */
-        public Builder partOfSpeech(String partOfSpeech) {
+        public Builder<T> partOfSpeech(String partOfSpeech) {
             this.partOfSpeech = partOfSpeech;
             return this;
         }
@@ -196,7 +196,7 @@ public class MorphoAnalysis extends BaseAttribute {
          * @param lemma the lemma
          * @return this
          */
-        public Builder lemma(String lemma) {
+        public Builder<T> lemma(String lemma) {
             this.lemma = lemma;
             return this;
         }
@@ -207,7 +207,7 @@ public class MorphoAnalysis extends BaseAttribute {
          * @param raw the raw analysis
          * @return this
          */
-        public Builder raw(String raw) {
+        public Builder<T> raw(String raw) {
             this.raw = raw;
             return this;
         }
@@ -218,7 +218,7 @@ public class MorphoAnalysis extends BaseAttribute {
          * @param component the component
          * @return this
          */
-        public Builder addComponent(Token component) {
+        public Builder<T> addComponent(Token component) {
             this.components.add(component);
             return this;
         }
@@ -228,7 +228,7 @@ public class MorphoAnalysis extends BaseAttribute {
          * @param components the components.
          * @return this.
          */
-        public Builder components(List<Token> components) {
+        public Builder<T> components(List<Token> components) {
             this.components = nullOrList(components);
             return this;
         }
