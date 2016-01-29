@@ -431,7 +431,7 @@ public class AnnotatedTextTest {
         assertNull(builder.build().getComponents());
 
         HanMorphoAnalysis.Builder hmaBuilder = new HanMorphoAnalysis.Builder();
-        hmaBuilder.addReading("bloop");
+        hmaBuilder.lemma("foo").addReading("bloop");
         hmaBuilder.readings(Lists.<String>newArrayList());
         assertNull(hmaBuilder.build().getReadings());
 

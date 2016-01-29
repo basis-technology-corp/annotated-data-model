@@ -200,7 +200,7 @@ public class ListAttribute<Item extends BaseAttribute> extends BaseAttribute imp
      *
      * @param <Item> the type of attribute in the list
      */
-    public static class Builder<Item extends BaseAttribute> extends BaseAttribute.Builder<ListAttribute<Item>> {
+    public static class Builder<Item extends BaseAttribute> extends BaseAttribute.Builder<ListAttribute<Item>, ListAttribute.Builder<Item>> {
         private Class<? extends BaseAttribute> itemClass;
         private List<Item> items;
 
@@ -243,6 +243,11 @@ public class ListAttribute<Item extends BaseAttribute> extends BaseAttribute imp
          */
         public ListAttribute<Item> build() {
             return new ListAttribute<>(itemClass, items, buildExtendedProperties());
+        }
+
+        @Override
+        protected Builder<Item> getThis() {
+            return this;
         }
     }
 }

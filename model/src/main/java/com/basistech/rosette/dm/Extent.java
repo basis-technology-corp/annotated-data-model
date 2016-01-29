@@ -36,7 +36,7 @@ public class Extent extends Attribute {
     /**
      * Builder for Extent attributes.
      */
-    public static class Builder extends Attribute.Builder<Extent> {
+    public static class Builder extends Attribute.Builder<Extent, Extent.Builder>  {
 
         /**
          * Constructs a builder with offsets.
@@ -58,6 +58,11 @@ public class Extent extends Attribute {
             super(toCopy);
             this.startOffset = toCopy.startOffset;
             this.endOffset = toCopy.endOffset;
+        }
+
+        @Override
+        protected Builder getThis() {
+            return this;
         }
 
         /**

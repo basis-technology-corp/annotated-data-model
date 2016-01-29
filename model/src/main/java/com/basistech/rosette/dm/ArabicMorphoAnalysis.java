@@ -273,7 +273,7 @@ public class ArabicMorphoAnalysis extends MorphoAnalysis {
     /**
      * Builder class for {@link com.basistech.rosette.dm.ArabicMorphoAnalysis}.
      */
-    public static class Builder extends MorphoAnalysis.Builder<ArabicMorphoAnalysis> {
+    public static class Builder extends MorphoAnalysis.Builder<ArabicMorphoAnalysis, ArabicMorphoAnalysis.Builder> {
         private int prefixLength;
         private int stemLength;
         private String root;

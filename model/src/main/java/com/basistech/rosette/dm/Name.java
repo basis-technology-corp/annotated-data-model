@@ -178,7 +178,7 @@ public class Name extends BaseAttribute {
     /**
      * Builder for {@link com.basistech.rosette.dm.Name}.
      */
-    public static class Builder extends BaseAttribute.Builder<Name> {
+    public static class Builder extends BaseAttribute.Builder<Name, Name.Builder> {
         private String text;
         private String type;
         private ISO15924 script;
@@ -252,6 +252,11 @@ public class Name extends BaseAttribute {
          */
         public Name build() {
             return new Name(text, type, script, languageOfOrigin, languageOfUse, buildExtendedProperties());
+        }
+
+        @Override
+        protected Builder getThis() {
+            return this;
         }
     }
 }

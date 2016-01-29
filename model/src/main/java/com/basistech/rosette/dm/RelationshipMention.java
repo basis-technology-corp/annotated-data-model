@@ -234,7 +234,7 @@ public class RelationshipMention extends Attribute {
         return result;
     }
 
-    public static class Builder extends Attribute.Builder<RelationshipMention> {
+    public static class Builder extends Attribute.Builder<RelationshipMention, RelationshipMention.Builder> {
 
         private RelationshipComponent predicate;
         private RelationshipComponent arg1;
@@ -283,6 +283,11 @@ public class RelationshipMention extends Attribute {
             addAllToSet(temporals, toCopy.temporals);
             this.source = toCopy.source;
             this.confidence = toCopy.confidence;
+        }
+
+        @Override
+        protected Builder getThis() {
+            return this;
         }
 
         /**

@@ -73,7 +73,7 @@ public class ScriptRegion extends Attribute {
     /**
      * Builder for script regions.
      */
-    public static class Builder extends Attribute.Builder<ScriptRegion> {
+    public static class Builder extends Attribute.Builder<ScriptRegion, ScriptRegion.Builder> {
         private ISO15924 script;
 
         /**
@@ -106,6 +106,11 @@ public class ScriptRegion extends Attribute {
          */
         public ScriptRegion build() {
             return new ScriptRegion(startOffset, endOffset, script, buildExtendedProperties());
+        }
+
+        @Override
+        protected Builder getThis() {
+            return this;
         }
     }
 }

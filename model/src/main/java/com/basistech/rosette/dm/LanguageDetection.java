@@ -138,7 +138,7 @@ public class LanguageDetection extends Attribute {
         /**
          * Builder for detection results.
          */
-        public static class Builder extends BaseAttribute.Builder<DetectionResult> {
+        public static class Builder extends BaseAttribute.Builder<DetectionResult, DetectionResult.Builder> {
             private LanguageCode language;
             private String encoding;
             private ISO15924 script;
@@ -219,6 +219,11 @@ public class LanguageDetection extends Attribute {
             public DetectionResult build() {
                 return new DetectionResult(language, encoding, script, confidence, buildExtendedProperties());
             }
+
+            @Override
+            protected Builder getThis() {
+                return this;
+            }
         }
     }
 
@@ -271,7 +276,7 @@ public class LanguageDetection extends Attribute {
     /**
      * A builder for language detection results.
      */
-    public static class Builder extends Attribute.Builder<LanguageDetection> {
+    public static class Builder extends Attribute.Builder<LanguageDetection, LanguageDetection.Builder> {
         private List<DetectionResult> detectionResults;
 
         /**
@@ -305,6 +310,11 @@ public class LanguageDetection extends Attribute {
         public LanguageDetection build() {
             // we do not null this list when empty. Should we?
             return new LanguageDetection(startOffset, endOffset, detectionResults, buildExtendedProperties());
+        }
+
+        @Override
+        protected Builder getThis() {
+            return this;
         }
     }
 }

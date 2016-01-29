@@ -134,7 +134,7 @@ public class ResolvedEntity extends Attribute {
     /**
      * A builder for resolved entities.
      */
-    public static class Builder extends Attribute.Builder<ResolvedEntity> {
+    public static class Builder extends Attribute.Builder<ResolvedEntity, ResolvedEntity.Builder> {
         private String entityId;
         private Double confidence; // NAN?
         private Integer coreferenceChainId;
@@ -218,6 +218,11 @@ public class ResolvedEntity extends Attribute {
         public ResolvedEntity build() {
             return new ResolvedEntity(startOffset, endOffset, entityId, coreferenceChainId, confidence,
                 sentiment, buildExtendedProperties());
+        }
+
+        @Override
+        protected Builder getThis() {
+            return this;
         }
     }
 }

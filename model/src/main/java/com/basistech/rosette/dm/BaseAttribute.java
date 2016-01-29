@@ -143,7 +143,7 @@ public abstract class BaseAttribute {
     /**
      * Base class for builders for the subclasses of {@link com.basistech.rosette.dm.BaseAttribute}.
      */
-    public abstract static class Builder<T extends BaseAttribute> {
+    public abstract static class Builder<T extends BaseAttribute, B extends Builder<T, B>> {
         private ImmutableMap.Builder<String, Object> extendedPropertiesBuilder;
         private ImmutableMap<String, Object> extendedPropertiesToCopy;
 
@@ -167,6 +167,8 @@ public abstract class BaseAttribute {
             this.extendedPropertiesToCopy = (ImmutableMap<String, Object>) toCopy.extendedProperties;
         }
 
+        protected abstract B getThis();
+
         /**
          * Cook up a map to pass to the constructor.
          * If we have an unmodified map to 'copy', we just use it. Otherwise, we build from the builder.
@@ -189,7 +191,7 @@ public abstract class BaseAttribute {
          * @param value the value
          * @return this
          */
-        public Builder<T> extendedProperty(String key, Object value) {
+        public B extendedProperty(String key, Object value) {
             if (extendedPropertiesBuilder == null) {
                 /* if we don't have a builder yet, forget 'toCopy' in favor of a builder. */
                 extendedPropertiesBuilder = ImmutableMap.builder();
@@ -199,7 +201,7 @@ public abstract class BaseAttribute {
                 }
             }
             this.extendedPropertiesBuilder.put(key, value);
-            return this;
+            return getThis();
         }
 
         /**
@@ -207,7 +209,7 @@ public abstract class BaseAttribute {
          * @param properties a map of extended properties.
          * @return this.
          */
-        public Builder<T> extendedProperties(Map<String, Object> properties) {
+        public B extendedProperties(Map<String, Object> properties) {
             /* Turn this into the version we copy. */
             if (properties instanceof ImmutableMap) {
                 this.extendedPropertiesToCopy = (ImmutableMap<String, Object>) properties;
@@ -216,7 +218,7 @@ public abstract class BaseAttribute {
             }
             /* No builder. */
             this.extendedPropertiesBuilder = null;
-            return this;
+            return getThis();
         }
 
         /**
