@@ -20,7 +20,16 @@ by default.  Also, `AnnotatedText#toString` has been removed.  Use
 
 ###  [ROS-205](https://basistech.atlassian.net/browse/ROS-205): make builders of polymorphic classes use generics to return the right type
 
-You can now say something like new KoreanMorphoAnalysis.Builder().lemma("foo").addMorpheme...
+The intent here was to allow something like:
+
+```
+   new HanMorphoAnalysis.Builder().lemma("x").addReading("y");
+```
+
+But it does not work, since the return value of `lemma` is still not
+`HanMorhoAnalysis`. Research continues to decide if there is a further
+tweak that does the desired thing, or whether the commits in question
+should be `git revert`-ed.
 
 ## 1.16.0
 
