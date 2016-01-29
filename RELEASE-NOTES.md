@@ -1,5 +1,14 @@
 # Cumulative Release Notes for the Annotated Data Model
 
+### 1.18.0
+
+### [ROS-201](https://basistech.atlassian.net/browse/ROS-201) AnnotatedText#getData() should be null by default
+
+`AnnotatedData#getData` now returns null instead of the empty string
+by default.  Also, `AnnotatedText#toString` has been removed.  Use
+`getData().toString()` instead.
+
+
 ### 1.17.0
 
 ##  [ROS-204](https://basistech.atlassian.net/browse/ROS-204): new

@@ -52,11 +52,7 @@ public class AnnotatedText {
     AnnotatedText(CharSequence data,
                   Map<String, BaseAttribute> attributes,
                   Map<String, List<String>> documentMetadata) {
-        if (data != null) {
-            this.data = data;
-        } else {
-            this.data = null;
-        }
+        this.data = data;
         // allow incoming json that simply lacks attributes or documentMetadata.
         if (attributes != null) {
             this.attributes = ImmutableMap.copyOf(attributes);
