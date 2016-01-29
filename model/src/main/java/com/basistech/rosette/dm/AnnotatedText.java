@@ -239,6 +239,21 @@ public class AnnotatedText {
     }
 
     /**
+     * toString is a convenience for accessing the textual data, if any, in this annotated text.
+     * @return the data for this AnnotatedText as a String.
+     * If the data is {@code null}, this returns {@code null}
+     * rather than throwing a {@link NullPointerException}.
+     */
+    @Override
+    public String toString() {
+        if (data == null) {
+            return null;
+        } else {
+            return data.toString();
+        }
+    }
+
+    /**
      * Builder class for {@link AnnotatedText} objects.
      */
     public static class Builder {

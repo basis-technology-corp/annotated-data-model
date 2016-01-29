@@ -446,4 +446,10 @@ public class AnnotatedTextTest {
     public void nullDataIsNull() {
         new AnnotatedText.Builder().build().getData().length();
     }
+
+    @Test
+    public void nullToData() {
+        AnnotatedText text = new AnnotatedText.Builder().build();
+        assertNull(text.toString());
+    }
 }
