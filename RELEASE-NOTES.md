@@ -15,18 +15,7 @@ by default.  Also, `AnnotatedText#toString` has been removed.  Use
 
 ###  [ROS-205](https://basistech.atlassian.net/browse/ROS-205): make builders of polymorphic classes use generics to return the right type
 
-This enables chaining without warnings in cases like this:
-
-Before:
-```
-       builder.addComponent(tokenBuilder.build());
-       builder.components(Lists.<Token>newArrayList());
-```
-
-After:
-```
-       builder.addComponent(tokenBuilder.build()).components(Lists.<Token>newArrayList());
-```
+Ignore this.  Not working as intended yet.
 
 
 ## 1.16.0
