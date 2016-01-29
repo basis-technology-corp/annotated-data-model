@@ -4,12 +4,12 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>adm-model</artifactId>
     <name>adm-model</name>
-    <version>1.18.2-SNAPSHOT</version>
+    <version>1.18.2</version>
     <description>ADM data model.</description>
     <parent>
         <groupId>com.basistech</groupId>
         <artifactId>annotated-data-model</artifactId>
-        <version>1.18.2-SNAPSHOT</version>
+        <version>1.18.2</version>
     </parent>
     <build>
         <resources>
