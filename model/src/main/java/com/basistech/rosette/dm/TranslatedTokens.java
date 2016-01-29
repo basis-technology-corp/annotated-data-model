@@ -90,7 +90,7 @@ public class TranslatedTokens extends BaseAttribute {
     /**
      * Builder class for TranslatedTokens.
      */
-    public static class Builder extends BaseAttribute.Builder {
+    public static class Builder extends BaseAttribute.Builder<TranslatedTokens> {
         private TextDomain domain;
         private List<String> translations;
 

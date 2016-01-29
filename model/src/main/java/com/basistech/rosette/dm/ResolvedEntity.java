@@ -134,7 +134,7 @@ public class ResolvedEntity extends Attribute {
     /**
      * A builder for resolved entities.
      */
-    public static class Builder extends Attribute.Builder {
+    public static class Builder extends Attribute.Builder<ResolvedEntity> {
         private String entityId;
         private Double confidence; // NAN?
         private Integer coreferenceChainId;

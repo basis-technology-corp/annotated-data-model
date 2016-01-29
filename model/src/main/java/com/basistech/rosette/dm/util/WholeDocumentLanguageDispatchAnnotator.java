@@ -48,7 +48,7 @@ public class WholeDocumentLanguageDispatchAnnotator implements Annotator {
         }
         Annotator delegate = delegates.get(languageDetection.getDetectionResults().get(0).getLanguage());
         if (delegate == null) {
-            throw new RosetteUnsupportedLanguageException(languageDetection.getDetectionResults().get(0).getLanguage().ISO639_3());
+            throw new RosetteUnsupportedLanguageException(languageDetection.getDetectionResults().get(0).getLanguage());
         }
         return delegate.annotate(input);
     }

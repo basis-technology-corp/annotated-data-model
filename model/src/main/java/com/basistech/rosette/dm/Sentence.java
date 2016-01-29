@@ -38,7 +38,7 @@ public class Sentence extends Attribute {
     /**
      * Builder for Sentence attributes.
      */
-    public static class Builder extends Attribute.Builder {
+    public static class Builder extends Attribute.Builder<Sentence> {
         /**
          * Constructs a builder from the required properties.
          *

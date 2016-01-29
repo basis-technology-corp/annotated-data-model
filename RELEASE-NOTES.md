@@ -1,12 +1,33 @@
 # Cumulative Release Notes for the Annotated Data Model
 
-### 1.17.0
+## 1.18.0
 
-##  [ROS-204](https://basistech.atlassian.net/browse/ROS-204): new
-    common libs.
+### [ROS-201](https://basistech.atlassian.net/browse/ROS-201) AnnotatedText#getData() should be null by default
 
-##  [ROS-205](https://basistech.atlassian.net/browse/ROS-205): make
-    builders of polymorphic classes use generics to return the right type.
+`AnnotatedData#getData` now returns null instead of the empty string
+by default.  Also, `AnnotatedText#toString` has been removed.  Use
+`getData().toString()` instead.
+
+
+## 1.17.0
+
+###  [ROS-204](https://basistech.atlassian.net/browse/ROS-204) new common libs
+
+###  [ROS-205](https://basistech.atlassian.net/browse/ROS-205): make builders of polymorphic classes use generics to return the right type
+
+This enables chaining without warnings in cases like this:
+
+Before:
+```
+       builder.addComponent(tokenBuilder.build());
+       builder.components(Lists.<Token>newArrayList());
+```
+
+After:
+```
+       builder.addComponent(tokenBuilder.build()).components(Lists.<Token>newArrayList());
+```
+
 
 ## 1.16.0
 
@@ -18,8 +39,7 @@ Also pull in new textanalytics parent version 57.2.14.
 
 ## 1.15.1
 
-### [ROS-186](https://basistech.atlassian.net/browse/ROS-186) enum
- module moved out.
+### [ROS-186](https://basistech.atlassian.net/browse/ROS-186) enum module moved out
 
 The `EnumModule` is now part of common-api; also pick up the fact that
 common-api has an independent version.  Code changes are required
@@ -33,8 +53,7 @@ to
 
 ## 1.15.0 because we added to the api
 
-### [ROS-183](https://basistech.atlassian.net/browse/ROS-183) new parent
- and some checkstyle repairs.
+### [ROS-183](https://basistech.atlassian.net/browse/ROS-183) new parent and some checkstyle repairs
  
 ### [ROS-181](https://basistech.atlassian.net/browse/ROS-181) add entity-level sentiment
 

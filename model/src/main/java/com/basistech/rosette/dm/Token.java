@@ -143,7 +143,7 @@ public class Token extends Attribute {
     /**
      * Builder for tokens.
      */
-    public static class Builder extends Attribute.Builder {
+    public static class Builder extends Attribute.Builder<Token> {
         private String text;
         private List<String> normalized;
         private List<MorphoAnalysis> analyses;

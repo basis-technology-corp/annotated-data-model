@@ -138,7 +138,7 @@ public class LanguageDetection extends Attribute {
         /**
          * Builder for detection results.
          */
-        public static class Builder extends BaseAttribute.Builder {
+        public static class Builder extends BaseAttribute.Builder<DetectionResult> {
             private LanguageCode language;
             private String encoding;
             private ISO15924 script;
@@ -271,7 +271,7 @@ public class LanguageDetection extends Attribute {
     /**
      * A builder for language detection results.
      */
-    public static class Builder extends Attribute.Builder {
+    public static class Builder extends Attribute.Builder<LanguageDetection> {
         private List<DetectionResult> detectionResults;
 
         /**

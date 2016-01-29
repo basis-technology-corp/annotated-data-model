@@ -109,7 +109,7 @@ public class TranslatedData extends BaseAttribute {
     /**
      * Builder class for TranslatedData.
      */
-    public static class Builder extends BaseAttribute.Builder {
+    public static class Builder extends BaseAttribute.Builder<TranslatedData> {
         private TextDomain domain;
         private String translation;
         private Double confidence;

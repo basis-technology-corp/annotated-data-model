@@ -178,7 +178,7 @@ public class Name extends BaseAttribute {
     /**
      * Builder for {@link com.basistech.rosette.dm.Name}.
      */
-    public static class Builder extends BaseAttribute.Builder {
+    public static class Builder extends BaseAttribute.Builder<Name> {
         private String text;
         private String type;
         private ISO15924 script;
