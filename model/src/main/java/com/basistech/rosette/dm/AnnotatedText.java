@@ -52,11 +52,10 @@ public class AnnotatedText {
     AnnotatedText(CharSequence data,
                   Map<String, BaseAttribute> attributes,
                   Map<String, List<String>> documentMetadata) {
-        if (data == null) {
-            // convention: this thing _is_ a CharSequence, "" is as null as it gets, even if we read json with no value.
-            this.data = "";
-        } else {
+        if (data != null) {
             this.data = data;
+        } else {
+            this.data = null;
         }
         // allow incoming json that simply lacks attributes or documentMetadata.
         if (attributes != null) {
@@ -241,17 +240,6 @@ public class AnnotatedText {
     @SuppressWarnings("unchecked")
     public ListAttribute<CategorizerResult> getSentimentResults() {
         return (ListAttribute<CategorizerResult>) attributes.get(AttributeKey.SENTIMENT_RESULTS.key());
-    }
-
-    /**
-     * Returns the textual data as a string.
-     *
-     * @return the textual data as a string
-     * @see CharSequence#toString()
-     */
-    @Override
-    public String toString() {
-        return data.toString();
     }
 
     /**
