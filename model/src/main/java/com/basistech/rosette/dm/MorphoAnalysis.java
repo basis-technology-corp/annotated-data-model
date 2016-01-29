@@ -147,7 +147,7 @@ public class MorphoAnalysis extends BaseAttribute {
     /**
      * Builder for {@link com.basistech.rosette.dm.MorphoAnalysis}.
      */
-    public static class Builder<T extends MorphoAnalysis> extends BaseAttribute.Builder {
+    public static class Builder<T extends MorphoAnalysis> extends BaseAttribute.Builder<MorphoAnalysis> {
         protected String partOfSpeech;
         protected String lemma;
         protected List<Token> components;

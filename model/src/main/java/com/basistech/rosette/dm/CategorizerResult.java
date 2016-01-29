@@ -174,7 +174,7 @@ public class CategorizerResult extends BaseAttribute {
     /**
      * A builder for classifier results.
      */
-    public static class Builder extends BaseAttribute.Builder {
+    public static class Builder extends BaseAttribute.Builder<CategorizerResult> {
         private String label;
         private Double score;
         private Double confidence;

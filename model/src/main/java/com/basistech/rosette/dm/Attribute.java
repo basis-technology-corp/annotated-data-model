@@ -93,7 +93,7 @@ public abstract class Attribute extends BaseAttribute {
     /**
      * Base class for builders for attributes that inherit from {@link com.basistech.rosette.dm.Attribute}.
      */
-    public abstract static class Builder<T extends Attribute> extends BaseAttribute.Builder {
+    public abstract static class Builder<T extends Attribute> extends BaseAttribute.Builder<Attribute> {
         protected int startOffset;
         protected int endOffset;
 

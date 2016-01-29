@@ -234,7 +234,7 @@ public class RelationshipMention extends Attribute {
         return result;
     }
 
-    public static class Builder extends Attribute.Builder {
+    public static class Builder extends Attribute.Builder<RelationshipMention> {
 
         private RelationshipComponent predicate;
         private RelationshipComponent arg1;

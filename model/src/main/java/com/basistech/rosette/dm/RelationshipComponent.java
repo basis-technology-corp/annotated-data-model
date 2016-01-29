@@ -111,7 +111,7 @@ public class RelationshipComponent extends BaseAttribute {
         return result;
     }
 
-    public static class Builder extends BaseAttribute.Builder {
+    public static class Builder extends BaseAttribute.Builder<RelationshipComponent> {
         private String phrase;
         private String identifier;
         private List<Extent> extents = Lists.newArrayList();

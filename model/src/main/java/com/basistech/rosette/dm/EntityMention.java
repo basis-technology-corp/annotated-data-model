@@ -190,7 +190,7 @@ public class EntityMention extends Attribute {
     /**
      * A builder for entity mentions.
      */
-    public static class Builder extends Attribute.Builder {
+    public static class Builder extends Attribute.Builder<EntityMention> {
         private String entityType;
         private Double confidence;
         private Integer coreferenceChainId;

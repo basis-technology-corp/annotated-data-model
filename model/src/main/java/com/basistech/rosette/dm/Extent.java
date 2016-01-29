@@ -36,7 +36,7 @@ public class Extent extends Attribute {
     /**
      * Builder for Extent attributes.
      */
-    public static class Builder extends Attribute.Builder {
+    public static class Builder extends Attribute.Builder<Extent> {
 
         /**
          * Constructs a builder with offsets.

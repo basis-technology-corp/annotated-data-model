@@ -28,7 +28,7 @@ public class BaseNounPhrase extends Attribute {
     /**
      * Builder for base noun phrase attributes.
      */
-    public static class Builder extends Attribute.Builder {
+    public static class Builder extends Attribute.Builder<BaseNounPhrase> {
         /**
          * Constructs a builder from the required properties.
          *
