@@ -566,14 +566,57 @@ itself.  "Texas" also forms a chain of length 1.
     // 3: [48, 53], 3, LOCATION, Texas
 
 
+
 Relationship Mentions
 ---------------------
 
+Relationship mentions are facts expressed in plain text through
+connections between entities or other noun phrases. A sentence with
+relationship mentions has one of a number of features that expresses
+the relationship: The predicate is the sentence's main verb or action.
+The first argument is the subject or agent of the relationship. The second
+argument is the object of the action in the relationship. The third argument
+is any additional object that may appear in the relationship. Optional
+components include locatives and temporals, which express the location(s)
+and time(s) at which the relationship took place, respectively, and adjuncts,
+which are all other optional parts of a relationship.
+
+The following example yields one relationship mention in which "announce" is
+the predicate, expressing the relationship between the first argument,
+"The former Google CEO," and the second argument, "that he is now CEO of
+Alphabet." The relationship also includes examples of optional components:
+the temporal "Monday" and the adjunct "in a blog post." Locatives are accessed
+the same way as temporals and adjuncts, as shown here.
+
 ::
 
-    String s = "George Bush lived in Washington. Bush lives in Text now.";
-    AnnotatedTest output = annotator.annotate(s);
-    System.out.print(new PlainTextADMOutputFormatter().apply(output));
+    String s = "The former Google CEO announced in a blog post Monday that he is now CEO of Alphabet."
+    AnnotatedText.Builder builder = new AnnotatedText.Builder().data(s);
+    AnnotatedText input = builder.build();
+    AnnotatedText output = annotator.annotate(input);
+
+    for (RelationshipMention mention : output.getRelationshipMentions()) {
+        String sentence = output.getData().subSequence(mention.getStartOffset(), mention.getEndOffset()).toString();
+        String arg1 = mention.getArg1().getPhrase();
+        String predicate = mention.getPredicate().getPhrase();
+        String arg2 = mention.getArg2().getPhrase();
+        String temporal = "";
+        for (RelationshipComponent temp : mention.getTemporals())
+            temporal += temp.getPhrase();
+
+        String adjunct = "";
+        for (RelationshipComponent adj : mention.getAdjuncts())
+            adjunct += adj.getPhrase();
+
+        System.out.printf("%s%n[%s] [%s] [%s]%nTemporals: [%s]  Adjuncts: [%s]",
+                sentence, arg1, predicate, arg2, temporal, adjunct);
+    }
+
+    // The former Google CEO announced in a blog post Monday that he is now CEO of Alphabet.
+    // [The former Google CEO] [announce] [that he is now CEO of Alphabet]
+    // Temporals: [Monday]  Adjuncts: [in a blog post]
+
+
 
 Resolved Entity
 ---------------
