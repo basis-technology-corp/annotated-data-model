@@ -13,6 +13,11 @@ repair to the change for ROS-201 to make the builder part work.
 by default.  Also, `AnnotatedText#toString` has been removed.  Use
 `getData().toString()` instead.
 
+*** There is a dangerous trap here! ***
+
+If old code relies on toString, it will still compile, but the result
+will be the java pointer representation.  Beware!
+
 
 ## 1.17.0
 
