@@ -1,5 +1,10 @@
 # Cumulative Release Notes for the Annotated Data Model
 
+## 1.18.1
+
+repair to the change for ROS-201 to make the builder part work.
+
+
 ## 1.18.0
 
 ### [ROS-201](https://basistech.atlassian.net/browse/ROS-201) AnnotatedText#getData() should be null by default
@@ -15,8 +20,7 @@ by default.  Also, `AnnotatedText#toString` has been removed.  Use
 
 ###  [ROS-205](https://basistech.atlassian.net/browse/ROS-205): make builders of polymorphic classes use generics to return the right type
 
-Ignore this.  Not working as intended yet.
-
+You can now say something like new KoreanMorphoAnalysis.Builder().lemma("foo").addMorpheme...
 
 ## 1.16.0
 
