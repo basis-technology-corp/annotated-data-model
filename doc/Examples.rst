@@ -571,8 +571,8 @@ Relationship Mentions
 ---------------------
 
 Relationship mentions are facts expressed in plain text through
-connections between entities or other noun phrases. A sentence with
-relationship mentions has one of a number of features that expresses
+connections between entities or other noun phrases. A relationship
+mention in a sentence has a number of features that describe
 the relationship: The predicate is the sentence's main verb or action.
 The first argument is the subject or agent of the relationship. The second
 argument is the object of the action in the relationship. The third argument
@@ -590,10 +590,8 @@ the same way as temporals and adjuncts, as shown here.
 
 ::
 
-    String s = "The former Google CEO announced in a blog post Monday that he is now CEO of Alphabet."
-    AnnotatedText.Builder builder = new AnnotatedText.Builder().data(s);
-    AnnotatedText input = builder.build();
-    AnnotatedText output = annotator.annotate(input);
+    String s = "The former Google CEO announced in a blog post Monday that he is now CEO of Alphabet.";
+    AnnotatedText output = annotator.annotate(s);
 
     for (RelationshipMention mention : output.getRelationshipMentions()) {
         String sentence = output.getData().subSequence(mention.getStartOffset(), mention.getEndOffset()).toString();
@@ -602,19 +600,20 @@ the same way as temporals and adjuncts, as shown here.
         String arg2 = mention.getArg2().getPhrase();
         String temporal = "";
         for (RelationshipComponent temp : mention.getTemporals())
-            temporal += temp.getPhrase();
+            temporal += "[" + temp.getPhrase() + "] ";
 
         String adjunct = "";
         for (RelationshipComponent adj : mention.getAdjuncts())
-            adjunct += adj.getPhrase();
+            adjunct += "[" + adj.getPhrase() + "] ";
 
-        System.out.printf("%s%n[%s] [%s] [%s]%nTemporals: [%s]  Adjuncts: [%s]",
+        System.out.printf("%s%n[%s] [%s] [%s]%nTemporals: %s%nAdjuncts: %s",
                 sentence, arg1, predicate, arg2, temporal, adjunct);
     }
 
     // The former Google CEO announced in a blog post Monday that he is now CEO of Alphabet.
     // [The former Google CEO] [announce] [that he is now CEO of Alphabet]
-    // Temporals: [Monday]  Adjuncts: [in a blog post]
+    // Temporals: [Monday]
+    // Adjuncts: [in a blog post]
 
 
 
