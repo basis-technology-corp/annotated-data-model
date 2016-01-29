@@ -441,4 +441,9 @@ public class AnnotatedTextTest {
         assertNull(kmaBuilder.build().getMorphemes());
         assertNull(kmaBuilder.build().getMorphemeTags());
     }
+
+    @Test(expected = NullPointerException.class)
+    public void nullDataIsNull() {
+        new AnnotatedText.Builder().build().getData().length();
+    }
 }

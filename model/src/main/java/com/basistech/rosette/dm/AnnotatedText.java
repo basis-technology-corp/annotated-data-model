@@ -252,7 +252,7 @@ public class AnnotatedText {
          * Constructs a builder.  The initial data is the empty string.
          */
         public Builder() {
-            data = "";
+            // leave data null.
         }
 
         /**
