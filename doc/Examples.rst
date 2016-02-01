@@ -566,6 +566,66 @@ itself.  "Texas" also forms a chain of length 1.
     // 3: [48, 53], 3, LOCATION, Texas
 
 
+
+Relationship Mentions
+---------------------
+
+Relationship mentions are facts expressed in plain text through
+connections between entities or other noun phrases. A relationship
+mention in a sentence has a number of components that describe
+the relationship: The predicate is the sentence's main verb or action.
+The first argument is the subject or agent of the relationship. The second
+argument is the object of the action in the relationship. The third argument
+is any additional object that may appear in the relationship. Optional
+components include locatives and temporals, which express the location(s)
+and time(s) at which the relationship took place, respectively, and adjuncts,
+which are all other optional parts of a relationship.
+
+All components are represented by the ``RelationshipComponent`` class. 
+There are three ways in which the component could be presented to a user or to the calling  application:
+
+* The ``phrase`` is intended to be used for display purposes. It normally contains a lemmatized, indoc-resolved or otherwise normalized version of the raw text. 
+
+* The raw text underlying the component is provided through ``extent`` s. These are character offsets pointing at the ``data`` portion of the ``AnnotatedText``.
+
+* The ``identifier`` field is holds a link to an external, 'canonical' representation of the component (e.g. a QID). This is currently only a placeholder and is not populated by the version of RELAX at the time of this writing. 
+
+The following example yields one relationship mention in which "announce" is
+the predicate, expressing the relationship between the first argument,
+"The former Google CEO," and the second argument, "that he is now CEO of
+Alphabet." The relationship also includes examples of optional components:
+the temporal "Monday" and the adjunct "in a blog post." Locatives are accessed
+the same way as temporals and adjuncts, as shown here.
+
+::
+
+    String s = "The former Google CEO announced in a blog post Monday that he is now CEO of Alphabet.";
+    AnnotatedText output = annotator.annotate(s);
+
+    for (RelationshipMention mention : output.getRelationshipMentions()) {
+        String sentence = output.getData().subSequence(mention.getStartOffset(), mention.getEndOffset()).toString();
+        String arg1 = mention.getArg1().getPhrase();
+        String predicate = mention.getPredicate().getPhrase();
+        String arg2 = mention.getArg2().getPhrase();
+        String temporal = "";
+        for (RelationshipComponent temp : mention.getTemporals())
+            temporal += "[" + temp.getPhrase() + "] ";
+
+        String adjunct = "";
+        for (RelationshipComponent adj : mention.getAdjuncts())
+            adjunct += "[" + adj.getPhrase() + "] ";
+
+        System.out.printf("%s%n[%s] [%s] [%s]%nTemporals: %s%nAdjuncts: %s",
+                sentence, arg1, predicate, arg2, temporal, adjunct);
+    }
+
+    // The former Google CEO announced in a blog post Monday that he is now CEO of Alphabet.
+    // [The former Google CEO] [announce] [that he is now CEO of Alphabet]
+    // Temporals: [Monday]
+    // Adjuncts: [in a blog post]
+
+
+
 Resolved Entity
 ---------------
 
