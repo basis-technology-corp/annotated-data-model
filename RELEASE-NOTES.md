@@ -10,13 +10,7 @@ repair to the change for ROS-201 to make the builder part work.
 ### [ROS-201](https://basistech.atlassian.net/browse/ROS-201) AnnotatedText#getData() should be null by default
 
 `AnnotatedData#getData` now returns null instead of the empty string
-by default.  Also, `AnnotatedText#toString` has been removed.  Use
-`getData().toString()` instead.
-
-*** There is a dangerous trap here! ***
-
-If old code relies on toString, it will still compile, but the result
-will be the java pointer representation.  Beware!
+by default.
 
 
 ## 1.17.0
