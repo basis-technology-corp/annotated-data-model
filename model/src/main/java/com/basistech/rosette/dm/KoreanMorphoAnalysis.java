@@ -93,7 +93,7 @@ public class KoreanMorphoAnalysis extends MorphoAnalysis {
     /**
      * A builder for {@link com.basistech.rosette.dm.KoreanMorphoAnalysis}.
      */
-    public static class Builder extends MorphoAnalysis.Builder<KoreanMorphoAnalysis> {
+    public static class Builder extends MorphoAnalysis.Builder<KoreanMorphoAnalysis, KoreanMorphoAnalysis.Builder> {
         private List<String> morphemes;
         private List<String> morphemeTags;
 

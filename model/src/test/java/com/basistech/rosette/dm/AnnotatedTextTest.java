@@ -431,7 +431,7 @@ public class AnnotatedTextTest {
         assertNull(builder.build().getComponents());
 
         HanMorphoAnalysis.Builder hmaBuilder = new HanMorphoAnalysis.Builder();
-        hmaBuilder.addReading("bloop");
+        hmaBuilder.lemma("foo").addReading("bloop");
         hmaBuilder.readings(Lists.<String>newArrayList());
         assertNull(hmaBuilder.build().getReadings());
 
@@ -440,6 +440,17 @@ public class AnnotatedTextTest {
         kmaBuilder.morphemes(Lists.<String>newArrayList(), Lists.<String>newArrayList());
         assertNull(kmaBuilder.build().getMorphemes());
         assertNull(kmaBuilder.build().getMorphemeTags());
+    }
+
+    @Test
+    public void morphoBuilderOrder() {
+        // RD-205
+        assertEquals(new HanMorphoAnalysis.Builder().lemma("lemma").addReading("reading").build(),
+            new HanMorphoAnalysis.Builder().addReading("reading").lemma("lemma").build());
+        assertEquals(new KoreanMorphoAnalysis.Builder().lemma("lemma").addMorpheme("morpheme", "tag").build(),
+            new KoreanMorphoAnalysis.Builder().addMorpheme("morpheme", "tag").lemma("lemma").build());
+        assertEquals(new ArabicMorphoAnalysis.Builder().lemma("lemma").addPrefix("prefix", "tag").build(),
+            new ArabicMorphoAnalysis.Builder().addPrefix("prefix", "tag").lemma("lemma").build());
     }
 
     @Test(expected = NullPointerException.class)

@@ -147,7 +147,7 @@ public class MorphoAnalysis extends BaseAttribute {
     /**
      * Builder for {@link com.basistech.rosette.dm.MorphoAnalysis}.
      */
-    public static class Builder<T extends MorphoAnalysis> extends BaseAttribute.Builder<MorphoAnalysis> {
+    public static class Builder<T extends MorphoAnalysis, B extends Builder<T, B>> extends BaseAttribute.Builder<MorphoAnalysis, MorphoAnalysis.Builder<T, B>>  {
         protected String partOfSpeech;
         protected String lemma;
         protected List<Token> components;
@@ -185,9 +185,9 @@ public class MorphoAnalysis extends BaseAttribute {
          * @param partOfSpeech the part-of-speech
          * @return this
          */
-        public Builder<T> partOfSpeech(String partOfSpeech) {
+        public B partOfSpeech(String partOfSpeech) {
             this.partOfSpeech = partOfSpeech;
-            return this;
+            return getThis();
         }
 
         /**
@@ -196,9 +196,9 @@ public class MorphoAnalysis extends BaseAttribute {
          * @param lemma the lemma
          * @return this
          */
-        public Builder<T> lemma(String lemma) {
+        public B lemma(String lemma) {
             this.lemma = lemma;
-            return this;
+            return getThis();
         }
 
         /**
@@ -207,9 +207,9 @@ public class MorphoAnalysis extends BaseAttribute {
          * @param raw the raw analysis
          * @return this
          */
-        public Builder<T> raw(String raw) {
+        public B raw(String raw) {
             this.raw = raw;
-            return this;
+            return getThis();
         }
 
         /**
@@ -218,9 +218,9 @@ public class MorphoAnalysis extends BaseAttribute {
          * @param component the component
          * @return this
          */
-        public Builder<T> addComponent(Token component) {
+        public B addComponent(Token component) {
             this.components.add(component);
-            return this;
+            return getThis();
         }
 
         /**
@@ -228,9 +228,9 @@ public class MorphoAnalysis extends BaseAttribute {
          * @param components the components.
          * @return this.
          */
-        public Builder<T> components(List<Token> components) {
+        public B components(List<Token> components) {
             this.components = nullOrList(components);
-            return this;
+            return getThis();
         }
 
         /**
@@ -240,6 +240,13 @@ public class MorphoAnalysis extends BaseAttribute {
          */
         public MorphoAnalysis build() {
             return new MorphoAnalysis(partOfSpeech, lemma, components, raw, buildExtendedProperties());
+        }
+
+        // because this class is not abstract, we can't have an abstract method.
+        @SuppressWarnings("unchecked")
+        @Override
+        protected B getThis() {
+            return (B) this;
         }
     }
 }

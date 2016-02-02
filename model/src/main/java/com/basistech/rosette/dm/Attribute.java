@@ -93,7 +93,7 @@ public abstract class Attribute extends BaseAttribute {
     /**
      * Base class for builders for attributes that inherit from {@link com.basistech.rosette.dm.Attribute}.
      */
-    public abstract static class Builder<T extends Attribute> extends BaseAttribute.Builder<Attribute> {
+    public abstract static class Builder<T extends Attribute, B extends Builder<T, B>> extends BaseAttribute.Builder<Attribute, Builder<T, B>> {
         protected int startOffset;
         protected int endOffset;
 
@@ -121,15 +121,17 @@ public abstract class Attribute extends BaseAttribute {
             this.endOffset = toCopy.endOffset;
         }
 
+        protected abstract B getThis();
+
         /**
          * Specifies the start character offset.
          *
          * @param startOffset the start character offset
          * @return this
          */
-        public Builder<T> startOffset(int startOffset) {
+        public B startOffset(int startOffset) {
             this.startOffset = startOffset;
-            return this;
+            return getThis();
         }
 
         /**
@@ -138,9 +140,9 @@ public abstract class Attribute extends BaseAttribute {
          * @param endOffset the end offset
          * @return this
          */
-        public Builder<T> endOffset(int endOffset) {
+        public B endOffset(int endOffset) {
             this.endOffset = endOffset;
-            return this;
+            return getThis();
         }
 
         /**
@@ -151,9 +153,9 @@ public abstract class Attribute extends BaseAttribute {
          * @deprecated use {@link #endOffset(int)}
          */
         @Deprecated
-        public Builder<T> setEndOffset(int endOffset) {
+        public B setEndOffset(int endOffset) {
             this.endOffset = endOffset;
-            return this;
+            return getThis();
         }
     }
 }

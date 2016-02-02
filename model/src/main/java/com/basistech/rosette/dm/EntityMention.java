@@ -190,7 +190,7 @@ public class EntityMention extends Attribute {
     /**
      * A builder for entity mentions.
      */
-    public static class Builder extends Attribute.Builder<EntityMention> {
+    public static class Builder extends Attribute.Builder<EntityMention, EntityMention.Builder>  {
         private String entityType;
         private Double confidence;
         private Integer coreferenceChainId;
@@ -313,6 +313,11 @@ public class EntityMention extends Attribute {
         public EntityMention build() {
             return new EntityMention(startOffset, endOffset, entityType, coreferenceChainId, confidence, flags, source,
                 subsource, normalized, buildExtendedProperties());
+        }
+
+        @Override
+        protected Builder getThis() {
+            return this;
         }
     }
 }

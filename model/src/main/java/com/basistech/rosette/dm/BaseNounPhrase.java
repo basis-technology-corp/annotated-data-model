@@ -28,7 +28,7 @@ public class BaseNounPhrase extends Attribute {
     /**
      * Builder for base noun phrase attributes.
      */
-    public static class Builder extends Attribute.Builder<BaseNounPhrase> {
+    public static class Builder extends Attribute.Builder<BaseNounPhrase, BaseNounPhrase.Builder> {
         /**
          * Constructs a builder from the required properties.
          *
@@ -70,6 +70,11 @@ public class BaseNounPhrase extends Attribute {
         */
         public BaseNounPhrase build() {
             return new BaseNounPhrase(startOffset, endOffset, buildExtendedProperties());
+        }
+
+        @Override
+        protected Builder getThis() {
+            return this;
         }
     }
 }

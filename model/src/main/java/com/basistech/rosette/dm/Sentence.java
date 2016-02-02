@@ -38,7 +38,7 @@ public class Sentence extends Attribute {
     /**
      * Builder for Sentence attributes.
      */
-    public static class Builder extends Attribute.Builder<Sentence> {
+    public static class Builder extends Attribute.Builder<Sentence, Sentence.Builder> {
         /**
          * Constructs a builder from the required properties.
          *
@@ -81,5 +81,11 @@ public class Sentence extends Attribute {
         public Sentence build() {
             return new Sentence(startOffset, endOffset, buildExtendedProperties());
         }
+
+        @Override
+        protected Builder getThis() {
+            return this;
+        }
+
     }
 }

@@ -109,7 +109,7 @@ public class TranslatedData extends BaseAttribute {
     /**
      * Builder class for TranslatedData.
      */
-    public static class Builder extends BaseAttribute.Builder<TranslatedData> {
+    public static class Builder extends BaseAttribute.Builder<TranslatedData, TranslatedData.Builder> {
         private TextDomain domain;
         private String translation;
         private Double confidence;
@@ -154,6 +154,11 @@ public class TranslatedData extends BaseAttribute {
          */
         public TranslatedData build() {
             return new TranslatedData(domain, translation, confidence, buildExtendedProperties());
+        }
+
+        @Override
+        protected Builder getThis() {
+            return this;
         }
     }
 }

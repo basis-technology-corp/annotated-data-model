@@ -90,7 +90,7 @@ public class TranslatedTokens extends BaseAttribute {
     /**
      * Builder class for TranslatedTokens.
      */
-    public static class Builder extends BaseAttribute.Builder<TranslatedTokens> {
+    public static class Builder extends BaseAttribute.Builder<TranslatedTokens, TranslatedTokens.Builder> {
         private TextDomain domain;
         private List<String> translations;
 
@@ -145,6 +145,11 @@ public class TranslatedTokens extends BaseAttribute {
          */
         public TranslatedTokens build() {
             return new TranslatedTokens(domain, translations, buildExtendedProperties());
+        }
+
+        @Override
+        protected Builder getThis() {
+            return this;
         }
     }
 }

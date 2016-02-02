@@ -90,7 +90,7 @@ public class HanMorphoAnalysis extends MorphoAnalysis {
     /**
      * A builder for {@link com.basistech.rosette.dm.HanMorphoAnalysis}.
      */
-    public static class Builder extends MorphoAnalysis.Builder<HanMorphoAnalysis> {
+    public static class Builder extends MorphoAnalysis.Builder<HanMorphoAnalysis, HanMorphoAnalysis.Builder> {
         private List<String> readings;
 
         /**

@@ -143,7 +143,7 @@ public class Token extends Attribute {
     /**
      * Builder for tokens.
      */
-    public static class Builder extends Attribute.Builder<Token> {
+    public static class Builder extends Attribute.Builder<Token, Token.Builder> {
         private String text;
         private List<String> normalized;
         private List<MorphoAnalysis> analyses;
@@ -251,6 +251,11 @@ public class Token extends Attribute {
          */
         public Token build() {
             return new Token(startOffset, endOffset, text, normalized, source, analyses, buildExtendedProperties());
+        }
+
+        @Override
+        protected Builder getThis() {
+            return this;
         }
     }
 }

@@ -111,13 +111,18 @@ public class RelationshipComponent extends BaseAttribute {
         return result;
     }
 
-    public static class Builder extends BaseAttribute.Builder<RelationshipComponent> {
+    public static class Builder extends BaseAttribute.Builder<RelationshipComponent, RelationshipComponent.Builder> {
         private String phrase;
         private String identifier;
         private List<Extent> extents = Lists.newArrayList();
 
         public Builder() {
             super();
+        }
+
+        @Override
+        protected Builder getThis() {
+            return this;
         }
 
         public Builder phrase(String phrase) {
