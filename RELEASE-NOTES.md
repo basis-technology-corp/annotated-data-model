@@ -1,5 +1,33 @@
 # Cumulative Release Notes for the Annotated Data Model
 
+## ???
+
+###  [ROS-205](https://basistech.atlassian.net/browse/ROS-205): make builders of polymorphic classes use generics to return the right type
+
+Before this change, the following would not compile:
+
+```
+new HanMorphoAnalysis.Builder().lemma("foo").addReading("bar");
+                                            ^^^^^^^^^^^^^^^^^^
+```
+
+because lemma() returns a base class builder but addReading() is only
+on the subclass builder.  The reverse would work:
+
+```
+new HanMorphoAnalysis.Builder().addReading("bar").lemma("foo");
+```
+
+or a cast:
+
+```
+HanMorphoAnalysis.Builder hmaBuilder = new HanMorphoAnalysis.Builder();
+((HanMorphoAnalysis.Builder)hmaBuilder.lemma("foo")).addReading("bar");
+```
+
+After the change, both orders work.
+
+
 ## 1.18.1
 
 repair to the change for ROS-201 to make the builder part work.

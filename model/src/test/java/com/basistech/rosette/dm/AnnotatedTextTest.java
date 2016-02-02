@@ -442,6 +442,17 @@ public class AnnotatedTextTest {
         assertNull(kmaBuilder.build().getMorphemeTags());
     }
 
+    @Test
+    public void morphoBuilderOrder() {
+        // RD-205
+        assertEquals(new HanMorphoAnalysis.Builder().lemma("lemma").addReading("reading").build(),
+            new HanMorphoAnalysis.Builder().addReading("reading").lemma("lemma").build());
+        assertEquals(new KoreanMorphoAnalysis.Builder().lemma("lemma").addMorpheme("morpheme", "tag").build(),
+            new KoreanMorphoAnalysis.Builder().addMorpheme("morpheme", "tag").lemma("lemma").build());
+        assertEquals(new ArabicMorphoAnalysis.Builder().lemma("lemma").addPrefix("prefix", "tag").build(),
+            new ArabicMorphoAnalysis.Builder().addPrefix("prefix", "tag").lemma("lemma").build());
+    }
+
     @Test(expected = NullPointerException.class)
     public void nullDataIsNull() {
         new AnnotatedText.Builder().build().getData().length();
