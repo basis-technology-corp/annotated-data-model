@@ -106,11 +106,6 @@ The translated tokens annotations provides a itemList of translations for each o
 contains a domain identifying the language and script of the translations and a itemList of translations corresponding to
 the tokens of the text.
 
-## Class-Level Documentation ##
-
-The primary documentation is the
-[javadoc](http://git.basistech.net/pages/textanalytics/annotated-data-model/adm-model/apidocs/index.html).
-
 ## How to Incorporate ##
 
 This project builds several Maven artifacts.
@@ -144,33 +139,6 @@ use shade for itself.
 </dependency>
 
 ````
-
-### adm-tools ###
-
-This project includes the classes to convert AbstractResultAccess
-objects to ADM. It uses Jackson, and inherits the 2.4.0-rc3 version
-requirement from the adm-json project. 
-
-````
-<dependency>
-    <groupId>com.basistech</groupId>
-    <artifactId>adm-model</artifactId>
-    <version>1.9.100</version>
-</dependency>
-
-````
-
-## OSGi ##
-
-The data model is also packaged as two OSGi bundles. 
-
-* com.basistech.adm-model-osgi - The model, itself.
-* com.basistech.adm-json-osgi - The jackson modules to customize json.
-
-They are separate so that the model can be in an application classpath
-_outside_ of an OSGi container (in the 'system bundle') while the
-Jackson customizations are _inside_ the OSGi container and thus not in
-the application's classpath.
 
 
 ### How to push the Maven site to gh-pages ###
