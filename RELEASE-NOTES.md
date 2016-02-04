@@ -1,6 +1,11 @@
 # Cumulative Release Notes for the Annotated Data Model
 
-## ???
+## 2.0.0
+
+This is the first release of the the annotated data model from source
+code at github.com. It depends on new major versions of common-api and
+common-lib, so even though its own API is not significantly different
+from the prior version, we moved up to 2.0.0.
 
 ###  [ROS-205](https://basistech.atlassian.net/browse/ROS-205): make builders of polymorphic classes use generics to return the right type
 
