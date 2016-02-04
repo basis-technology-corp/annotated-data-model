@@ -2,7 +2,7 @@
 
 ## 2.0.0
 
-## [ROS-194](https://basistech.atlassian.net/browse/ROS-194) ADM model and json on github.com
+### [ROS-194](https://basistech.atlassian.net/browse/ROS-194) ADM model and json on github.com
 
 This is the first release of the the annotated data model from source
 code at github.com. It depends on new major versions of common-api and
