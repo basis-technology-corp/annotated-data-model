@@ -65,7 +65,7 @@
                         <Bundle-Version>${osgi-version}</Bundle-Version>
                         <Import-Package>com.basistech.rosette.dm.jackson,com.basistech.rosette.dm.jackson.array,*</Import-Package>
                         <Export-Package>com.basistech.rosette.dm.jackson,com.basistech.rosette.dm.jackson.array</Export-Package>
-                        <Include-Resource>{META-INF/maven/dependencies.properties=${project.build.directory}/classes/META-INF/maven/dependencies.properties};{maven-resources}</Include-Resource>
+                        <Include-Resource>{META-INF/maven/dependencies.properties=${project.build.directory}/classes/META-INF/maven/dependencies.properties},{maven-resources}</Include-Resource>
                     </instructions>
                 </configuration>
             </plugin>
@@ -94,7 +94,17 @@
     <dependencies>
         <dependency>
             <groupId>com.basistech</groupId>
+            <artifactId>adm-common-test</artifactId>
+            <version>${project.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.basistech</groupId>
             <artifactId>common-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.basistech</groupId>
+            <artifactId>common-api-jackson</artifactId>
         </dependency>
         <dependency>
             <groupId>com.google.guava</groupId>
@@ -141,17 +151,6 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>adm-model</artifactId>
             <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.basistech</groupId>
-            <artifactId>pax-exam-test-composite</artifactId>
-            <version>0.0.4</version>
-            <type>pom</type>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.xerial.snappy</groupId>

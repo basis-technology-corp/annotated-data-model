@@ -16,6 +16,7 @@
 package com.basistech.dm.osgitest;
 
 import com.basistech.rosette.dm.LanguageDetection;
+import com.basistech.rosette.dm.test.OsgiTestUtil;
 import com.basistech.util.LanguageCode;
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -18,6 +18,7 @@ package com.basistech.dm.osgitest;
 import com.basistech.rosette.dm.LanguageDetection;
 import com.basistech.rosette.dm.Name;
 import com.basistech.rosette.dm.jackson.AnnotatedDataModelModule;
+import com.basistech.rosette.dm.test.OsgiTestUtil;
 import com.basistech.util.ISO15924;
 import com.basistech.util.LanguageCode;
 import com.fasterxml.jackson.core.type.TypeReference;

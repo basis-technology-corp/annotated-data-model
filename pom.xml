@@ -44,10 +44,11 @@
         </site>
     </distributionManagement>
     <properties>
-        <bt-common-api-version>35.6.0</bt-common-api-version>
+        <bt-common-api-version>36.0.1</bt-common-api-version>
     </properties>
     <modules>
         <module>taglets</module>
+        <module>common-test</module>
         <module>model</module>
         <module>json</module>
     </modules>
@@ -57,6 +58,11 @@
           <groupId>com.basistech</groupId>
           <artifactId>common-api</artifactId>
           <version>${bt-common-api-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.basistech</groupId>
+            <artifactId>common-api-jackson</artifactId>
+            <version>${bt-common-api-version}</version>
         </dependency>
       </dependencies>
     </dependencyManagement>

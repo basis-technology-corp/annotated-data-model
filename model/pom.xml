@@ -128,7 +128,7 @@
                                         <Implementation-Vendor>Basis Technology Corp.</Implementation-Vendor>
                                         <Implementation-Vendor-Id>com.basistech</Implementation-Vendor-Id>
                                         <Implementation-Version>${project.version}</Implementation-Version>
-                                        <Import-Package>com.basistech.rosette,com.basistech.util;version="[35.2,36)"</Import-Package>
+                                        <Import-Package>com.basistech.rosette,com.basistech.util;version="[36.0.0,37)"</Import-Package>
                                         <Require-Capability>osgi.ee;filter:="(&amp;(osgi.ee=JavaSE)(version=1.7))"</Require-Capability>
                                     </manifestEntries>
                                 </transformer>
@@ -178,6 +178,11 @@
         </plugins>
     </build>
     <dependencies>
+        <dependency>
+            <groupId>com.basistech</groupId>
+            <artifactId>adm-common-test</artifactId>
+            <version>${project.version}</version>
+        </dependency>
         <dependency>
             <groupId>com.basistech</groupId>
             <artifactId>common-api</artifactId>

@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package com.basistech.dm.osgitest;
+package com.basistech.rosette.dm.test;
 
 import com.basistech.rosette.RosetteRuntimeException;
 import com.google.common.collect.Lists;
@@ -115,10 +115,6 @@ public final class OsgiTestUtil {
                         // These two are needed for guava.
                         "sun.misc",
                         "javax.annotation",
-                        // actually used in RBL; perhaps we need to eliminate?
-                        "javax.swing.text",
-                        "com.basistech.osgi.testsupport",
-                        //
                         String.format("org.slf4j;version=\"%s\"", getDependencyVersion("org.slf4j", "slf4j-api"))
 
                 ),
