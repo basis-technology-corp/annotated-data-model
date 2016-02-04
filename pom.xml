@@ -1,60 +1,73 @@
 <?xml version="1.0"?>
+<!--
+  Copyright 2015 Basis Technology Corp.
+ 
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+ 
+         http://www.apache.org/licenses/LICENSE-2.0
+ 
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+  -->
+
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <artifactId>annotated-data-model</artifactId>
     <version>1.18.3-SNAPSHOT</version>
     <packaging>pom</packaging>
     <parent>
+        <artifactId>open-source-parent</artifactId>
         <groupId>com.basistech</groupId>
-        <artifactId>textanalytics</artifactId>
-        <version>58.1.1</version>
+        <version>0.1.2</version>
     </parent>
     <description>
       Data model for text and its annotations.
     </description>
     <prerequisites>
-        <maven>3.0.4</maven>
+        <maven>3.2.5</maven>
     </prerequisites>
     <inceptionYear>2013</inceptionYear>
-    <url>http://git.basistech.net/pages/textanalytics/annotated-data-model</url>
+    <url>http://basis-technology-corp.github.io/annotated-data-model</url>
     <scm>
-        <connection>scm:git:git@git.basistech.net:textanalytics/annotated-data-model.git</connection>
-        <developerConnection>scm:git:git@git.basistech.net:textanalytics/annotated-data-model.git</developerConnection>
-        <tag>HEAD</tag>
+        <connection>scm:git:git@github.com:basis-technology-corp/annotated-data-model.git</connection>
+        <developerConnection>scm:git:git@github.com:basis-technology-corp/annotated-data-model.git</developerConnection>
     </scm>
     <distributionManagement>
         <site>
             <id>adm-site</id>
-            <url>scm:git:git@git.basistech.net:textanalytics/annotated-data-model.git</url>
+            <url>scm:git:git@github.com:basis-technology-corp/annotated-data-model.git</url>
         </site>
     </distributionManagement>
     <properties>
-        <!-- MENFORCER-203 -->
-        <skip-dependency-convergence>true</skip-dependency-convergence>
+        <bt-common-api-version>36.0.1</bt-common-api-version>
     </properties>
     <modules>
         <module>taglets</module>
+        <module>common-test</module>
         <module>model</module>
         <module>json</module>
-        <module>json-benchmark</module>
-        <module>tools</module>
-        <module>script</module>
     </modules>
+    <dependencyManagement>
+      <dependencies>
+        <dependency>
+          <groupId>com.basistech</groupId>
+          <artifactId>common-api</artifactId>
+          <version>${bt-common-api-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.basistech</groupId>
+            <artifactId>common-api-jackson</artifactId>
+            <version>${bt-common-api-version}</version>
+        </dependency>
+      </dependencies>
+    </dependencyManagement>
     <build>
         <plugins>
-            <plugin>
-                <!-- This plugin overrides deploy -->
-                <groupId>org.sonatype.plugins</groupId>
-                <artifactId>nexus-staging-maven-plugin</artifactId>
-                <version>${nexus-staging-plugin-version}</version>
-                <extensions>true</extensions>
-                <configuration>
-                    <serverId>basistech.repo</serverId>
-                    <nexusUrl>http://nexus.basistech.net:8081/nexus/</nexusUrl>
-                    <!-- ID for text-analytics staging profile -->
-                    <stagingProfileId>1dd11ca8866422</stagingProfileId>
-                </configuration>
-            </plugin>
             <plugin>
                 <groupId>com.basistech</groupId>
                 <artifactId>bbh-maven-plugin</artifactId>
@@ -65,6 +78,20 @@
                         <phase>validate</phase>
                         <goals>
                             <goal>osgi-version</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.servicemix.tooling</groupId>
+                <artifactId>depends-maven-plugin</artifactId>
+                <version>1.2</version>
+                <executions>
+                    <execution>
+                        <id>generate-depends-file</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>generate-depends-file</goal>
                         </goals>
                     </execution>
                 </executions>
