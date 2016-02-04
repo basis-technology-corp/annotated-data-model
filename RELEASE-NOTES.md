@@ -2,12 +2,14 @@
 
 ## 2.0.0
 
+[ROS-194](https://basistech.atlassian.net/browse/ROS-194) ADM model and json on github.com
+
 This is the first release of the the annotated data model from source
 code at github.com. It depends on new major versions of common-api and
 common-lib, so even though its own API is not significantly different
 from the prior version, we moved up to 2.0.0.
 
-###  [ROS-205](https://basistech.atlassian.net/browse/ROS-205): make builders of polymorphic classes use generics to return the right type
+### [ROS-205](https://basistech.atlassian.net/browse/ROS-205): make builders of polymorphic classes use generics to return the right type
 
 Before this change, the following would not compile:
 
