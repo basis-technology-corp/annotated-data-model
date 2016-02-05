@@ -30,9 +30,11 @@ import com.basistech.rosette.dm.TranslatedData;
 import com.basistech.rosette.dm.TranslatedTokens;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.databind.annotation.JsonAppend;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.annotation.JsonTypeIdResolver;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
@@ -43,10 +45,13 @@ import java.util.Map;
 /**
  * {@link com.basistech.rosette.dm.AnnotatedText}.
  */
+
+@JsonAppend(prepend=true, props={ @JsonAppend.Prop(value=VersionProperty.class, name="version")})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public abstract class AnnotatedTextMixin {
 
     @JsonCreator
+    @JsonIgnoreProperties({"value"})
     AnnotatedTextMixin(@JsonProperty("data") CharSequence data,
                   @JsonProperty("attributes") Map<String, BaseAttribute> attributes,
                   @JsonProperty("documentMetadata") Map<String, List<String>> documentMetadata) {
@@ -60,6 +65,9 @@ public abstract class AnnotatedTextMixin {
     /* prevent Jackson from serializing a complex object here. */
     @JsonSerialize(using = ToStringSerializer.class)
     public abstract CharSequence getData();
+
+    @JsonIgnore
+    public abstract void setVersion(String version);
 
     @JsonIgnore
     public abstract ListAttribute<Token> getTokens();

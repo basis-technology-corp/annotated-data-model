@@ -88,6 +88,7 @@ public class  AnnotatedDataModelModule extends EnumModule {
         mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         final AnnotatedDataModelModule module = new AnnotatedDataModelModule();
         mapper.registerModule(module);
+
         return mapper;
     }
 }

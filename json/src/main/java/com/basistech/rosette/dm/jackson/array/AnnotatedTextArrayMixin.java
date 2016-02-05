@@ -36,6 +36,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.databind.annotation.JsonAppend;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.annotation.JsonTypeIdResolver;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
@@ -47,7 +48,8 @@ import java.util.Map;
  * {@link com.basistech.rosette.dm.AnnotatedText}.
  */
 @JsonFormat(shape = JsonFormat.Shape.ARRAY)
-@JsonPropertyOrder(alphabetic = true)
+@JsonAppend(attrs={ @JsonAppend.Attr("version")})
+@JsonPropertyOrder(alphabetic = true, value = {"version"})
 public abstract class AnnotatedTextArrayMixin {
 
     @JsonCreator
@@ -105,4 +107,7 @@ public abstract class AnnotatedTextArrayMixin {
 
     @JsonIgnore
     public abstract ListAttribute<CategorizerResult> getSentimentResults();
+
+    @JsonIgnore
+    public abstract void setVersion(String version);
 }
