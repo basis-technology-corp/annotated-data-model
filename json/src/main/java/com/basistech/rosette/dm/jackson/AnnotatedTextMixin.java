@@ -33,6 +33,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.databind.annotation.JsonAppend;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.annotation.JsonTypeIdResolver;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
@@ -43,13 +45,20 @@ import java.util.Map;
 /**
  * {@link com.basistech.rosette.dm.AnnotatedText}.
  */
+
+@JsonAppend(prepend = true, props = { @JsonAppend.Prop(value = VersionProperty.class, name = "version")})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public abstract class AnnotatedTextMixin {
 
     @JsonCreator
     AnnotatedTextMixin(@JsonProperty("data") CharSequence data,
                   @JsonProperty("attributes") Map<String, BaseAttribute> attributes,
-                  @JsonProperty("documentMetadata") Map<String, List<String>> documentMetadata) {
+                  @JsonProperty("documentMetadata") Map<String, List<String>> documentMetadata,
+                       /* work around https://github.com/FasterXML/jackson-databind/issues/1118,
+                       * and also quickly check for ADMs from 'the future'. */
+                       @JsonProperty("version")
+                       @JsonDeserialize(using = VersionCheckDeserializer.class)
+                       String version) {
         //
     }
 

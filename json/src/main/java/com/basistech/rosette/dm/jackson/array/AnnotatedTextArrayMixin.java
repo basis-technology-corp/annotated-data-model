@@ -30,12 +30,15 @@ import com.basistech.rosette.dm.Token;
 import com.basistech.rosette.dm.TranslatedData;
 import com.basistech.rosette.dm.TranslatedTokens;
 import com.basistech.rosette.dm.jackson.DmTypeIdResolver;
+import com.basistech.rosette.dm.jackson.VersionCheckDeserializer;
+import com.basistech.rosette.dm.jackson.VersionProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.databind.annotation.JsonAppend;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.annotation.JsonTypeIdResolver;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
@@ -47,13 +50,15 @@ import java.util.Map;
  * {@link com.basistech.rosette.dm.AnnotatedText}.
  */
 @JsonFormat(shape = JsonFormat.Shape.ARRAY)
-@JsonPropertyOrder(alphabetic = true)
+@JsonAppend(props = { @JsonAppend.Prop(value = VersionProperty.class, name = "version")})
 public abstract class AnnotatedTextArrayMixin {
 
     @JsonCreator
     AnnotatedTextArrayMixin(@JsonProperty("data") CharSequence data,
                             @JsonProperty("attributes") Map<String, BaseAttribute> attributes,
-                            @JsonProperty("documentMetadata") Map<String, List<String>> documentMetadata) {
+                            @JsonProperty("documentMetadata") Map<String, List<String>> documentMetadata,
+                            @JsonDeserialize(using = VersionCheckDeserializer.class)
+                            @JsonProperty("version") String version) {
         //
     }
 

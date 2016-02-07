@@ -35,10 +35,12 @@ import com.basistech.rosette.dm.Token;
 import com.basistech.rosette.dm.TranslatedData;
 import com.basistech.rosette.dm.TranslatedTokens;
 import com.basistech.rosette.dm.jackson.AnnotatedDataModelModule;
+import com.basistech.rosette.dm.jackson.array.AnnotatedDataModelArrayModule;
 import com.basistech.util.ISO15924;
 import com.basistech.util.LanguageCode;
 import com.basistech.util.TextDomain;
 import com.basistech.util.TransliterationScheme;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.databind.ObjectWriter;
@@ -47,6 +49,7 @@ import com.google.common.collect.Maps;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.StringWriter;
 import java.util.List;
 import java.util.Map;
 
@@ -336,5 +339,25 @@ public class JsonTest extends AdmAssert {
         assertEquals(categoryResult, read.getCategorizerResults().get(0));
 
         assertEquals(sentimentResult, read.getSentimentResults().get(0));
+    }
+
+    @Test
+    public void versionInjected() throws Exception {
+        StringWriter writer = new StringWriter();
+        ObjectMapper mapper = AnnotatedDataModelArrayModule.setupObjectMapper(new ObjectMapper());
+        ObjectWriter objectWriter = mapper.writer();
+        objectWriter.writeValue(writer, referenceText);
+        // to tell that the version is there, we read as a tree
+        JsonNode tree = mapper.readTree(writer.toString());
+        assertEquals("1.0.0", tree.get(3).asText());
+    }
+
+    @Test
+    public void versionCheckPasses() throws Exception {
+        StringWriter writer = new StringWriter();
+        ObjectMapper mapper = AnnotatedDataModelArrayModule.setupObjectMapper(new ObjectMapper());
+        ObjectWriter objectWriter = mapper.writer();
+        objectWriter.writeValue(writer, referenceText);
+        mapper.readValue(writer.toString(), AnnotatedText.class);
     }
 }

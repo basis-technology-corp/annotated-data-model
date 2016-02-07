@@ -53,7 +53,12 @@ public class AnnotatedText {
 
     AnnotatedText(CharSequence data,
                   Map<String, BaseAttribute> attributes,
-                  Map<String, List<String>> documentMetadata) {
+                  Map<String, List<String>> documentMetadata,
+                  /*
+                   * This version is only here as a workaround for https://github.com/FasterXML/jackson-databind/issues/1118
+                   * It would be better if it was only mentioned in the mixins.
+                   */
+                  String version) {
         this.data = data;
         // allow incoming json that simply lacks attributes or documentMetadata.
         if (attributes != null) {
@@ -532,7 +537,7 @@ public class AnnotatedText {
          * @return the new object
          */
         public AnnotatedText build() {
-            return new AnnotatedText(data, attributes, documentMetadata);
+            return new AnnotatedText(data, attributes, documentMetadata, null);
         }
     }
 }

@@ -106,6 +106,27 @@ The translated tokens annotations provides a itemList of translations for each o
 contains a domain identifying the language and script of the translations and a itemList of translations corresponding to
 the tokens of the text.
 
+# Serialization #
+
+The adm-json artifact provides support for reading and writing Json via
+the Jackson library. Custom serialization and deserialization provides
+type-safe lists and accomplishes polymorphism with a minumum of
+additional space.
+
+The artifact provides two Jackson modules. One writes the ADM as a
+graph of Json objects. The second avoids all the key names by using
+the 'array shape' feature of Jackson. In most cases, you can get
+space/time performance from the normal object model by using the
+Jackson 'SMILE' format or some other compression mechanism, but the
+array variation reduces overhead.
+
+The library has a concept of the version of the serialized form. When
+serializing, it adds a `version` property, and when deserializing it
+checks this version for compatibility. As of now, the format is at
+version 1.0.0. The deserialization code accepts either '1.x.y' or
+nothing for a version. Future versions may include the ability to read
+and convert old formats.
+
 ## How to Incorporate ##
 
 This project builds several Maven artifacts.
@@ -127,18 +148,17 @@ the model, and has dependencies, notably on Guava.
 ### adm-json ###
 
 adm-json provides classes for reading and writing the ADM with
-Jackson. It required Jackson 2.4.0, and declares dependencies on
-Jackson. This is appropriate for tools internal code or code that will
-use shade for itself.
+Jackson. It required Jackson 2.6.2, and declares dependencies on
+Jackson.
 
-````
+```
 <dependency>
     <groupId>com.basistech</groupId>
     <artifactId>adm-json</artifactId>
     <version>1.9.100</version>
 </dependency>
 
-````
+```
 
 
 ### How to push the Maven site to gh-pages ###
@@ -150,9 +170,9 @@ use shade for itself.
 
 Typically, this would be after a release:
 
-````
+```
   mvn release:perform
   cd target/checkout 
   mvn site site:stage
   mvn scm-publish:publish-scm
-````
+```

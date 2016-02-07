@@ -44,6 +44,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.common.collect.Lists;
@@ -51,6 +52,7 @@ import com.google.common.collect.Maps;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.File;
 import java.io.StringWriter;
 import java.util.List;
 import java.util.Map;
@@ -318,6 +320,39 @@ public class JsonTest extends AdmAssert {
         objectWriter.writeValue(writer, text);
         assertFalse(writer.toString().contains("What is this doing here"));
         assertTrue(writer.toString().contains("Hello Polly"));
+    }
+
+    @Test
+    public void versionInjected() throws Exception {
+        StringWriter writer = new StringWriter();
+        ObjectMapper mapper = AnnotatedDataModelModule.setupObjectMapper(new ObjectMapper());
+        ObjectWriter objectWriter = mapper.writer();
+        objectWriter.writeValue(writer, referenceText);
+        // to tell that the version is there, we read as a tree
+        JsonNode tree = mapper.readTree(writer.toString());
+        assertEquals("1.0.0", tree.get("version").asText());
+    }
+
+    @Test
+    public void versionCheckPasses() throws Exception {
+        StringWriter writer = new StringWriter();
+        ObjectMapper mapper = AnnotatedDataModelModule.setupObjectMapper(new ObjectMapper());
+        ObjectWriter objectWriter = mapper.writer();
+        objectWriter.writeValue(writer, referenceText);
+        mapper.readValue(writer.toString(), AnnotatedText.class);
+    }
+
+    @Test
+    public void noVersionAtAll() throws Exception {
+        ObjectMapper mapper = AnnotatedDataModelModule.setupObjectMapper(new ObjectMapper());
+        mapper.readValue(new File("test-data/ordered-list-in-annotated-text.json"), AnnotatedText.class);
+    }
+
+    @Test(expected = InvalidFormatException.class)
+    public void futureVersionThrows() throws Exception {
+        String v2 = "{ \"version\": \"2.0.0\" }";
+        ObjectMapper mapper = AnnotatedDataModelModule.setupObjectMapper(new ObjectMapper());
+        mapper.readValue(v2, AnnotatedText.class);
     }
 
     @Test
