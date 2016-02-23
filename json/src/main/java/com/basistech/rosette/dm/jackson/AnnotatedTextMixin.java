@@ -18,6 +18,7 @@ package com.basistech.rosette.dm.jackson;
 import com.basistech.rosette.dm.BaseAttribute;
 import com.basistech.rosette.dm.BaseNounPhrase;
 import com.basistech.rosette.dm.CategorizerResult;
+import com.basistech.rosette.dm.Entity;
 import com.basistech.rosette.dm.EntityMention;
 import com.basistech.rosette.dm.LanguageDetection;
 import com.basistech.rosette.dm.ListAttribute;
@@ -52,8 +53,8 @@ public abstract class AnnotatedTextMixin {
 
     @JsonCreator
     AnnotatedTextMixin(@JsonProperty("data") CharSequence data,
-                  @JsonProperty("attributes") Map<String, BaseAttribute> attributes,
-                  @JsonProperty("documentMetadata") Map<String, List<String>> documentMetadata,
+                       @JsonProperty("attributes") Map<String, BaseAttribute> attributes,
+                       @JsonProperty("documentMetadata") Map<String, List<String>> documentMetadata,
                        /* work around https://github.com/FasterXML/jackson-databind/issues/1118,
                        * and also quickly check for ADMs from 'the future'. */
                        @JsonProperty("version")
@@ -108,4 +109,7 @@ public abstract class AnnotatedTextMixin {
 
     @JsonIgnore
     public abstract ListAttribute<CategorizerResult> getSentimentResults();
+
+    @JsonIgnore
+    public abstract ListAttribute<Entity> getEntities();
 }

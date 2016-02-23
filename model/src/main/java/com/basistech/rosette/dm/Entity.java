@@ -39,17 +39,20 @@ import java.util.Map;
  */
 public class Entity extends BaseAttribute {
     private List<Mention> mentions;
+    private final Integer headMentionIndex;
     private final String entityId;
     private final Double confidence;
     private final CategorizerResult sentiment;
 
     protected Entity(List<Mention> mentions,
+                     Integer headMentionIndex,
                      String entityId,
                      Double confidence,
                      CategorizerResult sentiment,
                      Map<String, Object> extendedProperties) {
         super(extendedProperties);
         this.mentions = listOrNull(mentions);
+        this.headMentionIndex = headMentionIndex;
         this.entityId = entityId;
         this.confidence = confidence;
         this.sentiment = sentiment;
@@ -62,6 +65,23 @@ public class Entity extends BaseAttribute {
      */
     public String getEntityId() {
         return entityId;
+    }
+
+    /**
+     * @return the list of mentions that support this entity.
+     */
+    public List<Mention> getMentions() {
+        return mentions;
+    }
+
+    /**
+     * Return the head mention, if any. The head mention is the mention judged to be
+     * the best representation of the entity itself. This return {@code null} if no
+     * mention is designated as head.
+     * @return the index of the head mention.
+     */
+    public Integer getHeadMentionIndex() {
+        return headMentionIndex;
     }
 
     /**
@@ -141,16 +161,15 @@ public class Entity extends BaseAttribute {
     public static class Builder extends BaseAttribute.Builder<Entity, Entity.Builder> {
         private String entityId;
         private List<Mention> mentions;
-        private Double confidence; // NAN?
+        private Integer headMentionIndex;
+        private Double confidence;
         private CategorizerResult sentiment;
 
         /**
          * Constructs a builder from the required values.
-         *
-         * @param entityId the entity ID
          */
-        public Builder(String entityId) {
-            this.entityId = entityId;
+        public Builder() {
+            //
         }
 
         /**
@@ -190,6 +209,16 @@ public class Entity extends BaseAttribute {
         }
 
         /**
+         * Specifies the index of the head mention in the list of mentions, if any.
+         * @param headMentionIndex the index.
+         * @return this.
+         */
+        public Builder headMentionIndex(Integer headMentionIndex) {
+            this.headMentionIndex = headMentionIndex;
+            return this;
+        }
+
+        /**
          * Specifies the confidence value.
          *
          * @param confidence the confidence value
@@ -217,7 +246,7 @@ public class Entity extends BaseAttribute {
          * @return the new resolved entity
          */
         public Entity build() {
-            return new Entity(mentions, entityId, confidence,
+            return new Entity(mentions, headMentionIndex, entityId, confidence,
                             sentiment, buildExtendedProperties());
         }
 
