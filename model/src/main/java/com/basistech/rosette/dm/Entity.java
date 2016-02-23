@@ -40,12 +40,14 @@ import java.util.Map;
 public class Entity extends BaseAttribute {
     private List<Mention> mentions;
     private final Integer headMentionIndex;
+    private final String type;
     private final String entityId;
     private final Double confidence;
     private final CategorizerResult sentiment;
 
     protected Entity(List<Mention> mentions,
                      Integer headMentionIndex,
+                     String type,
                      String entityId,
                      Double confidence,
                      CategorizerResult sentiment,
@@ -53,6 +55,7 @@ public class Entity extends BaseAttribute {
         super(extendedProperties);
         this.mentions = listOrNull(mentions);
         this.headMentionIndex = headMentionIndex;
+        this.type = type;
         this.entityId = entityId;
         this.confidence = confidence;
         this.sentiment = sentiment;
@@ -100,6 +103,14 @@ public class Entity extends BaseAttribute {
      */
     public CategorizerResult getSentiment() {
         return sentiment;
+    }
+
+    /**
+     * If there is a type established for the entity, return the entity.
+     * @return the type.
+     */
+    public String getType() {
+        return type;
     }
 
     // hmm, what *really* belongs in equals and hashCode?  maybe just entityId?
@@ -160,6 +171,7 @@ public class Entity extends BaseAttribute {
      */
     public static class Builder extends BaseAttribute.Builder<Entity, Entity.Builder> {
         private String entityId;
+        private String type;
         private List<Mention> mentions;
         private Integer headMentionIndex;
         private Double confidence;
@@ -185,6 +197,7 @@ public class Entity extends BaseAttribute {
             this.entityId = toCopy.entityId;
             this.confidence = toCopy.confidence;
             this.sentiment = toCopy.sentiment;
+            this.type = toCopy.type;
         }
 
         /**
@@ -241,12 +254,22 @@ public class Entity extends BaseAttribute {
         }
 
         /**
+         * Specify the type for this entity.
+         * @param type the type
+         * @return this
+         */
+        public Builder type(String type) {
+            this.type = type;
+            return this;
+        }
+
+        /**
          * Returns an immutable resolved entity from the current state of the builder.
          *
          * @return the new resolved entity
          */
         public Entity build() {
-            return new Entity(mentions, headMentionIndex, entityId, confidence,
+            return new Entity(mentions, headMentionIndex, type, entityId, confidence,
                             sentiment, buildExtendedProperties());
         }
 

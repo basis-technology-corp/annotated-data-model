@@ -30,6 +30,7 @@ public abstract class EntityMixin {
     @JsonCreator
     EntityMixin(@JsonProperty("mentions") List<Mention> mentions,
                 @JsonProperty("headMentionIndex") Integer headMentionIndex,
+                @JsonProperty("type") String type,
                 @JsonProperty("entityId") String entityId,
                 @JsonProperty("confidence") Double confidence,
                 @JsonProperty("sentiment") CategorizerResult sentiment,
