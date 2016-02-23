@@ -22,29 +22,24 @@ import java.util.Map;
 /**
  * A mention of a entity in the text.  For example, "George" and
  * "George Washington" are mentions of type "PERSON".
- * @deprecated This class is replaced by {@link Mention}.
  */
-@Deprecated
-public class EntityMention extends Attribute {
+public class Mention extends Attribute {
     private final String entityType;
     private final Double confidence;
-    private final Integer coreferenceChainId;
-    private final Integer flags; // allow to be null if none!
     private final String source;
     private final String subsource;
     private final String normalized;
 
-    protected EntityMention(int startOffset, int endOffset,
-                            String entityType,
-                            Integer coreferenceChainId,
-                            Double confidence, Integer flags,
-                            String source, String subsource, String normalized,
-                            Map<String, Object> extendedProperties) {
+    protected Mention(int startOffset, int endOffset,
+                      String entityType,
+                      Double confidence,
+                      String source,
+                      String subsource,
+                      String normalized,
+                      Map<String, Object> extendedProperties) {
         super(startOffset, endOffset, extendedProperties);
         this.entityType = entityType;
         this.confidence = confidence;
-        this.coreferenceChainId = coreferenceChainId;
-        this.flags = flags;
         this.source = source;
         this.subsource = subsource;
         this.normalized = normalized;
@@ -68,31 +63,6 @@ public class EntityMention extends Attribute {
      */
     public Double getConfidence() {
         return confidence;
-    }
-
-    /**
-     * Returns a chain id that links together entity mentions that refer to the
-     * same entity as determined by in-document analysis. This is {@code null}
-     * if no in-document
-     * coreference information is available.  Currently, the chain id is the
-     * index (into the {@code EntityMention} list) of the head mention of the
-     * chain.  The head mention is the (first) longest mention in the chain.
-     *
-     * @return the coreference chain id, or null if chaining has not been applied
-     */
-    public Integer getCoreferenceChainId() {
-        return coreferenceChainId;
-    }
-
-    /**
-     * Returns flags associated with a mention. Interpretation of the flags varies
-     * by extractor and language.
-     *
-     * @return flags associated with the mention. These may be null
-     * (rather than 0) if there are no flags.
-     */
-    public Integer getFlags() {
-        return flags;
     }
 
     /**
@@ -120,7 +90,7 @@ public class EntityMention extends Attribute {
      * Returns the normalized form of the mention.  This form typically
      * normalizes spaces spaces and removes embedded newlines.  It may omit
      * prefixes in languages like Arabic.  This is not a canonical way to
-     * refer to the entity (see {@link com.basistech.rosette.dm.ResolvedEntity})
+     * refer to the entity (see {@link ResolvedEntity})
      * but rather a simplified form of this particular mention text.
      *
      * @return the normalized form of the mention
@@ -141,23 +111,20 @@ public class EntityMention extends Attribute {
             return false;
         }
 
-        EntityMention that = (EntityMention) o;
+        Mention that = (Mention) o;
 
         if (confidence != null ? !confidence.equals(that.confidence) : that.confidence != null) {
             return false;
         }
-        if (coreferenceChainId != null ? !coreferenceChainId.equals(that.coreferenceChainId) : that.coreferenceChainId != null) {
-            return false;
-        }
+
         if (entityType != null ? !entityType.equals(that.entityType) : that.entityType != null) {
             return false;
         }
-        if (flags != null ? !flags.equals(that.flags) : that.flags != null) {
-            return false;
-        }
+
         if (normalized != null ? !normalized.equals(that.normalized) : that.normalized != null) {
             return false;
         }
+
         if (source != null ? !source.equals(that.source) : that.source != null) {
             return false;
         }
@@ -170,8 +137,6 @@ public class EntityMention extends Attribute {
         int result = super.hashCode();
         result = 31 * result + (entityType != null ? entityType.hashCode() : 0);
         result = 31 * result + (confidence != null ? confidence.hashCode() : 0);
-        result = 31 * result + (coreferenceChainId != null ? coreferenceChainId.hashCode() : 0);
-        result = 31 * result + (flags != null ? flags.hashCode() : 0);
         result = 31 * result + (source != null ? source.hashCode() : 0);
         result = 31 * result + (subsource != null ? subsource.hashCode() : 0);
         result = 31 * result + (normalized != null ? normalized.hashCode() : 0);
@@ -183,8 +148,6 @@ public class EntityMention extends Attribute {
         return super.toStringHelper()
                 .add("entityType", entityType)
                 .add("confidence", confidence)
-                .add("coreferenceChainId", coreferenceChainId)
-                .add("flags", flags)
                 .add("source", source)
                 .add("subsource", subsource)
                 .add("normalized", normalized);
@@ -193,11 +156,9 @@ public class EntityMention extends Attribute {
     /**
      * A builder for entity mentions.
      */
-    public static class Builder extends Attribute.Builder<EntityMention, EntityMention.Builder>  {
+    public static class Builder extends Attribute.Builder<Mention, Mention.Builder>  {
         private String entityType;
         private Double confidence;
-        private Integer coreferenceChainId;
-        private Integer flags;
         private String source;
         private String subsource;
         private String normalized;
@@ -220,12 +181,10 @@ public class EntityMention extends Attribute {
          * @param toCopy the mention to copy.
          * @adm.ignore
          */
-        public Builder(EntityMention toCopy) {
+        public Builder(Mention toCopy) {
             super(toCopy);
             this.entityType = toCopy.entityType;
             this.confidence = toCopy.confidence;
-            this.coreferenceChainId = toCopy.coreferenceChainId;
-            this.flags = toCopy.flags;
             this.source = toCopy.source;
             this.subsource = toCopy.subsource;
             this.normalized = toCopy.normalized;
@@ -250,28 +209,6 @@ public class EntityMention extends Attribute {
          */
         public Builder confidence(Double confidence) {
             this.confidence = confidence;
-            return this;
-        }
-
-        /**
-         * Specifies the coreference chain identifier. See {@link com.basistech.rosette.dm.EntityMention#getCoreferenceChainId()}.
-         *
-         * @param coreferenceChainId the chain identifier, or null for a mention that is not linked.
-         * @return this
-         */
-        public Builder coreferenceChainId(Integer coreferenceChainId) {
-            this.coreferenceChainId = coreferenceChainId;
-            return this;
-        }
-
-        /**
-         * Specifies the flags.
-         *
-         * @param flags    flags value
-         * @return this
-         */
-        public Builder flags(int flags) {
-            this.flags = flags;
             return this;
         }
 
@@ -313,8 +250,8 @@ public class EntityMention extends Attribute {
          *
          * @return the mention
          */
-        public EntityMention build() {
-            return new EntityMention(startOffset, endOffset, entityType, coreferenceChainId, confidence, flags, source,
+        public Mention build() {
+            return new Mention(startOffset, endOffset, entityType, confidence, source,
                 subsource, normalized, buildExtendedProperties());
         }
 
