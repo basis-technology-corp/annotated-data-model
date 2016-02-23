@@ -169,7 +169,7 @@ public class Entity extends BaseAttribute {
          * Constructs a builder from the required values.
          */
         public Builder() {
-            //
+            mentions = Lists.newArrayList();
         }
 
         /**
@@ -180,9 +180,9 @@ public class Entity extends BaseAttribute {
          */
         public Builder(Entity toCopy) {
             super(toCopy);
-            this.entityId = toCopy.entityId;
             mentions = Lists.newArrayList();
             addAllToList(mentions, toCopy.mentions);
+            this.entityId = toCopy.entityId;
             this.confidence = toCopy.confidence;
             this.sentiment = toCopy.sentiment;
         }

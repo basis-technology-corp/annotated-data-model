@@ -239,12 +239,24 @@ public class AnnotatedTextTest {
         ListAttribute.Builder<ResolvedEntity> reListBuilder = new ListAttribute.Builder<>(ResolvedEntity.class);
 
         ResolvedEntity.Builder re1Builder = new ResolvedEntity.Builder(5, 11, "Q100");
+        re1Builder.coreferenceChainId(0);
         reListBuilder.add(re1Builder.build());
 
         ResolvedEntity.Builder re2Builder = new ResolvedEntity.Builder(16, 23, "Q1297");
+        re2Builder.coreferenceChainId(1);
         reListBuilder.add(re2Builder.build());
 
         builder.resolvedEntities(reListBuilder.build());
+
+        ListAttribute.Builder<EntityMention> mentionList = new ListAttribute.Builder<>(EntityMention.class);
+        EntityMention.Builder emBuilder = new EntityMention.Builder(5, 11, "LOCATION");
+        emBuilder.coreferenceChainId(0);
+        mentionList.add(emBuilder.build());
+        emBuilder = new EntityMention.Builder(16, 23, "LOCATION");
+        emBuilder.coreferenceChainId(1);
+        mentionList.add(emBuilder.build());
+        builder.entityMentions(mentionList.build());
+
         AnnotatedText text = builder.build();
 
         ResolvedEntity resolvedEntity;

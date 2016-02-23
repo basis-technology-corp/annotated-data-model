@@ -16,6 +16,7 @@
 
 package com.basistech.rosette.dm;
 
+import com.basistech.rosette.RosetteRuntimeException;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
@@ -180,10 +181,14 @@ public class AnnotatedText {
     }
 
     private void doResolvedConversion(List<EntityMention> oldMentions, List<ResolvedEntity> oldResolved, ImmutableMap.Builder<String, BaseAttribute> builder) {
-        /* Some mentions are accounted for by the resolved entities, some are not.
-         * Let's start by sorting sheep from goats, since I think we can call doTrivialConversion for
-         * the leftovers.
-         */
+        if (oldMentions == null) {
+            throw new RosetteRuntimeException("There are no EntityMentions.");
+        } else {
+            doResolvedConversionWithMentions(oldMentions, oldResolved, builder);
+        }
+    }
+
+    private void doResolvedConversionWithMentions(List<EntityMention> oldMentions, List<ResolvedEntity> oldResolved, ImmutableMap.Builder<String, BaseAttribute> builder) {
         List<EntityMention> unresolved = Lists.newArrayList();
         Map<Integer, List<EntityMention>> entityMentionsByChain = Maps.newHashMap();
 
@@ -225,13 +230,15 @@ public class AnnotatedText {
                 entityBuilder.extendedProperties(resolvedEntity.getExtendedProperties());
             }
             List<EntityMention> entityMentions = entityMentionsByChain.get(resolvedEntity.getCoreferenceChainId());
+            int index = 0;
             for (EntityMention entityMention : entityMentions) {
                 Mention mention = convertMention(entityMention);
                 entityBuilder.mention(mention);
                 if (entityMention.getStartOffset() == resolvedEntity.getStartOffset()
                         && entityMention.getEndOffset() == resolvedEntity.getEndOffset()) {
-                    entityBuilder.headMentionIndex(resolvedEntity.getCoreferenceChainId());
+                    entityBuilder.headMentionIndex(index);
                 }
+                index++;
             }
             entityListBuilder.add(entityBuilder.build());
         }
