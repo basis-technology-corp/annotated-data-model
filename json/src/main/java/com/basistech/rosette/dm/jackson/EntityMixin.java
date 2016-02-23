@@ -15,6 +15,7 @@
 */
 package com.basistech.rosette.dm.jackson;
 
+import com.basistech.rosette.dm.CategorizerResult;
 import com.basistech.rosette.dm.Mention;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -27,10 +28,11 @@ import java.util.Map;
  */
 public abstract class EntityMixin {
     @JsonCreator
-    EntityMixin(@JsonProperty("entityId") String entityId,
-                @JsonProperty("mentions") List<Mention> mentions,
+    EntityMixin(@JsonProperty("mentions") List<Mention> mentions,
                 @JsonProperty("headMentionIndex") Integer headMentionIndex,
+                @JsonProperty("entityId") String entityId,
                 @JsonProperty("confidence") Double confidence,
+                @JsonProperty("sentiment") CategorizerResult sentiment,
                 @JsonProperty("extendedProperties") Map<String, Object> extendedProperties) {
         //
     }

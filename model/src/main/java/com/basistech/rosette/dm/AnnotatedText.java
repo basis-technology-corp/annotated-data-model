@@ -83,6 +83,9 @@ public class AnnotatedText {
     @SuppressWarnings("unchecked")
     private Map<String, BaseAttribute> absorbAttributes(Map<String, BaseAttribute> attributes) {
         ImmutableMap.Builder<String, BaseAttribute> builder = new ImmutableMap.Builder<>();
+        if (attributes == null) {
+            return ImmutableMap.of();
+        }
         for (Map.Entry<String, BaseAttribute> me : attributes.entrySet()) {
             if (!AttributeKey.RESOLVED_ENTITY.key().equals(me.getKey())
                 && !AttributeKey.ENTITY_MENTION.key().equals(me.getKey())) {
@@ -91,8 +94,8 @@ public class AnnotatedText {
         }
 
         // Begin compatibility with '1.0' version of ADM.
-        List<EntityMention> oldMentions = (List<EntityMention>)attributes.get(AttributeKey.ENTITY_MENTION.key());
-        List<ResolvedEntity> oldResolved = (List<ResolvedEntity>)attributes.get(AttributeKey.RESOLVED_ENTITY.key());
+        ListAttribute<EntityMention> oldMentions = (ListAttribute<EntityMention>)attributes.get(AttributeKey.ENTITY_MENTION.key());
+        ListAttribute<ResolvedEntity> oldResolved = (ListAttribute<ResolvedEntity>)attributes.get(AttributeKey.RESOLVED_ENTITY.key());
         if (oldResolved != null) {
             doResolvedConversion(oldMentions, oldResolved, builder);
         } else if (oldMentions != null) {
@@ -103,7 +106,7 @@ public class AnnotatedText {
     }
 
     // no resolution, perhaps indoc coref.
-    private void doUnresolvedConversion(List<EntityMention> oldMentions, ImmutableMap.Builder<String, BaseAttribute> builder) {
+    private void doUnresolvedConversion(ListAttribute<EntityMention> oldMentions, ImmutableMap.Builder<String, BaseAttribute> builder) {
         int maxChainId = -1;
         int unchainedCount = 0;
         for (EntityMention em : oldMentions) {
@@ -148,6 +151,13 @@ public class AnnotatedText {
             elBuilder.add(enBuilder.build());
         }
 
+        if (oldMentions.getExtendedProperties() != null) {
+            for (Map.Entry<String, Object> me : oldMentions.getExtendedProperties().entrySet()) {
+                elBuilder.extendedProperty("mention." + me.getKey(),
+                        me.getValue());
+            }
+        }
+
         builder.put(AttributeKey.ENTITY.key(), elBuilder.build());
     }
 
@@ -160,6 +170,9 @@ public class AnnotatedText {
         if (em.getFlags() != null) {
             mentionBuilder.extendedProperty("oldFlags", em.getFlags());
         }
+        if (em.getCoreferenceChainId() != null) {
+            mentionBuilder.extendedProperty("oldCoreferenceChainId", em.getCoreferenceChainId());
+        }
         if (em.getNormalized() != null) {
             mentionBuilder.normalized(em.getNormalized());
         }
@@ -169,19 +182,34 @@ public class AnnotatedText {
         if (em.getSubsource() != null) {
             mentionBuilder.subsource(em.getSubsource());
         }
+
+        if (em.getExtendedProperties() != null && !em.getExtendedProperties().isEmpty()) {
+            for (Map.Entry<String, Object> me : em.getExtendedProperties().entrySet()) {
+                mentionBuilder.extendedProperty(me.getKey(), me.getValue());
+            }
+        }
+
         return mentionBuilder.build();
     }
 
     /*
      * Called when we have neither resolved entities nor coreference.
      */
-    private void doTrivialConversion(List<EntityMention> oldMentions, ImmutableMap.Builder<String, BaseAttribute> builder) {
+    private void doTrivialConversion(ListAttribute<EntityMention> oldMentions, ImmutableMap.Builder<String, BaseAttribute> builder) {
         ListAttribute.Builder<Entity> entityListBuilder = new ListAttribute.Builder<>(Entity.class);
         convertMentionList(oldMentions, entityListBuilder);
+        if (oldMentions.getExtendedProperties() != null) {
+            for (Map.Entry<String, Object> me : oldMentions.getExtendedProperties().entrySet()) {
+                entityListBuilder.extendedProperty("mention." + me.getKey(),
+                        me.getValue());
+            }
+        }
         builder.put(AttributeKey.ENTITY.key(), entityListBuilder.build());
     }
 
-    private void doResolvedConversion(List<EntityMention> oldMentions, List<ResolvedEntity> oldResolved, ImmutableMap.Builder<String, BaseAttribute> builder) {
+    private void doResolvedConversion(ListAttribute<EntityMention> oldMentions,
+                                      ListAttribute<ResolvedEntity> oldResolved,
+                                      ImmutableMap.Builder<String, BaseAttribute> builder) {
         if (oldMentions == null) {
             throw new RosetteRuntimeException("There are no EntityMentions.");
         } else {
@@ -189,7 +217,9 @@ public class AnnotatedText {
         }
     }
 
-    private void doResolvedConversionWithMentions(List<EntityMention> oldMentions, List<ResolvedEntity> oldResolved, ImmutableMap.Builder<String, BaseAttribute> builder) {
+    private void doResolvedConversionWithMentions(ListAttribute<EntityMention> oldMentions,
+                                                  ListAttribute<ResolvedEntity> oldResolved,
+                                                  ImmutableMap.Builder<String, BaseAttribute> builder) {
         List<EntityMention> unresolved = Lists.newArrayList();
         Map<Integer, List<EntityMention>> entityMentionsByChain = Maps.newHashMap();
 
@@ -215,6 +245,19 @@ public class AnnotatedText {
 
         ListAttribute.Builder<Entity> entityListBuilder = new ListAttribute.Builder<>(Entity.class);
 
+        if (oldMentions.getExtendedProperties() != null) {
+            for (Map.Entry<String, Object> me : oldMentions.getExtendedProperties().entrySet()) {
+                entityListBuilder.extendedProperty("mention." + me.getKey(),
+                        me.getValue());
+            }
+        }
+        if (oldResolved.getExtendedProperties() != null) {
+            for (Map.Entry<String, Object> me : oldResolved.getExtendedProperties().entrySet()) {
+                entityListBuilder.extendedProperty(me.getKey(), me.getValue());
+            }
+        }
+
+
         for (ResolvedEntity resolvedEntity : oldResolved) {
             Entity.Builder entityBuilder = new Entity.Builder();
             if (resolvedEntity.getConfidence() != null) {
@@ -230,6 +273,11 @@ public class AnnotatedText {
                     && resolvedEntity.getExtendedProperties().size() != 0) {
                 entityBuilder.extendedProperties(resolvedEntity.getExtendedProperties());
             }
+
+            if (resolvedEntity.getCoreferenceChainId() != null) {
+                entityBuilder.extendedProperty("oldCoreferenceChainId", resolvedEntity.getCoreferenceChainId());
+            }
+
             List<EntityMention> entityMentions = entityMentionsByChain.get(resolvedEntity.getCoreferenceChainId());
             int index = 0;
             for (EntityMention entityMention : entityMentions) {
@@ -367,7 +415,16 @@ public class AnnotatedText {
 
         if (compatMentions == null) {
             ListAttribute.Builder<EntityMention> cmListBuilder = new ListAttribute.Builder<>(EntityMention.class);
-            List<Entity> entities = getEntities();
+            ListAttribute<Entity> entities = getEntities();
+            if (entities.getExtendedProperties() != null) {
+                for (Map.Entry<String, Object> me : entities.getExtendedProperties().entrySet()) {
+                    String key = me.getKey();
+                    if (key.startsWith("mention.")) {
+                        cmListBuilder.extendedProperty(key.substring(8), me.getValue());
+                    }
+                }
+            }
+
             for (Entity entity : entities) {
                 for (Mention mention : entity.getMentions()) {
                     EntityMention.Builder emBuilder = new EntityMention.Builder(mention.getStartOffset(),
@@ -377,7 +434,15 @@ public class AnnotatedText {
                         emBuilder.confidence(mention.getConfidence());
                     }
                     if (mention.getExtendedProperties() != null && mention.getExtendedProperties().size() > 0) {
-                        emBuilder.extendedProperties(mention.getExtendedProperties());
+                        for (Map.Entry<String, Object> me : mention.getExtendedProperties().entrySet()) {
+                            if (me.getKey().equals("oldFlags")) {
+                                emBuilder.flags((Integer) me.getValue());
+                            } else if (me.getKey().equals("oldCoreferenceChainId")) {
+                                emBuilder.coreferenceChainId((Integer)me.getValue());
+                            } else {
+                                emBuilder.extendedProperty(me.getKey(), me.getValue());
+                            }
+                        }
                     }
                     if (mention.getNormalized() != null) {
                         emBuilder.normalized(mention.getNormalized());
@@ -388,7 +453,7 @@ public class AnnotatedText {
                     if (mention.getSubsource() != null) {
                         emBuilder.subsource(mention.getSubsource());
                     }
-                    // we do not attempt to reconstruct 'flags'.
+
                     cmListBuilder.add(emBuilder.build());
                 }
             }
@@ -424,7 +489,18 @@ public class AnnotatedText {
     public synchronized ListAttribute<ResolvedEntity> getResolvedEntities() {
         if (compatResolvedEntities == null) {
             ListAttribute.Builder<ResolvedEntity> reListBuilder = new ListAttribute.Builder<>(ResolvedEntity.class);
-            for (Entity entity : getEntities()) {
+
+            ListAttribute<Entity> entities = getEntities();
+            if (entities.getExtendedProperties() != null) {
+                for (Map.Entry<String, Object> me : entities.getExtendedProperties().entrySet()) {
+                    String key = me.getKey();
+                    if (!key.startsWith("mention.")) {
+                        reListBuilder.extendedProperty(key, me.getValue());
+                    }
+                }
+            }
+
+            for (Entity entity : entities) {
                 int headStart = 0;
                 int headEnd = 0;
                 if (entity.getHeadMentionIndex() != null) {
@@ -440,6 +516,17 @@ public class AnnotatedText {
                 if (entity.getSentiment() != null) {
                     reBuilder.sentiment(entity.getSentiment());
                 }
+
+                if (entity.getExtendedProperties() != null) {
+                    for (Map.Entry<String, Object> me : entity.getExtendedProperties().entrySet()) {
+                        if (me.getKey().equals("oldCoreferenceChainId")) {
+                            reBuilder.coreferenceChainId((Integer)me.getValue());
+                        } else {
+                            reBuilder.extendedProperty(me.getKey(), me.getValue());
+                        }
+                    }
+                }
+
                 reListBuilder.add(reBuilder.build());
             }
             compatResolvedEntities = reListBuilder.build();
@@ -577,7 +664,9 @@ public class AnnotatedText {
          *
          * @param entityMentions the entity mentions
          * @return this
+         * @deprecated Use {@link #entities(ListAttribute)}.
          */
+        @Deprecated
         public Builder entityMentions(ListAttribute<EntityMention> entityMentions) {
             attributes.put(AttributeKey.ENTITY_MENTION.key(), entityMentions);
             return this;
@@ -595,11 +684,23 @@ public class AnnotatedText {
         }
 
         /**
+         * Attaches a list of entities.
+         * @param entities the entities.
+         * @return this.
+         */
+        public Builder entities(ListAttribute<Entity> entities) {
+            attributes.put(AttributeKey.ENTITY.key(), entities);
+            return this;
+        }
+
+        /**
          * Attaches a list of resolved entities.
          *
          * @param resolvedEntities the resolved entities
          * @return this
+         * @deprecated use {@link #entities(ListAttribute)}.
          */
+        @Deprecated
         public Builder resolvedEntities(ListAttribute<ResolvedEntity> resolvedEntities) {
             attributes.put(AttributeKey.RESOLVED_ENTITY.key(), resolvedEntities);
             return this;

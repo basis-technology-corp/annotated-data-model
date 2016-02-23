@@ -18,6 +18,7 @@ package com.basistech.rosette.dm.jackson;
 import com.basistech.rosette.dm.BaseAttribute;
 import com.basistech.rosette.dm.BaseNounPhrase;
 import com.basistech.rosette.dm.CategorizerResult;
+import com.basistech.rosette.dm.Entity;
 import com.basistech.rosette.dm.LanguageDetection;
 import com.basistech.rosette.dm.ListAttribute;
 import com.basistech.rosette.dm.RelationshipComponent;
@@ -37,6 +38,7 @@ import com.basistech.rosette.dm.UnknownAttribute;
  */
 public enum KnownAttribute {
     BASE_NOUN_PHRASE("baseNounPhrases", BaseNounPhrase.class),
+    ENTITY("entities", Entity.class),
     @SuppressWarnings("deprecation")
     ENTITY_MENTION("entityMentions", com.basistech.rosette.dm.EntityMention.class),
     RELATIONSHIP_MENTION("relationshipMentions", RelationshipMention.class),

@@ -27,6 +27,13 @@ import com.fasterxml.jackson.databind.util.Annotations;
 
 /**
  * Custom injected property that injects the version of the ADM _as a Json data model_.
+ * Version history:
+ * <ul>
+ *     <li>1.0.0 -- the 'classic' ADM</li>
+ *     <li>1.1.0 -- the switch from top-level entity mentions and resolved entities to
+ *     a single top-level list of entities, each of which contains mentions. Since the
+ *     new code can accept old Json, we only bumped to to 1.1.0, not 2.0.0.</li>
+ * </ul>
  */
 public final class VersionProperty extends VirtualBeanPropertyWriter {
     private VersionProperty() {
@@ -40,7 +47,9 @@ public final class VersionProperty extends VirtualBeanPropertyWriter {
     @Override
     protected Object value(Object bean, JsonGenerator jgen, SerializerProvider prov) {
         if (_name.toString().equals("version")) {
-            return "1.0.0";
+            // We are currently doing 1.1.0. We accept older versions.
+            //
+            return "1.1.0";
         }
         return null;
     }

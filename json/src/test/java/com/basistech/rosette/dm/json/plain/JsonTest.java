@@ -329,7 +329,7 @@ public class JsonTest extends AdmAssert {
         objectWriter.writeValue(writer, referenceText);
         // to tell that the version is there, we read as a tree
         JsonNode tree = mapper.readTree(writer.toString());
-        assertEquals("1.0.0", tree.get("version").asText());
+        assertEquals("1.1.0", tree.get("version").asText());
     }
 
     @Test
