@@ -45,6 +45,7 @@ import java.util.Set;
  * Json (or XML or other representations) by applying a reflection-based toolkit 'as-is'.
  * For Json, and Java, the 'adm-json' module provides the supported serialization.
  */
+@SuppressWarnings("deprecation")
 public class AnnotatedText {
     private final CharSequence data;
     /* The attributes for this text, indexed by type.

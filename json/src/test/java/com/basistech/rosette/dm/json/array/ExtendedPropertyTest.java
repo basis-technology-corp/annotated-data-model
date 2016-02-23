@@ -17,7 +17,6 @@ package com.basistech.rosette.dm.json.array;
 
 import com.basistech.rosette.dm.AnnotatedText;
 import com.basistech.rosette.dm.ArabicMorphoAnalysis;
-import com.basistech.rosette.dm.EntityMention;
 import com.basistech.rosette.dm.HanMorphoAnalysis;
 import com.basistech.rosette.dm.ListAttribute;
 import com.basistech.rosette.dm.Token;
@@ -35,6 +34,7 @@ import java.io.Writer;
  * See if the extension mechanism works round-trip.
  * This does not require a full AnnotatedText object.
  */
+@SuppressWarnings("deprecation")
 public class ExtendedPropertyTest extends AdmAssert {
     @Test
     public void textExtendedRoundTrip() throws Exception {
@@ -60,8 +60,8 @@ public class ExtendedPropertyTest extends AdmAssert {
         //                012345678901234567890
         String rawText = "Cuthbert Girdlestone";
         AnnotatedText.Builder builder = new AnnotatedText.Builder().data(rawText);
-        ListAttribute.Builder<EntityMention> emListBuilder = new ListAttribute.Builder<>(EntityMention.class);
-        EntityMention.Builder emBuilder = new EntityMention.Builder(0, 20, "PERSON");
+        ListAttribute.Builder<com.basistech.rosette.dm.EntityMention> emListBuilder = new ListAttribute.Builder<>(com.basistech.rosette.dm.EntityMention.class);
+        com.basistech.rosette.dm.EntityMention.Builder emBuilder = new com.basistech.rosette.dm.EntityMention.Builder(0, 20, "PERSON");
         emBuilder.extendedProperty("extra_key", "extra_value");
         emListBuilder.add(emBuilder.build());
         builder.entityMentions(emListBuilder.build());
@@ -80,8 +80,8 @@ public class ExtendedPropertyTest extends AdmAssert {
         //                012345678901234567890
         String rawText = "Cuthbert Girdlestone";
         AnnotatedText.Builder builder = new AnnotatedText.Builder().data(rawText);
-        ListAttribute.Builder<EntityMention> emListBuilder = new ListAttribute.Builder<>(EntityMention.class);
-        EntityMention.Builder emBuilder = new EntityMention.Builder(0, 20, "PERSON");
+        ListAttribute.Builder<com.basistech.rosette.dm.EntityMention> emListBuilder = new ListAttribute.Builder<>(com.basistech.rosette.dm.EntityMention.class);
+        com.basistech.rosette.dm.EntityMention.Builder emBuilder = new com.basistech.rosette.dm.EntityMention.Builder(0, 20, "PERSON");
         emListBuilder.extendedProperty("extra_key", "extra_value");
         emListBuilder.add(emBuilder.build());
         builder.entityMentions(emListBuilder.build());

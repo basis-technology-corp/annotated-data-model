@@ -36,7 +36,7 @@ import static org.junit.Assert.assertTrue;
  * Then, in cases like {@code assertFalse(x1.hashCode() == x2.hashCode())}, neither value is 'correct', so
  * this seems more explicit to me than some use of {@code assertNotSame}.
  */
-@SuppressWarnings("ResultOfMethodCallIgnored")
+@SuppressWarnings({"ResultOfMethodCallIgnored", "deprecation"})
 public class EqualsTest {
 
     /*

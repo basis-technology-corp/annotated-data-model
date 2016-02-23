@@ -16,19 +16,19 @@
 
 package com.basistech.rosette.dm.internal;
 
-import com.basistech.rosette.dm.EntityMention;
 import com.google.common.collect.Lists;
 
 import java.util.List;
 
 /**
  * <code>Mention</code> class for internal use only.  Not to be confused
- * with the public <code>EntityMention</code> class.
+ * with the public {@code EntityMention} class.
  */
+@SuppressWarnings("deprecation")
 public class Mention {
     private final TextWrapper textWrapper;
     private final int entityIndex;
-    private final EntityMention entityMention;
+    private final com.basistech.rosette.dm.EntityMention entityMention;
 
     public Mention(TextWrapper textWrapper, int entityIndex) {
         this.textWrapper = textWrapper;

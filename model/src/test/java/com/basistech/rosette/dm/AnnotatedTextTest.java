@@ -34,6 +34,7 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertNull;
 
+@SuppressWarnings("deprecation")
 public class AnnotatedTextTest {
 
     @Test

@@ -22,7 +22,6 @@ import com.basistech.rosette.dm.BaseAttribute;
 import com.basistech.rosette.dm.BaseNounPhrase;
 import com.basistech.rosette.dm.CategorizerResult;
 import com.basistech.rosette.dm.Entity;
-import com.basistech.rosette.dm.EntityMention;
 import com.basistech.rosette.dm.Extent;
 import com.basistech.rosette.dm.HanMorphoAnalysis;
 import com.basistech.rosette.dm.KoreanMorphoAnalysis;
@@ -34,7 +33,6 @@ import com.basistech.rosette.dm.Name;
 import com.basistech.rosette.dm.RawData;
 import com.basistech.rosette.dm.RelationshipComponent;
 import com.basistech.rosette.dm.RelationshipMention;
-import com.basistech.rosette.dm.ResolvedEntity;
 import com.basistech.rosette.dm.ScriptRegion;
 import com.basistech.rosette.dm.Sentence;
 import com.basistech.rosette.dm.Token;
@@ -53,6 +51,7 @@ public class  AnnotatedDataModelModule extends EnumModule {
         super();
     }
 
+    @SuppressWarnings("deprecation")
     public void setupModule(SetupContext context) {
         super.setupModule(context); // pick up any enum support.
         context.setMixInAnnotations(AnnotatedText.class, AnnotatedTextMixin.class);
@@ -62,7 +61,7 @@ public class  AnnotatedDataModelModule extends EnumModule {
         context.setMixInAnnotations(BaseNounPhrase.class, BaseNounPhraseMixin.class);
         context.setMixInAnnotations(CategorizerResult.class, CategorizerResultMixin.class);
         context.setMixInAnnotations(Entity.class, EntityMixin.class);
-        context.setMixInAnnotations(EntityMention.class, EntityMentionMixin.class);
+        context.setMixInAnnotations(com.basistech.rosette.dm.EntityMention.class, EntityMentionMixin.class);
         context.setMixInAnnotations(RelationshipComponent.class, RelationshipComponentMixin.class);
         context.setMixInAnnotations(RelationshipMention.class, RelationshipMentionMixin.class);
         context.setMixInAnnotations(Extent.class, ExtentMixin.class);
@@ -75,7 +74,7 @@ public class  AnnotatedDataModelModule extends EnumModule {
         context.setMixInAnnotations(MorphoAnalysis.class, MorphoAnalysisMixin.class);
         context.setMixInAnnotations(Name.class, NameMixin.class);
         context.setMixInAnnotations(RawData.class, RawDataMixin.class);
-        context.setMixInAnnotations(ResolvedEntity.class, ResolvedEntityMixin.class);
+        context.setMixInAnnotations(com.basistech.rosette.dm.ResolvedEntity.class, ResolvedEntityMixin.class);
         context.setMixInAnnotations(Sentence.class, SentenceMixin.class);
         context.setMixInAnnotations(ScriptRegion.class, ScriptRegionMixin.class);
         context.setMixInAnnotations(Token.class, TokenMixin.class);

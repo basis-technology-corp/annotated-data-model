@@ -20,11 +20,9 @@ import com.basistech.rosette.dm.BaseAttribute;
 import com.basistech.rosette.dm.BaseNounPhrase;
 import com.basistech.rosette.dm.CategorizerResult;
 import com.basistech.rosette.dm.Entity;
-import com.basistech.rosette.dm.EntityMention;
 import com.basistech.rosette.dm.LanguageDetection;
 import com.basistech.rosette.dm.ListAttribute;
 import com.basistech.rosette.dm.RelationshipMention;
-import com.basistech.rosette.dm.ResolvedEntity;
 import com.basistech.rosette.dm.ScriptRegion;
 import com.basistech.rosette.dm.Sentence;
 import com.basistech.rosette.dm.Token;
@@ -52,6 +50,7 @@ import java.util.Map;
  */
 @JsonFormat(shape = JsonFormat.Shape.ARRAY)
 @JsonAppend(props = { @JsonAppend.Prop(value = VersionProperty.class, name = "version")})
+@SuppressWarnings("deprecated")
 public abstract class AnnotatedTextArrayMixin {
 
     @JsonCreator
@@ -82,11 +81,13 @@ public abstract class AnnotatedTextArrayMixin {
     @JsonIgnore
     public abstract ListAttribute<TranslatedTokens> getTranslatedTokens();
 
+    @SuppressWarnings("deprecation")
     @JsonIgnore
-    public abstract ListAttribute<EntityMention> getEntityMentions();
+    public abstract ListAttribute<com.basistech.rosette.dm.EntityMention> getEntityMentions();
 
+    @SuppressWarnings("deprecation")
     @JsonIgnore
-    public abstract ListAttribute<ResolvedEntity> getResolvedEntities();
+    public abstract ListAttribute<com.basistech.rosette.dm.ResolvedEntity> getResolvedEntities();
 
     @JsonIgnore
     public abstract ListAttribute<RelationshipMention> getRelationshipMentions();

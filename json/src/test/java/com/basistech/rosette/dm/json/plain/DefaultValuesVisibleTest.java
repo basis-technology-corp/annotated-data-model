@@ -16,7 +16,6 @@
 package com.basistech.rosette.dm.json.plain;
 
 import com.basistech.rosette.dm.AnnotatedText;
-import com.basistech.rosette.dm.EntityMention;
 import com.basistech.rosette.dm.ListAttribute;
 import com.basistech.rosette.dm.jackson.KnownAttribute;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -29,15 +28,16 @@ import java.io.ByteArrayOutputStream;
 /**
  * Test that default values are rendered into the Json.
  */
+@SuppressWarnings("deprecation")
 public class DefaultValuesVisibleTest extends AdmAssert {
 
     @Test
     public void checkVisible() throws Exception {
         AnnotatedText.Builder builder = new AnnotatedText.Builder();
         builder.data("George Washington slept here.");
-        ListAttribute.Builder<EntityMention> mentionListBuilder = new ListAttribute.Builder<>(EntityMention.class);
+        ListAttribute.Builder<com.basistech.rosette.dm.EntityMention> mentionListBuilder = new ListAttribute.Builder<>(com.basistech.rosette.dm.EntityMention.class);
         //int startOffset, int endOffset, String entityType)
-        EntityMention.Builder mentionBuilder = new EntityMention.Builder(0, 17, "politician");
+        com.basistech.rosette.dm.EntityMention.Builder mentionBuilder = new com.basistech.rosette.dm.EntityMention.Builder(0, 17, "politician");
         mentionBuilder.coreferenceChainId(null); // null is the official default, but null is never rendered, default or not.
         mentionListBuilder.add(mentionBuilder.build());
         builder.entityMentions(mentionListBuilder.build());
