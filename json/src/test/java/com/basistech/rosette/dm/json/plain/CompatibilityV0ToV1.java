@@ -63,15 +63,14 @@ public class CompatibilityV0ToV1 {
         ObjectMapper mapper = AnnotatedDataModelModule.setupObjectMapper(new ObjectMapper());
         AnnotatedText text = mapper.readValue(new File("test-data/simple_doc0_with_chains_adm_v0.json"),
                 AnnotatedText.class);
-        System.out.println(text.getEntities());
         assertEquals(4, text.getEntities().size());
-        assertEquals(null, text.getEntities().get(3).getEntityId());
-        assertEquals(null, text.getEntities().get(3).getType());
-        assertEquals(null, text.getEntities().get(3).getConfidence());
-        assertEquals(null, text.getEntities().get(3).getSentiment());
-        assertEquals(1, (int) text.getEntities().get(3).getHeadMentionIndex());
-        assertEquals("Hillary", text.getEntities().get(3).getMentions().get(0).getNormalized());
-        assertEquals("Hillary Clinton", text.getEntities().get(3).getMentions().get(1).getNormalized());
+        assertEquals(null, text.getEntities().get(2).getEntityId());
+        assertEquals(null, text.getEntities().get(2).getType());
+        assertEquals(null, text.getEntities().get(2).getConfidence());
+        assertEquals(null, text.getEntities().get(2).getSentiment());
+        assertEquals(1, (int) text.getEntities().get(2).getHeadMentionIndex());
+        assertEquals("Hillary", text.getEntities().get(2).getMentions().get(0).getNormalized());
+        assertEquals("Hillary Clinton", text.getEntities().get(2).getMentions().get(1).getNormalized());
     }
 
     @Ignore
@@ -80,13 +79,12 @@ public class CompatibilityV0ToV1 {
         ObjectMapper mapper = AnnotatedDataModelModule.setupObjectMapper(new ObjectMapper());
         AnnotatedText text = mapper.readValue(new File("test-data/simple_doc0_resolved_adm_v0.json"),
                 AnnotatedText.class);
-        System.out.println(text.getEntities());
-        assertEquals(2, text.getEntities().size());
-        assertEquals("Q6294", text.getEntities().get(1).getEntityId());
-        assertEquals("PERSON", text.getEntities().get(1).getType());
-        assertEquals(1.0, text.getEntities().get(1).getConfidence(), 0.00001);
-        assertEquals(null, text.getEntities().get(1).getSentiment());
-        assertEquals(1, (int) text.getEntities().get(1).getHeadMentionIndex());
-        assertEquals("Hillary Clinton", text.getEntities().get(3).getMentions().get(1).getNormalized());
+        assertEquals(4, text.getEntities().size());
+        assertEquals("Q6294", text.getEntities().get(2).getEntityId());
+        assertEquals("PERSON", text.getEntities().get(2).getType());
+        assertEquals(1.0, text.getEntities().get(2).getConfidence(), 0.00001);
+        assertEquals(null, text.getEntities().get(2).getSentiment());
+        assertEquals(1, (int) text.getEntities().get(2).getHeadMentionIndex());
+        assertEquals("Hillary Clinton", text.getEntities().get(2).getMentions().get(1).getNormalized());
     }
 }
