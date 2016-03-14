@@ -78,8 +78,8 @@ public class Entity extends BaseAttribute {
     }
 
     /**
-     * Return the head mention, if any. The head mention is the mention judged to be
-     * the best representation of the entity itself. This return {@code null} if no
+     * Return the head mention index, if any. The head mention is the mention judged to be
+     * the best representation of the entity itself. This returns {@code null} if no
      * mention is designated as head.
      * @return the index of the head mention.
      */
