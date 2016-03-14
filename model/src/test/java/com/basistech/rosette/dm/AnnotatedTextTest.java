@@ -391,6 +391,21 @@ public class AnnotatedTextTest {
     }
 
     @Test
+    public void entityWithSentiment() throws Exception {
+        Entity.Builder builder = new Entity.Builder();
+        builder.sentiment(new CategorizerResult.Builder("neg", 0.0).confidence(0.7).build());
+        builder.sentiment(new CategorizerResult.Builder("neu", 0.0).confidence(0.2)
+                .explanationSet(Lists.newArrayList("foo", "bar")).build());
+        builder.sentiment(new CategorizerResult.Builder("pos", 0.0).confidence(0.1).build());
+        Entity entity = builder.build();
+        assertEquals("neu", entity.getSentiment().get(1).getLabel());
+        assertEquals(0.0, entity.getSentiment().get(1).getScore(), 0.000001);
+        assertEquals(0.2, entity.getSentiment().get(1).getConfidence(), 0.000001);
+        assertEquals("bar", entity.getSentiment().get(1).getExplanationSet().get(1));
+        assertEquals(null, entity.getSentiment().get(2).getExplanationSet());
+    }
+
+    @Test
     public void relationMentions() {
         String argumentId = "/resolved/argument/";
         String argPhrase = "some-noun";

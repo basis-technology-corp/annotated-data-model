@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * {@link com.basistech.rosette.dm.ResolvedEntity}
+ * {@link com.basistech.rosette.dm.Entity}
  */
 public abstract class EntityMixin {
     @JsonCreator
@@ -33,7 +33,7 @@ public abstract class EntityMixin {
                 @JsonProperty("type") String type,
                 @JsonProperty("entityId") String entityId,
                 @JsonProperty("confidence") Double confidence,
-                @JsonProperty("sentiment") CategorizerResult sentiment,
+                @JsonProperty("sentiment") List<CategorizerResult> sentiment,
                 @JsonProperty("extendedProperties") Map<String, Object> extendedProperties) {
         //
     }

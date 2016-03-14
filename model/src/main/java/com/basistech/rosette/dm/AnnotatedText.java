@@ -310,8 +310,8 @@ public class AnnotatedText {
                 if (entity.getConfidence() != null) {
                     reBuilder.confidence(entity.getConfidence());
                 }
-                if (entity.getSentiment() != null) {
-                    reBuilder.sentiment(entity.getSentiment());
+                if (entity.getSentiment() != null && !entity.getSentiment().isEmpty()) {
+                    reBuilder.sentiment(entity.getSentiment().get(0));
                 }
 
                 if (entity.getExtendedProperties() != null) {

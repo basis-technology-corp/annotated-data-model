@@ -1,5 +1,25 @@
 # Cumulative Release Notes for the Annotated Data Model
 
+## ???
+
+### [ROS-218](https://basistech.atlassian.net/browse/ROS-218) Entity-level sentiment is a list
+
+Entity-level sentiment used to return a single `CategorizerResult`.
+After this change it returns a `List<CategorizerResult>` in confidence
+ranked order.  Currently there will be three results, one for each of
+"neg", "neu", "pos".  `ResolvedEntity#getSentiment` is already
+deprecated because of ROS-43.  It still returns the top result only.
+`Entity#getSentiment()` is the new method that returns the list.
+
+### [ROS-43](https://basistech.atlassian.net/browse/ROS-43) Combine EntityMentions and ResolvedEntity
+
+TODO
+
+### [ROS-50](https://basistech.atlassian.net/browse/ROS-50) Add version attribute
+
+TODO
+
+
 ## 2.0.0
 
 This is the first release of the the annotated data model from source

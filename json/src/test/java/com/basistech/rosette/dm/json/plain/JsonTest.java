@@ -701,8 +701,8 @@ public class JsonTest extends AdmAssert {
         AnnotatedText read = mapper.treeToValue(tree, AnnotatedText.class);
         BaseAttribute novelty = read.getAttributes().get("novelty");
         assertNotNull(novelty);
-        assertEquals(Integer.valueOf(4), novelty.getExtendedProperties().get("startOffset"));
-        assertEquals(Integer.valueOf(8), novelty.getExtendedProperties().get("endOffset"));
+        assertEquals(4, novelty.getExtendedProperties().get("startOffset"));
+        assertEquals(8, novelty.getExtendedProperties().get("endOffset"));
         assertEquals("pari", novelty.getExtendedProperties().get("color"));
     }
 
@@ -720,8 +720,8 @@ public class JsonTest extends AdmAssert {
         AnnotatedText read = mapper.treeToValue(tree, AnnotatedText.class);
         BaseAttribute novelty = read.getAttributes().get("novelty");
         assertNotNull(novelty);
-        assertEquals(Integer.valueOf(4), novelty.getExtendedProperties().get("startOffset"));
-        assertEquals(Integer.valueOf(8), novelty.getExtendedProperties().get("endOffset"));
+        assertEquals(4, novelty.getExtendedProperties().get("startOffset"));
+        assertEquals(8, novelty.getExtendedProperties().get("endOffset"));
         assertEquals("pari", novelty.getExtendedProperties().get("color"));
     }
 
@@ -753,13 +753,13 @@ public class JsonTest extends AdmAssert {
         assertNotNull(novelty);
         assertEquals(2, novelty.size());
         BaseAttribute item = novelty.get(0);
-        assertEquals(Integer.valueOf(4), item.getExtendedProperties().get("startOffset"));
-        assertEquals(Integer.valueOf(8), item.getExtendedProperties().get("endOffset"));
+        assertEquals(4, item.getExtendedProperties().get("startOffset"));
+        assertEquals(8, item.getExtendedProperties().get("endOffset"));
         assertEquals("pari", item.getExtendedProperties().get("color"));
 
         item = novelty.get(1);
-        assertEquals(Integer.valueOf(10), item.getExtendedProperties().get("startOffset"));
-        assertEquals(Integer.valueOf(12), item.getExtendedProperties().get("endOffset"));
+        assertEquals(10, item.getExtendedProperties().get("startOffset"));
+        assertEquals(12, item.getExtendedProperties().get("endOffset"));
         assertEquals("off", item.getExtendedProperties().get("color"));
 
     }
@@ -769,5 +769,40 @@ public class JsonTest extends AdmAssert {
         /* We want to be able to read an empty object as an ADM */
         /* No asserts needed, what we need here is a lack of a throw. */
         objectMapper().readValue("{}", AnnotatedText.class).toString();
+    }
+
+    @Test
+    public void testJB() throws Exception {
+        StringWriter writer = new StringWriter();
+        ObjectMapper mapper = AnnotatedDataModelModule.setupObjectMapper(new ObjectMapper());
+        ObjectWriter objectWriter = mapper.writerWithDefaultPrettyPrinter();
+
+        AnnotatedText.Builder builder = new AnnotatedText.Builder();
+
+        ListAttribute.Builder<Entity> entityListBuilder = new ListAttribute.Builder<>(Entity.class);
+        Entity.Builder entityBuilder = new Entity.Builder();
+        entityBuilder.headMentionIndex(0);
+        entityBuilder.type("PERSON");
+        entityBuilder.entityId("Q100");
+//        entityBuilder.sentiment(new CategorizerResult.Builder("neg", 0.0).confidence(0.7).build());
+//        entityBuilder.sentiment(new CategorizerResult.Builder("neu", 0.0).confidence(0.2).build());
+//        entityBuilder.sentiment(new CategorizerResult.Builder("pos", 0.0).confidence(0.1).build());
+        Mention.Builder mentionBuilder = new Mention.Builder(0, 10, "PERSON");
+        mentionBuilder.normalized("bahston");
+        mentionBuilder.source("testsource");
+        mentionBuilder.subsource("testsubsource");
+        mentionBuilder.confidence(1.0);
+        mentionBuilder.extendedProperty("em-ex", "em-ex-val");
+        entityBuilder.mention(mentionBuilder.build());
+        entityBuilder.confidence(0.5);
+        entity = entityBuilder.build();
+        entityListBuilder.add(entity);
+        builder.entities(entityListBuilder.build());
+        AnnotatedText text = builder.build();
+        objectWriter.writeValue(writer, text);
+        writer.close();
+        System.out.println(writer.toString());
+
+        System.out.println(text.getEntities().get(0));
     }
 }
