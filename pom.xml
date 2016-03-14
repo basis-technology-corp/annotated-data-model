@@ -23,7 +23,7 @@
     <parent>
         <artifactId>open-source-parent</artifactId>
         <groupId>com.basistech</groupId>
-        <version>0.1.2</version>
+        <version>1.0.0</version>
     </parent>
     <description>
       Data model for text and its annotations.
