@@ -36,6 +36,7 @@ import java.util.Map;
  * (e.g. "positive", "negative", "neutral").</li>
  * </ul>
  * Entities are not spans of text.
+ * The mentions in an entity are in document order.
  */
 public class Entity extends BaseAttribute {
     private List<Mention> mentions;

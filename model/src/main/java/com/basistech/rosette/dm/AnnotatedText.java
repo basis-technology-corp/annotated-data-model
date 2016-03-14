@@ -259,6 +259,12 @@ public class AnnotatedText {
         return compatMentions;
     }
 
+    /**
+     * Returns the list of entities.  Entities are ordered by the document
+     * order of their head mentions.
+     *
+     * @return the list of entities
+     */
     @SuppressWarnings("unchecked")
     public ListAttribute<Entity> getEntities() {
         return (ListAttribute<Entity>) attributes.get(AttributeKey.ENTITY.key());
