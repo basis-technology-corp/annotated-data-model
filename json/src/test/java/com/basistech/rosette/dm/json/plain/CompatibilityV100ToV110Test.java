@@ -42,7 +42,7 @@ import static org.junit.Assert.assertEquals;
 // which is the index into each entity's private list of mentions.  The order
 // of the entities must be the document order of the head mentions.  The order
 // of mentions within an entity should follow document order.
-public class CompatibilityV0ToV1Test {
+public class CompatibilityV100ToV110Test {
     @Test
     public void mentionsWithoutChains() throws Exception {
         ObjectMapper mapper = AnnotatedDataModelModule.setupObjectMapper(new ObjectMapper());
