@@ -259,6 +259,12 @@ public class AnnotatedText {
         return compatMentions;
     }
 
+    /**
+     * Returns the list of entities.  Entities are ordered by the document
+     * order of their head mentions.
+     *
+     * @return the list of entities
+     */
     @SuppressWarnings("unchecked")
     public ListAttribute<Entity> getEntities() {
         return (ListAttribute<Entity>) attributes.get(AttributeKey.ENTITY.key());
@@ -310,8 +316,8 @@ public class AnnotatedText {
                 if (entity.getConfidence() != null) {
                     reBuilder.confidence(entity.getConfidence());
                 }
-                if (entity.getSentiment() != null) {
-                    reBuilder.sentiment(entity.getSentiment());
+                if (entity.getSentiment() != null && !entity.getSentiment().isEmpty()) {
+                    reBuilder.sentiment(entity.getSentiment().get(0));
                 }
 
                 if (entity.getExtendedProperties() != null) {

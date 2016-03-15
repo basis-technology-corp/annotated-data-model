@@ -701,8 +701,8 @@ public class JsonTest extends AdmAssert {
         AnnotatedText read = mapper.treeToValue(tree, AnnotatedText.class);
         BaseAttribute novelty = read.getAttributes().get("novelty");
         assertNotNull(novelty);
-        assertEquals(Integer.valueOf(4), novelty.getExtendedProperties().get("startOffset"));
-        assertEquals(Integer.valueOf(8), novelty.getExtendedProperties().get("endOffset"));
+        assertEquals(4, novelty.getExtendedProperties().get("startOffset"));
+        assertEquals(8, novelty.getExtendedProperties().get("endOffset"));
         assertEquals("pari", novelty.getExtendedProperties().get("color"));
     }
 
@@ -720,8 +720,8 @@ public class JsonTest extends AdmAssert {
         AnnotatedText read = mapper.treeToValue(tree, AnnotatedText.class);
         BaseAttribute novelty = read.getAttributes().get("novelty");
         assertNotNull(novelty);
-        assertEquals(Integer.valueOf(4), novelty.getExtendedProperties().get("startOffset"));
-        assertEquals(Integer.valueOf(8), novelty.getExtendedProperties().get("endOffset"));
+        assertEquals(4, novelty.getExtendedProperties().get("startOffset"));
+        assertEquals(8, novelty.getExtendedProperties().get("endOffset"));
         assertEquals("pari", novelty.getExtendedProperties().get("color"));
     }
 
@@ -753,13 +753,13 @@ public class JsonTest extends AdmAssert {
         assertNotNull(novelty);
         assertEquals(2, novelty.size());
         BaseAttribute item = novelty.get(0);
-        assertEquals(Integer.valueOf(4), item.getExtendedProperties().get("startOffset"));
-        assertEquals(Integer.valueOf(8), item.getExtendedProperties().get("endOffset"));
+        assertEquals(4, item.getExtendedProperties().get("startOffset"));
+        assertEquals(8, item.getExtendedProperties().get("endOffset"));
         assertEquals("pari", item.getExtendedProperties().get("color"));
 
         item = novelty.get(1);
-        assertEquals(Integer.valueOf(10), item.getExtendedProperties().get("startOffset"));
-        assertEquals(Integer.valueOf(12), item.getExtendedProperties().get("endOffset"));
+        assertEquals(10, item.getExtendedProperties().get("startOffset"));
+        assertEquals(12, item.getExtendedProperties().get("endOffset"));
         assertEquals("off", item.getExtendedProperties().get("color"));
 
     }

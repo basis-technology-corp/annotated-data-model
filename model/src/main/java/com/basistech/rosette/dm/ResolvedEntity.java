@@ -85,6 +85,8 @@ public class ResolvedEntity extends Attribute {
 
     /**
      * Returns the sentiment of this entity, or null if not computed.
+     * Only the top-ranked sentiment result is returned.  Use
+     * {@link Entity#getSentiment()} to obtain all results.
      *
      * @return the sentiment of this entity, or null if not computed.
      */

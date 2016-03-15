@@ -36,6 +36,7 @@ import java.util.Map;
  * (e.g. "positive", "negative", "neutral").</li>
  * </ul>
  * Entities are not spans of text.
+ * The mentions in an entity are in document order.
  */
 public class Entity extends BaseAttribute {
     private List<Mention> mentions;
@@ -43,14 +44,14 @@ public class Entity extends BaseAttribute {
     private final String type;
     private final String entityId;
     private final Double confidence;
-    private final CategorizerResult sentiment;
+    private final List<CategorizerResult> sentiment;
 
     protected Entity(List<Mention> mentions,
                      Integer headMentionIndex,
                      String type,
                      String entityId,
                      Double confidence,
-                     CategorizerResult sentiment,
+                     List<CategorizerResult> sentiment,
                      Map<String, Object> extendedProperties) {
         super(extendedProperties);
         this.mentions = listOrNull(mentions);
@@ -58,7 +59,7 @@ public class Entity extends BaseAttribute {
         this.type = type;
         this.entityId = entityId;
         this.confidence = confidence;
-        this.sentiment = sentiment;
+        this.sentiment = listOrNull(sentiment);
     }
 
     /**
@@ -78,8 +79,8 @@ public class Entity extends BaseAttribute {
     }
 
     /**
-     * Return the head mention, if any. The head mention is the mention judged to be
-     * the best representation of the entity itself. This return {@code null} if no
+     * Return the head mention index, if any. The head mention is the mention judged to be
+     * the best representation of the entity itself. This returns {@code null} if no
      * mention is designated as head.
      * @return the index of the head mention.
      */
@@ -101,7 +102,7 @@ public class Entity extends BaseAttribute {
      *
      * @return the sentiment of this entity, or null if not computed.
      */
-    public CategorizerResult getSentiment() {
+    public List<CategorizerResult> getSentiment() {
         return sentiment;
     }
 
@@ -175,13 +176,14 @@ public class Entity extends BaseAttribute {
         private List<Mention> mentions;
         private Integer headMentionIndex;
         private Double confidence;
-        private CategorizerResult sentiment;
+        private List<CategorizerResult> sentiment;
 
         /**
          * Constructs a builder from the required values.
          */
         public Builder() {
             mentions = Lists.newArrayList();
+            sentiment = Lists.newArrayList();
         }
 
         /**
@@ -249,7 +251,7 @@ public class Entity extends BaseAttribute {
          * @return this
          */
         public Builder sentiment(CategorizerResult sentiment) {
-            this.sentiment = sentiment;
+            this.sentiment.add(sentiment);
             return this;
         }
 
