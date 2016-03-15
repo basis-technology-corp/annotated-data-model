@@ -42,7 +42,7 @@ final class ConvertFromPreAdm1 {
         if (em.getConfidence() != null) {
             mentionBuilder.confidence(em.getConfidence());
         }
-        if (em.getFlags() != null) {
+        if (em.getFlags() != null && em.getFlags() != 0) {
             mentionBuilder.extendedProperty("oldFlags", em.getFlags());
         }
         if (em.getCoreferenceChainId() != null) {
