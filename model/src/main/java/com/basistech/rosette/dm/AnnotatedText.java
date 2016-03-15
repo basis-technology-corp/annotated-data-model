@@ -94,10 +94,14 @@ public class AnnotatedText {
         // Begin compatibility with '1.0' version of ADM.
         ListAttribute<EntityMention> oldMentions = (ListAttribute<EntityMention>)attributes.get(AttributeKey.ENTITY_MENTION.key());
         ListAttribute<ResolvedEntity> oldResolved = (ListAttribute<ResolvedEntity>)attributes.get(AttributeKey.RESOLVED_ENTITY.key());
-        if (oldResolved != null || oldMentions != null) {
+        if (anythingInThere(oldResolved) || anythingInThere(oldMentions)) {
             ConvertFromPreAdm1.doResolvedConversion(oldMentions, oldResolved, builder);
         }
         return builder.build();
+    }
+
+    private static <T> boolean anythingInThere(List<T> list) {
+        return list != null && !list.isEmpty();
     }
 
     /**
