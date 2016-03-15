@@ -83,13 +83,17 @@ final class ConvertFromPreAdm1 {
                                      ListAttribute<ResolvedEntity> oldResolved,
                                      ImmutableMap.Builder<String, BaseAttribute> builder) {
 
+        if (oldMentions == null) {
+            doNoMentionConversion(oldResolved, builder);
+            return;
+        }
+
         int maxChainId = -1;
         for (EntityMention oldMention : oldMentions) {
             if (oldMention.getCoreferenceChainId() != null) {
                 maxChainId = Math.max(maxChainId, oldMention.getCoreferenceChainId());
             }
         }
-
         maxChainId = Math.max(maxChainId, oldMentions.size());
 
         ResolvedEntity[] resolvedByChainId = new ResolvedEntity[maxChainId + 1];
@@ -145,9 +149,21 @@ final class ConvertFromPreAdm1 {
                 heads[newIndex] = mentionsByEntities.get(newIndex).size() - 1;
             }
         }
+
+
         ListAttribute.Builder<Entity> elBuilder = buildEntities(oldMentions, resolvedByChainId, indocPresent, mentionsByEntities, heads);
 
+        builder.put(AttributeKey.ENTITY.key(), elBuilder.build());
+    }
 
+    // We can have old resolved entities without mentions.
+    private static void doNoMentionConversion(ListAttribute<ResolvedEntity> oldResolved, ImmutableMap.Builder<String, BaseAttribute> builder) {
+        ListAttribute.Builder<Entity> elBuilder = new ListAttribute.Builder<>(Entity.class);
+        for (ResolvedEntity resolvedEntity : oldResolved) {
+            Entity.Builder enBuilder = new Entity.Builder();
+            convertOneEntity(enBuilder, resolvedEntity);
+            elBuilder.add(enBuilder.build());
+        }
         builder.put(AttributeKey.ENTITY.key(), elBuilder.build());
     }
 
@@ -181,20 +197,7 @@ final class ConvertFromPreAdm1 {
             }
 
             if (resolvedEntity != null) {
-                enBuilder.entityId(resolvedEntity.getEntityId());
-                enBuilder.confidence(resolvedEntity.getConfidence());
-                if (resolvedEntity.getSentiment() != null) {
-                    // It's a list in the new code, a single item in the old code.
-                    enBuilder.sentiment(resolvedEntity.getSentiment());
-                }
-                if (resolvedEntity.getExtendedProperties() != null) {
-                    for (Map.Entry<String, Object> me : resolvedEntity.getExtendedProperties().entrySet()) {
-                        enBuilder.extendedProperty(me.getKey(), me.getValue());
-                    }
-                }
-                if (resolvedEntity.getCoreferenceChainId() != null) {
-                    enBuilder.extendedProperty("oldCoreferenceChainId", resolvedEntity.getCoreferenceChainId());
-                }
+                convertOneEntity(enBuilder, resolvedEntity);
             }
 
             if (indocPresent) {
@@ -228,5 +231,22 @@ final class ConvertFromPreAdm1 {
             }
         }
         return elBuilder;
+    }
+
+    private static void convertOneEntity(Entity.Builder enBuilder, ResolvedEntity resolvedEntity) {
+        enBuilder.entityId(resolvedEntity.getEntityId());
+        enBuilder.confidence(resolvedEntity.getConfidence());
+        if (resolvedEntity.getSentiment() != null) {
+            // It's a list in the new code, a single item in the old code.
+            enBuilder.sentiment(resolvedEntity.getSentiment());
+        }
+        if (resolvedEntity.getExtendedProperties() != null) {
+            for (Map.Entry<String, Object> me : resolvedEntity.getExtendedProperties().entrySet()) {
+                enBuilder.extendedProperty(me.getKey(), me.getValue());
+            }
+        }
+        if (resolvedEntity.getCoreferenceChainId() != null) {
+            enBuilder.extendedProperty("oldCoreferenceChainId", resolvedEntity.getCoreferenceChainId());
+        }
     }
 }

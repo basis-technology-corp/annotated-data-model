@@ -21,6 +21,8 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -209,12 +211,23 @@ public class AnnotatedText {
      */
     @SuppressWarnings("unchecked")
     @Deprecated
-    public synchronized ListAttribute<EntityMention> getEntityMentions() {
+    public ListAttribute<EntityMention> getEntityMentions() {
 
         if (compatMentions == null) {
-            ListAttribute.Builder<EntityMention> cmListBuilder = new ListAttribute.Builder<>(EntityMention.class);
+            List<EntityMention> entityMentionList = Lists.newArrayList();
             ListAttribute<Entity> entities = getEntities();
-            if (entities.getExtendedProperties() != null) {
+
+            if (entities != null) {
+                downconvertEntities(entityMentionList, entities);
+            }
+
+            ListAttribute.Builder<EntityMention> cmListBuilder = new ListAttribute.Builder<>(EntityMention.class);
+
+            for (EntityMention entityMention : entityMentionList) {
+                cmListBuilder.add(entityMention);
+            }
+
+            if (entities != null && entities.getExtendedProperties() != null) {
                 for (Map.Entry<String, Object> me : entities.getExtendedProperties().entrySet()) {
                     String key = me.getKey();
                     if (key.startsWith("mention.")) {
@@ -223,10 +236,17 @@ public class AnnotatedText {
                 }
             }
 
-            for (Entity entity : entities) {
+            compatMentions = cmListBuilder.build();
+        }
+        return compatMentions;
+    }
+
+    private void downconvertEntities(List<EntityMention> entityMentionList, ListAttribute<Entity> entities) {
+        for (Entity entity : entities) {
+            if (entity.getMentions() != null) {
                 for (Mention mention : entity.getMentions()) {
                     // If the conversion process stashed a per-mention type, recover it here.
-                    String type = (String)mention.getExtendedProperties().get("old-entity-type");
+                    String type = (String) mention.getExtendedProperties().get("old-entity-type");
                     if (type == null) {
                         // In the new model, it's on the Entity.
                         type = entity.getType();
@@ -241,12 +261,12 @@ public class AnnotatedText {
                     }
                     if (mention.getExtendedProperties() != null && mention.getExtendedProperties().size() > 0) {
                         for (Map.Entry<String, Object> me : mention.getExtendedProperties().entrySet()) {
-                            if (me.getKey() .equals("old-entity-type")) {
+                            if (me.getKey().equals("old-entity-type")) {
                                 //
                             } else if (me.getKey().equals("oldFlags")) {
                                 emBuilder.flags((Integer) me.getValue());
                             } else if (me.getKey().equals("oldCoreferenceChainId")) {
-                                emBuilder.coreferenceChainId((Integer)me.getValue());
+                                emBuilder.coreferenceChainId((Integer) me.getValue());
                             } else {
                                 emBuilder.extendedProperty(me.getKey(), me.getValue());
                             }
@@ -262,12 +282,18 @@ public class AnnotatedText {
                         emBuilder.subsource(mention.getSubsource());
                     }
 
-                    cmListBuilder.add(emBuilder.build());
+                    entityMentionList.add(emBuilder.build());
                 }
             }
-            compatMentions = cmListBuilder.build();
         }
-        return compatMentions;
+
+        // return these mentions in document order.
+        Collections.sort(entityMentionList, new Comparator<EntityMention>() {
+            @Override
+            public int compare(EntityMention o1, EntityMention o2) {
+                return o1.getStartOffset() - o2.getStartOffset();
+            }
+        });
     }
 
     /**
@@ -300,11 +326,14 @@ public class AnnotatedText {
      */
     @SuppressWarnings("unchecked")
     @Deprecated
-    public synchronized ListAttribute<ResolvedEntity> getResolvedEntities() {
+    public ListAttribute<ResolvedEntity> getResolvedEntities() {
         if (compatResolvedEntities == null) {
-            ListAttribute.Builder<ResolvedEntity> reListBuilder = new ListAttribute.Builder<>(ResolvedEntity.class);
-
             ListAttribute<Entity> entities = getEntities();
+            if (entities == null) {
+                return null;
+            }
+
+            ListAttribute.Builder<ResolvedEntity> reListBuilder = new ListAttribute.Builder<>(ResolvedEntity.class);
             if (entities.getExtendedProperties() != null) {
                 for (Map.Entry<String, Object> me : entities.getExtendedProperties().entrySet()) {
                     String key = me.getKey();
