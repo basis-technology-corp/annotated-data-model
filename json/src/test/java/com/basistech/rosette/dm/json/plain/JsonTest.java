@@ -302,7 +302,7 @@ public class JsonTest extends AdmAssert {
         entityBuilder.entityId("Q100");
         CategorizerResult.Builder crBuilder = new CategorizerResult.Builder("negative", 0.4);
         entityBuilder.sentiment(crBuilder.build());
-        Mention.Builder mentionBuilder = new Mention.Builder(0, 10, "PERSON");
+        Mention.Builder mentionBuilder = new Mention.Builder(0, 10);
         mentionBuilder.normalized("bahston");
         mentionBuilder.source("testsource");
         mentionBuilder.subsource("testsubsource");

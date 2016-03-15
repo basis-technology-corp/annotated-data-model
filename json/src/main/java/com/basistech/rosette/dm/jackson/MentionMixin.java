@@ -21,13 +21,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Map;
 
 /**
- * {@link com.basistech.rosette.dm.EntityMention}
+ * {@link com.basistech.rosette.dm.Mention}
  */
 public abstract class MentionMixin {
     @JsonCreator
     MentionMixin(@JsonProperty("startOffset") int startOffset,
                  @JsonProperty("endOffset") int endOffset,
-                 @JsonProperty("entityType") String entityType,
                  @JsonProperty("confidence") Double confidence,
                  @JsonProperty("source") String source,
                  @JsonProperty("subsource") String subsource,

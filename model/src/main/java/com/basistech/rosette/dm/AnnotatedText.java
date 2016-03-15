@@ -94,12 +94,9 @@ public class AnnotatedText {
         // Begin compatibility with '1.0' version of ADM.
         ListAttribute<EntityMention> oldMentions = (ListAttribute<EntityMention>)attributes.get(AttributeKey.ENTITY_MENTION.key());
         ListAttribute<ResolvedEntity> oldResolved = (ListAttribute<ResolvedEntity>)attributes.get(AttributeKey.RESOLVED_ENTITY.key());
-        if (oldResolved != null) {
+        if (oldResolved != null || oldMentions != null) {
             ConvertFromPreAdm1.doResolvedConversion(oldMentions, oldResolved, builder);
-        } else if (oldMentions != null) {
-            ConvertFromPreAdm1.doUnresolvedConversion(oldMentions, builder);
         }
-
         return builder.build();
     }
 
@@ -224,15 +221,25 @@ public class AnnotatedText {
 
             for (Entity entity : entities) {
                 for (Mention mention : entity.getMentions()) {
+                    // If the conversion process stashed a per-mention type, recover it here.
+                    String type = (String)mention.getExtendedProperties().get("old-entity-type");
+                    if (type == null) {
+                        // In the new model, it's on the Entity.
+                        type = entity.getType();
+                    }
+
                     EntityMention.Builder emBuilder = new EntityMention.Builder(mention.getStartOffset(),
                             mention.getEndOffset(),
-                            mention.getEntityType());
+                            type);
+
                     if (mention.getConfidence() != null) {
                         emBuilder.confidence(mention.getConfidence());
                     }
                     if (mention.getExtendedProperties() != null && mention.getExtendedProperties().size() > 0) {
                         for (Map.Entry<String, Object> me : mention.getExtendedProperties().entrySet()) {
-                            if (me.getKey().equals("oldFlags")) {
+                            if (me.getKey() .equals("old-entity-type")) {
+                                //
+                            } else if (me.getKey().equals("oldFlags")) {
                                 emBuilder.flags((Integer) me.getValue());
                             } else if (me.getKey().equals("oldCoreferenceChainId")) {
                                 emBuilder.coreferenceChainId((Integer)me.getValue());

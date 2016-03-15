@@ -24,35 +24,22 @@ import java.util.Map;
  * "George Washington" are mentions of type "PERSON".
  */
 public class Mention extends Attribute {
-    private final String entityType;
     private final Double confidence;
     private final String source;
     private final String subsource;
     private final String normalized;
 
     protected Mention(int startOffset, int endOffset,
-                      String entityType,
                       Double confidence,
                       String source,
                       String subsource,
                       String normalized,
                       Map<String, Object> extendedProperties) {
         super(startOffset, endOffset, extendedProperties);
-        this.entityType = entityType;
         this.confidence = confidence;
         this.source = source;
         this.subsource = subsource;
         this.normalized = normalized;
-    }
-
-    /**
-     * Returns the type of the entity.  For example, "PERSON", "LOCATION",
-     * "ORGANIZATION".
-     *
-     * @return the type of entity
-     */
-    public String getEntityType() {
-        return entityType;
     }
 
     /**
@@ -117,10 +104,6 @@ public class Mention extends Attribute {
             return false;
         }
 
-        if (entityType != null ? !entityType.equals(that.entityType) : that.entityType != null) {
-            return false;
-        }
-
         if (normalized != null ? !normalized.equals(that.normalized) : that.normalized != null) {
             return false;
         }
@@ -135,7 +118,6 @@ public class Mention extends Attribute {
     @Override
     public int hashCode() {
         int result = super.hashCode();
-        result = 31 * result + (entityType != null ? entityType.hashCode() : 0);
         result = 31 * result + (confidence != null ? confidence.hashCode() : 0);
         result = 31 * result + (source != null ? source.hashCode() : 0);
         result = 31 * result + (subsource != null ? subsource.hashCode() : 0);
@@ -146,7 +128,6 @@ public class Mention extends Attribute {
     @Override
     protected Objects.ToStringHelper toStringHelper() {
         return super.toStringHelper()
-                .add("entityType", entityType)
                 .add("confidence", confidence)
                 .add("source", source)
                 .add("subsource", subsource)
@@ -157,7 +138,6 @@ public class Mention extends Attribute {
      * A builder for entity mentions.
      */
     public static class Builder extends Attribute.Builder<Mention, Mention.Builder>  {
-        private String entityType;
         private Double confidence;
         private String source;
         private String subsource;
@@ -168,11 +148,9 @@ public class Mention extends Attribute {
          *
          * @param startOffset the start offset in the text, in characters
          * @param endOffset the end offset in the text, in characters
-         * @param entityType the type of entity (e.g. "PERSON").
          */
-        public Builder(int startOffset, int endOffset, String entityType) {
+        public Builder(int startOffset, int endOffset) {
             super(startOffset, endOffset);
-            this.entityType = entityType;
         }
 
         /**
@@ -183,22 +161,10 @@ public class Mention extends Attribute {
          */
         public Builder(Mention toCopy) {
             super(toCopy);
-            this.entityType = toCopy.entityType;
             this.confidence = toCopy.confidence;
             this.source = toCopy.source;
             this.subsource = toCopy.subsource;
             this.normalized = toCopy.normalized;
-        }
-
-        /**
-         * Specifies the entity type.
-         *
-         * @param entityType the entity type
-         * @return this
-         */
-        public Builder entityType(String entityType) {
-            this.entityType = entityType;
-            return this;
         }
 
         /**
@@ -251,7 +217,7 @@ public class Mention extends Attribute {
          * @return the mention
          */
         public Mention build() {
-            return new Mention(startOffset, endOffset, entityType, confidence, source,
+            return new Mention(startOffset, endOffset, confidence, source,
                 subsource, normalized, buildExtendedProperties());
         }
 

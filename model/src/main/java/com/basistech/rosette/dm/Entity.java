@@ -239,7 +239,7 @@ public class Entity extends BaseAttribute {
          * @param confidence the confidence value
          * @return this
          */
-        public Builder confidence(double confidence) {
+        public Builder confidence(Double confidence) {
             this.confidence = confidence;
             return this;
         }

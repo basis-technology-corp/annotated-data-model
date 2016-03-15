@@ -18,12 +18,12 @@ package com.basistech.rosette.dm;
 import com.basistech.rosette.RosetteRuntimeException;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
-import com.google.common.collect.Sets;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Utility class with methods for conversion of the data from
@@ -37,8 +37,7 @@ final class ConvertFromPreAdm1 {
     }
 
     static Mention convertMention(EntityMention em) {
-        Mention.Builder mentionBuilder = new Mention.Builder(em.getStartOffset(), em.getEndOffset(),
-                em.getEntityType());
+        Mention.Builder mentionBuilder = new Mention.Builder(em.getStartOffset(), em.getEndOffset());
         if (em.getConfidence() != null) {
             mentionBuilder.confidence(em.getConfidence());
         }
@@ -64,168 +63,163 @@ final class ConvertFromPreAdm1 {
             }
         }
 
+        mentionBuilder.extendedProperty("old-entity-type", em.getEntityType());
+
         return mentionBuilder.build();
     }
 
     /*
-         * Called when we have neither resolved entities nor coreference.
-         */
-    static void doTrivialConversion(ListAttribute<EntityMention> oldMentions, ImmutableMap.Builder<String, BaseAttribute> builder) {
-        ListAttribute.Builder<Entity> entityListBuilder = new ListAttribute.Builder<>(Entity.class);
-        convertMentionList(oldMentions, entityListBuilder);
-        if (oldMentions.getExtendedProperties() != null) {
-            for (Map.Entry<String, Object> me : oldMentions.getExtendedProperties().entrySet()) {
-                entityListBuilder.extendedProperty("mention." + me.getKey(),
-                        me.getValue());
-            }
-        }
-        builder.put(AttributeKey.ENTITY.key(), entityListBuilder.build());
-    }
+     * Each mention can in one of two states:
+     * 1: attached to a 'ResolvedEntity'
+     * 2: part of a coref chain; perhaps a singleton.
+     *
+     * In the second case, we need the same processing as we have
+     * below in unresolved conversion; how to factor?
+     */
 
-    static void convertMentionList(List<EntityMention> unresolved, ListAttribute.Builder<Entity> entityListBuilder) {
-        for (EntityMention em : unresolved) {
-            Mention mention = convertMention(em);
-            Entity.Builder entityBuilder = new Entity.Builder();
-            entityBuilder.headMentionIndex(0);
-            entityBuilder.mention(mention);
-            entityListBuilder.add(entityBuilder.build());
-        }
-    }
 
+    // there are at least indoc chains
     static void doResolvedConversion(ListAttribute<EntityMention> oldMentions,
                                      ListAttribute<ResolvedEntity> oldResolved,
                                      ImmutableMap.Builder<String, BaseAttribute> builder) {
-        if (oldMentions == null) {
-            throw new RosetteRuntimeException("There are no EntityMentions.");
-        } else {
-            doResolvedConversionWithMentions(oldMentions, oldResolved, builder);
-        }
-    }
 
-    static void doResolvedConversionWithMentions(ListAttribute<EntityMention> oldMentions,
-                                                 ListAttribute<ResolvedEntity> oldResolved,
-                                                 ImmutableMap.Builder<String, BaseAttribute> builder) {
-        List<EntityMention> unresolved = Lists.newArrayList();
-        Map<Integer, List<EntityMention>> entityMentionsByChain = Maps.newHashMap();
-
-        Set<Integer> resolvedCorefChains = Sets.newHashSet();
-        for (ResolvedEntity resolvedEntity : oldResolved) {
-            resolvedCorefChains.add(resolvedEntity.getCoreferenceChainId());
-        }
-
-        for (EntityMention entityMention : oldMentions) {
-            if (entityMention.getCoreferenceChainId() == null
-                    || !resolvedCorefChains.contains(entityMention.getCoreferenceChainId())) {
-                unresolved.add(entityMention);
-            }
-            if (entityMention.getCoreferenceChainId() != null) {
-                List<EntityMention> chainList = entityMentionsByChain.get(entityMention.getCoreferenceChainId());
-                if (chainList == null) {
-                    chainList = Lists.newArrayList();
-                    entityMentionsByChain.put(entityMention.getCoreferenceChainId(), chainList);
-                }
-                chainList.add(entityMention);
-            }
-        }
-
-        ListAttribute.Builder<Entity> entityListBuilder = new ListAttribute.Builder<>(Entity.class);
-
-        if (oldMentions.getExtendedProperties() != null) {
-            for (Map.Entry<String, Object> me : oldMentions.getExtendedProperties().entrySet()) {
-                entityListBuilder.extendedProperty("mention." + me.getKey(),
-                        me.getValue());
-            }
-        }
-        if (oldResolved.getExtendedProperties() != null) {
-            for (Map.Entry<String, Object> me : oldResolved.getExtendedProperties().entrySet()) {
-                entityListBuilder.extendedProperty(me.getKey(), me.getValue());
-            }
-        }
-
-
-        for (ResolvedEntity resolvedEntity : oldResolved) {
-            Entity.Builder entityBuilder = new Entity.Builder();
-            if (resolvedEntity.getConfidence() != null) {
-                entityBuilder.confidence(resolvedEntity.getConfidence());
-            }
-            if (resolvedEntity.getEntityId() != null) {
-                entityBuilder.entityId(resolvedEntity.getEntityId());
-            }
-            if (resolvedEntity.getSentiment() != null) {
-                entityBuilder.sentiment(resolvedEntity.getSentiment());
-            }
-            if (resolvedEntity.getExtendedProperties() != null
-                    && resolvedEntity.getExtendedProperties().size() != 0) {
-                entityBuilder.extendedProperties(resolvedEntity.getExtendedProperties());
-            }
-
-            if (resolvedEntity.getCoreferenceChainId() != null) {
-                entityBuilder.extendedProperty("oldCoreferenceChainId", resolvedEntity.getCoreferenceChainId());
-            }
-
-            List<EntityMention> entityMentions = entityMentionsByChain.get(resolvedEntity.getCoreferenceChainId());
-            int index = 0;
-            for (EntityMention entityMention : entityMentions) {
-                Mention mention = convertMention(entityMention);
-                entityBuilder.mention(mention);
-                if (entityMention.getStartOffset() == resolvedEntity.getStartOffset()
-                        && entityMention.getEndOffset() == resolvedEntity.getEndOffset()) {
-                    entityBuilder.headMentionIndex(index);
-                }
-                index++;
-            }
-            entityListBuilder.add(entityBuilder.build());
-        }
-
-        convertMentionList(unresolved, entityListBuilder);
-        builder.put(AttributeKey.ENTITY.key(), entityListBuilder.build());
-    }
-
-    // no resolution, perhaps indoc coref.
-    static void doUnresolvedConversion(ListAttribute<EntityMention> oldMentions, ImmutableMap.Builder<String, BaseAttribute> builder) {
         int maxChainId = -1;
-        int unchainedCount = 0;
-        for (EntityMention em : oldMentions) {
-            if (em.getCoreferenceChainId() != null) {
-                maxChainId = Math.max(em.getCoreferenceChainId(), maxChainId);
-            } else {
-                unchainedCount++;
+        for (EntityMention oldMention : oldMentions) {
+            if (oldMention.getCoreferenceChainId() != null) {
+                maxChainId = Math.max(maxChainId, oldMention.getCoreferenceChainId());
             }
         }
-        if (maxChainId == -1) {
-            doTrivialConversion(oldMentions, builder);
-            return;
+
+        maxChainId = Math.max(maxChainId, oldMentions.size());
+
+        ResolvedEntity[] resolvedByChainId = new ResolvedEntity[maxChainId + 1];
+        if (oldResolved != null) {
+            for (ResolvedEntity resolvedEntity : oldResolved) {
+                if (resolvedEntity.getCoreferenceChainId() != null) {
+                    resolvedByChainId[resolvedEntity.getCoreferenceChainId()] = resolvedEntity;
+                } else {
+                    throw new RosetteRuntimeException("Resolved entity with no coref chain id.");
+                }
+            }
         }
 
-        // we want one Entity per coref chain (or entity with no coref chain).
+        // Note that indoc chain ids can be sparse, or altogether absent.
+        // Absent is important, as it means that no indoc happened.
+        // If any indoc happened, all the mentions have indoc chains.
+        boolean indocPresent = oldMentions.get(0).getCoreferenceChainId() != null;
 
-        int entityCount = maxChainId + unchainedCount + 1;
-        List<List<EntityMention>> mentionsByEntities = Lists.newArrayListWithExpectedSize(entityCount);
-        for (int x = 0; x < entityCount; x++) {
+
+        int[] newIndices = new int[maxChainId + 1];
+        //chain ids cannot be larger than the count of mentions.
+        int[] chainToIndex = new int[maxChainId + 1];
+        Arrays.fill(chainToIndex, -1);
+        int newEntityCount = 0;
+
+        for (int oldIndex = 0; oldIndex < oldMentions.size(); oldIndex++) {
+            EntityMention em = oldMentions.get(oldIndex);
+            if (em.getCoreferenceChainId() != null) {
+                if (chainToIndex[em.getCoreferenceChainId()] == -1) {
+                    chainToIndex[em.getCoreferenceChainId()] = newEntityCount++;
+                }
+                newIndices[oldIndex] = chainToIndex[em.getCoreferenceChainId()];
+            } else {
+                newIndices[oldIndex] = newEntityCount++;
+            }
+        }
+
+        List<List<EntityMention>> mentionsByEntities = Lists.newArrayListWithExpectedSize(newEntityCount);
+        for (int x = 0; x < newEntityCount; x++) {
             mentionsByEntities.add(Lists.<EntityMention>newArrayList());
         }
 
-        int unchainedIndex = maxChainId + 1;
-        for (EntityMention em : oldMentions) {
-            if (em.getCoreferenceChainId() != null) {
-                mentionsByEntities.get(em.getCoreferenceChainId()).add(em);
-            } else {
-                mentionsByEntities.get(unchainedIndex++).add(em);
+        /* For each coref chain, the head is the entity whose index in the old mentions
+         * is equal to the chain id.
+         */
+        int[] heads = new int[newEntityCount];
+
+        for (int oldIndex = 0; oldIndex < oldMentions.size(); oldIndex++) {
+            EntityMention em = oldMentions.get(oldIndex);
+            int newIndex = newIndices[oldIndex];
+            mentionsByEntities.get(newIndex).add(em);
+            if (em.getCoreferenceChainId() != null && em.getCoreferenceChainId() == oldIndex) {
+                heads[newIndex] = mentionsByEntities.get(newIndex).size() - 1;
             }
         }
+        ListAttribute.Builder<Entity> elBuilder = buildEntities(oldMentions, resolvedByChainId, indocPresent, mentionsByEntities, heads);
 
-        ListAttribute.Builder<Entity> elBuilder = new ListAttribute.Builder<>(Entity.class);
+
+        builder.put(AttributeKey.ENTITY.key(), elBuilder.build());
+    }
+
+    private static ListAttribute.Builder<Entity> buildEntities(ListAttribute<EntityMention> oldMentions,
+                                                               ResolvedEntity[] resolvedByChainId,
+                                                               boolean indocPresent,
+                                                               List<List<EntityMention>> mentionsByEntities,
+                                                               int[] heads) {
+        // Since we need to sort, put them in an ordinary list for a start.
+        List<Entity> entities = Lists.newArrayList();
 
         // now we can just walk mentionsByEntities to build the results.
+        int newIndex = 0;
         for (List<EntityMention> entityMentions : mentionsByEntities) {
             Entity.Builder enBuilder = new Entity.Builder();
-            for (EntityMention em : entityMentions) {
+            String type = null;
+            for (int x = 0; x < entityMentions.size(); x++) {
+                EntityMention em = entityMentions.get(x);
+                if (x == heads[newIndex]) {
+                    type = em.getEntityType();
+                }
                 Mention mention = convertMention(em);
                 enBuilder.mention(mention);
             }
-            enBuilder.headMentionIndex(0); // TODO: Is this correct?
-            elBuilder.add(enBuilder.build());
+            enBuilder.type(type);
+
+            EntityMention entityMention = entityMentions.get(0);
+            ResolvedEntity resolvedEntity = null;
+            if (entityMention.getCoreferenceChainId() != null) {
+                resolvedEntity = resolvedByChainId[entityMention.getCoreferenceChainId()];
+            }
+
+            if (resolvedEntity != null) {
+                enBuilder.entityId(resolvedEntity.getEntityId());
+                enBuilder.confidence(resolvedEntity.getConfidence());
+                if (resolvedEntity.getSentiment() != null) {
+                    // It's a list in the new code, a single item in the old code.
+                    enBuilder.sentiment(resolvedEntity.getSentiment());
+                }
+                if (resolvedEntity.getExtendedProperties() != null) {
+                    for (Map.Entry<String, Object> me : resolvedEntity.getExtendedProperties().entrySet()) {
+                        enBuilder.extendedProperty(me.getKey(), me.getValue());
+                    }
+                }
+                if (resolvedEntity.getCoreferenceChainId() != null) {
+                    enBuilder.extendedProperty("oldCoreferenceChainId", resolvedEntity.getCoreferenceChainId());
+                }
+            }
+
+            if (indocPresent) {
+                enBuilder.headMentionIndex(heads[newIndex]);
+            }
+
+            entities.add(enBuilder.build());
+            newIndex++;
         }
+
+        if (indocPresent) {
+            Collections.sort(entities, new Comparator<Entity>() {
+                @Override
+                public int compare(Entity o1, Entity o2) {
+                    return o1.getMentions().get(o1.getHeadMentionIndex()).getStartOffset()
+                            - o2.getMentions().get(o2.getHeadMentionIndex()).getStartOffset();
+                }
+            });
+        }
+
+        ListAttribute.Builder<Entity> elBuilder = new ListAttribute.Builder<>(Entity.class);
+        for (Entity entity : entities) {
+            elBuilder.add(entity);
+        }
+
 
         if (oldMentions.getExtendedProperties() != null) {
             for (Map.Entry<String, Object> me : oldMentions.getExtendedProperties().entrySet()) {
@@ -233,7 +227,6 @@ final class ConvertFromPreAdm1 {
                         me.getValue());
             }
         }
-
-        builder.put(AttributeKey.ENTITY.key(), elBuilder.build());
+        return elBuilder;
     }
 }

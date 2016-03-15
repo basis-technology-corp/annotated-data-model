@@ -38,7 +38,7 @@ public class DefaultValuesVisibleTest extends AdmAssert {
         builder.data("George Washington slept here.");
         ListAttribute.Builder<Entity> entityListBuilder = new ListAttribute.Builder<>(Entity.class);
         //int startOffset, int endOffset, String entityType)
-        Mention.Builder mentionBuilder = new Mention.Builder(0, 17, "politician");
+        Mention.Builder mentionBuilder = new Mention.Builder(0, 17);
         mentionBuilder.confidence(null); // null is the official default, but null is never rendered, default or not.
         Entity.Builder entityBuilder = new Entity.Builder();
         entityBuilder.mention(mentionBuilder.build());

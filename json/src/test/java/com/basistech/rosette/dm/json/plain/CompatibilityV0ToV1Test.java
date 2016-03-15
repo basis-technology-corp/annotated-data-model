@@ -19,7 +19,6 @@ package com.basistech.rosette.dm.json.plain;
 import com.basistech.rosette.dm.AnnotatedText;
 import com.basistech.rosette.dm.jackson.AnnotatedDataModelModule;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.File;
@@ -43,8 +42,7 @@ import static org.junit.Assert.assertEquals;
 // which is the index into each entity's private list of mentions.  The order
 // of the entities must be the document order of the head mentions.  The order
 // of mentions within an entity should follow document order.
-public class CompatibilityV0ToV1 {
-    @Ignore
+public class CompatibilityV0ToV1Test {
     @Test
     public void mentionsWithoutChains() throws Exception {
         ObjectMapper mapper = AnnotatedDataModelModule.setupObjectMapper(new ObjectMapper());
@@ -52,14 +50,13 @@ public class CompatibilityV0ToV1 {
                 AnnotatedText.class);
         assertEquals(7, text.getEntities().size());
         assertEquals(null, text.getEntities().get(3).getEntityId());
-        assertEquals(null, text.getEntities().get(3).getType());
+        assertEquals("PERSON", text.getEntities().get(3).getType()); // even if RES wasn't involved, we take the type from the head mention.
         assertEquals(null, text.getEntities().get(3).getConfidence());
         assertEquals(null, text.getEntities().get(3).getSentiment());
         assertEquals(null, text.getEntities().get(3).getHeadMentionIndex());
         assertEquals("Hillary", text.getEntities().get(3).getMentions().get(0).getNormalized());
     }
 
-    @Ignore
     @Test
     public void mentionsWithChains() throws Exception {
         ObjectMapper mapper = AnnotatedDataModelModule.setupObjectMapper(new ObjectMapper());
@@ -68,15 +65,14 @@ public class CompatibilityV0ToV1 {
         assertEquals(4, text.getEntities().size());
         // Hillary should be entity index 3, based on doc order of head mentions.
         assertEquals(null, text.getEntities().get(3).getEntityId());
-        assertEquals(null, text.getEntities().get(3).getType());
+        assertEquals("PERSON", text.getEntities().get(3).getType());
         assertEquals(null, text.getEntities().get(3).getConfidence());
         assertEquals(null, text.getEntities().get(3).getSentiment());
         assertEquals(1, (int) text.getEntities().get(3).getHeadMentionIndex());
         assertEquals("Hillary", text.getEntities().get(3).getMentions().get(0).getNormalized());
-        assertEquals("Hillary Clinton", text.getEntities().get(2).getMentions().get(1).getNormalized());
+        assertEquals("Hillary Clinton", text.getEntities().get(3).getMentions().get(1).getNormalized());
     }
 
-    @Ignore
     @Test
     public void mentionsWithResolvedEntities() throws Exception {
         ObjectMapper mapper = AnnotatedDataModelModule.setupObjectMapper(new ObjectMapper());
