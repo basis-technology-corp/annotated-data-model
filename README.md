@@ -123,7 +123,7 @@ array variation reduces overhead.
 The library has a concept of the version of the serialized form. When
 serializing, it adds a `version` property, and when deserializing it
 checks this version for compatibility. As of now, the format is at
-version 1.0.0. The deserialization code accepts either '1.x.y' or
+version 1.1.0. The deserialization code accepts either '1.x.y' or
 nothing for a version. Future versions may include the ability to read
 and convert old formats.
 
@@ -140,7 +140,7 @@ the model, and has dependencies, notably on Guava.
 <dependency>
     <groupId>com.basistech</groupId>
     <artifactId>adm-model</artifactId>
-    <version>1.9.100</version>
+    <version>2.0.0</version>
 </dependency>
 
 ````
@@ -155,7 +155,7 @@ Jackson.
 <dependency>
     <groupId>com.basistech</groupId>
     <artifactId>adm-json</artifactId>
-    <version>1.9.100</version>
+    <version>2.0.0</version>
 </dependency>
 
 ```

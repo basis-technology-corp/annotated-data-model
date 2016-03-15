@@ -46,7 +46,7 @@ public class CompatibilityV100ToV110Test {
     @Test
     public void mentionsWithoutChains() throws Exception {
         ObjectMapper mapper = AnnotatedDataModelModule.setupObjectMapper(new ObjectMapper());
-        AnnotatedText text = mapper.readValue(new File("test-data/simple_doc0_no_chains_adm_v0.json"),
+        AnnotatedText text = mapper.readValue(new File("test-data/simple_doc0_no_chains_adm_v100.json"),
                 AnnotatedText.class);
         assertEquals(7, text.getEntities().size());
         assertEquals(null, text.getEntities().get(3).getEntityId());
@@ -60,7 +60,7 @@ public class CompatibilityV100ToV110Test {
     @Test
     public void mentionsWithChains() throws Exception {
         ObjectMapper mapper = AnnotatedDataModelModule.setupObjectMapper(new ObjectMapper());
-        AnnotatedText text = mapper.readValue(new File("test-data/simple_doc0_with_chains_adm_v0.json"),
+        AnnotatedText text = mapper.readValue(new File("test-data/simple_doc0_with_chains_adm_v100.json"),
                 AnnotatedText.class);
         assertEquals(4, text.getEntities().size());
         // Hillary should be entity index 3, based on doc order of head mentions.
@@ -76,7 +76,7 @@ public class CompatibilityV100ToV110Test {
     @Test
     public void mentionsWithResolvedEntities() throws Exception {
         ObjectMapper mapper = AnnotatedDataModelModule.setupObjectMapper(new ObjectMapper());
-        AnnotatedText text = mapper.readValue(new File("test-data/simple_doc0_resolved_adm_v0.json"),
+        AnnotatedText text = mapper.readValue(new File("test-data/simple_doc0_resolved_adm_v100.json"),
                 AnnotatedText.class);
         assertEquals(4, text.getEntities().size());
         // Hillary should be entity index 3, based on doc order of head mentions.
