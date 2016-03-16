@@ -13,11 +13,59 @@ deprecated because of ROS-43.  It still returns the top result only.
 
 ### [ROS-43](https://basistech.atlassian.net/browse/ROS-43) Combine EntityMentions and ResolvedEntity
 
-TODO
+Old behavior:
+
+`EntityMention` and `ResolvedEntity` are produced in separate lists,
+releated by the chainId field, where the chainId of a `ResolvedEntity`
+is the index of the head mention in the list of `EntityMention`.  All
+`EntityMention`s with the same chainId are mentions of the same
+entity.  It is awkward to interate though the entities, which seems to
+be the most popular use-case.
+
+New behavior:
+
+`EntityMention` and `ResolvedEntity` are deprecated, replaced by
+`Mention` and `Entity`.  An `Entity` *contains* a list of one or more
+`Mention`s.  The `Entity` list is ordered by the document order of the
+head mentions.  The `Mention` list in each `Entity` is in document
+order, but note that mentions across entities are not ordered in this
+way.  Each `Entity` contains a `headMentionIndex` which points to its
+head mention.
+
+The entity type field now lives at the `Entity` level, not the
+`Mention` level.
+
+If no chaining is done, each `Entity` will have a single `Mention`
+without a `headMentionIndex` (it will be null).
+
+If chaining is done, `headMentionIndex` will always be non-null.  Note
+that it is possible to do chaining but still end up with all singleton
+entities.  In this case, `headMentionIndex` for each `Entity` will be
+0.
+
+If entity resolution is also done, the `Entity` will have an
+`entityId` in addition to the `headMentionIndex`.
+
+It's now easy to iterate through the entities, and the mentions within
+an entity.  However, it is awkward to get a list of mentions in
+document order.  A helper method may be added for this in the future.
+
+Older json containing `EntityMention` and `ResolvedEntity` will be
+deserialized into the new data structure, compatibly, so you can code
+to the new api, or still use the deprecated classes and methods.  It
+is recommended to switch to the new api, and to re-serialize any files
+with the old json format, since the compatibility layer does add some
+overhead.
+
 
 ### [ROS-50](https://basistech.atlassian.net/browse/ROS-50) Add version attribute
 
-TODO
+This change adds a new version attribute to the serialized json form
+of `AnnotatedText`.  It will currently use version 1.1.0.  A older
+json without a version attribute will be treated as having version
+1.0.0, and it will be converted compatibly.  The changes between
+versions 1.0.0 and 1.1.0 are detailed above, in ROS-43.  If an
+incompatible version is found at runtime, an exception will be thrown.
 
 
 ## 2.0.0
