@@ -28,7 +28,7 @@ New behavior:
 `Mention` and `Entity`.  An `Entity` *contains* a list of one or more
 `Mention`s.  The `Entity` list is ordered by the document order of the
 head mentions.  The `Mention` list in each `Entity` is in document
-order, but note that mentions across entities are not ordered in this
+order, but note that mentions across entities cannot be ordered in this
 way.  Each `Entity` contains a `headMentionIndex` which points to its
 head mention.
 
