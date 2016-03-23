@@ -27,7 +27,7 @@ import java.util.Map;
 
 /**
  * Utility class with methods for conversion of the data from
- * the pre-1.0.0 data model to the 1.0.0 data model.
+ * the pre-1.1.0 data model to the 1.1.0 data model.
  */
 @SuppressWarnings("deprecation")
 final class ConvertFromPreAdm1 {

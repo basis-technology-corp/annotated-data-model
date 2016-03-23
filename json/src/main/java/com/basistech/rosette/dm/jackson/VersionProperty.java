@@ -26,7 +26,7 @@ import com.fasterxml.jackson.databind.ser.VirtualBeanPropertyWriter;
 import com.fasterxml.jackson.databind.util.Annotations;
 
 /**
- * Custom injected property that injects the version of the ADM _as a Json data model_.
+ * Custom injected property that injects the version of the ADM <i>as a Json data model</i>.
  * Version history:
  * <ul>
  *     <li>1.0.0 -- the 'classic' ADM</li>

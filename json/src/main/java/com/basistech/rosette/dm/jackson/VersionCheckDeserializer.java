@@ -25,13 +25,8 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import java.io.IOException;
 
 /**
- * At some point in the future, this library may include custom deserialization
- * to allow reading of old versions of the data structure. Until then,
- * this class simply catches incompatible versions. Note that this can't
- * catch 'no version at all', so it's mostly useful to prevent someone
- * trying to feed (e.g.) a Version 2 ADM into a Version 1 library, and not
- * the other way around.
- *
+ * Validate the version property. Eventually, the version property is used
+ * in the deserializer for AnnotatedText to trigger compatibility processing.
  */
 public class VersionCheckDeserializer extends JsonDeserializer<String> {
     @Override
