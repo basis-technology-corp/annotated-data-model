@@ -30,9 +30,9 @@ import java.util.Map;
  * the pre-1.1.0 data model to the 1.1.0 data model.
  */
 @SuppressWarnings("deprecation")
-final class ConvertFromPreAdm1 {
+final class ConvertFromPreAdm11 {
 
-    private ConvertFromPreAdm1() {
+    private ConvertFromPreAdm11() {
         //
     }
 
@@ -79,7 +79,8 @@ final class ConvertFromPreAdm1 {
 
 
     // there are at least indoc chains
-    static void doResolvedConversion(ListAttribute<EntityMention> oldMentions,
+    static void doResolvedConversion(ListAttribute<Entity> newResolved,
+                                     ListAttribute<EntityMention> oldMentions,
                                      ListAttribute<ResolvedEntity> oldResolved,
                                      ImmutableMap.Builder<String, BaseAttribute> builder) {
 
@@ -151,7 +152,7 @@ final class ConvertFromPreAdm1 {
         }
 
 
-        ListAttribute.Builder<Entity> elBuilder = buildEntities(oldMentions, resolvedByChainId, indocPresent, mentionsByEntities, heads);
+        ListAttribute.Builder<Entity> elBuilder = buildEntities(newResolved, oldMentions, resolvedByChainId, indocPresent, mentionsByEntities, heads);
 
         builder.put(AttributeKey.ENTITY.key(), elBuilder.build());
     }
@@ -167,13 +168,16 @@ final class ConvertFromPreAdm1 {
         builder.put(AttributeKey.ENTITY.key(), elBuilder.build());
     }
 
-    private static ListAttribute.Builder<Entity> buildEntities(ListAttribute<EntityMention> oldMentions,
+    private static ListAttribute.Builder<Entity> buildEntities(ListAttribute<Entity> newResolved, ListAttribute<EntityMention> oldMentions,
                                                                ResolvedEntity[] resolvedByChainId,
                                                                boolean indocPresent,
                                                                List<List<EntityMention>> mentionsByEntities,
                                                                int[] heads) {
         // Since we need to sort, put them in an ordinary list for a start.
         List<Entity> entities = Lists.newArrayList();
+        if (newResolved != null) {
+            entities.addAll(newResolved);
+        }
 
         // now we can just walk mentionsByEntities to build the results.
         int newIndex = 0;
@@ -230,6 +234,13 @@ final class ConvertFromPreAdm1 {
                         me.getValue());
             }
         }
+
+        if (newResolved != null && newResolved.getExtendedProperties().size() != 0) {
+            for (Map.Entry<String, Object> me : newResolved.getExtendedProperties().entrySet()) {
+                elBuilder.extendedProperty(me.getKey(),  me.getValue());
+            }
+        }
+
         return elBuilder;
     }
 

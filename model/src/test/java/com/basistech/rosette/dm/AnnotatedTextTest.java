@@ -492,4 +492,34 @@ public class AnnotatedTextTest {
         AnnotatedText text = new AnnotatedText.Builder().build();
         assertNull(text.toString());
     }
+
+    @Test
+    public void multipleEntriesWithSameKeyCrash() throws Exception {
+        AnnotatedText.Builder builder = new AnnotatedText.Builder().data("Basis is great");
+        // tokens
+        ListAttribute.Builder<Token> tokenListBuilder = new ListAttribute.Builder<>(Token.class);
+        Token.Builder tokenBuilder = new Token.Builder(0, 5, "Basis");
+        tokenListBuilder.add(tokenBuilder.build());
+        tokenBuilder = new Token.Builder(6, 8, "is");
+        tokenListBuilder.add(tokenBuilder.build());
+        tokenBuilder = new Token.Builder(9, 14, "great");
+        tokenListBuilder.add(tokenBuilder.build());
+        builder.tokens(tokenListBuilder.build());
+        // mentions
+        ListAttribute.Builder<EntityMention> emListBuilder = new ListAttribute.Builder<>(EntityMention.class);
+        EntityMention.Builder emBuilder = new EntityMention.Builder(0, 5, "ORGANIZATION");
+        emBuilder.normalized("Basis");
+        emBuilder.coreferenceChainId(0);
+        emListBuilder.add(emBuilder.build());
+        builder.entityMentions(emListBuilder.build());
+        AnnotatedText input = builder.build();
+
+        AnnotatedText.Builder output = new AnnotatedText.Builder(input);
+        ListAttribute.Builder<ResolvedEntity> reListBuilder =
+                new ListAttribute.Builder<>(ResolvedEntity.class);
+        ResolvedEntity.Builder reBuilder = new ResolvedEntity.Builder(0, 5, null);
+        reListBuilder.add(reBuilder.build());
+        output.resolvedEntities(reListBuilder.build());
+        output.build();
+    }
 }

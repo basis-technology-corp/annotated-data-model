@@ -76,8 +76,8 @@ public class AnnotatedText {
     }
 
     /*
-     * This method is called from the package-private constructor that is only called when deserializing
-      * json. It builds the attributes from the
+     * This method is called from the constructor. It can encounter 'old' attributes
+     * if there is data coming from old json.
      */
     @SuppressWarnings("unchecked")
     private static Map<String, BaseAttribute> absorbAttributes(Map<String, BaseAttribute> attributes) {
@@ -86,9 +86,13 @@ public class AnnotatedText {
             return ImmutableMap.of();
         }
 
+        ListAttribute<Entity> sourceEntityList = (ListAttribute<Entity>) attributes.get(AttributeKey.ENTITY.key());
+
         for (Map.Entry<String, BaseAttribute> me : attributes.entrySet()) {
             if (!AttributeKey.RESOLVED_ENTITY.key().equals(me.getKey())
-                && !AttributeKey.ENTITY_MENTION.key().equals(me.getKey())) {
+                && !AttributeKey.ENTITY_MENTION.key().equals(me.getKey())
+                    // defer entity
+                && !AttributeKey.ENTITY.key().equals(me.getKey())) {
                 builder.put(me);
             }
         }
@@ -97,7 +101,9 @@ public class AnnotatedText {
         ListAttribute<EntityMention> oldMentions = (ListAttribute<EntityMention>)attributes.get(AttributeKey.ENTITY_MENTION.key());
         ListAttribute<ResolvedEntity> oldResolved = (ListAttribute<ResolvedEntity>)attributes.get(AttributeKey.RESOLVED_ENTITY.key());
         if (anythingInThere(oldResolved) || anythingInThere(oldMentions)) {
-            ConvertFromPreAdm1.doResolvedConversion(oldMentions, oldResolved, builder);
+            ConvertFromPreAdm11.doResolvedConversion(sourceEntityList, oldMentions, oldResolved, builder);
+        } else if (sourceEntityList != null) {
+            builder.put(AttributeKey.ENTITY.key(), sourceEntityList);
         }
         return builder.build();
     }
