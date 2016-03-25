@@ -334,12 +334,14 @@ public class AnnotatedText {
     @Deprecated
     public ListAttribute<ResolvedEntity> getResolvedEntities() {
         if (compatResolvedEntities == null) {
+            ListAttribute.Builder<ResolvedEntity> reListBuilder = new ListAttribute.Builder<>(ResolvedEntity.class);
             ListAttribute<Entity> entities = getEntities();
             if (entities == null) {
-                return null;
+                // return an empty list, not a null.
+                compatResolvedEntities = reListBuilder.build();
+                return compatResolvedEntities;
             }
 
-            ListAttribute.Builder<ResolvedEntity> reListBuilder = new ListAttribute.Builder<>(ResolvedEntity.class);
             if (entities.getExtendedProperties() != null) {
                 for (Map.Entry<String, Object> me : entities.getExtendedProperties().entrySet()) {
                     String key = me.getKey();
