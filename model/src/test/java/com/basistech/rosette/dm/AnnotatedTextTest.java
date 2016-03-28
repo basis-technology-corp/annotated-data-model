@@ -522,4 +522,22 @@ public class AnnotatedTextTest {
         output.resolvedEntities(reListBuilder.build());
         output.build();
     }
+
+    @Test
+    public void testBuildEntity() throws Exception {
+        ListAttribute.Builder<Entity> entityListBuilder = new ListAttribute.Builder<>(Entity.class);
+        Mention mention1 = new Mention.Builder(10, 16).normalized("George").build();
+        Mention mention2 = new Mention.Builder(0, 6).normalized("George").build();
+        Entity.Builder entityBuilder = new Entity.Builder().mention(mention1).mention(mention2).type("PERSON");
+        entityListBuilder.add(entityBuilder.build());
+        AnnotatedText text = new AnnotatedText.Builder().entities(entityListBuilder.build()).build();
+
+        assertEquals(1, text.getEntities().size());
+        assertEquals(2, text.getEntityMentions().size());
+        assertEquals(0, text.getEntityMentions().get(0).getStartOffset());
+        assertEquals("PERSON", text.getEntityMentions().get(0).getEntityType());
+        assertEquals(10, text.getEntityMentions().get(1).getStartOffset());
+        assertEquals("PERSON", text.getEntityMentions().get(1).getEntityType());
+        assertNull(text.getResolvedEntities());
+    }
 }

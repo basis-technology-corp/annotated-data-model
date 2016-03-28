@@ -24,24 +24,26 @@ import org.junit.Test;
 import java.io.File;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 // From v0 to v1, we deprecated EntityMention and ResolvedEntity, and
 // introduced Entity.  v0 json should be converted to the new Entity model.
 //
-//    mention            type      chainId
-// 0  Bill Clinton       PERSON          0
-// 1  president          TITLE           1
-// 2  Clinton            PERSON          0
-// 3  Hillary            PERSON          5
-// 4  Secretary of State TITLE           4
-// 5  Hillary Clinton    PERSON          5
-// 6  president          TITLE           1
+//    mention            type      chainId   startOffset
+// 0  Bill Clinton       PERSON          0             0
+// 1  president          TITLE           1            26
+// 2  Clinton            PERSON          0            38
+// 3  Hillary            PERSON          5            53
+// 4  Secretary of State TITLE           4            74
+// 5  Hillary Clinton    PERSON          5            95
+// 6  president          TITLE           1           119
 //
 // In the old model, chainId referred to the index of the head mention in
 // the list of all mentions.  In the new model, each entity has a headMention,
 // which is the index into each entity's private list of mentions.  The order
 // of the entities must be the document order of the head mentions.  The order
 // of mentions within an entity should follow document order.
+@SuppressWarnings("deprecation")
 public class CompatibilityV100ToV110Test {
     @Test
     public void mentionsWithoutChains() throws Exception {
@@ -50,11 +52,23 @@ public class CompatibilityV100ToV110Test {
                 AnnotatedText.class);
         assertEquals(7, text.getEntities().size());
         assertEquals(null, text.getEntities().get(3).getEntityId());
-        assertEquals("PERSON", text.getEntities().get(3).getType()); // even if RES wasn't involved, we take the type from the head mention.
+        // even if RES wasn't involved, we take the type from the head mention.
+        assertEquals("PERSON", text.getEntities().get(3).getType());
         assertEquals(null, text.getEntities().get(3).getConfidence());
         assertEquals(null, text.getEntities().get(3).getSentiment());
         assertEquals(null, text.getEntities().get(3).getHeadMentionIndex());
         assertEquals("Hillary", text.getEntities().get(3).getMentions().get(0).getNormalized());
+
+        assertEquals(7, text.getEntityMentions().size());
+        assertEquals(0, text.getEntityMentions().get(0).getStartOffset());
+        assertEquals(26, text.getEntityMentions().get(1).getStartOffset());
+        assertEquals(38, text.getEntityMentions().get(2).getStartOffset());
+        assertEquals(53, text.getEntityMentions().get(3).getStartOffset());
+        assertEquals(74, text.getEntityMentions().get(4).getStartOffset());
+        assertEquals(95, text.getEntityMentions().get(5).getStartOffset());
+        assertEquals(119, text.getEntityMentions().get(6).getStartOffset());
+
+        assertNull(text.getResolvedEntities());
     }
 
     @Test
@@ -71,6 +85,21 @@ public class CompatibilityV100ToV110Test {
         assertEquals(1, (int) text.getEntities().get(3).getHeadMentionIndex());
         assertEquals("Hillary", text.getEntities().get(3).getMentions().get(0).getNormalized());
         assertEquals("Hillary Clinton", text.getEntities().get(3).getMentions().get(1).getNormalized());
+
+        assertEquals(7, text.getEntityMentions().size());
+        assertEquals(0, text.getEntityMentions().get(0).getStartOffset());
+        assertEquals(26, text.getEntityMentions().get(1).getStartOffset());
+        assertEquals(38, text.getEntityMentions().get(2).getStartOffset());
+        assertEquals(53, text.getEntityMentions().get(3).getStartOffset());
+        assertEquals(74, text.getEntityMentions().get(4).getStartOffset());
+        assertEquals(95, text.getEntityMentions().get(5).getStartOffset());
+        assertEquals(119, text.getEntityMentions().get(6).getStartOffset());
+
+        assertEquals(4, text.getResolvedEntities().size());
+        assertEquals(0, (int) text.getResolvedEntities().get(0).getCoreferenceChainId());
+        assertEquals(1, (int) text.getResolvedEntities().get(1).getCoreferenceChainId());
+        assertEquals(4, (int) text.getResolvedEntities().get(2).getCoreferenceChainId());
+        assertEquals(5, (int) text.getResolvedEntities().get(3).getCoreferenceChainId());
     }
 
     @Test
@@ -87,5 +116,21 @@ public class CompatibilityV100ToV110Test {
         assertEquals(1, (int) text.getEntities().get(3).getHeadMentionIndex());
         assertEquals("Hillary", text.getEntities().get(3).getMentions().get(0).getNormalized());
         assertEquals("Hillary Clinton", text.getEntities().get(3).getMentions().get(1).getNormalized());
+
+        assertEquals(7, text.getEntityMentions().size());
+        assertEquals(0, text.getEntityMentions().get(0).getStartOffset());
+        assertEquals(26, text.getEntityMentions().get(1).getStartOffset());
+        assertEquals(38, text.getEntityMentions().get(2).getStartOffset());
+        assertEquals(53, text.getEntityMentions().get(3).getStartOffset());
+        assertEquals(74, text.getEntityMentions().get(4).getStartOffset());
+        assertEquals(95, text.getEntityMentions().get(5).getStartOffset());
+        assertEquals(119, text.getEntityMentions().get(6).getStartOffset());
+
+        assertEquals(4, text.getResolvedEntities().size());
+        assertEquals(4, text.getResolvedEntities().size());
+        assertEquals("Q1124", text.getResolvedEntities().get(0).getEntityId());
+        assertEquals(null, text.getResolvedEntities().get(1).getEntityId());
+        assertEquals(null, text.getResolvedEntities().get(2).getEntityId());
+        assertEquals("Q6294", text.getResolvedEntities().get(3).getEntityId());
     }
 }
