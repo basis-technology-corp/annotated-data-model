@@ -202,7 +202,7 @@ final class ConvertFromPreAdm11 {
 
             if (resolvedEntity != null) {
                 convertOneEntity(enBuilder, resolvedEntity);
-            } else if (entityMention.getCoreferenceChainId() != null){
+            } else if (entityMention.getCoreferenceChainId() != null) {
                 // no resolved entity, but we still need a coref chain.
                 enBuilder.extendedProperty("oldCoreferenceChainId", entityMention.getCoreferenceChainId());
             }

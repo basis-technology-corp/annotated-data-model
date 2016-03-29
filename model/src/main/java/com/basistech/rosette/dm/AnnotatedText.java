@@ -339,7 +339,7 @@ public class AnnotatedText {
             if (entities == null) {
                 // return an empty list, not a null.
                 compatResolvedEntities = reListBuilder.build();
-                return compatResolvedEntities;
+                return null;
             }
 
             if (entities.getExtendedProperties() != null) {
@@ -352,6 +352,10 @@ public class AnnotatedText {
             }
 
             for (Entity entity : entities) {
+                if (entity.getHeadMentionIndex() == null) {
+                    // ignore entities without head mentions.
+                    continue;
+                }
                 int headStart = 0;
                 int headEnd = 0;
                 if (entity.getHeadMentionIndex() != null) {
@@ -381,9 +385,12 @@ public class AnnotatedText {
                 reListBuilder.add(reBuilder.build());
             }
             compatResolvedEntities = reListBuilder.build();
-
         }
-        return compatResolvedEntities;
+        if (compatResolvedEntities.size() != 0) {
+            return compatResolvedEntities;
+        } else {
+            return null;
+        }
     }
 
     /**
