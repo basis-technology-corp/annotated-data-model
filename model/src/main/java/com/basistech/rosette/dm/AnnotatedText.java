@@ -53,7 +53,9 @@ public class AnnotatedText {
      */
     private final Map<String, BaseAttribute> attributes;
     private final Map<String, List<String>> documentMetadata;
+    private boolean compatMentionsProcessed;
     private ListAttribute<EntityMention> compatMentions;
+    private boolean compatResolvedEntitiesProcessed;
     private ListAttribute<ResolvedEntity> compatResolvedEntities;
 
     AnnotatedText(CharSequence data,
@@ -109,7 +111,7 @@ public class AnnotatedText {
     }
 
     private static <T> boolean anythingInThere(List<T> list) {
-        return list != null && !list.isEmpty();
+        return list != null;
     }
 
     /**
@@ -219,12 +221,15 @@ public class AnnotatedText {
     @Deprecated
     public ListAttribute<EntityMention> getEntityMentions() {
 
-        if (compatMentions == null) {
+        if (!compatMentionsProcessed) {
+            compatMentionsProcessed = true;
             List<EntityMention> entityMentionList = Lists.newArrayList();
             ListAttribute<Entity> entities = getEntities();
 
             if (entities != null) {
                 downconvertEntities(entityMentionList, entities);
+            } else {
+                return null; // null entities = null compat.
             }
 
             ListAttribute.Builder<EntityMention> cmListBuilder = new ListAttribute.Builder<>(EntityMention.class);
@@ -241,7 +246,6 @@ public class AnnotatedText {
                     }
                 }
             }
-
             compatMentions = cmListBuilder.build();
         }
         return compatMentions;
@@ -333,12 +337,11 @@ public class AnnotatedText {
     @SuppressWarnings("unchecked")
     @Deprecated
     public ListAttribute<ResolvedEntity> getResolvedEntities() {
-        if (compatResolvedEntities == null) {
+        if (!compatResolvedEntitiesProcessed) {
+            compatResolvedEntitiesProcessed = true;
             ListAttribute.Builder<ResolvedEntity> reListBuilder = new ListAttribute.Builder<>(ResolvedEntity.class);
             ListAttribute<Entity> entities = getEntities();
             if (entities == null) {
-                // return an empty list, not a null.
-                compatResolvedEntities = reListBuilder.build();
                 return null;
             }
 
@@ -385,12 +388,11 @@ public class AnnotatedText {
                 reListBuilder.add(reBuilder.build());
             }
             compatResolvedEntities = reListBuilder.build();
+            if (compatResolvedEntities.size() == 0) { // if no resolved entities survived, don't make it look as if someone specified them.
+                compatResolvedEntities = null;
+            }
         }
-        if (compatResolvedEntities.size() != 0) {
-            return compatResolvedEntities;
-        } else {
-            return null;
-        }
+        return compatResolvedEntities;
     }
 
     /**
@@ -526,6 +528,8 @@ public class AnnotatedText {
          */
         @Deprecated
         public Builder entityMentions(ListAttribute<EntityMention> entityMentions) {
+            // a new set of old objects replaces any prior set of new objects.
+            attributes.remove(AttributeKey.ENTITY.key());
             attributes.put(AttributeKey.ENTITY_MENTION.key(), entityMentions);
             return this;
         }
@@ -547,6 +551,9 @@ public class AnnotatedText {
          * @return this.
          */
         public Builder entities(ListAttribute<Entity> entities) {
+            // specifying entities replaces the old entity structures.
+            attributes.remove(AttributeKey.ENTITY_MENTION.key());
+            attributes.remove(AttributeKey.RESOLVED_ENTITY.key());
             attributes.put(AttributeKey.ENTITY.key(), entities);
             return this;
         }
@@ -560,6 +567,7 @@ public class AnnotatedText {
          */
         @Deprecated
         public Builder resolvedEntities(ListAttribute<ResolvedEntity> resolvedEntities) {
+            attributes.remove(AttributeKey.ENTITY.key());
             attributes.put(AttributeKey.RESOLVED_ENTITY.key(), resolvedEntities);
             return this;
         }

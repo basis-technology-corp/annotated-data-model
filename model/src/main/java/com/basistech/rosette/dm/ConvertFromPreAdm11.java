@@ -111,7 +111,7 @@ final class ConvertFromPreAdm11 {
         // Note that indoc chain ids can be sparse, or altogether absent.
         // Absent is important, as it means that no indoc happened.
         // If any indoc happened, all the mentions have indoc chains.
-        boolean indocPresent = oldMentions.get(0).getCoreferenceChainId() != null;
+        boolean indocPresent = !oldMentions.isEmpty() && oldMentions.get(0).getCoreferenceChainId() != null;
 
 
         int[] newIndices = new int[maxChainId + 1];
@@ -219,6 +219,13 @@ final class ConvertFromPreAdm11 {
             Collections.sort(entities, new Comparator<Entity>() {
                 @Override
                 public int compare(Entity o1, Entity o2) {
+                    if (o1.getHeadMentionIndex() == null && o2.getHeadMentionIndex() == null) {
+                        return 0;
+                    } else if (o1.getHeadMentionIndex() == null && o2.getHeadMentionIndex() != null) {
+                        return -1;
+                    } else if (o1.getHeadMentionIndex() != null && o2.getHeadMentionIndex() == null) {
+                        return 1;
+                    }
                     return o1.getMentions().get(o1.getHeadMentionIndex()).getStartOffset()
                             - o2.getMentions().get(o2.getHeadMentionIndex()).getStartOffset();
                 }
