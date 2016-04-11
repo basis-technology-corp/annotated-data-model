@@ -122,7 +122,7 @@ final class ConvertFromPreAdm11 {
 
         for (int oldIndex = 0; oldIndex < oldMentions.size(); oldIndex++) {
             EntityMention em = oldMentions.get(oldIndex);
-            if (em.getCoreferenceChainId() != null) {
+            if (em.getCoreferenceChainId() != null && em.getCoreferenceChainId() != -1) {
                 if (chainToIndex[em.getCoreferenceChainId()] == -1) {
                     chainToIndex[em.getCoreferenceChainId()] = newEntityCount++;
                 }
@@ -196,7 +196,7 @@ final class ConvertFromPreAdm11 {
 
             EntityMention entityMention = entityMentions.get(0);
             ResolvedEntity resolvedEntity = null;
-            if (entityMention.getCoreferenceChainId() != null) {
+            if (entityMention.getCoreferenceChainId() != null && entityMention.getCoreferenceChainId() != -1) {
                 resolvedEntity = resolvedByChainId[entityMention.getCoreferenceChainId()];
             }
 
