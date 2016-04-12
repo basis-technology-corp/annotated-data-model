@@ -82,7 +82,7 @@ public class AnnotatedText {
      * if there is data coming from old json.
      */
     @SuppressWarnings("unchecked")
-    private static Map<String, BaseAttribute> absorbAttributes(Map<String, BaseAttribute> attributes) {
+    private Map<String, BaseAttribute> absorbAttributes(Map<String, BaseAttribute> attributes) {
         ImmutableMap.Builder<String, BaseAttribute> builder = new ImmutableMap.Builder<>();
         if (attributes == null) {
             return ImmutableMap.of();
@@ -106,6 +106,13 @@ public class AnnotatedText {
             ConvertFromPreAdm11.doResolvedConversion(sourceEntityList, oldMentions, oldResolved, builder);
         } else if (sourceEntityList != null) {
             builder.put(AttributeKey.ENTITY.key(), sourceEntityList);
+        }
+
+        if (oldResolved != null && oldResolved.size() == 0) {
+            // In this one special class we need to end up with an empty list.
+            // The code otherwise ends up with null.
+            compatResolvedEntities = new ListAttribute.Builder<ResolvedEntity>(ResolvedEntity.class).build();
+            compatResolvedEntitiesProcessed = true;
         }
         return builder.build();
     }
@@ -251,7 +258,7 @@ public class AnnotatedText {
         return compatMentions;
     }
 
-    private void downconvertEntities(List<EntityMention> entityMentionList, ListAttribute<Entity> entities) {
+    private static void downconvertEntities(List<EntityMention> entityMentionList, ListAttribute<Entity> entities) {
         for (Entity entity : entities) {
             if (entity.getMentions() != null) {
                 for (Mention mention : entity.getMentions()) {
@@ -301,7 +308,11 @@ public class AnnotatedText {
         Collections.sort(entityMentionList, new Comparator<EntityMention>() {
             @Override
             public int compare(EntityMention o1, EntityMention o2) {
-                return o1.getStartOffset() - o2.getStartOffset();
+                if (o1.getStartOffset() == o2.getStartOffset()) {
+                    return o1.getEndOffset() - o2.getEndOffset();
+                } else {
+                    return o1.getStartOffset() - o2.getStartOffset();
+                }
             }
         });
     }
@@ -388,7 +399,8 @@ public class AnnotatedText {
                 reListBuilder.add(reBuilder.build());
             }
             compatResolvedEntities = reListBuilder.build();
-            if (compatResolvedEntities.size() == 0) { // if no resolved entities survived, don't make it look as if someone specified them.
+            if (compatResolvedEntities.size() == 0) { // If no resolved entities survived, don't make it look as if someone specified them.
+                /* But note special case in absorbAttributes when someone used the old API to create an empty list. */
                 compatResolvedEntities = null;
             }
         }
@@ -566,8 +578,20 @@ public class AnnotatedText {
          * @deprecated use {@link #entities(ListAttribute)}.
          */
         @Deprecated
+        @SuppressWarnings("unchecked")
         public Builder resolvedEntities(ListAttribute<ResolvedEntity> resolvedEntities) {
-            attributes.remove(AttributeKey.ENTITY.key());
+            if (attributes.containsKey(AttributeKey.ENTITY.key())) {
+                // we need to recreate the old mentions to go with 'old' resolved entities.
+                List<EntityMention> oldList = Lists.newArrayList();
+                downconvertEntities(oldList, (ListAttribute<Entity>) attributes.get(AttributeKey.ENTITY.key()));
+                attributes.remove(AttributeKey.ENTITY.key());
+                ListAttribute.Builder<EntityMention> oldBuilder = new ListAttribute.Builder<>(EntityMention.class);
+                for (EntityMention em : oldList) {
+                    oldBuilder.add(em);
+                }
+                attributes.remove(AttributeKey.ENTITY.key());
+                attributes.put(AttributeKey.ENTITY_MENTION.key(), oldBuilder.build());
+            }
             attributes.put(AttributeKey.RESOLVED_ENTITY.key(), resolvedEntities);
             return this;
         }

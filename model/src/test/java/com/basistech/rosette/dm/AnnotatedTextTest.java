@@ -518,6 +518,7 @@ public class AnnotatedTextTest {
         ListAttribute.Builder<ResolvedEntity> reListBuilder =
                 new ListAttribute.Builder<>(ResolvedEntity.class);
         ResolvedEntity.Builder reBuilder = new ResolvedEntity.Builder(0, 5, null);
+        reBuilder.coreferenceChainId(0);
         reListBuilder.add(reBuilder.build());
         output.resolvedEntities(reListBuilder.build());
         output.build();

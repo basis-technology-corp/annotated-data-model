@@ -226,6 +226,12 @@ final class ConvertFromPreAdm11 {
                     } else if (o1.getHeadMentionIndex() != null && o2.getHeadMentionIndex() == null) {
                         return 1;
                     }
+
+                    if (o1.getMentions().get(o1.getHeadMentionIndex()).getStartOffset()
+                            == o2.getMentions().get(o2.getHeadMentionIndex()).getStartOffset()) {
+                        return o1.getMentions().get(o1.getHeadMentionIndex()).getEndOffset()
+                                - o2.getMentions().get(o2.getHeadMentionIndex()).getEndOffset();
+                    }
                     return o1.getMentions().get(o1.getHeadMentionIndex()).getStartOffset()
                             - o2.getMentions().get(o2.getHeadMentionIndex()).getStartOffset();
                 }
