@@ -61,7 +61,7 @@ overhead.
 ### [ROS-50](https://basistech.atlassian.net/browse/ROS-50) Add version attribute
 
 This change adds a new version attribute to the serialized json form
-of `AnnotatedText`.  It will currently use version 1.1.0.  A older
+of `AnnotatedText`.  It will currently use version 1.1.0.  An older
 json without a version attribute will be treated as having version
 1.0.0, and it will be converted compatibly.  The changes between
 versions 1.0.0 and 1.1.0 are detailed above, in ROS-43.  If an
