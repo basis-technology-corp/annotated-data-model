@@ -18,12 +18,11 @@ package com.basistech.rosette.dm.jackson;
 import com.basistech.rosette.dm.BaseAttribute;
 import com.basistech.rosette.dm.BaseNounPhrase;
 import com.basistech.rosette.dm.CategorizerResult;
-import com.basistech.rosette.dm.EntityMention;
+import com.basistech.rosette.dm.Entity;
 import com.basistech.rosette.dm.LanguageDetection;
 import com.basistech.rosette.dm.ListAttribute;
 import com.basistech.rosette.dm.RelationshipComponent;
 import com.basistech.rosette.dm.RelationshipMention;
-import com.basistech.rosette.dm.ResolvedEntity;
 import com.basistech.rosette.dm.ScriptRegion;
 import com.basistech.rosette.dm.Sentence;
 import com.basistech.rosette.dm.Token;
@@ -39,9 +38,12 @@ import com.basistech.rosette.dm.UnknownAttribute;
  */
 public enum KnownAttribute {
     BASE_NOUN_PHRASE("baseNounPhrases", BaseNounPhrase.class),
-    ENTITY_MENTION("entityMentions", EntityMention.class),
+    ENTITY("entities", Entity.class),
+    @SuppressWarnings("deprecation")
+    ENTITY_MENTION("entityMentions", com.basistech.rosette.dm.EntityMention.class),
     RELATIONSHIP_MENTION("relationshipMentions", RelationshipMention.class),
-    RESOLVED_ENTITY("resolvedEntities", ResolvedEntity.class),
+    @SuppressWarnings("deprecation")
+    RESOLVED_ENTITY("resolvedEntities", com.basistech.rosette.dm.ResolvedEntity.class),
     LANGUAGE_DETECTION("languageDetection", LanguageDetection.class),
     SCRIPT_REGION("scriptRegion", ScriptRegion.class),
     SENTENCE("sentence", Sentence.class),

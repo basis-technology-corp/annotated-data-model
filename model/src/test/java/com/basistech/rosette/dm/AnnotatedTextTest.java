@@ -34,6 +34,7 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertNull;
 
+@SuppressWarnings("deprecation")
 public class AnnotatedTextTest {
 
     @Test
@@ -239,12 +240,24 @@ public class AnnotatedTextTest {
         ListAttribute.Builder<ResolvedEntity> reListBuilder = new ListAttribute.Builder<>(ResolvedEntity.class);
 
         ResolvedEntity.Builder re1Builder = new ResolvedEntity.Builder(5, 11, "Q100");
+        re1Builder.coreferenceChainId(0);
         reListBuilder.add(re1Builder.build());
 
         ResolvedEntity.Builder re2Builder = new ResolvedEntity.Builder(16, 23, "Q1297");
+        re2Builder.coreferenceChainId(1);
         reListBuilder.add(re2Builder.build());
 
         builder.resolvedEntities(reListBuilder.build());
+
+        ListAttribute.Builder<EntityMention> mentionList = new ListAttribute.Builder<>(EntityMention.class);
+        EntityMention.Builder emBuilder = new EntityMention.Builder(5, 11, "LOCATION");
+        emBuilder.coreferenceChainId(0);
+        mentionList.add(emBuilder.build());
+        emBuilder = new EntityMention.Builder(16, 23, "LOCATION");
+        emBuilder.coreferenceChainId(1);
+        mentionList.add(emBuilder.build());
+        builder.entityMentions(mentionList.build());
+
         AnnotatedText text = builder.build();
 
         ResolvedEntity resolvedEntity;
@@ -378,6 +391,21 @@ public class AnnotatedTextTest {
     }
 
     @Test
+    public void entityWithSentiment() throws Exception {
+        Entity.Builder builder = new Entity.Builder();
+        builder.sentiment(new CategorizerResult.Builder("neg", 0.0).confidence(0.7).build());
+        builder.sentiment(new CategorizerResult.Builder("neu", 0.0).confidence(0.2)
+                .explanationSet(Lists.newArrayList("foo", "bar")).build());
+        builder.sentiment(new CategorizerResult.Builder("pos", 0.0).confidence(0.1).build());
+        Entity entity = builder.build();
+        assertEquals("neu", entity.getSentiment().get(1).getLabel());
+        assertEquals(0.0, entity.getSentiment().get(1).getScore(), 0.000001);
+        assertEquals(0.2, entity.getSentiment().get(1).getConfidence(), 0.000001);
+        assertEquals("bar", entity.getSentiment().get(1).getExplanationSet().get(1));
+        assertEquals(null, entity.getSentiment().get(2).getExplanationSet());
+    }
+
+    @Test
     public void relationMentions() {
         String argumentId = "/resolved/argument/";
         String argPhrase = "some-noun";
@@ -463,5 +491,54 @@ public class AnnotatedTextTest {
     public void nullToData() {
         AnnotatedText text = new AnnotatedText.Builder().build();
         assertNull(text.toString());
+    }
+
+    @Test
+    public void multipleEntriesWithSameKeyCrash() throws Exception {
+        AnnotatedText.Builder builder = new AnnotatedText.Builder().data("Basis is great");
+        // tokens
+        ListAttribute.Builder<Token> tokenListBuilder = new ListAttribute.Builder<>(Token.class);
+        Token.Builder tokenBuilder = new Token.Builder(0, 5, "Basis");
+        tokenListBuilder.add(tokenBuilder.build());
+        tokenBuilder = new Token.Builder(6, 8, "is");
+        tokenListBuilder.add(tokenBuilder.build());
+        tokenBuilder = new Token.Builder(9, 14, "great");
+        tokenListBuilder.add(tokenBuilder.build());
+        builder.tokens(tokenListBuilder.build());
+        // mentions
+        ListAttribute.Builder<EntityMention> emListBuilder = new ListAttribute.Builder<>(EntityMention.class);
+        EntityMention.Builder emBuilder = new EntityMention.Builder(0, 5, "ORGANIZATION");
+        emBuilder.normalized("Basis");
+        emBuilder.coreferenceChainId(0);
+        emListBuilder.add(emBuilder.build());
+        builder.entityMentions(emListBuilder.build());
+        AnnotatedText input = builder.build();
+
+        AnnotatedText.Builder output = new AnnotatedText.Builder(input);
+        ListAttribute.Builder<ResolvedEntity> reListBuilder =
+                new ListAttribute.Builder<>(ResolvedEntity.class);
+        ResolvedEntity.Builder reBuilder = new ResolvedEntity.Builder(0, 5, null);
+        reBuilder.coreferenceChainId(0);
+        reListBuilder.add(reBuilder.build());
+        output.resolvedEntities(reListBuilder.build());
+        output.build();
+    }
+
+    @Test
+    public void testBuildEntity() throws Exception {
+        ListAttribute.Builder<Entity> entityListBuilder = new ListAttribute.Builder<>(Entity.class);
+        Mention mention1 = new Mention.Builder(10, 16).normalized("George").build();
+        Mention mention2 = new Mention.Builder(0, 6).normalized("George").build();
+        Entity.Builder entityBuilder = new Entity.Builder().mention(mention1).mention(mention2).type("PERSON");
+        entityListBuilder.add(entityBuilder.build());
+        AnnotatedText text = new AnnotatedText.Builder().entities(entityListBuilder.build()).build();
+
+        assertEquals(1, text.getEntities().size());
+        assertEquals(2, text.getEntityMentions().size());
+        assertEquals(0, text.getEntityMentions().get(0).getStartOffset());
+        assertEquals("PERSON", text.getEntityMentions().get(0).getEntityType());
+        assertEquals(10, text.getEntityMentions().get(1).getStartOffset());
+        assertEquals("PERSON", text.getEntityMentions().get(1).getEntityType());
+        assertNull(text.getResolvedEntities());
     }
 }

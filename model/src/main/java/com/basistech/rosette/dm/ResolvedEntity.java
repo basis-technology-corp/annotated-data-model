@@ -26,7 +26,9 @@ import java.util.Map;
  * <a href="http://www.wikidata.org/wiki/Q23">Q23</a> from Wikidata.
  * An entity may optionally have a sentiment category associated with it
  * (e.g. "positive", "negative", "neutral").
+ * @deprecated replaced by {@link Entity}.
  */
+@Deprecated
 public class ResolvedEntity extends Attribute {
     private final String entityId;
     //I prefer 'chainId' over 'coreferenceChainId' but picked the latter to make it consistent with EntityMention
@@ -83,6 +85,8 @@ public class ResolvedEntity extends Attribute {
 
     /**
      * Returns the sentiment of this entity, or null if not computed.
+     * Only the top-ranked sentiment result is returned.  Use
+     * {@link Entity#getSentiment()} to obtain all results.
      *
      * @return the sentiment of this entity, or null if not computed.
      */

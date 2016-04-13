@@ -23,7 +23,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * A result from running Categorization.  A Categorizer typically emits
+ * A result from running Categorization. These objects are used to represent
+ * several different categorization processes, including sentiment.
+ * A Categorizer typically emits
  * a ranked list of {@code CategorizerResult}s.  Each result has a label
  * and a confidence.  Optional fields include an explanation set, and
  * per-feature scores.  This result holds the results for document

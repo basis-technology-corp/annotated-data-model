@@ -22,17 +22,18 @@ import com.basistech.rosette.dm.Attribute;
 import com.basistech.rosette.dm.BaseAttribute;
 import com.basistech.rosette.dm.BaseNounPhrase;
 import com.basistech.rosette.dm.CategorizerResult;
-import com.basistech.rosette.dm.EntityMention;
+import com.basistech.rosette.dm.Entity;
+import com.basistech.rosette.dm.Extent;
 import com.basistech.rosette.dm.HanMorphoAnalysis;
 import com.basistech.rosette.dm.KoreanMorphoAnalysis;
 import com.basistech.rosette.dm.LanguageDetection;
 import com.basistech.rosette.dm.ListAttribute;
+import com.basistech.rosette.dm.Mention;
 import com.basistech.rosette.dm.MorphoAnalysis;
 import com.basistech.rosette.dm.Name;
 import com.basistech.rosette.dm.RawData;
 import com.basistech.rosette.dm.RelationshipComponent;
 import com.basistech.rosette.dm.RelationshipMention;
-import com.basistech.rosette.dm.ResolvedEntity;
 import com.basistech.rosette.dm.ScriptRegion;
 import com.basistech.rosette.dm.Sentence;
 import com.basistech.rosette.dm.Token;
@@ -43,8 +44,11 @@ import com.basistech.rosette.dm.jackson.AttributeMixin;
 import com.basistech.rosette.dm.jackson.BaseNounPhraseMixin;
 import com.basistech.rosette.dm.jackson.CategorizerResultMixin;
 import com.basistech.rosette.dm.jackson.EntityMentionMixin;
+import com.basistech.rosette.dm.jackson.EntityMixin;
+import com.basistech.rosette.dm.jackson.ExtentMixin;
 import com.basistech.rosette.dm.jackson.HanMorphoAnalysisMixin;
 import com.basistech.rosette.dm.jackson.KoreanMorphoAnalysisMixin;
+import com.basistech.rosette.dm.jackson.MentionMixin;
 import com.basistech.rosette.dm.jackson.MorphoAnalysisMixin;
 import com.basistech.rosette.dm.jackson.NameMixin;
 import com.basistech.rosette.dm.jackson.RawDataMixin;
@@ -66,6 +70,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * supports an alternative that writes out Java objects as arrays, using a fixed order for the fields
  * This module installs customizations that read and write ADM using arrays.
  */
+@SuppressWarnings("deprecation")
 public class AnnotatedDataModelArrayModule extends EnumModule {
 
     public AnnotatedDataModelArrayModule() {
@@ -80,7 +85,9 @@ public class AnnotatedDataModelArrayModule extends EnumModule {
         context.setMixInAnnotations(BaseAttribute.class, BaseAttributeArrayMixin.class);
         context.setMixInAnnotations(BaseNounPhrase.class, BaseNounPhraseMixin.class);
         context.setMixInAnnotations(CategorizerResult.class, CategorizerResultMixin.class);
-        context.setMixInAnnotations(EntityMention.class, EntityMentionMixin.class);
+        context.setMixInAnnotations(com.basistech.rosette.dm.EntityMention.class, EntityMentionMixin.class);
+        context.setMixInAnnotations(Entity.class, EntityMixin.class);
+        context.setMixInAnnotations(Extent.class, ExtentMixin.class);
         context.setMixInAnnotations(RelationshipComponent.class, RelationshipComponentMixin.class);
         context.setMixInAnnotations(RelationshipMention.class, RelationshipMentionMixin.class);
         context.setMixInAnnotations(HanMorphoAnalysis.class, HanMorphoAnalysisMixin.class);
@@ -88,10 +95,11 @@ public class AnnotatedDataModelArrayModule extends EnumModule {
         context.setMixInAnnotations(LanguageDetection.class, LanguageDetectionArrayMixin.class);
         context.setMixInAnnotations(LanguageDetection.DetectionResult.class, LanguageDetectionArrayMixin.DetectionResultMixin.class);
         context.setMixInAnnotations(ListAttribute.class, ListAttributeArrayMixin.class);
+        context.setMixInAnnotations(Mention.class, MentionMixin.class);
         context.setMixInAnnotations(MorphoAnalysis.class, MorphoAnalysisMixin.class);
         context.setMixInAnnotations(Name.class, NameMixin.class);
         context.setMixInAnnotations(RawData.class, RawDataMixin.class);
-        context.setMixInAnnotations(ResolvedEntity.class, ResolvedEntityMixin.class);
+        context.setMixInAnnotations(com.basistech.rosette.dm.ResolvedEntity.class, ResolvedEntityMixin.class);
         context.setMixInAnnotations(Sentence.class, SentenceMixin.class);
         context.setMixInAnnotations(ScriptRegion.class, ScriptRegionMixin.class);
         context.setMixInAnnotations(Token.class, TokenArrayMixin.class);

@@ -19,7 +19,6 @@ import com.basistech.rosette.dm.AnnotatedText;
 import com.basistech.rosette.dm.ArabicMorphoAnalysis;
 import com.basistech.rosette.dm.BaseNounPhrase;
 import com.basistech.rosette.dm.CategorizerResult;
-import com.basistech.rosette.dm.EntityMention;
 import com.basistech.rosette.dm.Extent;
 import com.basistech.rosette.dm.HanMorphoAnalysis;
 import com.basistech.rosette.dm.KoreanMorphoAnalysis;
@@ -28,17 +27,18 @@ import com.basistech.rosette.dm.ListAttribute;
 import com.basistech.rosette.dm.MorphoAnalysis;
 import com.basistech.rosette.dm.RelationshipComponent;
 import com.basistech.rosette.dm.RelationshipMention;
-import com.basistech.rosette.dm.ResolvedEntity;
 import com.basistech.rosette.dm.ScriptRegion;
 import com.basistech.rosette.dm.Sentence;
 import com.basistech.rosette.dm.Token;
 import com.basistech.rosette.dm.TranslatedData;
 import com.basistech.rosette.dm.TranslatedTokens;
 import com.basistech.rosette.dm.jackson.AnnotatedDataModelModule;
+import com.basistech.rosette.dm.jackson.array.AnnotatedDataModelArrayModule;
 import com.basistech.util.ISO15924;
 import com.basistech.util.LanguageCode;
 import com.basistech.util.TextDomain;
 import com.basistech.util.TransliterationScheme;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.databind.ObjectWriter;
@@ -47,6 +47,7 @@ import com.google.common.collect.Maps;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.StringWriter;
 import java.util.List;
 import java.util.Map;
 
@@ -54,12 +55,13 @@ import java.util.Map;
  *
  */
 //CHECKSTYLE:OFF too messy to bother with.
+@SuppressWarnings("deprecation")
 public class JsonTest extends AdmAssert {
 
     public static final String THIS_IS_THE_TERRIER_SHOT_TO_BOSTON = "This is the terrier shot to Boston.";
     private BaseNounPhrase baseNounPhrase;
-    private EntityMention entityMention;
-    private ResolvedEntity resolvedEntity;
+    private com.basistech.rosette.dm.EntityMention entityMention;
+    private com.basistech.rosette.dm.ResolvedEntity resolvedEntity;
     private RelationshipMention relationshipMention;
     private LanguageDetection languageDetectionRegion;
     private LanguageDetection languageDetection;
@@ -86,8 +88,8 @@ public class JsonTest extends AdmAssert {
         bnpListBuilder.add(baseNounPhrase);
         builder.baseNounPhrases(bnpListBuilder.build());
 
-        ListAttribute.Builder<EntityMention> emListBuilder = new ListAttribute.Builder<>(EntityMention.class);
-        EntityMention.Builder emBuilder = new EntityMention.Builder(27, 33, "place");
+        ListAttribute.Builder<com.basistech.rosette.dm.EntityMention> emListBuilder = new ListAttribute.Builder<>(com.basistech.rosette.dm.EntityMention.class);
+        com.basistech.rosette.dm.EntityMention.Builder emBuilder = new com.basistech.rosette.dm.EntityMention.Builder(27, 33, "place");
         emBuilder.flags(42);
         emBuilder.normalized("bahston");
         emBuilder.source("testsource");
@@ -127,8 +129,8 @@ public class JsonTest extends AdmAssert {
         rmListBuilder.add(relationshipMention);
         builder.relationshipMentions(rmListBuilder.build());
 
-        ListAttribute.Builder<ResolvedEntity> reListBuilder = new ListAttribute.Builder<>(ResolvedEntity.class);
-        ResolvedEntity.Builder reBuilder = new ResolvedEntity.Builder(27, 33, "Q100");
+        ListAttribute.Builder<com.basistech.rosette.dm.ResolvedEntity> reListBuilder = new ListAttribute.Builder<>(com.basistech.rosette.dm.ResolvedEntity.class);
+        com.basistech.rosette.dm.ResolvedEntity.Builder reBuilder = new com.basistech.rosette.dm.ResolvedEntity.Builder(27, 33, "Q100");
         reBuilder.coreferenceChainId(43);
         reBuilder.confidence(1.0);
         reBuilder.sentiment(new CategorizerResult.Builder("positive", null).confidence(1.0).build());
@@ -284,10 +286,10 @@ public class JsonTest extends AdmAssert {
         BaseNounPhrase bnp = bnpList.get(0);
         assertEquals(baseNounPhrase, bnp);
 
-        ListAttribute<EntityMention> emList = read.getEntityMentions();
+        ListAttribute<com.basistech.rosette.dm.EntityMention> emList = read.getEntityMentions();
         assertNotNull(emList);
         assertEquals(1, emList.size());
-        EntityMention em = emList.get(0);
+        com.basistech.rosette.dm.EntityMention em = emList.get(0);
         assertEquals(entityMention, em);
 
         ListAttribute<RelationshipMention> rmList = read.getRelationshipMentions();
@@ -296,10 +298,10 @@ public class JsonTest extends AdmAssert {
         RelationshipMention rm = rmList.get(0);
         assertEquals(relationshipMention, rm);
 
-        ListAttribute<ResolvedEntity> resolvedEntityList = read.getResolvedEntities();
+        ListAttribute<com.basistech.rosette.dm.ResolvedEntity> resolvedEntityList = read.getResolvedEntities();
         assertNotNull(resolvedEntityList);
         assertEquals(1, resolvedEntityList.size());
-        ResolvedEntity e = resolvedEntityList.get(0);
+        com.basistech.rosette.dm.ResolvedEntity e = resolvedEntityList.get(0);
         assertEquals(resolvedEntity, e);
 
         ListAttribute<LanguageDetection> languageDetectionList = read.getLanguageDetectionRegions();
@@ -336,5 +338,25 @@ public class JsonTest extends AdmAssert {
         assertEquals(categoryResult, read.getCategorizerResults().get(0));
 
         assertEquals(sentimentResult, read.getSentimentResults().get(0));
+    }
+
+    @Test
+    public void versionInjected() throws Exception {
+        StringWriter writer = new StringWriter();
+        ObjectMapper mapper = AnnotatedDataModelArrayModule.setupObjectMapper(new ObjectMapper());
+        ObjectWriter objectWriter = mapper.writer();
+        objectWriter.writeValue(writer, referenceText);
+        // to tell that the version is there, we read as a tree
+        JsonNode tree = mapper.readTree(writer.toString());
+        assertEquals("1.1.0", tree.get(3).asText());
+    }
+
+    @Test
+    public void versionCheckPasses() throws Exception {
+        StringWriter writer = new StringWriter();
+        ObjectMapper mapper = AnnotatedDataModelArrayModule.setupObjectMapper(new ObjectMapper());
+        ObjectWriter objectWriter = mapper.writer();
+        objectWriter.writeValue(writer, referenceText);
+        mapper.readValue(writer.toString(), AnnotatedText.class);
     }
 }

@@ -52,7 +52,9 @@ public class ListAttributeSerializer extends JsonSerializer<ListAttribute> {
     public void serializeWithType(ListAttribute value, JsonGenerator jgen, SerializerProvider provider, TypeSerializer typeSer) throws IOException {
         typeSer.writeTypePrefixForObject(value, jgen);
 
-        jgen.writeStringField("itemType", KnownAttribute.getAttributeForClass(value.getItemClass()).key());
+        KnownAttribute attributeForClass = KnownAttribute.getAttributeForClass(value.getItemClass());
+        assert attributeForClass != null;
+        jgen.writeStringField("itemType", attributeForClass.key());
         jgen.writeObjectField("items", value.getItems());
         writeExtendedProperties(value, jgen);
         typeSer.writeTypeSuffixForObject(value, jgen);

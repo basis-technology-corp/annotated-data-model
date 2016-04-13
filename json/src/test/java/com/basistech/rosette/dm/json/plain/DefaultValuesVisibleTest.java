@@ -16,8 +16,9 @@
 package com.basistech.rosette.dm.json.plain;
 
 import com.basistech.rosette.dm.AnnotatedText;
-import com.basistech.rosette.dm.EntityMention;
+import com.basistech.rosette.dm.Entity;
 import com.basistech.rosette.dm.ListAttribute;
+import com.basistech.rosette.dm.Mention;
 import com.basistech.rosette.dm.jackson.KnownAttribute;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -35,12 +36,15 @@ public class DefaultValuesVisibleTest extends AdmAssert {
     public void checkVisible() throws Exception {
         AnnotatedText.Builder builder = new AnnotatedText.Builder();
         builder.data("George Washington slept here.");
-        ListAttribute.Builder<EntityMention> mentionListBuilder = new ListAttribute.Builder<>(EntityMention.class);
+        ListAttribute.Builder<Entity> entityListBuilder = new ListAttribute.Builder<>(Entity.class);
         //int startOffset, int endOffset, String entityType)
-        EntityMention.Builder mentionBuilder = new EntityMention.Builder(0, 17, "politician");
-        mentionBuilder.coreferenceChainId(null); // null is the official default, but null is never rendered, default or not.
-        mentionListBuilder.add(mentionBuilder.build());
-        builder.entityMentions(mentionListBuilder.build());
+        Mention.Builder mentionBuilder = new Mention.Builder(0, 17);
+        mentionBuilder.confidence(null); // null is the official default, but null is never rendered, default or not.
+        Entity.Builder entityBuilder = new Entity.Builder();
+        entityBuilder.mention(mentionBuilder.build());
+        entityListBuilder.add(entityBuilder.build());
+        builder.entities(entityListBuilder.build());
+
         AnnotatedText text = builder.build();
 
         ObjectMapper mapper = objectMapper();
@@ -51,8 +55,8 @@ public class DefaultValuesVisibleTest extends AdmAssert {
         JsonNode tree = mapper.readTree(byteArrayOutputStream.toByteArray());
         // and navigate to the problem at hand.
         ObjectNode attrsNode = (ObjectNode) tree.get("attributes");
-        ObjectNode mentionsNode = (ObjectNode) attrsNode.get(KnownAttribute.ENTITY_MENTION.key());
+        ObjectNode mentionsNode = (ObjectNode) attrsNode.get(KnownAttribute.ENTITY.key());
         ObjectNode mentionNode = (ObjectNode) mentionsNode.get("items").get(0);
-        assertFalse(mentionNode.has("coreferenceChainId"));
+        assertFalse(mentionNode.has("confidence"));
     }
 }

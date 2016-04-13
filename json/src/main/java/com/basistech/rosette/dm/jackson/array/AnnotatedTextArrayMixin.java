@@ -19,23 +19,25 @@ package com.basistech.rosette.dm.jackson.array;
 import com.basistech.rosette.dm.BaseAttribute;
 import com.basistech.rosette.dm.BaseNounPhrase;
 import com.basistech.rosette.dm.CategorizerResult;
-import com.basistech.rosette.dm.EntityMention;
+import com.basistech.rosette.dm.Entity;
 import com.basistech.rosette.dm.LanguageDetection;
 import com.basistech.rosette.dm.ListAttribute;
 import com.basistech.rosette.dm.RelationshipMention;
-import com.basistech.rosette.dm.ResolvedEntity;
 import com.basistech.rosette.dm.ScriptRegion;
 import com.basistech.rosette.dm.Sentence;
 import com.basistech.rosette.dm.Token;
 import com.basistech.rosette.dm.TranslatedData;
 import com.basistech.rosette.dm.TranslatedTokens;
 import com.basistech.rosette.dm.jackson.DmTypeIdResolver;
+import com.basistech.rosette.dm.jackson.VersionCheckDeserializer;
+import com.basistech.rosette.dm.jackson.VersionProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.databind.annotation.JsonAppend;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.annotation.JsonTypeIdResolver;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
@@ -47,13 +49,16 @@ import java.util.Map;
  * {@link com.basistech.rosette.dm.AnnotatedText}.
  */
 @JsonFormat(shape = JsonFormat.Shape.ARRAY)
-@JsonPropertyOrder(alphabetic = true)
+@JsonAppend(props = { @JsonAppend.Prop(value = VersionProperty.class, name = "version")})
+@SuppressWarnings("deprecated")
 public abstract class AnnotatedTextArrayMixin {
 
     @JsonCreator
     AnnotatedTextArrayMixin(@JsonProperty("data") CharSequence data,
                             @JsonProperty("attributes") Map<String, BaseAttribute> attributes,
-                            @JsonProperty("documentMetadata") Map<String, List<String>> documentMetadata) {
+                            @JsonProperty("documentMetadata") Map<String, List<String>> documentMetadata,
+                            @JsonDeserialize(using = VersionCheckDeserializer.class)
+                            @JsonProperty("version") String version) {
         //
     }
 
@@ -76,11 +81,13 @@ public abstract class AnnotatedTextArrayMixin {
     @JsonIgnore
     public abstract ListAttribute<TranslatedTokens> getTranslatedTokens();
 
+    @SuppressWarnings("deprecation")
     @JsonIgnore
-    public abstract ListAttribute<EntityMention> getEntityMentions();
+    public abstract ListAttribute<com.basistech.rosette.dm.EntityMention> getEntityMentions();
 
+    @SuppressWarnings("deprecation")
     @JsonIgnore
-    public abstract ListAttribute<ResolvedEntity> getResolvedEntities();
+    public abstract ListAttribute<com.basistech.rosette.dm.ResolvedEntity> getResolvedEntities();
 
     @JsonIgnore
     public abstract ListAttribute<RelationshipMention> getRelationshipMentions();
@@ -105,4 +112,7 @@ public abstract class AnnotatedTextArrayMixin {
 
     @JsonIgnore
     public abstract ListAttribute<CategorizerResult> getSentimentResults();
+
+    @JsonIgnore
+    public abstract ListAttribute<Entity> getEntities();
 }

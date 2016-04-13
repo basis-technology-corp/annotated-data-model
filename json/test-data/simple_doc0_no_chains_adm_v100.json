@@ -1,0 +1,217 @@
+{
+  "data": "Bill Clinton was the 42nd president.  Clinton's wife Hillary is\ncurrently Secretary of State.  Hillary Clinton ran for president\nunsuccessfully.\n",
+  "attributes": {
+    "sentence": {
+      "type": "list",
+      "itemType": "sentence",
+      "items": [
+        {
+          "startOffset": 0,
+          "endOffset": 38
+        },
+        {
+          "startOffset": 38,
+          "endOffset": 95
+        },
+        {
+          "startOffset": 95,
+          "endOffset": 145
+        }
+      ]
+    },
+    "languageDetection": {
+      "type": "languageDetection",
+      "startOffset": 0,
+      "endOffset": 145,
+      "detectionResults": [
+        {
+          "language": "eng",
+          "encoding": "UTF-16",
+          "script": "Latn"
+        }
+      ]
+    },
+    "entityMentions": {
+      "type": "list",
+      "itemType": "entityMentions",
+      "items": [
+        {
+          "startOffset": 0,
+          "endOffset": 12,
+          "entityType": "PERSON",
+          "source": "statistical",
+          "normalized": "Bill Clinton"
+        },
+        {
+          "startOffset": 26,
+          "endOffset": 35,
+          "entityType": "TITLE",
+          "source": "statistical",
+          "normalized": "president"
+        },
+        {
+          "startOffset": 38,
+          "endOffset": 45,
+          "entityType": "PERSON",
+          "source": "statistical",
+          "normalized": "Clinton"
+        },
+        {
+          "startOffset": 53,
+          "endOffset": 60,
+          "entityType": "PERSON",
+          "source": "statistical",
+          "normalized": "Hillary"
+        },
+        {
+          "startOffset": 74,
+          "endOffset": 92,
+          "entityType": "TITLE",
+          "source": "statistical",
+          "normalized": "Secretary of State"
+        },
+        {
+          "startOffset": 95,
+          "endOffset": 110,
+          "entityType": "PERSON",
+          "source": "statistical",
+          "normalized": "Hillary Clinton"
+        },
+        {
+          "startOffset": 119,
+          "endOffset": 128,
+          "entityType": "TITLE",
+          "source": "statistical",
+          "normalized": "president"
+        }
+      ]
+    },
+    "token": {
+      "type": "list",
+      "itemType": "token",
+      "items": [
+        {
+          "startOffset": 0,
+          "endOffset": 4,
+          "text": "Bill"
+        },
+        {
+          "startOffset": 5,
+          "endOffset": 12,
+          "text": "Clinton"
+        },
+        {
+          "startOffset": 13,
+          "endOffset": 16,
+          "text": "was"
+        },
+        {
+          "startOffset": 17,
+          "endOffset": 20,
+          "text": "the"
+        },
+        {
+          "startOffset": 21,
+          "endOffset": 25,
+          "text": "42nd"
+        },
+        {
+          "startOffset": 26,
+          "endOffset": 35,
+          "text": "president"
+        },
+        {
+          "startOffset": 35,
+          "endOffset": 36,
+          "text": "."
+        },
+        {
+          "startOffset": 38,
+          "endOffset": 45,
+          "text": "Clinton"
+        },
+        {
+          "startOffset": 45,
+          "endOffset": 47,
+          "text": "'s"
+        },
+        {
+          "startOffset": 48,
+          "endOffset": 52,
+          "text": "wife"
+        },
+        {
+          "startOffset": 53,
+          "endOffset": 60,
+          "text": "Hillary"
+        },
+        {
+          "startOffset": 61,
+          "endOffset": 63,
+          "text": "is"
+        },
+        {
+          "startOffset": 64,
+          "endOffset": 73,
+          "text": "currently"
+        },
+        {
+          "startOffset": 74,
+          "endOffset": 83,
+          "text": "Secretary"
+        },
+        {
+          "startOffset": 84,
+          "endOffset": 86,
+          "text": "of"
+        },
+        {
+          "startOffset": 87,
+          "endOffset": 92,
+          "text": "State"
+        },
+        {
+          "startOffset": 92,
+          "endOffset": 93,
+          "text": "."
+        },
+        {
+          "startOffset": 95,
+          "endOffset": 102,
+          "text": "Hillary"
+        },
+        {
+          "startOffset": 103,
+          "endOffset": 110,
+          "text": "Clinton"
+        },
+        {
+          "startOffset": 111,
+          "endOffset": 114,
+          "text": "ran"
+        },
+        {
+          "startOffset": 115,
+          "endOffset": 118,
+          "text": "for"
+        },
+        {
+          "startOffset": 119,
+          "endOffset": 128,
+          "text": "president"
+        },
+        {
+          "startOffset": 129,
+          "endOffset": 143,
+          "text": "unsuccessfully"
+        },
+        {
+          "startOffset": 143,
+          "endOffset": 144,
+          "text": "."
+        }
+      ]
+    }
+  },
+  "documentMetadata": {}
+}

@@ -40,6 +40,7 @@ import java.util.Set;
  * on token indexes.  The underlying <code>Text</code> object contains only
  * character offsets.
  */
+@SuppressWarnings("deprecation")
 public class TextWrapper {
     private static class TokenIndexPair {
         int startIndex;

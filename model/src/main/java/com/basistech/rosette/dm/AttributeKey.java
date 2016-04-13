@@ -24,8 +24,12 @@ package com.basistech.rosette.dm;
  */
 enum AttributeKey {
     BASE_NOUN_PHRASE("baseNounPhrases"),
+    ENTITY("entities"),
+    MENTION("mentions"),
+    @Deprecated
     ENTITY_MENTION("entityMentions"),
     RELATIONSHIP_MENTION("relationshipMentions"),
+    @Deprecated
     RESOLVED_ENTITY("resolvedEntities"),
     /**
      * The list of language detections by region of the document.

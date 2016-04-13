@@ -21,6 +21,8 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -42,6 +44,7 @@ import java.util.Map;
  * Json (or XML or other representations) by applying a reflection-based toolkit 'as-is'.
  * For Json, and Java, the 'adm-json' module provides the supported serialization.
  */
+@SuppressWarnings("deprecation")
 public class AnnotatedText {
     private final CharSequence data;
     /* The attributes for this text, indexed by type.
@@ -50,22 +53,72 @@ public class AnnotatedText {
      */
     private final Map<String, BaseAttribute> attributes;
     private final Map<String, List<String>> documentMetadata;
+    private boolean compatMentionsProcessed;
+    private ListAttribute<EntityMention> compatMentions;
+    private boolean compatResolvedEntitiesProcessed;
+    private ListAttribute<ResolvedEntity> compatResolvedEntities;
 
     AnnotatedText(CharSequence data,
                   Map<String, BaseAttribute> attributes,
-                  Map<String, List<String>> documentMetadata) {
+                  Map<String, List<String>> documentMetadata,
+                  /*
+                   * This version is only here as a workaround for https://github.com/FasterXML/jackson-databind/issues/1118
+                   * It would be better if it was only mentioned in the mixins. No data arrives here, it just
+                   * allows the mixin to be matched with the existence of a version item in the json.
+                   */
+                  String version) {
         this.data = data;
         // allow incoming json that simply lacks attributes or documentMetadata.
-        if (attributes != null) {
-            this.attributes = ImmutableMap.copyOf(attributes);
-        } else {
-            this.attributes = ImmutableMap.of();
-        }
+        this.attributes = absorbAttributes(attributes);
         if (documentMetadata != null) {
             this.documentMetadata = ImmutableMap.copyOf(documentMetadata);
         } else {
             this.documentMetadata = ImmutableMap.of();
         }
+    }
+
+    /*
+     * This method is called from the constructor. It can encounter 'old' attributes
+     * if there is data coming from old json.
+     */
+    @SuppressWarnings("unchecked")
+    private Map<String, BaseAttribute> absorbAttributes(Map<String, BaseAttribute> attributes) {
+        ImmutableMap.Builder<String, BaseAttribute> builder = new ImmutableMap.Builder<>();
+        if (attributes == null) {
+            return ImmutableMap.of();
+        }
+
+        ListAttribute<Entity> sourceEntityList = (ListAttribute<Entity>) attributes.get(AttributeKey.ENTITY.key());
+
+        for (Map.Entry<String, BaseAttribute> me : attributes.entrySet()) {
+            if (!AttributeKey.RESOLVED_ENTITY.key().equals(me.getKey())
+                && !AttributeKey.ENTITY_MENTION.key().equals(me.getKey())
+                    // defer entity
+                && !AttributeKey.ENTITY.key().equals(me.getKey())) {
+                builder.put(me);
+            }
+        }
+
+        // Begin compatibility with '1.0' version of ADM.
+        ListAttribute<EntityMention> oldMentions = (ListAttribute<EntityMention>)attributes.get(AttributeKey.ENTITY_MENTION.key());
+        ListAttribute<ResolvedEntity> oldResolved = (ListAttribute<ResolvedEntity>)attributes.get(AttributeKey.RESOLVED_ENTITY.key());
+        if (anythingInThere(oldResolved) || anythingInThere(oldMentions)) {
+            ConvertFromPreAdm11.doResolvedConversion(sourceEntityList, oldMentions, oldResolved, builder);
+        } else if (sourceEntityList != null) {
+            builder.put(AttributeKey.ENTITY.key(), sourceEntityList);
+        }
+
+        if (oldResolved != null && oldResolved.size() == 0) {
+            // In this one special class we need to end up with an empty list.
+            // The code otherwise ends up with null.
+            compatResolvedEntities = new ListAttribute.Builder<ResolvedEntity>(ResolvedEntity.class).build();
+            compatResolvedEntitiesProcessed = true;
+        }
+        return builder.build();
+    }
+
+    private static <T> boolean anythingInThere(List<T> list) {
+        return list != null;
     }
 
     /**
@@ -96,6 +149,9 @@ public class AnnotatedText {
      * on the attribute.  Applications should usually prefer to use the
      * convenience accessors (e.g. {@code getTokens}) instead, to avoid the
      * need for a cast.
+     *
+     * Note that this map will not return {@link EntityMention} or {@link ResolvedEntity} objects,
+     * which are deprecated; they are only available from the specific accessors.
      *
      * @return all of the annotations on this text
      *
@@ -164,10 +220,112 @@ public class AnnotatedText {
      * Returns the list of entity mentions.
      *
      * @return the list of entity mentions
+     * @deprecated this constructs a list of the old objects for compatibility, the supported
+     * item is {@link Mention}.
+     *
      */
     @SuppressWarnings("unchecked")
+    @Deprecated
     public ListAttribute<EntityMention> getEntityMentions() {
-        return (ListAttribute<EntityMention>) attributes.get(AttributeKey.ENTITY_MENTION.key());
+
+        if (!compatMentionsProcessed) {
+            compatMentionsProcessed = true;
+            List<EntityMention> entityMentionList = Lists.newArrayList();
+            ListAttribute<Entity> entities = getEntities();
+
+            if (entities != null) {
+                downconvertEntities(entityMentionList, entities);
+            } else {
+                return null; // null entities = null compat.
+            }
+
+            ListAttribute.Builder<EntityMention> cmListBuilder = new ListAttribute.Builder<>(EntityMention.class);
+
+            for (EntityMention entityMention : entityMentionList) {
+                cmListBuilder.add(entityMention);
+            }
+
+            if (entities != null && entities.getExtendedProperties() != null) {
+                for (Map.Entry<String, Object> me : entities.getExtendedProperties().entrySet()) {
+                    String key = me.getKey();
+                    if (key.startsWith("mention.")) {
+                        cmListBuilder.extendedProperty(key.substring(8), me.getValue());
+                    }
+                }
+            }
+            compatMentions = cmListBuilder.build();
+        }
+        return compatMentions;
+    }
+
+    private static void downconvertEntities(List<EntityMention> entityMentionList, ListAttribute<Entity> entities) {
+        for (Entity entity : entities) {
+            if (entity.getMentions() != null) {
+                for (Mention mention : entity.getMentions()) {
+                    // If the conversion process stashed a per-mention type, recover it here.
+                    String type = (String) mention.getExtendedProperties().get("old-entity-type");
+                    if (type == null) {
+                        // In the new model, it's on the Entity.
+                        type = entity.getType();
+                    }
+
+                    EntityMention.Builder emBuilder = new EntityMention.Builder(mention.getStartOffset(),
+                            mention.getEndOffset(),
+                            type);
+
+                    if (mention.getConfidence() != null) {
+                        emBuilder.confidence(mention.getConfidence());
+                    }
+                    if (mention.getExtendedProperties() != null && mention.getExtendedProperties().size() > 0) {
+                        for (Map.Entry<String, Object> me : mention.getExtendedProperties().entrySet()) {
+                            if (me.getKey().equals("old-entity-type")) {
+                                //
+                            } else if (me.getKey().equals("oldFlags")) {
+                                emBuilder.flags((Integer) me.getValue());
+                            } else if (me.getKey().equals("oldCoreferenceChainId")) {
+                                emBuilder.coreferenceChainId((Integer) me.getValue());
+                            } else {
+                                emBuilder.extendedProperty(me.getKey(), me.getValue());
+                            }
+                        }
+                    }
+                    if (mention.getNormalized() != null) {
+                        emBuilder.normalized(mention.getNormalized());
+                    }
+                    if (mention.getSource() != null) {
+                        emBuilder.source(mention.getSource());
+                    }
+                    if (mention.getSubsource() != null) {
+                        emBuilder.subsource(mention.getSubsource());
+                    }
+
+                    entityMentionList.add(emBuilder.build());
+                }
+            }
+        }
+
+        // return these mentions in document order.
+        Collections.sort(entityMentionList, new Comparator<EntityMention>() {
+            @Override
+            public int compare(EntityMention o1, EntityMention o2) {
+                if (o1.getStartOffset() == o2.getStartOffset()) {
+                    return o1.getEndOffset() - o2.getEndOffset();
+                } else {
+                    return o1.getStartOffset() - o2.getStartOffset();
+                }
+            }
+        });
+    }
+
+    /**
+     * Returns the list of entities.  Entities are ordered by the document
+     * order of their head mentions.
+     *
+     * @return the list of entities
+     */
+    @SuppressWarnings("unchecked")
+    public ListAttribute<Entity> getEntities() {
+        return (ListAttribute<Entity>) attributes.get(AttributeKey.ENTITY.key());
     }
 
     /**
@@ -184,10 +342,69 @@ public class AnnotatedText {
      * Returns the list of resolved entities.
      *
      * @return the list of resolved entities
+     * @deprecated this constructs a list of the old objects for compatibility, the supported item
+     * is {@link Entity}.
      */
     @SuppressWarnings("unchecked")
+    @Deprecated
     public ListAttribute<ResolvedEntity> getResolvedEntities() {
-        return (ListAttribute<ResolvedEntity>) attributes.get(AttributeKey.RESOLVED_ENTITY.key());
+        if (!compatResolvedEntitiesProcessed) {
+            compatResolvedEntitiesProcessed = true;
+            ListAttribute.Builder<ResolvedEntity> reListBuilder = new ListAttribute.Builder<>(ResolvedEntity.class);
+            ListAttribute<Entity> entities = getEntities();
+            if (entities == null) {
+                return null;
+            }
+
+            if (entities.getExtendedProperties() != null) {
+                for (Map.Entry<String, Object> me : entities.getExtendedProperties().entrySet()) {
+                    String key = me.getKey();
+                    if (!key.startsWith("mention.")) {
+                        reListBuilder.extendedProperty(key, me.getValue());
+                    }
+                }
+            }
+
+            for (Entity entity : entities) {
+                if (entity.getHeadMentionIndex() == null) {
+                    // ignore entities without head mentions.
+                    continue;
+                }
+                int headStart = 0;
+                int headEnd = 0;
+                if (entity.getHeadMentionIndex() != null) {
+                    Mention head = entity.getMentions().get(entity.getHeadMentionIndex());
+                    headStart = head.getStartOffset();
+                    headEnd = head.getEndOffset();
+                }
+
+                ResolvedEntity.Builder reBuilder = new ResolvedEntity.Builder(headStart, headEnd, entity.getEntityId());
+                if (entity.getConfidence() != null) {
+                    reBuilder.confidence(entity.getConfidence());
+                }
+                if (entity.getSentiment() != null && !entity.getSentiment().isEmpty()) {
+                    reBuilder.sentiment(entity.getSentiment().get(0));
+                }
+
+                if (entity.getExtendedProperties() != null) {
+                    for (Map.Entry<String, Object> me : entity.getExtendedProperties().entrySet()) {
+                        if (me.getKey().equals("oldCoreferenceChainId")) {
+                            reBuilder.coreferenceChainId((Integer)me.getValue());
+                        } else {
+                            reBuilder.extendedProperty(me.getKey(), me.getValue());
+                        }
+                    }
+                }
+
+                reListBuilder.add(reBuilder.build());
+            }
+            compatResolvedEntities = reListBuilder.build();
+            if (compatResolvedEntities.size() == 0) { // If no resolved entities survived, don't make it look as if someone specified them.
+                /* But note special case in absorbAttributes when someone used the old API to create an empty list. */
+                compatResolvedEntities = null;
+            }
+        }
+        return compatResolvedEntities;
     }
 
     /**
@@ -319,8 +536,12 @@ public class AnnotatedText {
          *
          * @param entityMentions the entity mentions
          * @return this
+         * @deprecated Use {@link #entities(ListAttribute)}.
          */
+        @Deprecated
         public Builder entityMentions(ListAttribute<EntityMention> entityMentions) {
+            // a new set of old objects replaces any prior set of new objects.
+            attributes.remove(AttributeKey.ENTITY.key());
             attributes.put(AttributeKey.ENTITY_MENTION.key(), entityMentions);
             return this;
         }
@@ -337,12 +558,40 @@ public class AnnotatedText {
         }
 
         /**
+         * Attaches a list of entities.
+         * @param entities the entities.
+         * @return this.
+         */
+        public Builder entities(ListAttribute<Entity> entities) {
+            // specifying entities replaces the old entity structures.
+            attributes.remove(AttributeKey.ENTITY_MENTION.key());
+            attributes.remove(AttributeKey.RESOLVED_ENTITY.key());
+            attributes.put(AttributeKey.ENTITY.key(), entities);
+            return this;
+        }
+
+        /**
          * Attaches a list of resolved entities.
          *
          * @param resolvedEntities the resolved entities
          * @return this
+         * @deprecated use {@link #entities(ListAttribute)}.
          */
+        @Deprecated
+        @SuppressWarnings("unchecked")
         public Builder resolvedEntities(ListAttribute<ResolvedEntity> resolvedEntities) {
+            if (attributes.containsKey(AttributeKey.ENTITY.key())) {
+                // we need to recreate the old mentions to go with 'old' resolved entities.
+                List<EntityMention> oldList = Lists.newArrayList();
+                downconvertEntities(oldList, (ListAttribute<Entity>) attributes.get(AttributeKey.ENTITY.key()));
+                attributes.remove(AttributeKey.ENTITY.key());
+                ListAttribute.Builder<EntityMention> oldBuilder = new ListAttribute.Builder<>(EntityMention.class);
+                for (EntityMention em : oldList) {
+                    oldBuilder.add(em);
+                }
+                attributes.remove(AttributeKey.ENTITY.key());
+                attributes.put(AttributeKey.ENTITY_MENTION.key(), oldBuilder.build());
+            }
             attributes.put(AttributeKey.RESOLVED_ENTITY.key(), resolvedEntities);
             return this;
         }
@@ -532,7 +781,7 @@ public class AnnotatedText {
          * @return the new object
          */
         public AnnotatedText build() {
-            return new AnnotatedText(data, attributes, documentMetadata);
+            return new AnnotatedText(data, attributes, documentMetadata, null);
         }
     }
 }
