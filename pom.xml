@@ -23,7 +23,7 @@
     <parent>
         <artifactId>open-source-parent</artifactId>
         <groupId>com.basistech</groupId>
-        <version>1.0.0</version>
+        <version>1.1.0</version>
     </parent>
     <description>
       Data model for text and its annotations.
@@ -45,7 +45,7 @@
         </site>
     </distributionManagement>
     <properties>
-        <bt-common-api-version>36.0.1</bt-common-api-version>
+        <bt-common-api-version>36.0.2</bt-common-api-version>
     </properties>
     <modules>
         <module>taglets</module>

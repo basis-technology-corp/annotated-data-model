@@ -1,6 +1,6 @@
 # Cumulative Release Notes for the Annotated Data Model
 
-## ???
+## 2.1.0
 
 ### [ROS-218](https://basistech.atlassian.net/browse/ROS-218) Entity-level sentiment is a list
 
