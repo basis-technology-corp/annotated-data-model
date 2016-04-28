@@ -1,5 +1,13 @@
 # Cumulative Release Notes for the Annotated Data Model
 
+## 2.1.1
+
+### [ROS-228](https://basistech.atlassian.net/browse/ROS-228) Coreference chain ID compatibility
+
+The EntityMention objects created in response to AnnotatedText.getEntityMentions()
+contain correct coreferenceChainId fields derived from the head mentions in the 
+Entity objects.
+
 ## 2.1.0
 
 ### [ROS-218](https://basistech.atlassian.net/browse/ROS-218) Entity-level sentiment is a list
