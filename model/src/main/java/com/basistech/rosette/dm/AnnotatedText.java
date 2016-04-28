@@ -330,7 +330,7 @@ public class AnnotatedText {
                         if (me.getKey().equals("oldFlags")) {
                             emBuilder.flags((Integer) me.getValue());
                         } else if (me.getKey().equals("oldCoreferenceChainId")) {
-                            emBuilder.coreferenceChainId((Integer) me.getValue());
+                           // Do not use this. The coref chain ID has to be aligned with the sorted order.
                         } else {
                             emBuilder.extendedProperty(me.getKey(), me.getValue());
                         }

@@ -182,6 +182,7 @@
             <groupId>com.basistech</groupId>
             <artifactId>adm-common-test</artifactId>
             <version>${project.version}</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.basistech</groupId>

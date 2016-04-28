@@ -95,7 +95,7 @@ public class JsonTest extends AdmAssert {
         emBuilder.source("testsource");
         emBuilder.subsource("testsubsource");
         emBuilder.confidence(1.0);
-        emBuilder.coreferenceChainId(43);
+        emBuilder.coreferenceChainId(0);
         emBuilder.extendedProperty("em-ex", "em-ex-val");
         entityMention = emBuilder.build();
         emListBuilder.add(entityMention);
@@ -131,7 +131,7 @@ public class JsonTest extends AdmAssert {
 
         ListAttribute.Builder<com.basistech.rosette.dm.ResolvedEntity> reListBuilder = new ListAttribute.Builder<>(com.basistech.rosette.dm.ResolvedEntity.class);
         com.basistech.rosette.dm.ResolvedEntity.Builder reBuilder = new com.basistech.rosette.dm.ResolvedEntity.Builder(27, 33, "Q100");
-        reBuilder.coreferenceChainId(43);
+        reBuilder.coreferenceChainId(0);
         reBuilder.confidence(1.0);
         reBuilder.sentiment(new CategorizerResult.Builder("positive", null).confidence(1.0).build());
         reBuilder.extendedProperty("re-ex", "re-ex-val");
