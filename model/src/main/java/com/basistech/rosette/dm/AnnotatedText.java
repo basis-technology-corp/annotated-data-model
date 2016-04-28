@@ -21,8 +21,10 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -245,7 +247,7 @@ public class AnnotatedText {
                 cmListBuilder.add(entityMention);
             }
 
-            if (entities != null && entities.getExtendedProperties() != null) {
+            if (entities.getExtendedProperties() != null) {
                 for (Map.Entry<String, Object> me : entities.getExtendedProperties().entrySet()) {
                     String key = me.getKey();
                     if (key.startsWith("mention.")) {
@@ -258,63 +260,96 @@ public class AnnotatedText {
         return compatMentions;
     }
 
+    // Class uses to flatten mentions on their way to EntityMentions.
+    private static class MentionAndEntity {
+        final Mention mention;
+        final Entity entity;
+
+        MentionAndEntity(Mention mention, Entity entity) {
+            this.mention = mention;
+            this.entity = entity;
+        }
+    }
+
     private static void downconvertEntities(List<EntityMention> entityMentionList, ListAttribute<Entity> entities) {
+
+        /* We need to precalculate the order in which we will deliver them to get the coref chain ids. */
+        List<MentionAndEntity> mentionList = new ArrayList<>();
         for (Entity entity : entities) {
             if (entity.getMentions() != null) {
                 for (Mention mention : entity.getMentions()) {
-                    // If the conversion process stashed a per-mention type, recover it here.
-                    String type = (String) mention.getExtendedProperties().get("old-entity-type");
-                    if (type == null) {
-                        // In the new model, it's on the Entity.
-                        type = entity.getType();
-                    }
-
-                    EntityMention.Builder emBuilder = new EntityMention.Builder(mention.getStartOffset(),
-                            mention.getEndOffset(),
-                            type);
-
-                    if (mention.getConfidence() != null) {
-                        emBuilder.confidence(mention.getConfidence());
-                    }
-                    if (mention.getExtendedProperties() != null && mention.getExtendedProperties().size() > 0) {
-                        for (Map.Entry<String, Object> me : mention.getExtendedProperties().entrySet()) {
-                            if (me.getKey().equals("old-entity-type")) {
-                                //
-                            } else if (me.getKey().equals("oldFlags")) {
-                                emBuilder.flags((Integer) me.getValue());
-                            } else if (me.getKey().equals("oldCoreferenceChainId")) {
-                                emBuilder.coreferenceChainId((Integer) me.getValue());
-                            } else {
-                                emBuilder.extendedProperty(me.getKey(), me.getValue());
-                            }
-                        }
-                    }
-                    if (mention.getNormalized() != null) {
-                        emBuilder.normalized(mention.getNormalized());
-                    }
-                    if (mention.getSource() != null) {
-                        emBuilder.source(mention.getSource());
-                    }
-                    if (mention.getSubsource() != null) {
-                        emBuilder.subsource(mention.getSubsource());
-                    }
-
-                    entityMentionList.add(emBuilder.build());
+                    mentionList.add(new MentionAndEntity(mention, entity));
                 }
             }
         }
 
-        // return these mentions in document order.
-        Collections.sort(entityMentionList, new Comparator<EntityMention>() {
+        // sort mentions in document order, the order we will return them in.
+        Collections.sort(mentionList, new Comparator<MentionAndEntity>() {
             @Override
-            public int compare(EntityMention o1, EntityMention o2) {
-                if (o1.getStartOffset() == o2.getStartOffset()) {
-                    return o1.getEndOffset() - o2.getEndOffset();
+            public int compare(MentionAndEntity o1, MentionAndEntity o2) {
+                if (o1.mention.getStartOffset() == o2.mention.getStartOffset()) {
+                    return o1.mention.getEndOffset() - o2.mention.getEndOffset();
                 } else {
-                    return o1.getStartOffset() - o2.getStartOffset();
+                    return o1.mention.getStartOffset() - o2.mention.getStartOffset();
                 }
             }
         });
+
+        // Allow us to find the ordinal position of each mention, so that
+        // we can get from a headMentionIndex to a chain id.
+        Map<Mention, Integer> mentionOrdinals = new HashMap<>();
+        for (int x = 0; x < mentionList.size(); x++) {
+            mentionOrdinals.put(mentionList.get(x).mention, x);
+        }
+
+        for (MentionAndEntity mae : mentionList) {
+            Mention mention = mae.mention;
+            Entity entity = mae.entity;
+            // If the conversion process stashed a per-mention type, recover it here.
+            String type = (String) mention.getExtendedProperties().get("old-entity-type");
+            if (type == null) {
+                // In the new model, it's on the Entity.
+                type = entity.getType();
+            }
+
+            EntityMention.Builder emBuilder = new EntityMention.Builder(mention.getStartOffset(),
+                    mention.getEndOffset(),
+                    type);
+
+            if (entity.getHeadMentionIndex() != null) {
+                // the coref chain id is the location in the list of the mention in question.
+                emBuilder.coreferenceChainId(mentionOrdinals.get(entity.getMentions().get(entity.getHeadMentionIndex())));
+            }
+
+            if (mention.getConfidence() != null) {
+                emBuilder.confidence(mention.getConfidence());
+            }
+            if (mention.getExtendedProperties() != null && mention.getExtendedProperties().size() > 0) {
+                for (Map.Entry<String, Object> me : mention.getExtendedProperties().entrySet()) {
+                    if (!me.getKey().equals("old-entity-type")) {
+                        if (me.getKey().equals("oldFlags")) {
+                            emBuilder.flags((Integer) me.getValue());
+                        } else if (me.getKey().equals("oldCoreferenceChainId")) {
+                            emBuilder.coreferenceChainId((Integer) me.getValue());
+                        } else {
+                            emBuilder.extendedProperty(me.getKey(), me.getValue());
+                        }
+                    }
+                }
+            }
+            if (mention.getNormalized() != null) {
+                emBuilder.normalized(mention.getNormalized());
+            }
+            if (mention.getSource() != null) {
+                emBuilder.source(mention.getSource());
+            }
+            if (mention.getSubsource() != null) {
+                emBuilder.subsource(mention.getSubsource());
+            }
+            entityMentionList.add(emBuilder.build());
+        }
+
+
     }
 
     /**
