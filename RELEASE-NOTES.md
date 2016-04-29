@@ -2,6 +2,10 @@
 
 ## 2.1.1
 
+### [ROS-226](https://basistech.atlassian.net/browse/ROS-226) NPE in Entity.Builder
+
+Simple bugfix.
+
 ### [ROS-228](https://basistech.atlassian.net/browse/ROS-228) Coreference chain ID compatibility
 
 The EntityMention objects created in response to AnnotatedText.getEntityMentions()
