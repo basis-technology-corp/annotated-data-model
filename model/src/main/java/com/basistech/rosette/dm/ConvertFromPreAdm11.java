@@ -184,12 +184,28 @@ final class ConvertFromPreAdm11 {
         for (List<EntityMention> entityMentions : mentionsByEntities) {
             Entity.Builder enBuilder = new Entity.Builder();
             String type = null;
+            List<Mention> mentions = Lists.newArrayList();
             for (int x = 0; x < entityMentions.size(); x++) {
                 EntityMention em = entityMentions.get(x);
                 if (x == heads[newIndex]) {
                     type = em.getEntityType();
                 }
                 Mention mention = convertMention(em);
+                mentions.add(mention);
+            }
+
+            Collections.sort(mentions, new Comparator<Mention>() {
+                @Override
+                public int compare(Mention o1, Mention o2) {
+                    if (o1.getStartOffset() == o2.getStartOffset()) {
+                        return o1.getEndOffset() - o2.getEndOffset();
+                    } else {
+                        return o1.getStartOffset() - o1.getEndOffset();
+                    }
+                }
+            });
+
+            for (Mention mention : mentions) {
                 enBuilder.mention(mention);
             }
             enBuilder.type(type);
@@ -219,21 +235,22 @@ final class ConvertFromPreAdm11 {
             Collections.sort(entities, new Comparator<Entity>() {
                 @Override
                 public int compare(Entity o1, Entity o2) {
-                    if (o1.getHeadMentionIndex() == null && o2.getHeadMentionIndex() == null) {
-                        return 0;
-                    } else if (o1.getHeadMentionIndex() == null && o2.getHeadMentionIndex() != null) {
-                        return -1;
-                    } else if (o1.getHeadMentionIndex() != null && o2.getHeadMentionIndex() == null) {
-                        return 1;
+                    if (o1.getMentions() == null || o1.getMentions().size() == 0) {
+                        if (o1.getMentions() == null || o2.getMentions().size() == 0) {
+                            return 0;
+                        } else {
+                            return -1;
+                        }
                     }
 
-                    if (o1.getMentions().get(o1.getHeadMentionIndex()).getStartOffset()
-                            == o2.getMentions().get(o2.getHeadMentionIndex()).getStartOffset()) {
-                        return o1.getMentions().get(o1.getHeadMentionIndex()).getEndOffset()
-                                - o2.getMentions().get(o2.getHeadMentionIndex()).getEndOffset();
+                    Mention m1 = o1.getMentions().get(0);
+                    Mention m2 = o2.getMentions().get(0);
+
+                    if (m1.getStartOffset() == m2.getStartOffset()) {
+                        return m1.getEndOffset() - m2.getEndOffset();
+                    } else {
+                        return m1.getStartOffset() - m2.getStartOffset();
                     }
-                    return o1.getMentions().get(o1.getHeadMentionIndex()).getStartOffset()
-                            - o2.getMentions().get(o2.getHeadMentionIndex()).getStartOffset();
                 }
             });
         }

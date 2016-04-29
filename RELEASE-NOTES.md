@@ -2,6 +2,12 @@
 
 ## 2.1.1
 
+### [ROS-227](https://basistech.atlassian.net/browse/ROS-227) Document order for upgraded Entity/Mention
+
+Contrary to the explanation below, when the code constructs Entity/Mention structures from old
+EntityMention objects, it respects _document_ order, never head mention order. Entities are ordered
+by their first mention's document position, and mentions in an entity, of course, by their document order.
+
 ### [ROS-226](https://basistech.atlassian.net/browse/ROS-226) NPE in Entity.Builder
 
 Simple bugfix.
