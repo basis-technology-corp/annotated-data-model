@@ -541,4 +541,48 @@ public class AnnotatedTextTest {
         assertEquals("PERSON", text.getEntityMentions().get(1).getEntityType());
         assertNull(text.getResolvedEntities());
     }
+
+    @SuppressWarnings("deprecation")
+    @Test
+    public void corefChainCompat() throws Exception {
+        AnnotatedText.Builder textBuilder = new AnnotatedText.Builder();
+        //                0000000000111111111122222222223333333333444
+        //                0123456789012345678901234567890123456789012
+        textBuilder.data("George went to Boston. Washington hated it.");
+        ListAttribute.Builder<Entity> entityListBuilder = new ListAttribute.Builder<>(Entity.class);
+        Entity.Builder entityBuilder = new Entity.Builder();
+        entityBuilder.type("PERSON");
+        entityBuilder.headMentionIndex(1);
+        entityBuilder.mention(new Mention.Builder(0, 6).build());
+        entityBuilder.mention(new Mention.Builder(23, 33).build());
+        entityListBuilder.add(entityBuilder.build());
+
+        entityBuilder = new Entity.Builder();
+        entityBuilder.type("LOCATION");
+        entityBuilder.headMentionIndex(0);
+        entityBuilder.mention(new Mention.Builder(15, 21).build());
+        entityListBuilder.add(entityBuilder.build());
+        textBuilder.entities(entityListBuilder.build());
+        AnnotatedText text = textBuilder.build();
+
+        List<EntityMention> mentions = text.getEntityMentions();
+        assertEquals(3, mentions.size());
+        EntityMention em = mentions.get(0);
+        assertEquals("PERSON", em.getEntityType());
+        assertEquals(0, em.getStartOffset());
+        assertEquals(6, em.getEndOffset());
+        assertEquals(2, (int)em.getCoreferenceChainId());
+
+        em = mentions.get(1);
+        assertEquals("LOCATION", em.getEntityType());
+        assertEquals(15, em.getStartOffset());
+        assertEquals(21, em.getEndOffset());
+        assertEquals(1, (int)em.getCoreferenceChainId());
+
+        em = mentions.get(2);
+        assertEquals("PERSON", em.getEntityType());
+        assertEquals(23, em.getStartOffset());
+        assertEquals(33, em.getEndOffset());
+        assertEquals(2, (int)em.getCoreferenceChainId());
+    }
 }
