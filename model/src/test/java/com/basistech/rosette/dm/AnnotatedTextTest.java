@@ -542,7 +542,8 @@ public class AnnotatedTextTest {
         assertNull(text.getResolvedEntities());
 
         // This would crash before the fix to ROS-226.
-        new Entity.Builder(text.getEntities().get(0));
+        Entity.Builder sbuilder = new Entity.Builder(text.getEntities().get(0));
+        sbuilder.sentiment(new CategorizerResult.Builder("meh", 0.5).build());
     }
 
     @SuppressWarnings("deprecation")
