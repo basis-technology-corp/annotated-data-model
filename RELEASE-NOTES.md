@@ -4,13 +4,14 @@
 
 ### [ROS-227](https://basistech.atlassian.net/browse/ROS-227) Document order for upgraded Entity/Mention
 
-Contrary to the explanation below, when the code constructs Entity/Mention structures from old
+Contrary to the explanation below (in ROS-43), when the code constructs Entity/Mention structures from old
 EntityMention objects, it respects _document_ order, never head mention order. Entities are ordered
 by their first mention's document position, and mentions in an entity, of course, by their document order.
 
 ### [ROS-226](https://basistech.atlassian.net/browse/ROS-226) NPE in Entity.Builder
 
-Simple bugfix.
+Prevent NullPointerException when adding sentiment to an
+Entity.Builder created via the copy constructor.
 
 ### [ROS-228](https://basistech.atlassian.net/browse/ROS-228) Coreference chain ID compatibility
 
@@ -45,10 +46,10 @@ New behavior:
 `EntityMention` and `ResolvedEntity` are deprecated, replaced by
 `Mention` and `Entity`.  An `Entity` *contains* a list of one or more
 `Mention`s.  The `Entity` list is ordered by the document order of the
-head mentions.  The `Mention` list in each `Entity` is in document
-order, but note that mentions across entities cannot be ordered in this
-way.  Each `Entity` contains a `headMentionIndex` which points to its
-head mention.
+head mentions.  (But see change in ROS-227 above.)  The `Mention` list
+in each `Entity` is in document order, but note that mentions across
+entities cannot be ordered in this way.  Each `Entity` contains a
+`headMentionIndex` which points to its head mention.
 
 The entity type field now lives at the `Entity` level, not the
 `Mention` level.
