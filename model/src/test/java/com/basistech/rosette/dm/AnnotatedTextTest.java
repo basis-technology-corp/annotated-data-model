@@ -271,6 +271,37 @@ public class AnnotatedTextTest {
     }
 
     @Test
+    public void testUpgradeEntityOrder() throws Exception {
+        AnnotatedText.Builder builder = new AnnotatedText.Builder();
+        ListAttribute.Builder<EntityMention> emListBuilder = new ListAttribute.Builder<>(EntityMention.class);
+        emListBuilder.add(new EntityMention.Builder(25, 30, "Thing1")
+                .entityType("T1")
+                .coreferenceChainId(0)
+                .build());
+        emListBuilder.add(new EntityMention.Builder(20, 25, "Thing2")
+                .entityType("T1")
+                .coreferenceChainId(0)
+                .build());
+        emListBuilder.add(new EntityMention.Builder(0, 6, "Thing3")
+                .entityType("T3")
+                .coreferenceChainId(1)
+                .build());
+        builder.entityMentions(emListBuilder.build());
+        AnnotatedText text = builder.build();
+
+        List<Entity> entities = text.getEntities(); // see what conversion did.
+        assertEquals(2, entities.size());
+        assertEquals(1, entities.get(0).getMentions().size());
+        assertEquals("T3", entities.get(0).getType());
+        assertEquals(6, entities.get(0).getMentions().get(0).getEndOffset());
+
+        Entity e = entities.get(1);
+        assertEquals("T1", e.getType());
+        assertEquals(20, e.getMentions().get(0).getStartOffset());
+        assertEquals(25, e.getMentions().get(1).getStartOffset());
+    }
+
+    @Test
     public void testEntityMentionComparison() {
         EntityMention mention1 = new EntityMention.Builder(0, 3, "PERSON").build();
         EntityMention mention2 = new EntityMention.Builder(0, 3, "PERSON").confidence(1.0).build();
