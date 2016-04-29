@@ -20,12 +20,12 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>adm-model</artifactId>
     <name>adm-model</name>
-    <version>2.1.1-SNAPSHOT</version>
+    <version>2.1.1</version>
     <description>ADM data model.</description>
     <parent>
         <groupId>com.basistech</groupId>
         <artifactId>annotated-data-model</artifactId>
-        <version>2.1.1-SNAPSHOT</version>
+        <version>2.1.1</version>
     </parent>
     <build>
         <resources>
