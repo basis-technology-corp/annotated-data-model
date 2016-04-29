@@ -204,7 +204,8 @@ public class Entity extends BaseAttribute {
             addAllToList(mentions, toCopy.mentions);
             this.entityId = toCopy.entityId;
             this.confidence = toCopy.confidence;
-            this.sentiment = toCopy.sentiment;
+            sentiment = Lists.newArrayList();
+            addAllToList(sentiment, toCopy.sentiment);
             this.type = toCopy.type;
         }
 
