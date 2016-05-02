@@ -77,14 +77,24 @@ public class CompatibilityV100ToV110Test {
         AnnotatedText text = mapper.readValue(new File("test-data/simple_doc0_with_chains_adm_v100.json"),
                 AnnotatedText.class);
         assertEquals(4, text.getEntities().size());
+
+        // "Bill Clinton" and "Clinton"
+        assertEquals("PERSON", text.getEntities().get(0).getType());
+        assertEquals(null, text.getEntities().get(0).getConfidence());
+        assertEquals(null, text.getEntities().get(0).getSentiment());
+        assertEquals(0, (int) text.getEntities().get(0).getHeadMentionIndex());
+        assertEquals("Bill Clinton", text.getEntities().get(0).getMentions().get(0).getNormalized());
+        assertEquals("Clinton", text.getEntities().get(0).getMentions().get(1).getNormalized());
+
+
         // Hillary should be entity index 2, based on doc order of first mentions.
         assertEquals(null, text.getEntities().get(2).getEntityId());
         assertEquals("PERSON", text.getEntities().get(2).getType());
         assertEquals(null, text.getEntities().get(2).getConfidence());
         assertEquals(null, text.getEntities().get(2).getSentiment());
         assertEquals(1, (int) text.getEntities().get(2).getHeadMentionIndex());
-        assertEquals("Hillary", text.getEntities().get(2).getMentions().get(1).getNormalized());
-        assertEquals("Hillary Clinton", text.getEntities().get(2).getMentions().get(0).getNormalized());
+        assertEquals("Hillary", text.getEntities().get(2).getMentions().get(0).getNormalized());
+        assertEquals("Hillary Clinton", text.getEntities().get(2).getMentions().get(1).getNormalized());
 
         assertEquals(7, text.getEntityMentions().size());
         assertEquals(0, text.getEntityMentions().get(0).getStartOffset());
@@ -97,9 +107,9 @@ public class CompatibilityV100ToV110Test {
 
         assertEquals(4, text.getResolvedEntities().size());
         assertEquals(0, (int) text.getResolvedEntities().get(0).getCoreferenceChainId());
-        assertEquals(4, (int) text.getResolvedEntities().get(1).getCoreferenceChainId());
+        assertEquals(1, (int) text.getResolvedEntities().get(1).getCoreferenceChainId());
         assertEquals(5, (int) text.getResolvedEntities().get(2).getCoreferenceChainId());
-        assertEquals(1, (int) text.getResolvedEntities().get(3).getCoreferenceChainId());
+        assertEquals(4, (int) text.getResolvedEntities().get(3).getCoreferenceChainId());
     }
 
     @Test
@@ -114,8 +124,8 @@ public class CompatibilityV100ToV110Test {
         assertEquals(1.0, text.getEntities().get(2).getConfidence(), 0.00001);
         assertEquals(null, text.getEntities().get(2).getSentiment());
         assertEquals(1, (int) text.getEntities().get(2).getHeadMentionIndex());
-        assertEquals("Hillary", text.getEntities().get(2).getMentions().get(1).getNormalized());
-        assertEquals("Hillary Clinton", text.getEntities().get(2).getMentions().get(0).getNormalized());
+        assertEquals("Hillary", text.getEntities().get(2).getMentions().get(0).getNormalized());
+        assertEquals("Hillary Clinton", text.getEntities().get(2).getMentions().get(1).getNormalized());
 
         assertEquals(7, text.getEntityMentions().size());
         assertEquals(0, text.getEntityMentions().get(0).getStartOffset());

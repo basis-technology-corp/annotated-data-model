@@ -200,7 +200,7 @@ final class ConvertFromPreAdm11 {
                     if (o1.getStartOffset() == o2.getStartOffset()) {
                         return o1.getEndOffset() - o2.getEndOffset();
                     } else {
-                        return o1.getStartOffset() - o1.getEndOffset();
+                        return o1.getStartOffset() - o2.getStartOffset();
                     }
                 }
             });
