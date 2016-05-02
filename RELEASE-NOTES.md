@@ -1,5 +1,10 @@
 # Cumulative Release Notes for the Annotated Data Model
 
+## 21.2
+
+### [RELAX-360](https://basistech.atlassian.net/browse/RELAX-360) Fix
+    mistake in mention sorting.
+
 ## 2.1.1
 
 ### [ROS-227](https://basistech.atlassian.net/browse/ROS-227) Document order for upgraded Entity/Mention
