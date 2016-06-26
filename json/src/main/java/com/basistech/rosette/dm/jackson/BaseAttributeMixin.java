@@ -17,6 +17,8 @@ package com.basistech.rosette.dm.jackson;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.Map;
@@ -25,6 +27,8 @@ import java.util.Map;
  * {@link com.basistech.rosette.dm.BaseAttribute}.
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
+/* These three are used internally as part of 1.0 / 1.1 compatibility, and should not be serialized. */
+@JsonIgnoreProperties({ "old-entity-type", "oldCoreferenceChainId", "oldFlags" })
 public abstract class BaseAttributeMixin {
     @JsonAnyGetter
     public abstract Map<String, Object> getExtendedProperties();

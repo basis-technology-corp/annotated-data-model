@@ -18,8 +18,11 @@ package com.basistech.rosette.dm.json.plain;
 import com.basistech.rosette.dm.AnnotatedText;
 import com.basistech.rosette.dm.ArabicMorphoAnalysis;
 
+import com.basistech.rosette.dm.Entity;
+import com.basistech.rosette.dm.EntityMention;
 import com.basistech.rosette.dm.HanMorphoAnalysis;
 import com.basistech.rosette.dm.ListAttribute;
+import com.basistech.rosette.dm.Mention;
 import com.basistech.rosette.dm.Token;
 import com.basistech.rosette.dm.jackson.AnnotatedDataModelModule;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -120,4 +123,30 @@ public class ExtendedPropertyTest extends AdmAssert {
         ArabicMorphoAnalysis ma2 = (ArabicMorphoAnalysis)deserialized.getAnalyses().get(1);
         assertEquals("apples", ma2.getExtendedProperties().get("some"));
     }
+
+    @Test
+    public void noOldPropsSerialized() throws Exception {
+        AnnotatedText.Builder atBuilder = new AnnotatedText.Builder();
+        atBuilder.data("ignore");
+        ListAttribute.Builder<EntityMention> elistBuilder = new ListAttribute.Builder<>(EntityMention.class);
+        EntityMention.Builder mbuilder = new EntityMention.Builder(0, 10, "PARSON");
+        mbuilder.coreferenceChainId(0);
+        mbuilder.flags(1);
+        elistBuilder.add(mbuilder.build());
+        atBuilder.entityMentions(elistBuilder.build());
+        AnnotatedText text = atBuilder.build();
+        text.getEntities(); // force construction of modern.
+        ObjectMapper mapper = AnnotatedDataModelModule.setupObjectMapper(new ObjectMapper());
+        ObjectWriter objectWriter = mapper.writerWithDefaultPrettyPrinter();
+        Writer sw = new StringWriter();
+        objectWriter.writeValue(sw, text);
+        String json = sw.toString();
+        AnnotatedText readBack = mapper.readValue(json, AnnotatedText.class);
+        Entity e = readBack.getEntities().get(0);
+        Mention m = e.getMentions().get(0);
+        assertFalse(m.getExtendedProperties().containsKey("oldFlags"));
+        assertFalse(m.getExtendedProperties().containsKey("oldCoreferenceChainId"));
+        assertFalse(m.getExtendedProperties().containsKey("old-entity-type"));
+    }
+
 }
