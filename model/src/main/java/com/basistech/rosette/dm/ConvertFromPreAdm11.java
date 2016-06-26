@@ -192,6 +192,7 @@ final class ConvertFromPreAdm11 {
                 }
                 Mention mention = convertMention(em);
                 mentions.add(mention);
+
             }
 
             Collections.sort(mentions, new Comparator<Mention>() {
@@ -221,6 +222,9 @@ final class ConvertFromPreAdm11 {
             } else if (entityMention.getCoreferenceChainId() != null) {
                 // no resolved entity, but we still need a coref chain.
                 enBuilder.extendedProperty("oldCoreferenceChainId", entityMention.getCoreferenceChainId());
+                // Also implement the 'T' entity id convention -- if we have no Qid from a linked entity,
+                // generate one from the coref chain id.
+                enBuilder.entityId(String.format("T%d", entityMention.getCoreferenceChainId()));
             }
 
             if (indocPresent) {

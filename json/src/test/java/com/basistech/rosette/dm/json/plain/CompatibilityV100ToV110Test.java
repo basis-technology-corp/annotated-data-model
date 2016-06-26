@@ -88,7 +88,7 @@ public class CompatibilityV100ToV110Test {
 
 
         // Hillary should be entity index 2, based on doc order of first mentions.
-        assertEquals(null, text.getEntities().get(2).getEntityId());
+        assertEquals("T5", text.getEntities().get(2).getEntityId());
         assertEquals("PERSON", text.getEntities().get(2).getType());
         assertEquals(null, text.getEntities().get(2).getConfidence());
         assertEquals(null, text.getEntities().get(2).getSentiment());
@@ -139,8 +139,8 @@ public class CompatibilityV100ToV110Test {
         assertEquals(4, text.getResolvedEntities().size());
         assertEquals(4, text.getResolvedEntities().size());
         assertEquals("Q1124", text.getResolvedEntities().get(0).getEntityId());
-        assertEquals(null, text.getResolvedEntities().get(1).getEntityId());
-        assertEquals(null, text.getResolvedEntities().get(3).getEntityId());
+        assertEquals("T1", text.getResolvedEntities().get(1).getEntityId());
+        assertEquals("T4", text.getResolvedEntities().get(3).getEntityId());
         assertEquals("Q6294", text.getResolvedEntities().get(2).getEntityId());
     }
 }

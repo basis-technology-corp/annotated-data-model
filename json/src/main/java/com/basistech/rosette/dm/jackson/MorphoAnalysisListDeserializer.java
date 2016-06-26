@@ -103,7 +103,7 @@ public final class MorphoAnalysisListDeserializer extends JsonDeserializer<List<
     public List<MorphoAnalysis> deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
 
         if (!cached) {
-            throw new JsonMappingException("attempt to deserialize with un-contextualized MorphoAnalysisListDeserializer");
+            throw new JsonMappingException(jp, "attempt to deserialize with un-contextualized MorphoAnalysisListDeserializer");
         }
 
         /*
