@@ -620,4 +620,12 @@ public class AnnotatedTextTest {
         assertEquals(33, em.getEndOffset());
         assertEquals(2, (int)em.getCoreferenceChainId());
     }
+
+    @Test
+    public void testEntityHeadMentionBuilder() {
+        Mention mention = new Mention.Builder(0, 6).normalized("George").build();
+        Entity entity = new Entity.Builder().mention(mention).headMentionIndex(0).build();
+        Entity.Builder entityBuilder = new Entity.Builder(entity);
+        assertEquals(0, (int)entityBuilder.build().getHeadMentionIndex());
+    }
 }
