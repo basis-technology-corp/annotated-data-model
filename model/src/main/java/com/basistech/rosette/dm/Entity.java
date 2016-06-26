@@ -207,6 +207,7 @@ public class Entity extends BaseAttribute {
             sentiment = Lists.newArrayList();
             addAllToList(sentiment, toCopy.sentiment);
             this.type = toCopy.type;
+            this.headMentionIndex = toCopy.headMentionIndex;
         }
 
         /**
