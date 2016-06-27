@@ -271,6 +271,7 @@ public class JsonTest extends AdmAssert {
         referenceText = builder.build();
     }
 
+    //TODO: shift this test entirely to Entities/Mentions.
     @Test
     public void roundTrip() throws Exception {
         ObjectMapper mapper = AnnotatedDataModelModule.setupObjectMapper(new ObjectMapper());
@@ -290,7 +291,11 @@ public class JsonTest extends AdmAssert {
         assertNotNull(emList);
         assertEquals(1, emList.size());
         com.basistech.rosette.dm.EntityMention em = emList.get(0);
-        assertEquals(entityMention, em);
+        // Test the things we care about, but avoid the extended props and the coref chain id.
+        assertEquals(entityMention.getEntityType(), em.getEntityType());
+        assertEquals(entityMention.getNormalized(), em.getNormalized());
+        assertEquals(entityMention.getStartOffset(), em.getStartOffset());
+        assertEquals(entityMention.getEndOffset(), em.getEndOffset());
 
         ListAttribute<RelationshipMention> rmList = read.getRelationshipMentions();
         assertNotNull(rmList);
@@ -298,11 +303,8 @@ public class JsonTest extends AdmAssert {
         RelationshipMention rm = rmList.get(0);
         assertEquals(relationshipMention, rm);
 
-        ListAttribute<com.basistech.rosette.dm.ResolvedEntity> resolvedEntityList = read.getResolvedEntities();
-        assertNotNull(resolvedEntityList);
-        assertEquals(1, resolvedEntityList.size());
-        com.basistech.rosette.dm.ResolvedEntity e = resolvedEntityList.get(0);
-        assertEquals(resolvedEntity, e);
+        // We don't test RT on the old ResolvedEntity. It's just not worth the bother.
+        // the coref chain id is intentionally not round-tripped, we don't want it.
 
         ListAttribute<LanguageDetection> languageDetectionList = read.getLanguageDetectionRegions();
         assertNotNull(languageDetectionList);
