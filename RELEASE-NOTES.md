@@ -1,6 +1,11 @@
 # Cumulative Release Notes for the Annotated Data Model
 
-## 21.2
+## 2.1.3
+
+### [ROS-229](https://basistech.atlassian.net/browse/ROS-239) Add
+    'Tnn' entity ids for entities created from V1.0 adms with no links.
+
+## 2.1.2
 
 ### [RELAX-360](https://basistech.atlassian.net/browse/RELAX-360) Fix
     mistake in mention sorting.
