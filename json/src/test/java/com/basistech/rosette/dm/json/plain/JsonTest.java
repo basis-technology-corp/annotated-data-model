@@ -570,7 +570,11 @@ public class JsonTest extends AdmAssert {
         assertNotNull(emList);
         assertEquals(1, emList.size());
         com.basistech.rosette.dm.EntityMention em = emList.get(0);
-        assertEquals(entityMention, em);
+        // Test the things we care about, but avoid the extended props and the coref chain id.
+        assertEquals(entityMention.getEntityType(), em.getEntityType());
+        assertEquals(entityMention.getNormalized(), em.getNormalized());
+        assertEquals(entityMention.getStartOffset(), em.getStartOffset());
+        assertEquals(entityMention.getEndOffset(), em.getEndOffset());
 
         ListAttribute<RelationshipMention> rmList = read.getRelationshipMentions();
         assertNotNull(rmList);
@@ -578,11 +582,17 @@ public class JsonTest extends AdmAssert {
         RelationshipMention rm = rmList.get(0);
         assertEquals(relationshipMention, rm);
 
+        // don't check the coref chain id, it's no longer round-tripped to avoid noise in json.
         ListAttribute<com.basistech.rosette.dm.ResolvedEntity> resolvedEntityList = read.getResolvedEntities();
         assertNotNull(resolvedEntityList);
         assertEquals(1, resolvedEntityList.size());
         com.basistech.rosette.dm.ResolvedEntity e = resolvedEntityList.get(0);
-        assertEquals(resolvedEntity, e);
+        assertEquals(resolvedEntity.getStartOffset(), e.getStartOffset());
+        assertEquals(resolvedEntity.getEndOffset(), e.getEndOffset());
+        assertEquals(resolvedEntity.getEntityId(), e.getEntityId());
+        assertEquals(resolvedEntity.getExtendedProperties(), e.getExtendedProperties());
+        assertEquals(resolvedEntity.getSentiment(), e.getSentiment());
+        assertEquals(resolvedEntity.getConfidence(), e.getConfidence(), 0.001);
 
         ListAttribute<LanguageDetection> languageDetectionList = read.getLanguageDetectionRegions();
         assertNotNull(languageDetectionList);

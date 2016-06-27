@@ -4,7 +4,8 @@
 
 ### [ROS-240](https://basistech.atlassian.net/browse/ROS-240) Don't
     write out the extra attributes used internally to migrate data
-    from 1.0 to 1.0.
+    from 1.0 to 1.0. Note that this means that round-trip of old ADM's
+    is incomplete.
 
 ## 21.2
 
