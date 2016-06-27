@@ -1,6 +1,11 @@
 # Cumulative Release Notes for the Annotated Data Model
 
-## 21.2
+## 2.1.3
+
+### [ROS-230](https://basistech.atlassian.net/browse/ROS-230) Fix
+  bug: head mention indices not copied by copy constructor.
+
+## 2.1.2
 
 ### [RELAX-360](https://basistech.atlassian.net/browse/RELAX-360) Fix
     mistake in mention sorting.
