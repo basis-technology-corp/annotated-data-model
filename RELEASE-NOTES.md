@@ -1,5 +1,11 @@
 # Cumulative Release Notes for the Annotated Data Model
 
+## 2.1.3
+
+### [ROS-240](https://basistech.atlassian.net/browse/ROS-240) Don't
+    write out the extra attributes used internally to migrate data
+    from 1.0 to 1.0.
+
 ## 21.2
 
 ### [RELAX-360](https://basistech.atlassian.net/browse/RELAX-360) Fix
