@@ -162,7 +162,7 @@ final class ConvertFromPreAdm11 {
         ListAttribute.Builder<Entity> elBuilder = new ListAttribute.Builder<>(Entity.class);
         for (ResolvedEntity resolvedEntity : oldResolved) {
             Entity.Builder enBuilder = new Entity.Builder();
-            convertOneEntity(enBuilder, resolvedEntity);
+            convertOneEntity(enBuilder, resolvedEntity, null);
             elBuilder.add(enBuilder.build());
         }
         builder.put(AttributeKey.ENTITY.key(), elBuilder.build());
@@ -218,7 +218,7 @@ final class ConvertFromPreAdm11 {
             }
 
             if (resolvedEntity != null) {
-                convertOneEntity(enBuilder, resolvedEntity);
+                convertOneEntity(enBuilder, resolvedEntity, entityMention.getCoreferenceChainId());
             } else if (entityMention.getCoreferenceChainId() != null) {
                 // no resolved entity, but we still need a coref chain.
                 enBuilder.extendedProperty("oldCoreferenceChainId", entityMention.getCoreferenceChainId());
@@ -281,7 +281,7 @@ final class ConvertFromPreAdm11 {
         return elBuilder;
     }
 
-    private static void convertOneEntity(Entity.Builder enBuilder, ResolvedEntity resolvedEntity) {
+    private static void convertOneEntity(Entity.Builder enBuilder, ResolvedEntity resolvedEntity, Integer indocChainId) {
         enBuilder.entityId(resolvedEntity.getEntityId());
         enBuilder.confidence(resolvedEntity.getConfidence());
         if (resolvedEntity.getSentiment() != null) {
@@ -295,6 +295,9 @@ final class ConvertFromPreAdm11 {
         }
         if (resolvedEntity.getCoreferenceChainId() != null) {
             enBuilder.extendedProperty("oldCoreferenceChainId", resolvedEntity.getCoreferenceChainId());
+            if (resolvedEntity.getEntityId() == null && indocChainId != null) {
+                enBuilder.entityId(String.format("T%d", indocChainId));
+            }
         }
     }
 }
