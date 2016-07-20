@@ -615,19 +615,20 @@ public class AnnotatedText {
         @Deprecated
         @SuppressWarnings("unchecked")
         public Builder resolvedEntities(ListAttribute<ResolvedEntity> resolvedEntities) {
-            if (attributes.containsKey(AttributeKey.ENTITY.key())) {
-                // we need to recreate the old mentions to go with 'old' resolved entities.
-                List<EntityMention> oldList = Lists.newArrayList();
-                downconvertEntities(oldList, (ListAttribute<Entity>) attributes.get(AttributeKey.ENTITY.key()));
-                attributes.remove(AttributeKey.ENTITY.key());
-                ListAttribute.Builder<EntityMention> oldBuilder = new ListAttribute.Builder<>(EntityMention.class);
-                for (EntityMention em : oldList) {
-                    oldBuilder.add(em);
+            if (resolvedEntities != null && !resolvedEntities.isEmpty()) {
+                if (attributes.containsKey(AttributeKey.ENTITY.key())) {
+                    // we need to recreate the old mentions to go with 'old' resolved entities.
+                    List<EntityMention> oldList = Lists.newArrayList();
+                    downconvertEntities(oldList, (ListAttribute<Entity>) attributes.get(AttributeKey.ENTITY.key()));
+                    ListAttribute.Builder<EntityMention> oldBuilder = new ListAttribute.Builder<>(EntityMention.class);
+                    for (EntityMention em : oldList) {
+                        oldBuilder.add(em);
+                    }
+                    attributes.remove(AttributeKey.ENTITY.key());
+                    attributes.put(AttributeKey.ENTITY_MENTION.key(), oldBuilder.build());
                 }
-                attributes.remove(AttributeKey.ENTITY.key());
-                attributes.put(AttributeKey.ENTITY_MENTION.key(), oldBuilder.build());
+                attributes.put(AttributeKey.RESOLVED_ENTITY.key(), resolvedEntities);
             }
-            attributes.put(AttributeKey.RESOLVED_ENTITY.key(), resolvedEntities);
             return this;
         }
 
