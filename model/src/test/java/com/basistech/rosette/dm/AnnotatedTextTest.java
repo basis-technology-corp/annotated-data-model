@@ -377,6 +377,33 @@ public class AnnotatedTextTest {
     }
 
     @Test
+    public void testTopicResults() {
+        AnnotatedText.Builder builder = new AnnotatedText.Builder();
+        ListAttribute.Builder<CategorizerResult> listBuilder
+                = new ListAttribute.Builder<>(CategorizerResult.class);
+        listBuilder.add(new CategorizerResult.Builder("sports", 0.2)
+                .confidence(0.2).build());
+        listBuilder.add(new CategorizerResult.Builder("basketball", 0.1)
+                .confidence(0.1).build());
+        builder.topicResults(listBuilder.build());
+        AnnotatedText text = builder.build();
+
+        CategorizerResult r1 = text.getTopicResults().get(0);
+        assertEquals("sports", r1.getLabel());
+        assertEquals(0.2, r1.getScore(), 0.000000001);
+        assertEquals(0.2, r1.getConfidence(), 0.000000001);
+        assertNull(r1.getExplanationSet());
+        assertNull(r1.getPerFeatureScores());
+
+        CategorizerResult r2 = text.getTopicResults().get(1);
+        assertEquals("basketball", r2.getLabel());
+        assertEquals(0.1, r2.getScore(), 0.000000001);
+        assertEquals(0.1, r2.getConfidence(), 0.000000001);
+        assertNull(r2.getExplanationSet());
+        assertNull(r2.getPerFeatureScores());
+    }
+
+    @Test
     public void documentMetadata() throws Exception {
         AnnotatedText.Builder builder = new AnnotatedText.Builder();
         final ArrayList<String> listOfStrings = Lists.newArrayList("value1", "value2");

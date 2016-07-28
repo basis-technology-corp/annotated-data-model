@@ -52,6 +52,7 @@ public enum KnownAttribute {
     TRANSLATED_TOKENS("translatedTokens", TranslatedTokens.class),
     CATEGORIZATION_RESULT("categorizerResults", CategorizerResult.class),
     SENTIMENT_RESULT("sentimentResults", CategorizerResult.class),
+    TOPIC_RESULT("topicResults", CategorizerResult.class),
     LIST("list", ListAttribute.class),
     UNKNOWN("unknown", UnknownAttribute.class),
     RELATION_ARGUMENT("RelationshipComponent", RelationshipComponent.class);

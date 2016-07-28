@@ -112,5 +112,8 @@ public abstract class AnnotatedTextMixin {
     public abstract ListAttribute<CategorizerResult> getSentimentResults();
 
     @JsonIgnore
+    public abstract ListAttribute<CategorizerResult> getTopicResults();
+
+    @JsonIgnore
     public abstract ListAttribute<Entity> getEntities();
 }

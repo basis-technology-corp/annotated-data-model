@@ -493,6 +493,19 @@ public class AnnotatedText {
     }
 
     /**
+     * Returns the list of topic results.  Topics differ from categories in
+     * that there is usually a single best category (e.g. SPORTS) whereas
+     * there may be a number good topics (e.g. sports, basketball, Michael
+     * Jordan).
+     *
+     * @return the list of topic results
+     */
+    @SuppressWarnings("unchecked")
+    public ListAttribute<CategorizerResult> getTopicResults() {
+        return (ListAttribute<CategorizerResult>) attributes.get(AttributeKey.TOPIC_RESULTS.key());
+    }
+
+    /**
      * toString is a convenience for accessing the textual data, if any, in this annotated text.
      * @return the data for this AnnotatedText as a String.
      * If the data is {@code null}, this returns {@code null}
@@ -728,6 +741,17 @@ public class AnnotatedText {
          */
         public Builder sentimentResults(ListAttribute<CategorizerResult> sentimentResults) {
             attributes.put(AttributeKey.SENTIMENT_RESULTS.key(), sentimentResults);
+            return this;
+        }
+
+        /**
+         * Attaches a list of topic results.
+         *
+         * @param topicResults the topic results
+         * @return this
+         */
+        public Builder topicResults(ListAttribute<CategorizerResult> topicResults) {
+            attributes.put(AttributeKey.TOPIC_RESULTS.key(), topicResults);
             return this;
         }
 

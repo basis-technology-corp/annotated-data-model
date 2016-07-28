@@ -46,7 +46,9 @@ enum AttributeKey {
     TRANSLATED_TOKENS("translatedTokens"),
 
     CATEGORIZER_RESULTS("categorizerResults"),
-    SENTIMENT_RESULTS("sentimentResults");
+    SENTIMENT_RESULTS("sentimentResults"),
+    TOPIC_RESULTS("topicResults");
+
 
     private final String key;
 
