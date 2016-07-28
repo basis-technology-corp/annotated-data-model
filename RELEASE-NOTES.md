@@ -1,5 +1,22 @@
 # Cumulative Release Notes for the Annotated Data Model
 
+## ???
+
+### [ROS-251](https://basistech.atlassian.net/browse/ROS-251) New slot for "topics"
+
+A document can have multiple topics. These are sort of like "labels"
+or "keywords" but the topic does not need to be mentioned directly in
+the doc. For example, an article about Michael Jordan might have
+topics "basketball", "sports", "Michael Jordan", "bulls", "chicago". A
+categorizer might simply emit "SPORTS". There's usually a single best
+category (though we still produce a ranked list), but we may expect to
+have multiple good topics (thought they are still presented as a
+ranked list).
+
+This change adds ``AnnoatedText#getTopicResult`` and associated
+builders and tests.  A single topic is held in a
+``CategorizerResult``.  ``getTopicResults`` returns a list of them.
+
 ## 2.1.4
 
 Incremental fix to compatibility case of using the old api to add info
