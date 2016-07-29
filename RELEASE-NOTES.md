@@ -1,5 +1,9 @@
 # Cumulative Release Notes for the Annotated Data Model
 
+### 2.1.5
+
+### [ROS-254](https://basistech.atlassian.net/browse/ROS-254) Add  representation for dependencies.
+    
 ## 2.1.4
 
 Incremental fix to compatibility case of using the old api to add info
