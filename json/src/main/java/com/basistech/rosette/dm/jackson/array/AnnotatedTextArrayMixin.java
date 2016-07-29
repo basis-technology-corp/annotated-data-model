@@ -19,6 +19,7 @@ package com.basistech.rosette.dm.jackson.array;
 import com.basistech.rosette.dm.BaseAttribute;
 import com.basistech.rosette.dm.BaseNounPhrase;
 import com.basistech.rosette.dm.CategorizerResult;
+import com.basistech.rosette.dm.Dependency;
 import com.basistech.rosette.dm.Entity;
 import com.basistech.rosette.dm.LanguageDetection;
 import com.basistech.rosette.dm.ListAttribute;
@@ -115,4 +116,7 @@ public abstract class AnnotatedTextArrayMixin {
 
     @JsonIgnore
     public abstract ListAttribute<Entity> getEntities();
+
+    @JsonIgnore
+    public abstract ListAttribute<Dependency> getDependencies();
 }
