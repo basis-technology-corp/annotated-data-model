@@ -209,6 +209,20 @@ public class AnnotatedTextTest {
     }
 
     @Test
+    public void dependencies() {
+        String rawText = "Dogs eat books.";
+        AnnotatedText.Builder builder = new AnnotatedText.Builder().data(rawText);
+        ListAttribute.Builder<Dependency> depListBuilder = new ListAttribute.Builder<>(Dependency.class);
+        depListBuilder.add(new Dependency.Builder("V", -1, 1).build());
+        depListBuilder.add(new Dependency.Builder("S", 1, 0).build());
+        depListBuilder.add(new Dependency.Builder("O", 1, 2).build());
+        depListBuilder.add(new Dependency.Builder("P", 2, 3).build());
+        builder.dependencies(depListBuilder.build());
+        AnnotatedText text = builder.build();
+        assertEquals(4, text.getDependencies().size());
+    }
+
+    @Test
     public void testEntityMentionsWithoutChains() {
         //                012345678901234
         String rawText = "Bill.  George.";

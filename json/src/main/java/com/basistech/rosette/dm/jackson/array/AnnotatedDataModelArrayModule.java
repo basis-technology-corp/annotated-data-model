@@ -22,6 +22,7 @@ import com.basistech.rosette.dm.Attribute;
 import com.basistech.rosette.dm.BaseAttribute;
 import com.basistech.rosette.dm.BaseNounPhrase;
 import com.basistech.rosette.dm.CategorizerResult;
+import com.basistech.rosette.dm.Dependency;
 import com.basistech.rosette.dm.Entity;
 import com.basistech.rosette.dm.Extent;
 import com.basistech.rosette.dm.HanMorphoAnalysis;
@@ -43,6 +44,7 @@ import com.basistech.rosette.dm.jackson.ArabicMorphoAnalysisMixin;
 import com.basistech.rosette.dm.jackson.AttributeMixin;
 import com.basistech.rosette.dm.jackson.BaseNounPhraseMixin;
 import com.basistech.rosette.dm.jackson.CategorizerResultMixin;
+import com.basistech.rosette.dm.jackson.DependencyMixin;
 import com.basistech.rosette.dm.jackson.EntityMentionMixin;
 import com.basistech.rosette.dm.jackson.EntityMixin;
 import com.basistech.rosette.dm.jackson.ExtentMixin;
@@ -105,6 +107,7 @@ public class AnnotatedDataModelArrayModule extends EnumModule {
         context.setMixInAnnotations(Token.class, TokenArrayMixin.class);
         context.setMixInAnnotations(TranslatedData.class, TranslatedDataMixin.class);
         context.setMixInAnnotations(TranslatedTokens.class, TranslatedTokensMixin.class);
+        context.setMixInAnnotations(Dependency.class, DependencyMixin.class);
     }
 
     /**

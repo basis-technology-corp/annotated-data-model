@@ -20,6 +20,7 @@ import com.basistech.rosette.dm.ArabicMorphoAnalysis;
 import com.basistech.rosette.dm.BaseAttribute;
 import com.basistech.rosette.dm.BaseNounPhrase;
 import com.basistech.rosette.dm.CategorizerResult;
+import com.basistech.rosette.dm.Dependency;
 import com.basistech.rosette.dm.Entity;
 import com.basistech.rosette.dm.Extent;
 import com.basistech.rosette.dm.HanMorphoAnalysis;
@@ -472,6 +473,10 @@ public class JsonTest extends AdmAssert {
         crListBuilder.add(sentimentResult);
         builder.sentimentResults(crListBuilder.build());
 
+        ListAttribute.Builder<Dependency> depListBuilder = new ListAttribute.Builder<>(Dependency.class);
+        depListBuilder.add(new Dependency.Builder("V", -1, 0).build());
+        builder.dependencies(depListBuilder.build());
+
         referenceText = builder.build();
     }
 
@@ -682,6 +687,10 @@ public class JsonTest extends AdmAssert {
         assertEquals(categoryResult, read.getCategorizerResults().get(0));
 
         assertEquals(sentimentResult, read.getSentimentResults().get(0));
+
+        assertEquals("V", read.getDependencies().get(0).getRelationship());
+        assertEquals(-1, read.getDependencies().get(0).getGovernorTokenIndex());
+        assertEquals(0, read.getDependencies().get(0).getDependencyTokenIndex());
     }
 
     @Test
@@ -769,6 +778,6 @@ public class JsonTest extends AdmAssert {
     public void emptyAdm() throws Exception {
         /* We want to be able to read an empty object as an ADM */
         /* No asserts needed, what we need here is a lack of a throw. */
-        objectMapper().readValue("{}", AnnotatedText.class).toString();
+        assertNull(objectMapper().readValue("{}", AnnotatedText.class).toString());
     }
 }
