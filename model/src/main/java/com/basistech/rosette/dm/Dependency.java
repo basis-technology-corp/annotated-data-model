@@ -21,6 +21,55 @@ import java.util.Objects;
 /**
  * An inter-token dependency from a parser.
  * Note that a token index of {@code -1} means 'ROOT'.
+ * <br>
+ * Consider a ConLL file with dependency information:
+ * <pre>
+ * 1	My	my	PRP$	_	2	poss	_	O
+ * 2	dog	dog	NN	_	3	nsubj	_	O
+ * 3	has	have	VBZ	_	0	root	_	O
+ * 4	fleas	flea	NNS	_	3	dobj	_	O
+ * 5	.	.	.	_	3	punct	_	O
+ * </pre>
+ * Each token has two columns related to dependencies: the 'governor' and the 'label'. In the ADM,
+ * this would turn into a list of {@code Dependency} objects as follows:
+ * <table>
+ *     <thead>
+ *         <tr>
+ *             <td>relationship</td>
+ *             <td>governorTokenIndex</td>
+ *             <td>dependencyTokenIndex</td>
+ *         </tr>
+ *     </thead>
+ *     <tbody>
+ *         <tr>
+ *             <td>poss</td>
+ *             <td>1</td>
+ *             <td>0</td>
+ *         </tr>
+ *         <tr>
+ *             <td>nsubj</td>
+ *             <td>2</td>
+ *             <td>1</td>
+ *         </tr>
+ *         <tr>
+ *             <td>root</td>
+ *             <td>-1</td>
+ *             <td>2</td>
+ *         </tr>
+ *         <tr>
+ *             <td>dobj</td>
+ *             <td>2</td>
+ *             <td>3</td>
+  *         </tr>
+ *         <tr>
+ *             <td>punct</td>
+ *             <td>2</td>
+ *             <td>4</td>
+ *         </tr>
+ *     </tbody>
+ * </table>
+ * Viewed as a list, the {@code dependencyTokenIndex} is redundant, but it is useful to pass a single dependency
+ * around in isolation as a complete representation of a dependency arc.
  */
 public class Dependency extends BaseAttribute {
     private final String relationship;
