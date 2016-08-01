@@ -777,7 +777,7 @@ public class JsonTest extends AdmAssert {
     @Test
     public void emptyAdm() throws Exception {
         /* We want to be able to read an empty object as an ADM */
-        /* No asserts needed, what we need here is a lack of a throw. */
+        // since there is no data, toString return null.
         assertNull(objectMapper().readValue("{}", AnnotatedText.class).toString());
     }
 }
