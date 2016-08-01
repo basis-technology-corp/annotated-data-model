@@ -493,6 +493,16 @@ public class AnnotatedText {
     }
 
     /**
+     * Returns the list of dependencies.
+     *
+     * @return the list of dependencies.
+     */
+    @SuppressWarnings("unchecked")
+    public ListAttribute<Dependency> getDependencies() {
+        return (ListAttribute<Dependency>) attributes.get(AttributeKey.DEPENDENCY.key());
+    }
+
+    /**
      * toString is a convenience for accessing the textual data, if any, in this annotated text.
      * @return the data for this AnnotatedText as a String.
      * If the data is {@code null}, this returns {@code null}
@@ -728,6 +738,17 @@ public class AnnotatedText {
          */
         public Builder sentimentResults(ListAttribute<CategorizerResult> sentimentResults) {
             attributes.put(AttributeKey.SENTIMENT_RESULTS.key(), sentimentResults);
+            return this;
+        }
+
+        /**
+         * Attaches a list of dependencies.
+         *
+         * @param dependencies the dependencies.
+         * @return this
+         */
+        public Builder dependencies(ListAttribute<Dependency> dependencies) {
+            attributes.put(AttributeKey.DEPENDENCY.key(), dependencies);
             return this;
         }
 

@@ -18,6 +18,7 @@ package com.basistech.rosette.dm.jackson;
 import com.basistech.rosette.dm.BaseAttribute;
 import com.basistech.rosette.dm.BaseNounPhrase;
 import com.basistech.rosette.dm.CategorizerResult;
+import com.basistech.rosette.dm.Dependency;
 import com.basistech.rosette.dm.Entity;
 import com.basistech.rosette.dm.LanguageDetection;
 import com.basistech.rosette.dm.ListAttribute;
@@ -54,7 +55,8 @@ public enum KnownAttribute {
     SENTIMENT_RESULT("sentimentResults", CategorizerResult.class),
     LIST("list", ListAttribute.class),
     UNKNOWN("unknown", UnknownAttribute.class),
-    RELATION_ARGUMENT("RelationshipComponent", RelationshipComponent.class);
+    RELATION_ARGUMENT("RelationshipComponent", RelationshipComponent.class),
+    DEPENDENCY("dependency", Dependency.class);
 
 
     private final String jsonTag;

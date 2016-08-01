@@ -445,8 +445,6 @@ public class EqualsTest {
         RelationshipComponent _p2 = new RelationshipComponent.Builder().phrase("p")
                 .extents(Lists.newArrayList(new Extent.Builder(2, 3).build())).build();
 
-
-
         // relId intentionally null, all other fields populated.
         RelationshipMention rm1 = new RelationshipMention.Builder(0, 12).predicate(_p).arg1(_ra1).arg2
                 (_ra2).build();
@@ -476,7 +474,16 @@ public class EqualsTest {
         assertFalse(rm3.equals(rm2));
         assertFalse(rm3.equals(rm1));
         assertFalse(rm3.hashCode() == rm2.hashCode());
+    }
 
+    @Test
+    public void dependency() throws Exception {
+        // This is minimal -- this class is too simple to be anxious about.
+        Dependency d1 = new Dependency.Builder("conj", 0, 1).build();
+        Dependency d2 = new Dependency.Builder("conj", 1, 3).build();
+        assertFalse(d1.equals(d2));
+        assertFalse(d1.hashCode() == d2.hashCode());
+        assertTrue(d1.equals(d1));
 
     }
 
