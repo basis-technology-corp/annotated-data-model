@@ -24,11 +24,11 @@ import java.util.Objects;
  * <br>
  * Consider a ConLL file with dependency information:
  * <pre>
- * 1	My	my	PRP$	_	2	poss	_	O
- * 2	dog	dog	NN	_	3	nsubj	_	O
- * 3	has	have	VBZ	_	0	root	_	O
- * 4	fleas	flea	NNS	_	3	dobj	_	O
- * 5	.	.	.	_	3	punct	_	O
+ * 1    My      my      PRP$  _   2   poss    _   O
+ * 2    dog     dog     NN    _   3   nsubj   _   O
+ * 3    has     have    VBZ   _   0   root    _   O
+ * 4    fleas   flea    NNS   _   3   dobj    _   O
+ * 5    .       .       .     _   3   punct   _   O
  * </pre>
  * Each token has two columns related to dependencies: the 'governor' and the 'label'. In the ADM,
  * this would turn into a list of {@code Dependency} objects as follows:
