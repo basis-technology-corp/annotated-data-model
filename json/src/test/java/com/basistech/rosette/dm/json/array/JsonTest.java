@@ -58,7 +58,7 @@ import java.util.Map;
 @SuppressWarnings("deprecation")
 public class JsonTest extends AdmAssert {
 
-    public static final String THIS_IS_THE_TERRIER_SHOT_TO_BOSTON = "This is the terrier shot to Boston.";
+    private static final String THIS_IS_THE_TERRIER_SHOT_TO_BOSTON = "This is the terrier shot to Boston.";
     private BaseNounPhrase baseNounPhrase;
     private com.basistech.rosette.dm.EntityMention entityMention;
     private com.basistech.rosette.dm.ResolvedEntity resolvedEntity;
@@ -74,6 +74,7 @@ public class JsonTest extends AdmAssert {
     private TranslatedTokens spanishTranslation;
     private CategorizerResult categoryResult;
     private CategorizerResult sentimentResult;
+    private CategorizerResult topicResult;
     private AnnotatedText referenceText;
 
     @Before
@@ -268,6 +269,12 @@ public class JsonTest extends AdmAssert {
         crBuilder.add(sentimentResult);
         builder.sentimentResults(crBuilder.build());
 
+        crBuilder = new ListAttribute.Builder<>(CategorizerResult.class);
+        topicResult = new CategorizerResult.Builder("basketball", 0.5)
+                .confidence(0.3).build();
+        crBuilder.add(topicResult);
+        builder.topicResults(crBuilder.build());
+
         referenceText = builder.build();
     }
 
@@ -338,6 +345,8 @@ public class JsonTest extends AdmAssert {
         assertEquals(categoryResult, read.getCategorizerResults().get(0));
 
         assertEquals(sentimentResult, read.getSentimentResults().get(0));
+
+        assertEquals(topicResult, read.getTopicResults().get(0));
     }
 
     @Test

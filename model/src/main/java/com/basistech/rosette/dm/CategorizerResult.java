@@ -23,13 +23,15 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * A result from running Categorization. These objects are used to represent
- * several different categorization processes, including sentiment.
- * A Categorizer typically emits
- * a ranked list of {@code CategorizerResult}s.  Each result has a label
- * and a confidence.  Optional fields include an explanation set, and
- * per-feature scores.  This result holds the results for document
- * categorization and sentiment analysis.
+ * <p>Associates a label with a document.  Various applications may generate
+ * these labels.  For an article about Michael Jordan, a categorzier might
+ * produce a label like "SPORTS", and sentiment analyzer might produce
+ * "neg", "neu", "pos", while a topic generator might produce "basketball",
+ * "bulls", "chicago".  Applications typically produce a ranked list of
+ * {@code CategorizerResult}s.  Each result has a label.  Optional fields
+ * include confidence, an explanation set, and per-feature scores.  This
+ * result is currently used for document categorization, sentiment analysis,
+ * and topic generation.</p>
  */
 public class CategorizerResult extends BaseAttribute {
     private final String label;

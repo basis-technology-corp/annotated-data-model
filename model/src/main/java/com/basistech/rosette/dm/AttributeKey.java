@@ -47,7 +47,8 @@ enum AttributeKey {
 
     CATEGORIZER_RESULTS("categorizerResults"),
     SENTIMENT_RESULTS("sentimentResults"),
-    DEPENDENCY("dependency");
+    DEPENDENCY("dependency"),
+    TOPIC_RESULTS("topicResults");
 
     private final String key;
 
