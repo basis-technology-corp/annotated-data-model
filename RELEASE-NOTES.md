@@ -2,7 +2,8 @@
 
 ### 2.1.5
 
-### [ROS-254](https://basistech.atlassian.net/browse/ROS-254) Add  representation for dependencies.
+### [ROS-255](https://basistech.atlassian.net/browse/ROS-255) Add representation entity salience.
+### [ROS-254](https://basistech.atlassian.net/browse/ROS-254) Add representation for dependencies.
     
 ## 2.1.4
 

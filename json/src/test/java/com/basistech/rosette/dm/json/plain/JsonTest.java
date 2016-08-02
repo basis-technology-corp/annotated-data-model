@@ -65,7 +65,7 @@ import java.util.Map;
 @SuppressWarnings("deprecation")
 public class JsonTest extends AdmAssert {
 
-    public static final String THIS_IS_THE_TERRIER_SHOT_TO_BOSTON = "This is the terrier shot to Boston.";
+    private static final String THIS_IS_THE_TERRIER_SHOT_TO_BOSTON = "This is the terrier shot to Boston.";
     private BaseNounPhrase baseNounPhrase;
     private com.basistech.rosette.dm.EntityMention entityMention;
     private RelationshipMention relationshipMention;
@@ -312,6 +312,7 @@ public class JsonTest extends AdmAssert {
         mentionBuilder.extendedProperty("em-ex", "em-ex-val");
         entityBuilder.mention(mentionBuilder.build());
         entityBuilder.confidence(0.5);
+        entityBuilder.salience(0.4);
         entity = entityBuilder.build();
         entityListBuilder.add(entity);
         builder.entities(entityListBuilder.build());
@@ -645,6 +646,7 @@ public class JsonTest extends AdmAssert {
         assertNotNull(entityList);
         assertEquals(1, entityList.size());
         Entity en = entityList.get(0);
+        assertEquals(0.4, en.getSalience(), 0.0001); // just make sure the salience field works all around.
         assertEquals(entity, en);
 
         ListAttribute<RelationshipMention> rmList = read.getRelationshipMentions();

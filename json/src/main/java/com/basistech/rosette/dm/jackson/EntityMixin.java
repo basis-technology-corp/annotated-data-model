@@ -34,6 +34,7 @@ public abstract class EntityMixin {
                 @JsonProperty("entityId") String entityId,
                 @JsonProperty("confidence") Double confidence,
                 @JsonProperty("sentiment") List<CategorizerResult> sentiment,
+                @JsonProperty("salience") Double salience,
                 @JsonProperty("extendedProperties") Map<String, Object> extendedProperties) {
         //
     }
