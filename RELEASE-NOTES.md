@@ -1,7 +1,8 @@
 # Cumulative Release Notes for the Annotated Data Model
 
-### 2.1.5
+## 2.1.5
 
+### [ROS-257](https://basistech.atlassian.net/browse/ROS-257) Add relationship modality.
 ### [ROS-255](https://basistech.atlassian.net/browse/ROS-255) Add representation entity salience.
 ### [ROS-254](https://basistech.atlassian.net/browse/ROS-254) Add representation for dependencies.
     
