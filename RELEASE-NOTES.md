@@ -20,10 +20,10 @@ the doc. For example, an article about Michael Jordan might have
 topics "basketball", "sports", "Michael Jordan", "bulls", "chicago". A
 categorizer might simply emit "SPORTS". There's usually a single best
 category (though we still produce a ranked list), but we may expect to
-have multiple good topics (thought they are still presented as a
+have multiple good topics (though they are still presented as a
 ranked list).
 
-This change adds ``AnnoatedText#getTopicResult`` and associated
+This change adds ``AnnoatedText#getTopicResults`` and associated
 builders and tests.  A single topic is held in a
 ``CategorizerResult``.  ``getTopicResults`` returns a list of them.
 
