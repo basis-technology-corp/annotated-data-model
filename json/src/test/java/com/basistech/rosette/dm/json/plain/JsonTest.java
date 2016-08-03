@@ -295,7 +295,7 @@ public class JsonTest extends AdmAssert {
         Embeddings.Builder embeddingsBuilder = new Embeddings.Builder();
         EmbeddingCollection.Builder embeddingCollectionBuilder = new EmbeddingCollection.Builder();
         embeddingCollectionBuilder.put(0, new float[]{0, 1});
-        embeddingsBuilder.put(Embeddings.TEXT, embeddingCollectionBuilder.build());
+        embeddingsBuilder.put(Embeddings.Name.TEXT, embeddingCollectionBuilder.build());
         embeddings = embeddingsBuilder.build();
         builder.embeddings(embeddingsBuilder.build());
 
@@ -505,7 +505,7 @@ public class JsonTest extends AdmAssert {
         Embeddings.Builder embeddingsBuilder = new Embeddings.Builder();
         EmbeddingCollection.Builder embeddingCollectionBuilder = new EmbeddingCollection.Builder();
         embeddingCollectionBuilder.put(0, new float[]{0, 1});
-        embeddingsBuilder.put(Embeddings.TEXT, embeddingCollectionBuilder.build());
+        embeddingsBuilder.put(Embeddings.Name.TEXT, embeddingCollectionBuilder.build());
         embeddings = embeddingsBuilder.build();
         builder.embeddings(embeddingsBuilder.build());
 

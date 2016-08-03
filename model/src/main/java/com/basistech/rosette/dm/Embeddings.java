@@ -27,14 +27,24 @@ import java.util.Objects;
  * Constants are provided for some common cases.
  */
 public class Embeddings extends BaseAttribute {
-    //* The embedding values for the entire text.
-    public static final String TEXT = "text";
-    //* The embedding values for tokens.
-    public static final String TOKENS = "tokens";
+    /**
+     * The embedding name.
+     */
+    public enum Name {
+        /**
+         * The embedding values for the entire text.
+         */
+        TEXT,
 
-    private final Map<String, EmbeddingCollection> collections;
+        /**
+         * The embedding values for tokens.
+         */
+        TOKENS
+    }
 
-    protected Embeddings(Map<String, EmbeddingCollection> collections, Map<String, Object> extendedProperties) {
+    private final Map<Name, EmbeddingCollection> collections;
+
+    protected Embeddings(Map<Name, EmbeddingCollection> collections, Map<String, Object> extendedProperties) {
         super(extendedProperties);
         this.collections = collections;
     }
@@ -44,7 +54,7 @@ public class Embeddings extends BaseAttribute {
      * @param collectionName The collection name.
      * @return the embeddings.
      */
-    public EmbeddingCollection get(String collectionName) {
+    public EmbeddingCollection get(Name collectionName) {
         return collections.get(collectionName);
     }
 
@@ -52,7 +62,7 @@ public class Embeddings extends BaseAttribute {
      * Retrieve all of the collections as a map.
      * @return the collections.
      */
-    public Map<String, EmbeddingCollection> getCollections() {
+    public Map<Name, EmbeddingCollection> getCollections() {
         return collections;
     }
 
@@ -83,7 +93,7 @@ public class Embeddings extends BaseAttribute {
     }
 
     public static class Builder extends BaseAttribute.Builder<Embeddings, Embeddings.Builder> {
-        private Map<String, EmbeddingCollection> collections;
+        private Map<Name, EmbeddingCollection> collections;
 
         public Builder() {
             super();
@@ -96,7 +106,7 @@ public class Embeddings extends BaseAttribute {
          * @param collection the collection.
          * @return this.
          */
-        public Builder put(String collectionName, EmbeddingCollection collection) {
+        public Builder put(Name collectionName, EmbeddingCollection collection) {
             collections.put(collectionName, collection);
             return this;
         }
