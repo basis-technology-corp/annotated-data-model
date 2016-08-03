@@ -21,6 +21,8 @@ import com.basistech.rosette.dm.BaseAttribute;
 import com.basistech.rosette.dm.BaseNounPhrase;
 import com.basistech.rosette.dm.CategorizerResult;
 import com.basistech.rosette.dm.Dependency;
+import com.basistech.rosette.dm.EmbeddingCollection;
+import com.basistech.rosette.dm.Embeddings;
 import com.basistech.rosette.dm.Entity;
 import com.basistech.rosette.dm.Extent;
 import com.basistech.rosette.dm.HanMorphoAnalysis;
@@ -88,6 +90,7 @@ public class JsonTest extends AdmAssert {
     private AnnotatedText referenceTextOldEntities;
     private AnnotatedText referenceText;
     private Entity entity;
+    private Embeddings embeddings;
 
     @Before
     public void oneWithEverythingOldEntities() {
@@ -290,7 +293,15 @@ public class JsonTest extends AdmAssert {
         crBuilder.add(topicResult);
         builder.topicResults(crBuilder.build());
 
+        Embeddings.Builder embeddingsBuilder = new Embeddings.Builder();
+        EmbeddingCollection.Builder embeddingCollectionBuilder = new EmbeddingCollection.Builder();
+        embeddingCollectionBuilder.put(0, new float[]{0, 1});
+        embeddingsBuilder.put(Embeddings.Name.TEXT, embeddingCollectionBuilder.build());
+        embeddings = embeddingsBuilder.build();
+        builder.embeddings(embeddingsBuilder.build());
+
         referenceTextOldEntities = builder.build();
+
     }
 
     @Before
@@ -493,7 +504,16 @@ public class JsonTest extends AdmAssert {
         crListBuilder.add(topicResult);
         builder.topicResults(crListBuilder.build());
 
+        Embeddings.Builder embeddingsBuilder = new Embeddings.Builder();
+        EmbeddingCollection.Builder embeddingCollectionBuilder = new EmbeddingCollection.Builder();
+        embeddingCollectionBuilder.put(0, new float[]{0, 1});
+        embeddingsBuilder.put(Embeddings.Name.TEXT, embeddingCollectionBuilder.build());
+        embeddings = embeddingsBuilder.build();
+        builder.embeddings(embeddingsBuilder.build());
+
         referenceText = builder.build();
+
+
     }
 
     /* See ROS-76. */
@@ -546,7 +566,8 @@ public class JsonTest extends AdmAssert {
         objectWriter.writeValue(writer, referenceTextOldEntities);
         // to tell that the version is there, we read as a tree
         JsonNode tree = mapper.readTree(writer.toString());
-        assertEquals("1.1.0", tree.get("version").asText());
+        String version = tree.get("version").asText();
+        assertEquals("1.1.0", version);
     }
 
     @Test
@@ -677,7 +698,7 @@ public class JsonTest extends AdmAssert {
         assertEquals(1, languageDetectionList.size());
 
         assertEquals(languageDetectionRegion, languageDetectionList.get(0));
-        assertEquals(languageDetection,  read.getWholeTextLanguageDetection());
+        assertEquals(languageDetection, read.getWholeTextLanguageDetection());
 
         ListAttribute<ScriptRegion> scriptRegionList = read.getScriptRegions();
         assertNotNull(scriptRegionList);
@@ -712,6 +733,9 @@ public class JsonTest extends AdmAssert {
         assertEquals(0, read.getDependencies().get(0).getDependencyTokenIndex());
 
         assertEquals(topicResult, read.getTopicResults().get(0));
+
+        Embeddings readEmbeddings = read.getEmbeddings();
+        assertEquals(embeddings, readEmbeddings);
     }
 
     @Test

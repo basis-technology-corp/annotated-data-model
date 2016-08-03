@@ -516,6 +516,16 @@ public class AnnotatedText {
     }
 
     /**
+     * Return the embeddings associated with this text. Embeddings, sometimes known
+     * as text vectors, are arrays of floating point numbers calculated from the entire
+     * text or subsets such as tokens or entities.
+     * @return the embeddings.
+     */
+    public Embeddings getEmbeddings() {
+        return (Embeddings) attributes.get(AttributeKey.EMBEDDING.key());
+    }
+
+    /**
      * toString is a convenience for accessing the textual data, if any, in this annotated text.
      * @return the data for this AnnotatedText as a String.
      * If the data is {@code null}, this returns {@code null}
@@ -773,6 +783,16 @@ public class AnnotatedText {
          */
         public Builder topicResults(ListAttribute<CategorizerResult> topicResults) {
             attributes.put(AttributeKey.TOPIC_RESULTS.key(), topicResults);
+            return this;
+        }
+
+        /**
+         * Attaches a set of embeddings.
+         * @param embeddings the embeddings.
+         * @return this.
+         */
+        public Builder embeddings(Embeddings embeddings) {
+            attributes.put(AttributeKey.EMBEDDING.key(), embeddings);
             return this;
         }
 
