@@ -127,6 +127,7 @@ public class JsonTest extends AdmAssert {
         rmBuilder.extendedProperty("rm-ex", "rm-ex-val");
         rmBuilder.source("statistical rules:42");
         rmBuilder.modality("wholey");
+        rmBuilder.salience(0.0);
         relationshipMention = rmBuilder.build();
         rmListBuilder.add(relationshipMention);
         builder.relationshipMentions(rmListBuilder.build());

@@ -3,9 +3,15 @@
 ## 2.1.5
 
 ### [ROS-257](https://basistech.atlassian.net/browse/ROS-257) Add relationship modality.
-### [ROS-255](https://basistech.atlassian.net/browse/ROS-255) Add representation entity salience.
+
+### [ROS-258](https://basistech.atlassian.net/browse/ROS-258) Add representation for relationship salience.
+
+### [ROS-255](https://basistech.atlassian.net/browse/ROS-255) Add representation for embeddings.
+
+### [ROS-256](https://basistech.atlassian.net/browse/ROS-256) Add representation for entity salience.
+
 ### [ROS-254](https://basistech.atlassian.net/browse/ROS-254) Add representation for dependencies.
-    
+
 ### [ROS-251](https://basistech.atlassian.net/browse/ROS-251) New slot for "topics"
 
 A document can have multiple topics. These are sort of like "labels"

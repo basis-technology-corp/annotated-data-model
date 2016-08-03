@@ -38,6 +38,7 @@ public class RelationshipMention extends Attribute {
     private final String source;
     private final Double confidence;
     private final String modality;
+    private final Double salience;
 
     protected RelationshipMention(int startOffset, int endOffset,
                                   RelationshipComponent predicate,
@@ -50,6 +51,7 @@ public class RelationshipMention extends Attribute {
                                   String source,
                                   Double confidence,
                                   String modality,
+                                  Double salience,
                                   Map<String, Object> extendedProperties) {
         super(startOffset, endOffset, extendedProperties);
         this.source = source;
@@ -62,7 +64,7 @@ public class RelationshipMention extends Attribute {
         this.locatives = setOrNull(locatives);
         this.temporals = setOrNull(temporals);
         this.modality = modality;
-
+        this.salience = salience;
     }
 
     /**
@@ -126,7 +128,7 @@ public class RelationshipMention extends Attribute {
      * Returns a set of temporal expressions. Temporals usually express the time in which the action expressed by
      * the relationship took place.
      *
-     * @return a set of termporal expressions
+     * @return a set of temporal expressions
      */
     public Set<RelationshipComponent> getTemporals() {
         return temporals;
@@ -169,6 +171,15 @@ public class RelationshipMention extends Attribute {
         return modality;
     }
 
+    /**
+     * Returns the salience of this relationship mention, or {@code null} if no
+     * salience was calculated. Note that salience values may be quantized.
+     * @return the salience.
+     */
+    public Double getSalience() {
+        return salience;
+    }
+
     @Override
     protected Objects.ToStringHelper toStringHelper() {
         return super.toStringHelper()
@@ -180,7 +191,8 @@ public class RelationshipMention extends Attribute {
                 .add("locatives", locatives)
                 .add("temporals", temporals)
                 .add("source", source)
-                .add("confidence", confidence);
+                .add("confidence", confidence)
+                .add("salience", salience);
 
     }
 
@@ -205,12 +217,13 @@ public class RelationshipMention extends Attribute {
                 && java.util.Objects.equals(temporals, that.temporals)
                 && java.util.Objects.equals(source, that.source)
                 && java.util.Objects.equals(confidence, that.confidence)
-                && java.util.Objects.equals(modality, that.modality);
+                && java.util.Objects.equals(modality, that.modality)
+                && java.util.Objects.equals(salience, that.salience);
     }
 
     @Override
     public int hashCode() {
-        return java.util.Objects.hash(super.hashCode(), predicate, arg1, arg2, arg3, adjuncts, locatives, temporals, source, confidence, modality);
+        return java.util.Objects.hash(super.hashCode(), predicate, arg1, arg2, arg3, adjuncts, locatives, temporals, source, confidence, modality, salience);
     }
 
     public static class Builder extends Attribute.Builder<RelationshipMention, RelationshipMention.Builder> {
@@ -226,6 +239,7 @@ public class RelationshipMention extends Attribute {
         private String source;
         private Double confidence;
         private String modality;
+        private Double salience;
 
         /**
          * Constructs a builder with the minimal required information for an relationship mentions.
@@ -264,6 +278,7 @@ public class RelationshipMention extends Attribute {
             this.source = toCopy.source;
             this.confidence = toCopy.confidence;
             this.modality = toCopy.modality;
+            this.salience = toCopy.salience;
         }
 
         @Override
@@ -429,6 +444,16 @@ public class RelationshipMention extends Attribute {
         }
 
         /**
+         * Specifies the salience value for this mention.
+         * @param salience the salience value.
+         * @return this
+         */
+        public Builder salience(Double salience) {
+            this.salience = salience;
+            return this;
+        }
+
+        /**
          * Returns an immutable relation mention from the current state of the builder.
          *
          * @return the new relation mention.
@@ -445,6 +470,7 @@ public class RelationshipMention extends Attribute {
                     source,
                     confidence,
                     modality,
+                    salience,
                     buildExtendedProperties());
         }
     }
