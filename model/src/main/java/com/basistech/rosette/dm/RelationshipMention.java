@@ -186,7 +186,9 @@ public class RelationshipMention extends Attribute {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
+        if (this == o) {
+            return true;
+        }
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
@@ -194,16 +196,16 @@ public class RelationshipMention extends Attribute {
             return false;
         }
         RelationshipMention that = (RelationshipMention) o;
-        return java.util.Objects.equals(predicate, that.predicate) &&
-                java.util.Objects.equals(arg1, that.arg1) &&
-                java.util.Objects.equals(arg2, that.arg2) &&
-                java.util.Objects.equals(arg3, that.arg3) &&
-                java.util.Objects.equals(adjuncts, that.adjuncts) &&
-                java.util.Objects.equals(locatives, that.locatives) &&
-                java.util.Objects.equals(temporals, that.temporals) &&
-                java.util.Objects.equals(source, that.source) &&
-                java.util.Objects.equals(confidence, that.confidence) &&
-                java.util.Objects.equals(modality, that.modality);
+        return java.util.Objects.equals(predicate, that.predicate)
+                && java.util.Objects.equals(arg1, that.arg1)
+                && java.util.Objects.equals(arg2, that.arg2)
+                && java.util.Objects.equals(arg3, that.arg3)
+                && java.util.Objects.equals(adjuncts, that.adjuncts)
+                && java.util.Objects.equals(locatives, that.locatives)
+                && java.util.Objects.equals(temporals, that.temporals)
+                && java.util.Objects.equals(source, that.source)
+                && java.util.Objects.equals(confidence, that.confidence)
+                && java.util.Objects.equals(modality, that.modality);
     }
 
     @Override
