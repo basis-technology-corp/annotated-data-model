@@ -24,13 +24,13 @@ package com.basistech.rosette.dm;
  */
 enum AttributeKey {
     BASE_NOUN_PHRASE("baseNounPhrases"),
+    CATEGORIZER_RESULTS("categorizerResults"),
+    DEPENDENCY("dependency"),
+    EMBEDDING("embeddings"),
     ENTITY("entities"),
     MENTION("mentions"),
     @Deprecated
     ENTITY_MENTION("entityMentions"),
-    RELATIONSHIP_MENTION("relationshipMentions"),
-    @Deprecated
-    RESOLVED_ENTITY("resolvedEntities"),
     /**
      * The list of language detections by region of the document.
      */
@@ -39,15 +39,17 @@ enum AttributeKey {
      * The language detection for the entire document.
      */
     LANGUAGE_DETECTION("languageDetection"),
+    RELATIONSHIP_MENTION("relationshipMentions"),
+    @Deprecated
+    RESOLVED_ENTITY("resolvedEntities"),
     SCRIPT_REGION("scriptRegion"),
     SENTENCE("sentence"),
+
+
+    SENTIMENT_RESULTS("sentimentResults"),
     TOKEN("token"),
     TRANSLATED_DATA("translatedData"),
     TRANSLATED_TOKENS("translatedTokens"),
-
-    CATEGORIZER_RESULTS("categorizerResults"),
-    SENTIMENT_RESULTS("sentimentResults"),
-    DEPENDENCY("dependency"),
     TOPIC_RESULTS("topicResults");
 
     private final String key;

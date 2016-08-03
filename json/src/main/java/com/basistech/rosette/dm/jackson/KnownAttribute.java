@@ -19,6 +19,7 @@ import com.basistech.rosette.dm.BaseAttribute;
 import com.basistech.rosette.dm.BaseNounPhrase;
 import com.basistech.rosette.dm.CategorizerResult;
 import com.basistech.rosette.dm.Dependency;
+import com.basistech.rosette.dm.Embeddings;
 import com.basistech.rosette.dm.Entity;
 import com.basistech.rosette.dm.LanguageDetection;
 import com.basistech.rosette.dm.ListAttribute;
@@ -39,6 +40,8 @@ import com.basistech.rosette.dm.UnknownAttribute;
  */
 public enum KnownAttribute {
     BASE_NOUN_PHRASE("baseNounPhrases", BaseNounPhrase.class),
+    DEPENDENCY("dependency", Dependency.class),
+    EMBEDDING("embedding", Embeddings.class),
     ENTITY("entities", Entity.class),
     @SuppressWarnings("deprecation")
     ENTITY_MENTION("entityMentions", com.basistech.rosette.dm.EntityMention.class),
@@ -56,9 +59,7 @@ public enum KnownAttribute {
     TOPIC_RESULT("topicResults", CategorizerResult.class),
     LIST("list", ListAttribute.class),
     UNKNOWN("unknown", UnknownAttribute.class),
-    RELATION_ARGUMENT("RelationshipComponent", RelationshipComponent.class),
-    DEPENDENCY("dependency", Dependency.class);
-
+    RELATION_ARGUMENT("RelationshipComponent", RelationshipComponent.class);
 
     private final String jsonTag;
     private final Class<? extends BaseAttribute> attributeClass;
