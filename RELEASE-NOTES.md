@@ -1,14 +1,11 @@
 # Cumulative Release Notes for the Annotated Data Model
 
-<<<<<<< HEAD
-### 2.1.5
+## 2.1.5
 
+### [ROS-257](https://basistech.atlassian.net/browse/ROS-257) Add relationship modality.
 ### [ROS-255](https://basistech.atlassian.net/browse/ROS-255) Add representation entity salience.
 ### [ROS-254](https://basistech.atlassian.net/browse/ROS-254) Add representation for dependencies.
     
-=======
-## ???
-
 ### [ROS-251](https://basistech.atlassian.net/browse/ROS-251) New slot for "topics"
 
 A document can have multiple topics. These are sort of like "labels"
@@ -24,7 +21,6 @@ This change adds ``AnnoatedText#getTopicResult`` and associated
 builders and tests.  A single topic is held in a
 ``CategorizerResult``.  ``getTopicResults`` returns a list of them.
 
->>>>>>> ros-251-slot-for-topics
 ## 2.1.4
 
 Incremental fix to compatibility case of using the old api to add info

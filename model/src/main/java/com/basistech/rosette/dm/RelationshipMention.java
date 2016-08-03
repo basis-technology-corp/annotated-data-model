@@ -37,6 +37,7 @@ public class RelationshipMention extends Attribute {
     private final Set<RelationshipComponent> temporals;
     private final String source;
     private final Double confidence;
+    private final String modality;
 
     protected RelationshipMention(int startOffset, int endOffset,
                                   RelationshipComponent predicate,
@@ -47,7 +48,9 @@ public class RelationshipMention extends Attribute {
                                   Set<RelationshipComponent> locatives,
                                   Set<RelationshipComponent> temporals,
                                   String source,
-                                  Double confidence, Map<String, Object> extendedProperties) {
+                                  Double confidence,
+                                  String modality,
+                                  Map<String, Object> extendedProperties) {
         super(startOffset, endOffset, extendedProperties);
         this.source = source;
         this.confidence = confidence;
@@ -58,6 +61,7 @@ public class RelationshipMention extends Attribute {
         this.adjuncts = setOrNull(adjuncts);
         this.locatives = setOrNull(locatives);
         this.temporals = setOrNull(temporals);
+        this.modality = modality;
 
     }
 
@@ -155,6 +159,16 @@ public class RelationshipMention extends Attribute {
         return predicate.getExtents() == null || predicate.getExtents().isEmpty();
     }
 
+    /**
+     * Returns the 'modality' for this relationship. 'Modality' is a catch-all term for a variety of contextual
+     * modifications of a relationship mention, such as negation, and expression as an opinion. The possible
+     * values are defined by the particular extraction system.
+     * @return the modality, or {@code null} if none.
+     */
+    public String getModality() {
+        return modality;
+    }
+
     @Override
     protected Objects.ToStringHelper toStringHelper() {
         return super.toStringHelper()
@@ -175,65 +189,28 @@ public class RelationshipMention extends Attribute {
         if (this == o) {
             return true;
         }
-
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-
         if (!super.equals(o)) {
             return false;
         }
-
         RelationshipMention that = (RelationshipMention) o;
-
-        if (predicate != null ? !predicate.equals(that.predicate) : that.predicate != null) {
-            return false;
-        }
-
-        if (arg1 != null ? !arg1.equals(that.arg1) : that.arg1 != null) {
-            return false;
-        }
-
-        if (arg2 != null ? !arg2.equals(that.arg2) : that.arg2 != null) {
-            return false;
-        }
-
-        if (arg3 != null ? !arg3.equals(that.arg3) : that.arg3 != null) {
-            return false;
-        }
-
-        if (adjuncts != null ? !adjuncts.equals(that.adjuncts) : that.adjuncts != null) {
-            return false;
-        }
-
-        if (locatives != null ? !locatives.equals(that.locatives) : that.locatives != null) {
-            return false;
-        }
-
-        if (temporals != null ? !temporals.equals(that.temporals) : that.temporals != null) {
-            return false;
-        }
-
-        if (confidence != null ? !confidence.equals(that.confidence) : that.confidence != null) {
-            return false;
-        }
-
-        return !(source != null ? !source.equals(that.source) : that.source != null);
+        return java.util.Objects.equals(predicate, that.predicate)
+                && java.util.Objects.equals(arg1, that.arg1)
+                && java.util.Objects.equals(arg2, that.arg2)
+                && java.util.Objects.equals(arg3, that.arg3)
+                && java.util.Objects.equals(adjuncts, that.adjuncts)
+                && java.util.Objects.equals(locatives, that.locatives)
+                && java.util.Objects.equals(temporals, that.temporals)
+                && java.util.Objects.equals(source, that.source)
+                && java.util.Objects.equals(confidence, that.confidence)
+                && java.util.Objects.equals(modality, that.modality);
     }
 
     @Override
     public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + (predicate != null ? predicate.hashCode() : 0);
-        result = 31 * result + (arg1 != null ? arg1.hashCode() : 0);
-        result = 31 * result + (arg2 != null ? arg2.hashCode() : 0);
-        result = 31 * result + (arg3 != null ? arg3.hashCode() : 0);
-        result = 31 * result + (adjuncts != null ? adjuncts.hashCode() : 0);
-        result = 31 * result + (locatives != null ? locatives.hashCode() : 0);
-        result = 31 * result + (temporals != null ? temporals.hashCode() : 0);
-        result = 31 * result + (source != null ? source.hashCode() : 0);
-        result = 31 * result + (confidence != null ? confidence.hashCode() : 0);
-        return result;
+        return java.util.Objects.hash(super.hashCode(), predicate, arg1, arg2, arg3, adjuncts, locatives, temporals, source, confidence, modality);
     }
 
     public static class Builder extends Attribute.Builder<RelationshipMention, RelationshipMention.Builder> {
@@ -248,6 +225,7 @@ public class RelationshipMention extends Attribute {
 
         private String source;
         private Double confidence;
+        private String modality;
 
         /**
          * Constructs a builder with the minimal required information for an relationship mentions.
@@ -285,6 +263,7 @@ public class RelationshipMention extends Attribute {
             addAllToSet(temporals, toCopy.temporals);
             this.source = toCopy.source;
             this.confidence = toCopy.confidence;
+            this.modality = toCopy.modality;
         }
 
         @Override
@@ -438,6 +417,16 @@ public class RelationshipMention extends Attribute {
             return this;
         }
 
+        /**
+         * Specifies the modality for this relationship mention.
+         * @see RelationshipMention#getModality()
+         * @param modality the modality.
+         * @return this
+         */
+        public Builder modality(String modality) {
+            this.modality = modality;
+            return this;
+        }
 
         /**
          * Returns an immutable relation mention from the current state of the builder.
@@ -454,7 +443,9 @@ public class RelationshipMention extends Attribute {
                     locatives,
                     temporals,
                     source,
-                    confidence, buildExtendedProperties());
+                    confidence,
+                    modality,
+                    buildExtendedProperties());
         }
     }
 }
