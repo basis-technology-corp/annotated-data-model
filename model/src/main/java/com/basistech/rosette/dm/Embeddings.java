@@ -46,7 +46,7 @@ public class Embeddings extends BaseAttribute {
 
     protected Embeddings(Map<Name, EmbeddingCollection> collections, Map<String, Object> extendedProperties) {
         super(extendedProperties);
-        this.collections = collections;
+        this.collections = mapOrNull(collections);
     }
 
     /**

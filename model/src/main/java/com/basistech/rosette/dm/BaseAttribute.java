@@ -20,7 +20,6 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 
 import java.util.List;
 import java.util.Map;
@@ -133,7 +132,7 @@ public abstract class BaseAttribute {
      * @param <T> the type of the list
      * @return a list, or null.
      */
-    protected static <T> Set<T> setOrNull(Set<T> setToBuild) {
+    static <T> Set<T> setOrNull(Set<T> setToBuild) {
         // note: Guava's nullable business is an option here, but it's a lot to drag in at the moment.
         if (setToBuild == null || setToBuild.size() == 0) {
             return null;
@@ -141,6 +140,15 @@ public abstract class BaseAttribute {
             return ImmutableSet.copyOf(setToBuild);
         }
     }
+
+    static<K, V> Map<K, V> mapOrNull(Map<K, V> mapToCopy) {
+        if (mapToCopy == null || mapToCopy.size() == 0) {
+            return null;
+        } else {
+            return ImmutableMap.copyOf(mapToCopy);
+        }
+    }
+
     /**
      * Base class for builders for the subclasses of {@link com.basistech.rosette.dm.BaseAttribute}.
      */
@@ -251,14 +259,6 @@ public abstract class BaseAttribute {
                 return Lists.newArrayList();
             } else {
                 return newListValue;
-            }
-        }
-
-        protected static <T> Set<T> nullOrSet(Set<T> newSetValue) {
-            if (newSetValue == null) {
-                return Sets.newHashSet();
-            } else {
-                return newSetValue;
             }
         }
     }

@@ -37,7 +37,7 @@ public class RelationshipMention extends Attribute {
     private final Set<RelationshipComponent> temporals;
     private final String source;
     private final Double confidence;
-    private final String modality;
+    private final Set<String> modality;
     private final Double salience;
 
     protected RelationshipMention(int startOffset, int endOffset,
@@ -50,7 +50,7 @@ public class RelationshipMention extends Attribute {
                                   Set<RelationshipComponent> temporals,
                                   String source,
                                   Double confidence,
-                                  String modality,
+                                  Set<String> modality,
                                   Double salience,
                                   Map<String, Object> extendedProperties) {
         super(startOffset, endOffset, extendedProperties);
@@ -63,7 +63,7 @@ public class RelationshipMention extends Attribute {
         this.adjuncts = setOrNull(adjuncts);
         this.locatives = setOrNull(locatives);
         this.temporals = setOrNull(temporals);
-        this.modality = modality;
+        this.modality = setOrNull(modality);
         this.salience = salience;
     }
 
@@ -162,12 +162,13 @@ public class RelationshipMention extends Attribute {
     }
 
     /**
-     * Returns the 'modality' for this relationship. 'Modality' is a catch-all term for a variety of contextual
-     * modifications of a relationship mention, such as negation, and expression as an opinion. The possible
+     * Returns the 'modality' values for this relationship.
+     * 'Modality' is a catch-all term for a variety of contextual
+     * modifications of a relationship mention, such as negation or expression as an opinion. The possible
      * values are defined by the particular extraction system.
      * @return the modality, or {@code null} if none.
      */
-    public String getModality() {
+    public Set<String> getModality() {
         return modality;
     }
 
@@ -192,8 +193,8 @@ public class RelationshipMention extends Attribute {
                 .add("temporals", temporals)
                 .add("source", source)
                 .add("confidence", confidence)
-                .add("salience", salience);
-
+                .add("salience", salience)
+                .add("modality", modality);
     }
 
     @Override
@@ -238,7 +239,7 @@ public class RelationshipMention extends Attribute {
 
         private String source;
         private Double confidence;
-        private String modality;
+        private Set<String> modality;
         private Double salience;
 
         /**
@@ -433,13 +434,14 @@ public class RelationshipMention extends Attribute {
         }
 
         /**
-         * Specifies the modality for this relationship mention.
+         * Specifies the modalities for this relationship mention.
          * @see RelationshipMention#getModality()
          * @param modality the modality.
          * @return this
          */
-        public Builder modality(String modality) {
-            this.modality = modality;
+        public Builder modality(Set<String> modality) {
+            this.modality = new HashSet<>();
+            this.modality.addAll(modality);
             return this;
         }
 

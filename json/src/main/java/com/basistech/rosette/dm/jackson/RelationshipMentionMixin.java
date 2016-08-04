@@ -39,7 +39,7 @@ public abstract class RelationshipMentionMixin {
                              @JsonProperty("temporals") Set<RelationshipComponent> temporals,
                              @JsonProperty("source") String source,
                              @JsonProperty("confidence") Double confidence,
-                             @JsonProperty("modality") String modality,
+                             @JsonProperty("modality") Set<String> modality,
                              @JsonProperty("salience") Double salience,
                              @JsonProperty("extendedProperties") Map<String, Object> extendedProperties) {
 

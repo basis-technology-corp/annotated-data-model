@@ -32,7 +32,7 @@ public class EmbeddingCollection {
     private final Map<Integer, float[]> embeddings;
 
     protected EmbeddingCollection(Map<Integer, float[]> embeddings) {
-        this.embeddings = embeddings;
+        this.embeddings = BaseAttribute.mapOrNull(embeddings);
     }
 
     /**
