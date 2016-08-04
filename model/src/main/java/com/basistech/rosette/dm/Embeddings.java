@@ -16,6 +16,8 @@
 
 package com.basistech.rosette.dm;
 
+import com.google.common.collect.ImmutableMap;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -46,7 +48,7 @@ public class Embeddings extends BaseAttribute {
 
     protected Embeddings(Map<Name, EmbeddingCollection> collections, Map<String, Object> extendedProperties) {
         super(extendedProperties);
-        this.collections = collections;
+        this.collections = ImmutableMap.<Name, EmbeddingCollection>builder().putAll(collections).build();
     }
 
     /**

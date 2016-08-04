@@ -141,6 +141,7 @@ public abstract class BaseAttribute {
             return ImmutableSet.copyOf(setToBuild);
         }
     }
+
     /**
      * Base class for builders for the subclasses of {@link com.basistech.rosette.dm.BaseAttribute}.
      */

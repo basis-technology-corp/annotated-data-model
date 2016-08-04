@@ -126,6 +126,14 @@ public class Dependency extends BaseAttribute {
         return Objects.hash(super.hashCode(), relationship, governorTokenIndex, dependencyTokenIndex);
     }
 
+    @Override
+    protected com.google.common.base.Objects.ToStringHelper toStringHelper() {
+        return super.toStringHelper()
+                .add("relationship", relationship)
+                .add("dependencyTokenIndex", dependencyTokenIndex)
+                .add("governorTokenIndex", governorTokenIndex);
+    }
+
     /**
      * Builder for Dependency.
      */

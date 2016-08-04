@@ -48,8 +48,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.StringWriter;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  *
@@ -126,7 +128,10 @@ public class JsonTest extends AdmAssert {
                 (arg2);
         rmBuilder.extendedProperty("rm-ex", "rm-ex-val");
         rmBuilder.source("statistical rules:42");
-        rmBuilder.modality("wholey");
+        Set<String> modalityValue = new HashSet<>();
+        modalityValue.add("subjunctive");
+        modalityValue.add("negated");
+        rmBuilder.modality(modalityValue);
         rmBuilder.salience(0.0);
         relationshipMention = rmBuilder.build();
         rmListBuilder.add(relationshipMention);

@@ -16,6 +16,8 @@
 
 package com.basistech.rosette.dm;
 
+import com.google.common.collect.ImmutableMap;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -32,7 +34,7 @@ public class EmbeddingCollection {
     private final Map<Integer, float[]> embeddings;
 
     protected EmbeddingCollection(Map<Integer, float[]> embeddings) {
-        this.embeddings = embeddings;
+        this.embeddings = ImmutableMap.<Integer, float[]>builder().putAll(embeddings).build();
     }
 
     /**
