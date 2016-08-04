@@ -2,7 +2,7 @@
 
 ## 2.2.1
 
-### [ROS-258](https://basistech.atlassian.net/browse/ROS-259) Fix some recent bugs.
+### [ROS-259](https://basistech.atlassian.net/browse/ROS-259) Fix some recent bugs.
 
 ## 2.2.0
 
