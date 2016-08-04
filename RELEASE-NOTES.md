@@ -1,5 +1,9 @@
 # Cumulative Release Notes for the Annotated Data Model
 
+## 2.2.1
+
+### [ROS-258](https://basistech.atlassian.net/browse/ROS-259) Fix some recent bugs.
+
 ## 2.2.0
 
 ### [ROS-257](https://basistech.atlassian.net/browse/ROS-257) Add relationship modality.
