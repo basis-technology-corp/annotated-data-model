@@ -19,11 +19,11 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>adm-taglets</artifactId>
     <name>adm-taglets</name>
-    <version>2.2.1</version>
+    <version>2.2.2-SNAPSHOT</version>
     <parent>
         <groupId>com.basistech</groupId>
         <artifactId>annotated-data-model</artifactId>
-        <version>2.2.1</version>
+        <version>2.2.2-SNAPSHOT</version>
     </parent>
     <dependencies>
         <dependency>
