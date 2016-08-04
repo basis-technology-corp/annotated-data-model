@@ -17,7 +17,6 @@
 package com.basistech.rosette.dm;
 
 import com.google.common.base.Objects;
-import com.google.common.collect.Iterables;
 
 import java.util.HashSet;
 import java.util.Map;
@@ -195,7 +194,7 @@ public class RelationshipMention extends Attribute {
                 .add("source", source)
                 .add("confidence", confidence)
                 .add("salience", salience)
-                .add("modality", modality == null ? "{}" : Iterables.toString(modality));
+                .add("modality", modality);
     }
 
     @Override
