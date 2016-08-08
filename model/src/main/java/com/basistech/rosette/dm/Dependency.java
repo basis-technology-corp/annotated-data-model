@@ -32,7 +32,7 @@ import java.util.Objects;
  * </pre>
  * Each token has two columns related to dependencies: the 'governor' and the 'label'. In the ADM,
  * this would turn into a list of {@code Dependency} objects as follows:
- * <table>
+ * <table summary="An example list of Dependencies">
  *     <thead>
  *         <tr>
  *             <td>relationship</td>
