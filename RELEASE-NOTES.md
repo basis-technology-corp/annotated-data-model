@@ -1,5 +1,15 @@
 # Cumulative Release Notes for the Annotated Data Model
 
+### [RD-1713](https://basistech.atlassian.net/browse/RD-1713) Removed internal classes
+
+The following internal classes were removed:
+
+```
+com.basistech.rosette.dm.internal.Mention
+com.basistech.rosette.dm.internal.TextWrapper
+```
+
+
 ## 2.2.1
 
 ### [ROS-259](https://basistech.atlassian.net/browse/ROS-259) Fix some recent bugs.
