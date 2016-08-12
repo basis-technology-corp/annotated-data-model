@@ -23,8 +23,22 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- *
  * A Relationship Mention describes arguments in a sentence and a predicate that connects them.
+ * It also includes event-related information (such as the location and time the action represented by the mention
+ * took place), an indication of the relationship's salience and modality, as well as metadata such the name of the
+ * algorithm that yielded the extraction and the confidence thereof.
+ * For example, the sentence "Leila Lopes, Miss Angola 2011, was crowned Miss Universe 2011 in Brazil on September 12th, 2011."
+ * can yield a following RelationshipMention (among others):
+ * <blockquote><pre>
+ *     arg1: [Leila Lopes(Q232501)]
+ *     predicate: [be crowned]
+ *     arg2: [Miss Universe 2011(Q932457)]
+ *     temporals:    [on September 12th]
+ *     locatives:   [In Brazil(Q155)]
+ *     context:    [assertion]
+ *     source:    [rules:2]
+ *     confidence:    [0.679]
+ * </pre></blockquote>
  */
 public class RelationshipMention extends Attribute {
 
@@ -115,7 +129,7 @@ public class RelationshipMention extends Attribute {
     }
 
     /**
-     * Returns a set of locative expressions. Locatives usually express the locations the action expressed by
+     * Returns a set of locative expressions. Locatives usually express the locations where the action expressed by
      * the relationship took place.
      *
      * @return a set of locative expressions
@@ -153,8 +167,11 @@ public class RelationshipMention extends Attribute {
     }
 
     /**
-     * Returns true if the predicate is synthetic (eg is not represented by the text)
-     *
+     * Returns true if the predicate is synthetic, i.e. does not occurr in the text.
+     * For example, the sentence "meet Bill Flax, my brother in law" may yield a synthetic "is" predicate:
+     * <blockquote><pre>
+     *  [Bill Flax]    [is]    [my brother in law]
+     * </pre></blockquote>
      * @return boolean
      */
     public boolean hasSyntheticPredicate() {
@@ -164,8 +181,9 @@ public class RelationshipMention extends Attribute {
     /**
      * Returns the 'modality' values for this relationship.
      * 'Modality' is a catch-all term for a variety of contextual
-     * modifications of a relationship mention, such as negation or expression as an opinion. The possible
+     * modifications of a relationship mention, such as negation or expression of an opinion. The possible
      * values are defined by the particular extraction system.
+     * The Rosette relationship extractor currently emits "assertion", "negation", "question", "opinion" and "uncertainty"
      * @return the modality, or {@code null} if none.
      */
     public Set<String> getModality() {
