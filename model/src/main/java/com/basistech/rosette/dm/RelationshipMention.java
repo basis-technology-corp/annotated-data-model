@@ -25,7 +25,7 @@ import java.util.Set;
 /**
  * A Relationship Mention describes arguments in a sentence and a predicate that connects them.
  * It also includes event-related information (such as the location and time the action represented by the mention
- * took place) an indication of the relationship's salience and modality, as well as metadata such the name of the
+ * took place), an indication of the relationship's salience and modality, as well as metadata such the name of the
  * algorithm that yielded the extraction and the confidence thereof.
  * For example, the sentence "Leila Lopes, Miss Angola 2011, was crowned Miss Universe 2011 in Brazil on September 12th, 2011."
  * can yield a following RelationshipMention (among others):
@@ -167,7 +167,7 @@ public class RelationshipMention extends Attribute {
     }
 
     /**
-     * Returns true if the predicate is synthetic, i.e.&nbsp;is not occurring in the text.
+     * Returns true if the predicate is synthetic, i.e. does not occurr in the text.
      * For example, the sentence "meet Bill Flax, my brother in law" may yield a synthetic "is" predicate:
      * <blockquote><pre>
      *  [Bill Flax]    [is]    [my brother in law]
@@ -181,7 +181,7 @@ public class RelationshipMention extends Attribute {
     /**
      * Returns the 'modality' values for this relationship.
      * 'Modality' is a catch-all term for a variety of contextual
-     * modifications of a relationship mention, such as negation or expression as an opinion. The possible
+     * modifications of a relationship mention, such as negation or expression of an opinion. The possible
      * values are defined by the particular extraction system.
      * The Rosette relationship extractor currently emits "assertion", "negation", "question", "opinion" and "uncertainty"
      * @return the modality, or {@code null} if none.
