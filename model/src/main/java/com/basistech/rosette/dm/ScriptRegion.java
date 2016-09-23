@@ -18,13 +18,15 @@ package com.basistech.rosette.dm;
 import com.basistech.util.ISO15924;
 import com.google.common.base.Objects;
 
+import java.io.Serializable;
 import java.util.Map;
 
 /**
  * A script region. Script regions describe text as spans defined by
  * ISO-15924.
  */
-public class ScriptRegion extends Attribute {
+public class ScriptRegion extends Attribute implements Serializable {
+    private static final long serialVersionUID = 222L;
     private final ISO15924 script;
 
     protected ScriptRegion(int startOffset, int endOffset, ISO15924 script, Map<String, Object> extendedProperties) {

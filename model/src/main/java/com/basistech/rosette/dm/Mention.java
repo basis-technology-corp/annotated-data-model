@@ -17,13 +17,15 @@ package com.basistech.rosette.dm;
 
 import com.google.common.base.Objects;
 
+import java.io.Serializable;
 import java.util.Map;
 
 /**
  * A mention of a entity in the text.  For example, "George" and
  * "George Washington" are mentions of type "PERSON".
  */
-public class Mention extends Attribute {
+public class Mention extends Attribute implements Serializable {
+    private static final long serialVersionUID = 222L;
     private final Double confidence;
     private final String source;
     private final String subsource;

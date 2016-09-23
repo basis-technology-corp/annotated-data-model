@@ -19,6 +19,7 @@ import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
@@ -33,7 +34,8 @@ import java.util.Map;
  * result is currently used for document categorization, sentiment analysis,
  * and topic generation.</p>
  */
-public class CategorizerResult extends BaseAttribute {
+public class CategorizerResult extends BaseAttribute implements Serializable {
+    private static final long serialVersionUID = 222L;
     private final String label;
     private final Double score;
     private final Double confidence;

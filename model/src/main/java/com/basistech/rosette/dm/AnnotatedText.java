@@ -21,6 +21,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -47,7 +48,8 @@ import java.util.Map;
  * For Json, and Java, the 'adm-json' module provides the supported serialization.
  */
 @SuppressWarnings("deprecation")
-public class AnnotatedText {
+public class AnnotatedText implements Serializable {
+    private static final long serialVersionUID = 222L;
     private final CharSequence data;
     /* The attributes for this text, indexed by type.
      * Only one attribute of a type is permitted, thus the concept
@@ -55,10 +57,10 @@ public class AnnotatedText {
      */
     private final Map<String, BaseAttribute> attributes;
     private final Map<String, List<String>> documentMetadata;
-    private boolean compatMentionsProcessed;
-    private ListAttribute<EntityMention> compatMentions;
-    private boolean compatResolvedEntitiesProcessed;
-    private ListAttribute<ResolvedEntity> compatResolvedEntities;
+    private transient boolean compatMentionsProcessed;
+    private transient ListAttribute<EntityMention> compatMentions;
+    private transient boolean compatResolvedEntitiesProcessed;
+    private transient ListAttribute<ResolvedEntity> compatResolvedEntities;
 
     AnnotatedText(CharSequence data,
                   Map<String, BaseAttribute> attributes,

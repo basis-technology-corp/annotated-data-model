@@ -20,6 +20,7 @@ import com.basistech.util.LanguageCode;
 import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
@@ -28,7 +29,8 @@ import java.util.Map;
  * The results are composed as a list of {@link com.basistech.rosette.dm.LanguageDetection.DetectionResult},
  * to reflect the multiple alternatives produced by language detectors.
  */
-public class LanguageDetection extends Attribute {
+public class LanguageDetection extends Attribute implements Serializable {
+    private static final long serialVersionUID = 222L;
 
     /**
      * A single result from language detection.

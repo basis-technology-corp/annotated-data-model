@@ -15,6 +15,7 @@
 */
 package com.basistech.rosette.dm;
 
+import java.io.Serializable;
 import java.util.Map;
 import java.util.Objects;
 
@@ -71,7 +72,8 @@ import java.util.Objects;
  * Viewed as a list, the {@code dependencyTokenIndex} is redundant, but it is useful to pass a single dependency
  * around in isolation as a complete representation of a dependency arc.
  */
-public class Dependency extends BaseAttribute {
+public class Dependency extends BaseAttribute implements Serializable {
+    private static final long serialVersionUID = 222L;
     private final String relationship;
     private final int governorTokenIndex;
     private final int dependencyTokenIndex;

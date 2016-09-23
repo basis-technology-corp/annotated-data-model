@@ -20,6 +20,7 @@ package com.basistech.rosette.dm;
 import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
@@ -27,7 +28,8 @@ import java.util.Map;
  * A Relationship Component: a building block of a relationship mention, such as an argument, predicate or adjunct.
  *
  */
-public class RelationshipComponent extends BaseAttribute {
+public class RelationshipComponent extends BaseAttribute implements Serializable {
+    private static final long serialVersionUID = 222L;
 
     private final String phrase;
     private final List<Extent> extents;

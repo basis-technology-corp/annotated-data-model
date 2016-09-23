@@ -18,6 +18,7 @@ package com.basistech.rosette.dm;
 
 import com.google.common.base.Objects;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -40,7 +41,8 @@ import java.util.Set;
  *     confidence:    [0.679]
  * </pre></blockquote>
  */
-public class RelationshipMention extends Attribute {
+public class RelationshipMention extends Attribute implements Serializable {
+    private static final long serialVersionUID = 222L;
 
     private final RelationshipComponent predicate;
     private final RelationshipComponent arg1;

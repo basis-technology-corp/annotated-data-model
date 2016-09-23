@@ -21,6 +21,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -32,7 +33,9 @@ import java.util.Set;
  *
  * @adm.ignore
  */
-public abstract class BaseAttribute {
+public abstract class BaseAttribute implements Serializable {
+    private static final long serialVersionUID = 222L;
+
     protected Map<String, Object> extendedProperties;
 
     protected BaseAttribute() {

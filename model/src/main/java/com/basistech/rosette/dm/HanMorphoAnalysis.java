@@ -19,6 +19,7 @@ package com.basistech.rosette.dm;
 import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
@@ -30,7 +31,8 @@ import java.util.Map;
  * Pinyin for Chinese and Hiragana for Japanese.  A single surface form may have
  * multiple possible readings.
  */
-public class HanMorphoAnalysis extends MorphoAnalysis {
+public class HanMorphoAnalysis extends MorphoAnalysis implements Serializable {
+    private static final long serialVersionUID = 222L;
     private final List<String> readings;
 
     protected HanMorphoAnalysis(String partOfSpeech,

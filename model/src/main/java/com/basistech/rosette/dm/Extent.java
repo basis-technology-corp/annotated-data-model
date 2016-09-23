@@ -16,6 +16,7 @@
 
 package com.basistech.rosette.dm;
 
+import java.io.Serializable;
 import java.util.Map;
 
 /**
@@ -24,7 +25,8 @@ import java.util.Map;
  * The offsets refer to a half-open range of characters (UTF-16 elements)
  * Note that Extents have no properties of their own.
  */
-public class Extent extends Attribute {
+public class Extent extends Attribute implements Serializable {
+    private static final long serialVersionUID = 222L;
 
     protected Extent(int startOffset, int endOffset) {
         super(startOffset, endOffset);

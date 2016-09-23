@@ -18,6 +18,7 @@ package com.basistech.rosette.dm;
 import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
@@ -45,7 +46,8 @@ import java.util.Map;
  * suffixTags:     [NO_FUNC]
  * </pre>
  */
-public class ArabicMorphoAnalysis extends MorphoAnalysis {
+public class ArabicMorphoAnalysis extends MorphoAnalysis implements Serializable {
+    private static final long serialVersionUID = 222L;
     private final int prefixLength;
     private final int stemLength;
     private final String root;
