@@ -17,6 +17,7 @@ package com.basistech.rosette.dm;
 
 import com.google.common.base.Objects;
 
+import java.io.Serializable;
 import java.util.Map;
 
 /**
@@ -24,7 +25,8 @@ import java.util.Map;
  * have a start and end offset.  The offsets refer to a half-open range
  * of characters (UTF-16 elements).
  */
-public abstract class Attribute extends BaseAttribute {
+public abstract class Attribute extends BaseAttribute implements Serializable {
+    private static final long serialVersionUID = 222L;
     protected final int startOffset;
     protected final int endOffset;
 

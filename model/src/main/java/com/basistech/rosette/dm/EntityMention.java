@@ -17,6 +17,7 @@ package com.basistech.rosette.dm;
 
 import com.google.common.base.Objects;
 
+import java.io.Serializable;
 import java.util.Map;
 
 /**
@@ -25,7 +26,8 @@ import java.util.Map;
  * @deprecated This class is replaced by {@link Mention}.
  */
 @Deprecated
-public class EntityMention extends Attribute {
+public class EntityMention extends Attribute implements Serializable {
+    private static final long serialVersionUID = 222L;
     private final String entityType;
     private final Double confidence;
     private final Integer coreferenceChainId;

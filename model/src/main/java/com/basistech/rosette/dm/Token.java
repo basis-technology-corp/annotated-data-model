@@ -18,6 +18,7 @@ package com.basistech.rosette.dm;
 import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
@@ -25,7 +26,8 @@ import java.util.Map;
  * The token. The definition of a token can vary by language, but
  * generally a token corresponds to a word.
  */
-public class Token extends Attribute {
+public class Token extends Attribute implements Serializable {
+    private static final long serialVersionUID = 222L;
     // we don't want to have to go look at the parent {@link AnnotatedText}.
     private final String text;
     private final List<String> normalized;

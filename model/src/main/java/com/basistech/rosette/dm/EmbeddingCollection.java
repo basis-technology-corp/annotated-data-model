@@ -16,6 +16,7 @@
 
 package com.basistech.rosette.dm;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -28,7 +29,8 @@ import java.util.Objects;
  * from indices to the value vector. In the case of the embedding for the entire text,
  * the index value is 0.
  */
-public class EmbeddingCollection {
+public class EmbeddingCollection implements Serializable {
+    private static final long serialVersionUID = 222L;
     private final Map<Integer, float[]> embeddings;
 
     protected EmbeddingCollection(Map<Integer, float[]> embeddings) {

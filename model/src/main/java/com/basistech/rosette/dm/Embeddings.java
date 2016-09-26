@@ -16,6 +16,7 @@
 
 package com.basistech.rosette.dm;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -26,7 +27,8 @@ import java.util.Objects;
  * items inside the text, such as the tokens or entities. The collections are identified by strings.
  * Constants are provided for some common cases.
  */
-public class Embeddings extends BaseAttribute {
+public class Embeddings extends BaseAttribute implements Serializable {
+    private static final long serialVersionUID = 222L;
     /**
      * The embedding name.
      */

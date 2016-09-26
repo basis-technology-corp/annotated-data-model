@@ -15,6 +15,7 @@
 */
 package com.basistech.rosette.dm;
 
+import java.io.Serializable;
 import java.util.Map;
 
 /**
@@ -30,7 +31,8 @@ import java.util.Map;
  * <br>
  * Note that sentences have no properties of their own.
  */
-public class Sentence extends Attribute {
+public class Sentence extends Attribute implements Serializable {
+    private static final long serialVersionUID = 222L;
 
     protected Sentence(int startOffset, int endOffset, Map<String, Object> extendedProperties) {
         super(startOffset, endOffset, extendedProperties);

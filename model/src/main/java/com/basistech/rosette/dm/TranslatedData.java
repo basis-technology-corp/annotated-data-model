@@ -18,6 +18,7 @@ package com.basistech.rosette.dm;
 import com.basistech.util.TextDomain;
 import com.google.common.base.Objects;
 
+import java.io.Serializable;
 import java.util.Map;
 
 /**
@@ -25,7 +26,8 @@ import java.util.Map;
  * for example the original text may be Traditional Chinese, and the
  * translation may be Simplified Chinese.
  */
-public class TranslatedData extends BaseAttribute {
+public class TranslatedData extends BaseAttribute implements Serializable {
+    private static final long serialVersionUID = 222L;
     private final TextDomain domain;
     private final String translation;
     private final Double confidence;

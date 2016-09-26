@@ -15,11 +15,14 @@
 */
 package com.basistech.rosette.dm;
 
+import java.io.Serializable;
+
 /**
  * Class used for future-proof representation of attributes in json that we
  * don't have classes for.
  * @adm.ignore
  */
-public class UnknownAttribute extends BaseAttribute {
+public class UnknownAttribute extends BaseAttribute implements Serializable {
+    private static final long serialVersionUID = 222L;
     //
 }

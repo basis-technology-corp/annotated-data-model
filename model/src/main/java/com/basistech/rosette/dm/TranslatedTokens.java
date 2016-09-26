@@ -19,13 +19,15 @@ import com.basistech.util.TextDomain;
 import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
 /**
  * A list of translations for the tokens. Each translation matches the corresponding token.
  */
-public class TranslatedTokens extends BaseAttribute {
+public class TranslatedTokens extends BaseAttribute implements Serializable {
+    private static final long serialVersionUID = 222L;
     private final TextDomain domain;
     private final List<String> translations; // 1-1 with tokens
 

@@ -17,6 +17,7 @@ package com.basistech.rosette.dm;
 
 import com.google.common.base.Objects;
 
+import java.io.Serializable;
 import java.util.Map;
 
 /**
@@ -29,7 +30,8 @@ import java.util.Map;
  * @deprecated replaced by {@link Entity}.
  */
 @Deprecated
-public class ResolvedEntity extends Attribute {
+public class ResolvedEntity extends Attribute implements Serializable {
+    private static final long serialVersionUID = 222L;
     private final String entityId;
     //I prefer 'chainId' over 'coreferenceChainId' but picked the latter to make it consistent with EntityMention
     private final Integer coreferenceChainId;

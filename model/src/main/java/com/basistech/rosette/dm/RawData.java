@@ -17,6 +17,7 @@ package com.basistech.rosette.dm;
 
 import com.google.common.collect.ImmutableMap;
 
+import java.io.Serializable;
 import java.nio.ByteBuffer;
 import java.util.HashMap;
 import java.util.List;
@@ -28,7 +29,8 @@ import java.util.Map;
  * serves components that consume bytes, e.g. encoding identification.
  * @adm.ignore
  */
-public class RawData {
+public class RawData implements Serializable {
+    private static final long serialVersionUID = 222L;
     private final ByteBuffer data;
     // a compromise between String and Object
     private final Map<String, List<String>> metadata;

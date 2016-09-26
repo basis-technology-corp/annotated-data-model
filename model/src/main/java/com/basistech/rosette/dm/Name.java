@@ -19,6 +19,7 @@ import com.basistech.util.ISO15924;
 import com.basistech.util.LanguageCode;
 import com.google.common.base.Objects;
 
+import java.io.Serializable;
 import java.util.Map;
 
 /*
@@ -29,11 +30,12 @@ import java.util.Map;
 
 /**
  * A name of something in the world.
- * Both Names and {@link com.basistech.rosette.dm.EntityMention} objects can contains the names of things.
- * {@linkplain com.basistech.rosette.dm.EntityMention} is used for reference inside of documents, while
+ * Both Names and {@link com.basistech.rosette.dm.Mention} objects can contains the names of things.
+ * {@linkplain com.basistech.rosette.dm.Mention} is used for reference inside of documents, while
  * {@linkplain Name} is used for names unrelated to documents.
  */
-public class Name extends BaseAttribute {
+public class Name extends BaseAttribute implements Serializable {
+    private static final long serialVersionUID = 222L;
     private final String text;
     private final String type;
     private final ISO15924 script;
