@@ -45,9 +45,7 @@ public class SerializableTest {
 
     private static final String THIS_IS_THE_TERRIER_SHOT_TO_BOSTON = "This is the terrier shot to Boston.";
     private BaseNounPhrase baseNounPhrase;
-    private EntityMention entityMention;
     private RelationshipMention relationshipMention;
-    private ResolvedEntity resolvedEntity;
     private LanguageDetection languageDetectionRegion;
     private LanguageDetection languageDetection;
     private ScriptRegion scriptRegion;
@@ -63,7 +61,6 @@ public class SerializableTest {
     private CategorizerResult categoryResult;
     private CategorizerResult sentimentResult;
     private CategorizerResult topicResult;
-    private AnnotatedText referenceTextOldEntities;
     private AnnotatedText referenceText;
     private Entity entity;
     private Embeddings embeddings;
