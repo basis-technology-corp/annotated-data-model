@@ -47,6 +47,7 @@
  *     over all the attributes of an old {@code AnnotatedText} plus a new set is not particularly costly compared to whatever
  *     actual NLP task is producing the annotations.
  * </p>
+ * <h2>Serializable</h2>
  * <p>
  *     The classes in this data model implement <pre>java.io.Serializable</pre>. Each class has a
  *     <pre>serialVersionId</pre>, the ID is derived from the version number of the library in which the

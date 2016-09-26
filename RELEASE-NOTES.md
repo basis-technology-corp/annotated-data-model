@@ -1,5 +1,11 @@
 # Cumulative Release Notes for the Annotated Data Model
 
+## 2.2.2
+
+### [ROS-268](https://basistech.atlassian.net/browse/ROS-268) Add Serializable
+
+All the model classes now support `Serializable`.
+
 ### [RD-1713](https://basistech.atlassian.net/browse/RD-1713) Removed internal classes
 
 The following internal classes were removed:
