@@ -30,7 +30,7 @@ import java.util.Map;
 
 /**
  * A name of something in the world.
- * Both Names and {@link com.basistech.rosette.dm.EntityMention} objects can contains the names of things.
+ * Both Names and {@link com.basistech.rosette.dm.Mention} objects can contains the names of things.
  * {@linkplain com.basistech.rosette.dm.Mention} is used for reference inside of documents, while
  * {@linkplain Name} is used for names unrelated to documents.
  */
