@@ -532,11 +532,10 @@ no suffix.  The prefix itself is divided into two parts ("and" and
 Entities
 ---------------
 
-Entities refer to "real world" entities. Each entity in a document is 
-the result of resolving one or more mentions. A mention is a span of 
-text that mentions an entity, while an entity describes the entity itself.
-It has an entity type (e.g. PERSON, LOCATION), entity id and head mention 
-index (in the mentions list). 
+Entities are a result of document-level grouping of mentions that refer
+to the same thing. A mention is a span of text that mentions an entity, 
+while an entity describes the entity itself. It has an entity type (e.g. 
+PERSON, LOCATION), entity id and head mention index (in the mentions list). 
 
 Mentions are strings in the text that refer to entities.
 A mention is identified by its character start/end offsets. It has 
