@@ -54,17 +54,11 @@ the input as part of the output.
 
 Base Noun Phrases are spans of text, aligned with token boundaries.
 
-### ENTITY_MENTION ###
+### ENTITY ###
 
-Entity Mentions are the output of REX. Mentions are spans of characters, not necessarily aligned with tokens.
-See the REX documentation for the information delivered with an 
-entity mention.
-
-### RESOLVED_ENTITY ###
-
-Resolved Entities are the output of RES which associates an indoc (one or more entity mentions chained together) 
-in a document with a real-world entity. See the RES documentation for the information delivered with a resolved 
-entity.
+Entities are the output of REX. Entities are a result of document-level grouping of mentions that refer
+to the same thing. Mentions are spans of characters, not necessarily aligned with tokens.
+See the REX documentation for the information delivered with an entity mention.
 
 ### RELATION_MENTIONS ###
 
