@@ -9,7 +9,7 @@ Introduction
 
 The Rosette Data Model is a collection of classes that store plain
 text and attributes of that text, such as tokens, part-of-speech tags,
-entity mentions, etc.  Attributes are also sometimes called
+entities, etc.  Attributes are also sometimes called
 "annotations" in this context.
 
 This document describes the most interesting features of the data
@@ -72,7 +72,7 @@ choose to use named attribute accessors instead.  This avoids the need
 for the application to cast the returned ``BaseAttibute``.
 
 ``ListAttribute`` is a container for other attributes.  For example,
-entity mentions are stored as ``ListAttribute<EntityMention>``.
+entities are stored as ``ListAttribute<Entity>``.
 
 
 Named Attribute Accessors
@@ -85,13 +85,13 @@ avoids casting in the application.  Consider:
 
     // via generic attributes
     AnnotatedText text = ...;
-    ListAttribute<EntityMention> mentions = (ListAttribute<EntityMention>) text.getAttributes().get(AttributeKey.ENTITY_MENTION.key());
+    ListAttribute<Entity> entities = (ListAttribute<Entity>) text.getAttributes().get(AttributeKey.ENTITY.key());
 
 ::
 
     // via named attribute accessor
     AnnotatedText text = ...;
-    ListAttribute<EntityMention> mentions = text.getEntityMentions();
+    ListAttribute<Entity> entities = text.getEntities();
 
 
 Nulls in the Data Model
@@ -104,14 +104,14 @@ produced zero results.  For example:
 
 ::
 
-    ListAttribute<EntityMention> mentions = text.getEntityMentions();
-    if (mentions != null) {
-        if (mentions.isEmpty()) {
+    ListAttribute<Entity> entities = text.getEntity();
+    if (entities != null) {
+        if (entities.isEmpty()) {
             // The REX component was run, but the document contained
-            // no mentions, e.g. a very small document.
+            // no entities, e.g. a very small document.
         }
     } else {
-        // The REX component was not run at all; mentions.isEmpty()
+        // The REX component was not run at all; entities.isEmpty()
         // would throw a NullPointerException
     }
 
@@ -529,21 +529,22 @@ no suffix.  The prefix itself is divided into two parts ("and" and
 
 
 
-Entity Mentions
+Entities
 ---------------
 
-Entity mentions are strings in the text that refer to named entities.
-A mention is identified by its character start/end offsets.  It has an
-entity type (e.g. PERSON, LOCATION).  It may have a normalized form
-(e.g. normalized whitespace, affixes removed), a confidence, and an
-in-document coreference chain id.  The chain id is the index of the
-head mention of the chain.  The head mention is the longest mention in
-the chain.  If multiple mentions are longest, the first one is chosen.
+Entities are a result of document-level grouping of mentions that refer
+to the same thing. A mention is a span of text that mentions an entity, 
+while an entity describes the entity itself. It has an entity type (e.g. 
+PERSON, LOCATION), entity id and head mention index (in the mentions list). 
 
-Below, mentions ["George Bush", "Bush"] form a chain.  The head
-mention of the chain is "George Bush" at index 0.  The chain id for
-both mentions is 0.  "Washington" forms a chain of length 1 with
-itself.  "Texas" also forms a chain of length 1.
+Mentions are strings in the text that refer to entities.
+A mention is identified by its character start/end offsets. It has 
+a source and subsource which refer to the way it was extracted.
+It may have a normalized form (e.g. normalized whitespace, affixes 
+removed) and confidence score.
+
+Below, mentions ["George Bush", "Bush"] form an entity of "PERSON" type and
+entity id "T0".  "Washington" entiy has a single mention as well as "Texas".
 
 ::
 
@@ -552,18 +553,21 @@ itself.  "Texas" also forms a chain of length 1.
     AnnotatedText input = builder.build();
     AnnotatedText output = annotator.annotate(input);
     int i = 0;
-    for (EntityMention mention : output.getEntityMentions()) {
-        System.out.printf("%d: [%d, %d], %d, %s, %s%n",
-            i, mention.getStartOffset(), mention.getEndOffset(),
-            mention.getCoreferenceChainId(), mention.getEntityType(),
-            mention.getNormalized());
-        i++;
+    for (Entity entity : output.getEntities())
+        for (Mention mention : entity.getMentions()) {
+            System.out.printf("%d: [%d, %d], %s, %s, %s%n",
+                    i, mention.getStartOffset(), mention.getEndOffset(),
+                    entity.getEntityId(), entity.getType(),
+                    mention.getNormalized());
+            i++;
+        }
+    
     }
 
-    // 0: [0, 11], 0, PERSON, George Bush
-    // 1: [21, 31], 1, LOCATION, Washington
-    // 2: [34, 38], 0, PERSON, Bush
-    // 3: [48, 53], 3, LOCATION, Texas
+    // 0: [0, 11], T0, PERSON, George Bush
+    // 1: [34, 38], T0, PERSON, Bush
+    // 2: [21, 31], T1, LOCATION, Washington
+    // 3: [48, 53], T3, LOCATION, Texas
 
 
 
@@ -624,32 +628,6 @@ the same way as temporals and adjuncts, as shown here.
     // Temporals: [Monday]
     // Adjuncts: [in a blog post]
 
-
-
-Resolved Entity
----------------
-
-Entity mentions may be resolved to real-world entities.  For example,
-the in-document coreference chain ["George Bush", "Bush"] may be
-resolved to Wikidata entity Q207_, or perhaps Q23505_, depending on
-the document context.
-
-.. _Q207: http://www.wikidata.org/wiki/Q207
-
-.. _Q23505: http://www.wikidata.org/wiki/Q23505
-
-::
-
-    AnnotatedText input = ...; // "George Bush lived in Washington.  Bush lives in Texas now.";
-    AnnotatedText output = resolver.annotate(textBuilder.build());
-    for (com.basistech.rosette.dm.ResolvedEntity r : output.getResolvedEntities()) {
-        System.out.printf("[%d, %d), %d, %s%n",
-            r.getStartOffset(), r.getEndOffset(), r.getCoreferenceChainId(), r.getEntityId());
-    }
-
-    // [0, 11), 0, Q207
-    // [21, 31), 1, Q1223
-    // [46, 51), 2, Q1439
 
 
 Translated Data
@@ -734,7 +712,7 @@ Name
 ----
 
 A ``Name`` is a entity mention not related to a document, in contrast
-to ``EntityMention``, which refers to offsets within a document.
+to ``Entity`` and its ``Mention``s, which refers to offsets within a document.
 ``Name`` is provided to facilitate ``RNT`` functionality.  A name can
 have a language-of-origin and a language-of-use.  For example, an
 English name "George" can be used in a French document.
