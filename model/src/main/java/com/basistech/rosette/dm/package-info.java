@@ -53,7 +53,7 @@
  *     <pre>serialVersionId</pre>, the ID is derived from the version number of the library in which the
  *     a change was made. Serializable support was added in version 2.2.2, so all the classes started
  *     with version <pre>222</pre>.
- * </p>
+  * </p>
  * <h2>Builders</h2>
  * <p>
  *     Because these classes are immutable, they have many arguments to their constructors. Each class has a
