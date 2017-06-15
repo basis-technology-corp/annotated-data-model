@@ -1,5 +1,11 @@
 # Cumulative Release Notes for the Annotated Data Model
 
+## 2.2.3
+
+### [TEJ-975](https://basistech.atlassian.net/browse/TEJ-975) Confidence truncated to 3 digits below decimal
+
+Truncate serialized confidence values in com.basistech.rosette.dm.Mention and com.basistech.rosette.dm.EntityMention to 3 digits below the decimal point.
+
 ## 2.2.2
 
 ### [ROS-268](https://basistech.atlassian.net/browse/ROS-268) Add Serializable

@@ -24,6 +24,7 @@ import com.basistech.rosette.dm.Dependency;
 import com.basistech.rosette.dm.EmbeddingCollection;
 import com.basistech.rosette.dm.Embeddings;
 import com.basistech.rosette.dm.Entity;
+import com.basistech.rosette.dm.EntityMention;
 import com.basistech.rosette.dm.Extent;
 import com.basistech.rosette.dm.HanMorphoAnalysis;
 import com.basistech.rosette.dm.KoreanMorphoAnalysis;
@@ -112,7 +113,7 @@ public class JsonTest extends AdmAssert {
         emBuilder.normalized("bahston");
         emBuilder.source("testsource");
         emBuilder.subsource("testsubsource");
-        emBuilder.confidence(1.0);
+        emBuilder.confidence(1.33333);
         // we cannot have a completely arbitrary chain ID and have all the compatibility work out.
         emBuilder.coreferenceChainId(0);
         emBuilder.extendedProperty("em-ex", "em-ex-val");
@@ -333,9 +334,11 @@ public class JsonTest extends AdmAssert {
         mentionBuilder.normalized("bahston");
         mentionBuilder.source("testsource");
         mentionBuilder.subsource("testsubsource");
-        mentionBuilder.confidence(1.0);
+        mentionBuilder.confidence(1.33333);
         mentionBuilder.extendedProperty("em-ex", "em-ex-val");
         entityBuilder.mention(mentionBuilder.build());
+        // null mention except start and end
+        entityBuilder.mention(new Mention.Builder(11, 12).build());
         entityBuilder.confidence(0.5);
         entityBuilder.salience(0.4);
         entity = entityBuilder.build();
@@ -622,7 +625,13 @@ public class JsonTest extends AdmAssert {
         assertNotNull(emList);
         assertEquals(1, emList.size());
         com.basistech.rosette.dm.EntityMention em = emList.get(0);
-        assertEquals(entityMention, em);
+        assertEquals(entityMention.toString().replace("1.33333", "1.333"), em.toString());
+
+        // make sure OK to serialize null confidence.
+        EntityMention nullConfidenceEM = new EntityMention.Builder(0, 1, "E").build();
+
+        EntityMention em1 = mapper.readValue(mapper.writeValueAsString(nullConfidenceEM), EntityMention.class);
+        assertNull(em1.getConfidence());
 
         ListAttribute<RelationshipMention> rmList = read.getRelationshipMentions();
         assertNotNull(rmList);
@@ -695,7 +704,10 @@ public class JsonTest extends AdmAssert {
         assertEquals(1, entityList.size());
         Entity en = entityList.get(0);
         assertEquals(0.4, en.getSalience(), 0.0001); // just make sure the salience field works all around.
-        assertEquals(entity, en);
+
+        // The deserialized entity (en) matches the original (entity) except the first mention's confidence which is
+        // truncated to 3 digits after decimal point.
+        assertEquals(entity.toString().replace("1.33333", "1.333"), en.toString());
 
         ListAttribute<RelationshipMention> rmList = read.getRelationshipMentions();
         assertNotNull(rmList);

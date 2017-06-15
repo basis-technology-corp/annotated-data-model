@@ -17,6 +17,7 @@ package com.basistech.rosette.dm.jackson;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.util.Map;
 
@@ -24,6 +25,9 @@ import java.util.Map;
  * {@link com.basistech.rosette.dm.Mention}
  */
 public abstract class MentionMixin {
+    @JsonSerialize(using = MentionConfidenceSerializer.class)
+    Double confidence;
+
     @JsonCreator
     MentionMixin(@JsonProperty("startOffset") int startOffset,
                  @JsonProperty("endOffset") int endOffset,
