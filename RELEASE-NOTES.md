@@ -2,9 +2,9 @@
 
 ## 2.2.3
 
-### [TEJ-975](https://basistech.atlassian.net/browse/TEJ-975) Confidence truncated to 3 digits below decimal
+### [TEJ-975](https://basistech.atlassian.net/browse/TEJ-975) Double value serialization limit to 8 digits below decimal
 
-Truncate serialized confidence values in com.basistech.rosette.dm.Mention and com.basistech.rosette.dm.EntityMention to 3 digits below the decimal point.
+All Double-typed fields in com.basistech.dm.AnnotatedText are serialized to 8 digits below the decimal point.
 
 ## 2.2.2
 
