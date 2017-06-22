@@ -21,6 +21,7 @@ import com.basistech.rosette.dm.BaseNounPhrase;
 import com.basistech.rosette.dm.CategorizerResult;
 import com.basistech.rosette.dm.Extent;
 import com.basistech.rosette.dm.HanMorphoAnalysis;
+import com.basistech.rosette.dm.Keyphrase;
 import com.basistech.rosette.dm.KoreanMorphoAnalysis;
 import com.basistech.rosette.dm.LanguageDetection;
 import com.basistech.rosette.dm.ListAttribute;
@@ -30,6 +31,7 @@ import com.basistech.rosette.dm.RelationshipMention;
 import com.basistech.rosette.dm.ScriptRegion;
 import com.basistech.rosette.dm.Sentence;
 import com.basistech.rosette.dm.Token;
+import com.basistech.rosette.dm.Topic;
 import com.basistech.rosette.dm.TranslatedData;
 import com.basistech.rosette.dm.TranslatedTokens;
 import com.basistech.rosette.dm.jackson.AnnotatedDataModelModule;
@@ -77,6 +79,8 @@ public class JsonTest extends AdmAssert {
     private CategorizerResult categoryResult;
     private CategorizerResult sentimentResult;
     private CategorizerResult topicResult;
+    private Topic topic;
+    private Keyphrase keyphrase;
     private AnnotatedText referenceText;
 
     @Before
@@ -281,6 +285,18 @@ public class JsonTest extends AdmAssert {
                 .confidence(0.3).build();
         crBuilder.add(topicResult);
         builder.topicResults(crBuilder.build());
+
+        ListAttribute.Builder<Topic> topicBuilder = new ListAttribute.Builder<>(Topic.class);
+        topic = new Topic.Builder("topic", 0.7, "Q100").build();
+        topicBuilder.add(topic);
+        builder.topics(topicBuilder.build());
+
+        ListAttribute.Builder<Keyphrase> keyphraseBuilder = new ListAttribute.Builder<>(Keyphrase.class);
+        keyphrase = new Keyphrase.Builder("keyphrase", 1.0,
+                Lists.newArrayList(new Extent.Builder(5, 6).build(), new Extent.Builder(6, 7).build()))
+                .build();
+        keyphraseBuilder.add(keyphrase);
+        builder.keyphrases(keyphraseBuilder.build());
 
         referenceText = builder.build();
     }

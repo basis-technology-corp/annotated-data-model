@@ -26,6 +26,7 @@ import com.basistech.rosette.dm.Embeddings;
 import com.basistech.rosette.dm.Entity;
 import com.basistech.rosette.dm.Extent;
 import com.basistech.rosette.dm.HanMorphoAnalysis;
+import com.basistech.rosette.dm.Keyphrase;
 import com.basistech.rosette.dm.KoreanMorphoAnalysis;
 import com.basistech.rosette.dm.LanguageDetection;
 import com.basistech.rosette.dm.ListAttribute;
@@ -36,6 +37,7 @@ import com.basistech.rosette.dm.RelationshipMention;
 import com.basistech.rosette.dm.ScriptRegion;
 import com.basistech.rosette.dm.Sentence;
 import com.basistech.rosette.dm.Token;
+import com.basistech.rosette.dm.Topic;
 import com.basistech.rosette.dm.TranslatedData;
 import com.basistech.rosette.dm.TranslatedTokens;
 import com.basistech.rosette.dm.jackson.AnnotatedDataModelModule;
@@ -93,6 +95,8 @@ public class JsonTest extends AdmAssert {
     private AnnotatedText referenceText;
     private Entity entity;
     private Embeddings embeddings;
+    private Topic topic;
+    private Keyphrase keyphrase;
 
     @Before
     public void oneWithEverythingOldEntities() {
@@ -305,6 +309,18 @@ public class JsonTest extends AdmAssert {
         embeddingsBuilder.put(Embeddings.Name.TEXT, embeddingCollectionBuilder.build());
         embeddings = embeddingsBuilder.build();
         builder.embeddings(embeddingsBuilder.build());
+
+        ListAttribute.Builder<Topic> topicBuilder = new ListAttribute.Builder<>(Topic.class);
+        topic = new Topic.Builder("topic", 0.7, "Q100").build();
+        topicBuilder.add(topic);
+        builder.topics(topicBuilder.build());
+
+        ListAttribute.Builder<Keyphrase> keyphraseBuilder = new ListAttribute.Builder<>(Keyphrase.class);
+        keyphrase = new Keyphrase.Builder("keyphrase", 1.0,
+                Lists.newArrayList(new Extent.Builder(5, 6).build(), new Extent.Builder(6, 7).build()))
+                .build();
+        keyphraseBuilder.add(keyphrase);
+        builder.keyphrases(keyphraseBuilder.build());
 
         referenceTextOldEntities = builder.build();
 

@@ -21,12 +21,14 @@ import com.basistech.rosette.dm.CategorizerResult;
 import com.basistech.rosette.dm.Dependency;
 import com.basistech.rosette.dm.Embeddings;
 import com.basistech.rosette.dm.Entity;
+import com.basistech.rosette.dm.Keyphrase;
 import com.basistech.rosette.dm.LanguageDetection;
 import com.basistech.rosette.dm.ListAttribute;
 import com.basistech.rosette.dm.RelationshipMention;
 import com.basistech.rosette.dm.ScriptRegion;
 import com.basistech.rosette.dm.Sentence;
 import com.basistech.rosette.dm.Token;
+import com.basistech.rosette.dm.Topic;
 import com.basistech.rosette.dm.TranslatedData;
 import com.basistech.rosette.dm.TranslatedTokens;
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -124,4 +126,10 @@ public abstract class AnnotatedTextMixin {
 
     @JsonIgnore
     public abstract Embeddings getEmbeddings();
+
+    @JsonIgnore
+    public abstract ListAttribute<Topic> getTopics();
+
+    @JsonIgnore
+    public abstract ListAttribute<Keyphrase> getKeyphrases();
 }

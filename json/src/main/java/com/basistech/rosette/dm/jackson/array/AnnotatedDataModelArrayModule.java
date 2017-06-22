@@ -28,6 +28,7 @@ import com.basistech.rosette.dm.Embeddings;
 import com.basistech.rosette.dm.Entity;
 import com.basistech.rosette.dm.Extent;
 import com.basistech.rosette.dm.HanMorphoAnalysis;
+import com.basistech.rosette.dm.Keyphrase;
 import com.basistech.rosette.dm.KoreanMorphoAnalysis;
 import com.basistech.rosette.dm.LanguageDetection;
 import com.basistech.rosette.dm.ListAttribute;
@@ -40,6 +41,7 @@ import com.basistech.rosette.dm.RelationshipMention;
 import com.basistech.rosette.dm.ScriptRegion;
 import com.basistech.rosette.dm.Sentence;
 import com.basistech.rosette.dm.Token;
+import com.basistech.rosette.dm.Topic;
 import com.basistech.rosette.dm.TranslatedData;
 import com.basistech.rosette.dm.TranslatedTokens;
 import com.basistech.rosette.dm.jackson.ArabicMorphoAnalysisMixin;
@@ -53,6 +55,7 @@ import com.basistech.rosette.dm.jackson.EntityMentionMixin;
 import com.basistech.rosette.dm.jackson.EntityMixin;
 import com.basistech.rosette.dm.jackson.ExtentMixin;
 import com.basistech.rosette.dm.jackson.HanMorphoAnalysisMixin;
+import com.basistech.rosette.dm.jackson.KeyphraseMixin;
 import com.basistech.rosette.dm.jackson.KoreanMorphoAnalysisMixin;
 import com.basistech.rosette.dm.jackson.MentionMixin;
 import com.basistech.rosette.dm.jackson.MorphoAnalysisMixin;
@@ -63,6 +66,7 @@ import com.basistech.rosette.dm.jackson.RelationshipMentionMixin;
 import com.basistech.rosette.dm.jackson.ResolvedEntityMixin;
 import com.basistech.rosette.dm.jackson.ScriptRegionMixin;
 import com.basistech.rosette.dm.jackson.SentenceMixin;
+import com.basistech.rosette.dm.jackson.TopicMixin;
 import com.basistech.rosette.dm.jackson.TranslatedDataMixin;
 import com.basistech.rosette.dm.jackson.TranslatedTokensMixin;
 import com.basistech.util.jackson.EnumModule;
@@ -114,6 +118,8 @@ public class AnnotatedDataModelArrayModule extends EnumModule {
         context.setMixInAnnotations(Dependency.class, DependencyMixin.class);
         context.setMixInAnnotations(EmbeddingCollection.class, EmbeddingCollectionMixin.class);
         context.setMixInAnnotations(Embeddings.class, EmbeddingsMixin.class);
+        context.setMixInAnnotations(Topic.class, TopicMixin.class);
+        context.setMixInAnnotations(Keyphrase.class, KeyphraseMixin.class);
     }
 
     /**
