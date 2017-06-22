@@ -19,15 +19,30 @@ package com.basistech.rosette.dm.jackson;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
+import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Locale;
 
-public class MentionConfidenceSerializer extends JsonSerializer<Double> {
+public class DoubleSerializer extends StdSerializer<Double> {
+
+    private final NumberFormat numberFormat;
+
+    public DoubleSerializer() {
+        super(Double.class);
+
+        NumberFormat f = NumberFormat.getInstance(Locale.US);
+        if (f instanceof DecimalFormat) {
+            f.setMaximumFractionDigits(8);
+        }
+        numberFormat = f;
+    }
+
     /**
-     * Method to serialize the confidence (double) value in either {@link com.basistech.rosette.dm.Mention} or
-     * {@link com.basistech.rosette.dm.EntityMention}.
+     * Method to serialize Double values in {@link com.basistech.rosette.dm.AnnotatedText} globally.
      *
      * @param value       Value to serialize; can <b>not</b> be null.
      * @param gen         Generator used to output resulting Json content
@@ -35,6 +50,7 @@ public class MentionConfidenceSerializer extends JsonSerializer<Double> {
      */
     @Override
     public void serialize(Double value, JsonGenerator gen, SerializerProvider serializers) throws IOException, JsonProcessingException {
-        gen.writeString(String.format("%.3f", value));
+        // truncate to 8 digits below decimal for all Double fields.
+        gen.writeString(numberFormat.format(value));
     }
 }
