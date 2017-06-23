@@ -22,6 +22,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * {@link com.basistech.rosette.dm.Keyphrase}.
+ */
 public abstract class KeyphraseMixin {
     @JsonCreator
     KeyphraseMixin(@JsonProperty("keyphrase") String keyphrase,

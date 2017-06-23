@@ -20,15 +20,25 @@ import com.google.common.base.Objects;
 import java.io.Serializable;
 import java.util.Map;
 
+/**
+ * A reference to a high-level "topic" of a document.  A topic can be an abstract
+ * or concrete concept that is highly relevant to the document in question.  Topics
+ * may or may not be explicitly referenced in the document, and as such do not refer to
+ * any specific span of text.
+ * Each {@linkplain Topic} provides:
+ * <ul>
+ *     <li>the name of the specific topic</li>
+ *     <li>a confidence value associated with the topic</li>
+ *     <li>an ID that associates the topic some external knowledge base, e.g.
+ * <a href="http://www.wikidata.org/wiki/Q23">Q23</a> from Wikidata.</li>
+ * </ul>
+ */
 public class Topic extends BaseAttribute implements Serializable {
     private static final long serialVersionUID = 222L;
     private final String concept;
     private final Double confidence;
     private final String conceptId;
 
-    public Topic() throws Exception {
-        throw new Exception("default constructor");
-    }
     protected Topic(String concept, Double confidence, String conceptId, Map<String, Object> extendedProperties) {
         super(extendedProperties);
         this.concept = concept;
@@ -36,14 +46,26 @@ public class Topic extends BaseAttribute implements Serializable {
         this.conceptId = conceptId;
     }
 
+    /**
+     * Returns the name for the topic
+     * @return concept the name of the topic
+     */
     public String getConcept() {
         return concept;
     }
 
+    /**
+     * Returns the confidence value associated with this topic
+     * @return the confidence value
+     */
     public Double getConfidence() {
         return confidence;
     }
 
+    /**
+     * Returns the ID associated with the topic
+     * @return the ID associated with the topic
+     */
     public String getConceptId() {
         return conceptId;
     }
@@ -78,17 +100,32 @@ public class Topic extends BaseAttribute implements Serializable {
                 .add("conceptId", conceptId);
     }
 
+    /**
+     * A Builder for topics
+     */
     public static class Builder extends BaseAttribute.Builder<Topic, Topic.Builder> {
         protected String concept;
         protected Double confidence;
         protected String conceptId;
 
+        /**
+         * Construct a builder out of the required properties
+         * @param concept the name of the topic
+         * @param confidence the confidence associated with the topic
+         * @param conceptId the ID associated with the topic
+         */
         public Builder(String concept, Double confidence, String conceptId) {
             this.concept = concept;
             this.confidence = confidence;
             this.conceptId = conceptId;
         }
 
+        /**
+         * Constructs a builder by copying values from an existing topic
+         *
+         * @param toCopy the object to copy from
+         * @adm.ignore
+         */
         public Builder(Topic toCopy) {
             super(toCopy);
             this.concept = toCopy.getConcept();
@@ -96,27 +133,46 @@ public class Topic extends BaseAttribute implements Serializable {
             this.conceptId = toCopy.getConceptId();
         }
 
+        /**
+         * Specify the name of the topic
+         * @param concept the name of the topic
+         * @return this
+         */
         public Builder concept(String concept) {
             this.concept = concept;
             return this;
         }
 
+        /**
+         * Specify the confidence associated with this topic
+         * @param confidence the confidence associated with the topic
+         * @return this
+         */
         public Builder confidence(Double confidence) {
             this.confidence = confidence;
             return this;
         }
 
+        /**
+         * Specify the unique ID associated with this topic
+         * @param conceptId the unique ID associated with the topic
+         * @return this
+         */
         public Builder conceptId(String conceptId) {
             this.conceptId = conceptId;
             return this;
         }
 
+        /**
+         * Returns an immutable topic based on the content of the builder
+         * @return the new topic
+         */
         public Topic build() {
             return new Topic(concept, confidence, conceptId, buildExtendedProperties());
         }
 
         @Override
-        public Builder getThis() {
+        protected Builder getThis() {
             return this;
         }
     }

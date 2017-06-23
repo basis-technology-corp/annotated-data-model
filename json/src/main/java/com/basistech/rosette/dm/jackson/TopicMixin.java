@@ -20,6 +20,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Map;
 
+/**
+ * {@link com.basistech.rosette.dm.Topic}
+ */
 public abstract class TopicMixin {
     @JsonCreator
     TopicMixin(@JsonProperty("topic") String topic,

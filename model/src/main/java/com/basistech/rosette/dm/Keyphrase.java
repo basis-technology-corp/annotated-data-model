@@ -21,6 +21,16 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * A reference to a "keyphrase" of a document. Each keyphrase is a specific
+ * span of text that is highly relevant to the document.
+ * Each {@linkplain Keyphrase} provides:
+ * <ul>
+ *     <li>the name of the specific keyphrase</li>
+ *     <li>the confidence associated with the keyphrase</li>
+ *     <li>a list of {@linkplain Extent}s marking each location of the keyphrase in the text</li>
+ * </ul>
+ */
 public class Keyphrase extends BaseAttribute implements Serializable {
     private static final long serialVersionUID = 222L;
     private final String concept;
@@ -34,14 +44,27 @@ public class Keyphrase extends BaseAttribute implements Serializable {
         this.extents = listOrNull(extents);
     }
 
+    /**
+     * Returns the name of the keyphrase
+     * @return the name of the keyphrase
+     */
     public String getConcept() {
         return concept;
     }
 
+    /**
+     * Returns the confidence value associated with the keyphrase
+     * @return the confidence value
+     */
     public Double getConfidence() {
         return confidence;
     }
 
+    /**
+     * Returns the list of extents marking the offsets of each instance
+     * of the keyphrase in the text
+     * @return the list of extents
+     */
     public List<Extent> getExtents() {
         return extents;
     }
@@ -88,17 +111,31 @@ public class Keyphrase extends BaseAttribute implements Serializable {
         return result;
     }
 
+    /**
+     * A builder for keyphrases
+     */
     public static class Builder extends BaseAttribute.Builder<Keyphrase, Keyphrase.Builder> {
         private String concept;
         private Double confidence;
         private List<Extent> extents;
 
+        /**
+         * Constructs a builder from the required properties
+         * @param concept the name of the keyphrase
+         * @param confidence the confidence associated with the keyphrase
+         * @param extents the list of extents marking offsets for each mention of the
+         *                keyphrase in the text
+         */
         public Builder(String concept, Double confidence, List<Extent> extents) {
             this.concept = concept;
             this.confidence = confidence;
             this.extents = extents;
         }
 
+        /**
+         * Constructs a builder out of an existing Keyphrase
+         * @param toCopy the keyphrase to copy
+         */
         public Builder(Keyphrase toCopy) {
             super(toCopy);
             this.concept = toCopy.getConcept();
@@ -106,29 +143,47 @@ public class Keyphrase extends BaseAttribute implements Serializable {
             this.extents = toCopy.getExtents();
         }
 
+        /**
+         * Specify the name of the keyphrase
+         * @param concept the name of the keyphrase
+         * @return this
+         */
         public Builder concept(String concept) {
             this.concept = concept;
             return this;
         }
 
+        /**
+         * Specify the confidence value for the keyphrase
+         * @param confidence the confidence value
+         * @return this
+         */
         public Builder confidence(Double confidence) {
             this.confidence = confidence;
             return this;
         }
 
+        /**
+         * Specify the list of offsets of each mention of the keyphrase
+         * @param extents the list of extents
+         * @return this
+         */
         public Builder extents(List<Extent> extents) {
             this.extents = extents;
             return this;
         }
 
+        /**
+         * Returns an immutable Keyphrase out of the builder contents
+         * @return the new Keyphrase
+         */
         public Keyphrase build() {
             return new Keyphrase(concept, confidence, extents, buildExtendedProperties());
         }
 
         @Override
-        public Builder getThis() {
+        protected Builder getThis() {
             return this;
         }
     }
-
 }
