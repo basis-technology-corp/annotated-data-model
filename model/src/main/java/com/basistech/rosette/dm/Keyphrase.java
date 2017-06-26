@@ -27,20 +27,20 @@ import java.util.Map;
  * Each {@linkplain Keyphrase} provides:
  * <ul>
  *     <li>the name of the specific keyphrase</li>
- *     <li>the confidence associated with the keyphrase</li>
+ *     <li>the salience associated with the keyphrase</li>
  *     <li>a list of {@linkplain Extent}s marking each location of the keyphrase in the text</li>
  * </ul>
  */
 public class Keyphrase extends BaseAttribute implements Serializable {
     private static final long serialVersionUID = 222L;
     private final String concept;
-    private final Double confidence;
+    private final Double salience;
     private final List<Extent> extents;
 
-    protected Keyphrase(String concept, Double confidence, List<Extent> extents, Map<String, Object> extendedProperties) {
+    protected Keyphrase(String concept, Double salience, List<Extent> extents, Map<String, Object> extendedProperties) {
         super(extendedProperties);
         this.concept = concept;
-        this.confidence = confidence;
+        this.salience = salience;
         this.extents = listOrNull(extents);
     }
 
@@ -53,11 +53,11 @@ public class Keyphrase extends BaseAttribute implements Serializable {
     }
 
     /**
-     * Returns the confidence value associated with the keyphrase
-     * @return the confidence value
+     * Returns the salience value associated with the keyphrase
+     * @return the salience value
      */
-    public Double getConfidence() {
-        return confidence;
+    public Double getSalience() {
+        return salience;
     }
 
     /**
@@ -73,7 +73,7 @@ public class Keyphrase extends BaseAttribute implements Serializable {
     protected Objects.ToStringHelper toStringHelper() {
         return super.toStringHelper()
                 .add("concepts", concept)
-                .add("confidence", confidence)
+                .add("salience", salience)
                 .add("extents", extents);
     }
 
@@ -95,7 +95,7 @@ public class Keyphrase extends BaseAttribute implements Serializable {
             return false;
         }
 
-        if (confidence != null ? !confidence.equals(that.confidence) : that.confidence != null) {
+        if (salience != null ? !salience.equals(that.salience) : that.salience != null) {
             return false;
         }
 
@@ -106,7 +106,7 @@ public class Keyphrase extends BaseAttribute implements Serializable {
     public int hashCode() {
         int result = super.hashCode();
         result = 31 * result + (concept != null ? concept.hashCode() : 0);
-        result = 31 * result + (confidence != null ? confidence.hashCode() : 0);
+        result = 31 * result + (salience != null ? salience.hashCode() : 0);
         result = 31 * result + (extents != null ? extents.hashCode() : 0);
         return result;
     }
@@ -116,19 +116,19 @@ public class Keyphrase extends BaseAttribute implements Serializable {
      */
     public static class Builder extends BaseAttribute.Builder<Keyphrase, Keyphrase.Builder> {
         private String concept;
-        private Double confidence;
+        private Double salience;
         private List<Extent> extents;
 
         /**
          * Constructs a builder from the required properties
          * @param concept the name of the keyphrase
-         * @param confidence the confidence associated with the keyphrase
+         * @param salience the salience associated with the keyphrase
          * @param extents the list of extents marking offsets for each mention of the
          *                keyphrase in the text
          */
-        public Builder(String concept, Double confidence, List<Extent> extents) {
+        public Builder(String concept, Double salience, List<Extent> extents) {
             this.concept = concept;
-            this.confidence = confidence;
+            this.salience = salience;
             this.extents = extents;
         }
 
@@ -139,7 +139,7 @@ public class Keyphrase extends BaseAttribute implements Serializable {
         public Builder(Keyphrase toCopy) {
             super(toCopy);
             this.concept = toCopy.getConcept();
-            this.confidence = toCopy.getConfidence();
+            this.salience = toCopy.getSalience();
             this.extents = toCopy.getExtents();
         }
 
@@ -154,12 +154,12 @@ public class Keyphrase extends BaseAttribute implements Serializable {
         }
 
         /**
-         * Specify the confidence value for the keyphrase
-         * @param confidence the confidence value
+         * Specify the salience value for the keyphrase
+         * @param salience the salience value
          * @return this
          */
-        public Builder confidence(Double confidence) {
-            this.confidence = confidence;
+        public Builder salience(Double salience) {
+            this.salience = salience;
             return this;
         }
 
@@ -178,7 +178,7 @@ public class Keyphrase extends BaseAttribute implements Serializable {
          * @return the new Keyphrase
          */
         public Keyphrase build() {
-            return new Keyphrase(concept, confidence, extents, buildExtendedProperties());
+            return new Keyphrase(concept, salience, extents, buildExtendedProperties());
         }
 
         @Override

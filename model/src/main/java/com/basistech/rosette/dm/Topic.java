@@ -28,7 +28,7 @@ import java.util.Map;
  * Each {@linkplain Topic} provides:
  * <ul>
  *     <li>the name of the specific topic</li>
- *     <li>a confidence value associated with the topic</li>
+ *     <li>a salience value associated with the topic</li>
  *     <li>an ID that associates the topic some external knowledge base, e.g.
  * <a href="http://www.wikidata.org/wiki/Q23">Q23</a> from Wikidata.</li>
  * </ul>
@@ -36,13 +36,13 @@ import java.util.Map;
 public class Topic extends BaseAttribute implements Serializable {
     private static final long serialVersionUID = 222L;
     private final String concept;
-    private final Double confidence;
+    private final Double salience;
     private final String conceptId;
 
-    protected Topic(String concept, Double confidence, String conceptId, Map<String, Object> extendedProperties) {
+    protected Topic(String concept, Double salience, String conceptId, Map<String, Object> extendedProperties) {
         super(extendedProperties);
         this.concept = concept;
-        this.confidence = confidence;
+        this.salience = salience;
         this.conceptId = conceptId;
     }
 
@@ -55,11 +55,11 @@ public class Topic extends BaseAttribute implements Serializable {
     }
 
     /**
-     * Returns the confidence value associated with this topic
-     * @return the confidence value
+     * Returns the salience associated with this topic
+     * @return the salience
      */
-    public Double getConfidence() {
-        return confidence;
+    public Double getSalience() {
+        return salience;
     }
 
     /**
@@ -83,20 +83,20 @@ public class Topic extends BaseAttribute implements Serializable {
         }
         Topic topic = (Topic) o;
         return java.util.Objects.equals(topic, topic.concept)
-                && java.util.Objects.equals(confidence, topic.confidence)
+                && java.util.Objects.equals(salience, topic.salience)
                 && java.util.Objects.equals(conceptId, topic.conceptId);
     }
 
     @Override
     public int hashCode() {
-        return java.util.Objects.hash(super.hashCode(), concept, confidence, conceptId);
+        return java.util.Objects.hash(super.hashCode(), concept, salience, conceptId);
     }
 
     @Override
     protected Objects.ToStringHelper toStringHelper() {
         return super.toStringHelper()
                 .add("concept", concept)
-                .add("confidence", confidence)
+                .add("salience", salience)
                 .add("conceptId", conceptId);
     }
 
@@ -105,18 +105,18 @@ public class Topic extends BaseAttribute implements Serializable {
      */
     public static class Builder extends BaseAttribute.Builder<Topic, Topic.Builder> {
         protected String concept;
-        protected Double confidence;
+        protected Double salience;
         protected String conceptId;
 
         /**
          * Construct a builder out of the required properties
          * @param concept the name of the topic
-         * @param confidence the confidence associated with the topic
+         * @param salience the salience associated with the topic
          * @param conceptId the ID associated with the topic
          */
-        public Builder(String concept, Double confidence, String conceptId) {
+        public Builder(String concept, Double salience, String conceptId) {
             this.concept = concept;
-            this.confidence = confidence;
+            this.salience = salience;
             this.conceptId = conceptId;
         }
 
@@ -129,7 +129,7 @@ public class Topic extends BaseAttribute implements Serializable {
         public Builder(Topic toCopy) {
             super(toCopy);
             this.concept = toCopy.getConcept();
-            this.confidence = toCopy.getConfidence();
+            this.salience = toCopy.getSalience();
             this.conceptId = toCopy.getConceptId();
         }
 
@@ -144,12 +144,12 @@ public class Topic extends BaseAttribute implements Serializable {
         }
 
         /**
-         * Specify the confidence associated with this topic
-         * @param confidence the confidence associated with the topic
+         * Specify the salience associated with this topic
+         * @param salience the salience associated with the topic
          * @return this
          */
-        public Builder confidence(Double confidence) {
-            this.confidence = confidence;
+        public Builder salience(Double salience) {
+            this.salience = salience;
             return this;
         }
 
@@ -168,7 +168,7 @@ public class Topic extends BaseAttribute implements Serializable {
          * @return the new topic
          */
         public Topic build() {
-            return new Topic(concept, confidence, conceptId, buildExtendedProperties());
+            return new Topic(concept, salience, conceptId, buildExtendedProperties());
         }
 
         @Override
