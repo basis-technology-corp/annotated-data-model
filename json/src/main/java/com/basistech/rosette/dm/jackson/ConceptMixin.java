@@ -28,7 +28,7 @@ public abstract class ConceptMixin {
     @JsonCreator
     ConceptMixin(@JsonProperty("concept") String concept,
                  @JsonProperty("salience") Double salience,
-                 @JsonProperty("conceptId") String topicId,
+                 @JsonProperty("conceptId") String conceptId,
                  @JsonProperty("extendedProperties") Map<String, Object> extendedProperties) {
         //
     }
