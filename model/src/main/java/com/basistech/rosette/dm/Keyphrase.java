@@ -33,13 +33,13 @@ import java.util.Map;
  */
 public class Keyphrase extends BaseAttribute implements Serializable {
     private static final long serialVersionUID = 222L;
-    private final String concept;
+    private final String topic;
     private final Double salience;
     private final List<Extent> extents;
 
-    protected Keyphrase(String concept, Double salience, List<Extent> extents, Map<String, Object> extendedProperties) {
+    protected Keyphrase(String topic, Double salience, List<Extent> extents, Map<String, Object> extendedProperties) {
         super(extendedProperties);
-        this.concept = concept;
+        this.topic = topic;
         this.salience = salience;
         this.extents = listOrNull(extents);
     }
@@ -48,8 +48,8 @@ public class Keyphrase extends BaseAttribute implements Serializable {
      * Returns the name of the keyphrase
      * @return the name of the keyphrase
      */
-    public String getConcept() {
-        return concept;
+    public String getTopic() {
+        return topic;
     }
 
     /**
@@ -72,7 +72,7 @@ public class Keyphrase extends BaseAttribute implements Serializable {
     @Override
     protected Objects.ToStringHelper toStringHelper() {
         return super.toStringHelper()
-                .add("concepts", concept)
+                .add("topic", topic)
                 .add("salience", salience)
                 .add("extents", extents);
     }
@@ -91,7 +91,7 @@ public class Keyphrase extends BaseAttribute implements Serializable {
 
         Keyphrase that = (Keyphrase) o;
 
-        if (concept != null ? !concept.equals(that.concept) : that.concept != null) {
+        if (topic != null ? !topic.equals(that.topic) : that.topic != null) {
             return false;
         }
 
@@ -105,7 +105,7 @@ public class Keyphrase extends BaseAttribute implements Serializable {
     @Override
     public int hashCode() {
         int result = super.hashCode();
-        result = 31 * result + (concept != null ? concept.hashCode() : 0);
+        result = 31 * result + (topic != null ? topic.hashCode() : 0);
         result = 31 * result + (salience != null ? salience.hashCode() : 0);
         result = 31 * result + (extents != null ? extents.hashCode() : 0);
         return result;
@@ -115,19 +115,19 @@ public class Keyphrase extends BaseAttribute implements Serializable {
      * A builder for keyphrases
      */
     public static class Builder extends BaseAttribute.Builder<Keyphrase, Keyphrase.Builder> {
-        private String concept;
+        private String topic;
         private Double salience;
         private List<Extent> extents;
 
         /**
          * Constructs a builder from the required properties
-         * @param concept the name of the keyphrase
+         * @param topic the name of the keyphrase
          * @param salience the salience associated with the keyphrase
          * @param extents the list of extents marking offsets for each mention of the
          *                keyphrase in the text
          */
-        public Builder(String concept, Double salience, List<Extent> extents) {
-            this.concept = concept;
+        public Builder(String topic, Double salience, List<Extent> extents) {
+            this.topic = topic;
             this.salience = salience;
             this.extents = extents;
         }
@@ -138,18 +138,18 @@ public class Keyphrase extends BaseAttribute implements Serializable {
          */
         public Builder(Keyphrase toCopy) {
             super(toCopy);
-            this.concept = toCopy.getConcept();
+            this.topic = toCopy.getTopic();
             this.salience = toCopy.getSalience();
             this.extents = toCopy.getExtents();
         }
 
         /**
          * Specify the name of the keyphrase
-         * @param concept the name of the keyphrase
+         * @param topic the name of the keyphrase
          * @return this
          */
-        public Builder concept(String concept) {
-            this.concept = concept;
+        public Builder topic(String topic) {
+            this.topic = topic;
             return this;
         }
 
@@ -178,7 +178,7 @@ public class Keyphrase extends BaseAttribute implements Serializable {
          * @return the new Keyphrase
          */
         public Keyphrase build() {
-            return new Keyphrase(concept, salience, extents, buildExtendedProperties());
+            return new Keyphrase(topic, salience, extents, buildExtendedProperties());
         }
 
         @Override

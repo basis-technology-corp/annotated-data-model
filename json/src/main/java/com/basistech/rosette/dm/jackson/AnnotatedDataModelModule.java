@@ -40,7 +40,7 @@ import com.basistech.rosette.dm.RelationshipMention;
 import com.basistech.rosette.dm.ScriptRegion;
 import com.basistech.rosette.dm.Sentence;
 import com.basistech.rosette.dm.Token;
-import com.basistech.rosette.dm.Topic;
+import com.basistech.rosette.dm.Concept;
 import com.basistech.rosette.dm.TranslatedData;
 import com.basistech.rosette.dm.TranslatedTokens;
 import com.basistech.util.jackson.EnumModule;
@@ -88,7 +88,7 @@ public class  AnnotatedDataModelModule extends EnumModule {
         context.setMixInAnnotations(Dependency.class, DependencyMixin.class);
         context.setMixInAnnotations(EmbeddingCollection.class, EmbeddingCollectionMixin.class);
         context.setMixInAnnotations(Embeddings.class, EmbeddingsMixin.class);
-        context.setMixInAnnotations(Topic.class, TopicMixin.class);
+        context.setMixInAnnotations(Concept.class, ConceptMixin.class);
         context.setMixInAnnotations(Keyphrase.class, KeyphraseMixin.class);
     }
 

@@ -31,7 +31,7 @@ import com.basistech.rosette.dm.RelationshipMention;
 import com.basistech.rosette.dm.ScriptRegion;
 import com.basistech.rosette.dm.Sentence;
 import com.basistech.rosette.dm.Token;
-import com.basistech.rosette.dm.Topic;
+import com.basistech.rosette.dm.Concept;
 import com.basistech.rosette.dm.TranslatedData;
 import com.basistech.rosette.dm.TranslatedTokens;
 import com.basistech.rosette.dm.jackson.AnnotatedDataModelModule;
@@ -79,7 +79,7 @@ public class JsonTest extends AdmAssert {
     private CategorizerResult categoryResult;
     private CategorizerResult sentimentResult;
     private CategorizerResult topicResult;
-    private Topic topic;
+    private Concept concept;
     private Keyphrase keyphrase;
     private AnnotatedText referenceText;
 
@@ -286,10 +286,10 @@ public class JsonTest extends AdmAssert {
         crBuilder.add(topicResult);
         builder.topicResults(crBuilder.build());
 
-        ListAttribute.Builder<Topic> topicBuilder = new ListAttribute.Builder<>(Topic.class);
-        topic = new Topic.Builder("topic", 0.7, "Q100").build();
-        topicBuilder.add(topic);
-        builder.topics(topicBuilder.build());
+        ListAttribute.Builder<Concept> conceptBuilder = new ListAttribute.Builder<>(Concept.class);
+        concept = new Concept.Builder("concept", 0.7, "Q100").build();
+        conceptBuilder.add(concept);
+        builder.concepts(conceptBuilder.build());
 
         ListAttribute.Builder<Keyphrase> keyphraseBuilder = new ListAttribute.Builder<>(Keyphrase.class);
         keyphrase = new Keyphrase.Builder("keyphrase", 1.0,

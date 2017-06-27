@@ -15,20 +15,21 @@
 */
 package com.basistech.rosette.dm.jackson;
 
+import com.basistech.rosette.dm.Concept;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Map;
 
 /**
- * {@link com.basistech.rosette.dm.Topic}
+ * {@link Concept}
  */
-public abstract class TopicMixin {
+public abstract class ConceptMixin {
     @JsonCreator
-    TopicMixin(@JsonProperty("topic") String topic,
-               @JsonProperty("salience") Double salience,
-               @JsonProperty("conceptId") String topicId,
-               @JsonProperty("extendedProperties") Map<String, Object> extendedProperties) {
+    ConceptMixin(@JsonProperty("topic") String topic,
+                 @JsonProperty("salience") Double salience,
+                 @JsonProperty("conceptId") String topicId,
+                 @JsonProperty("extendedProperties") Map<String, Object> extendedProperties) {
         //
     }
 }

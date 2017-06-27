@@ -52,7 +52,7 @@ enum AttributeKey {
     TRANSLATED_TOKENS("translatedTokens"),
     TOPIC_RESULTS("topicResults"),
 
-    TOPIC("topics"),
+    CONCEPT("concepts"),
     KEYPHRASE("keyphrases");
 
     private final String key;

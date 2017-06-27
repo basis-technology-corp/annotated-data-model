@@ -41,7 +41,7 @@ import com.basistech.rosette.dm.RelationshipMention;
 import com.basistech.rosette.dm.ScriptRegion;
 import com.basistech.rosette.dm.Sentence;
 import com.basistech.rosette.dm.Token;
-import com.basistech.rosette.dm.Topic;
+import com.basistech.rosette.dm.Concept;
 import com.basistech.rosette.dm.TranslatedData;
 import com.basistech.rosette.dm.TranslatedTokens;
 import com.basistech.rosette.dm.jackson.ArabicMorphoAnalysisMixin;
@@ -66,7 +66,7 @@ import com.basistech.rosette.dm.jackson.RelationshipMentionMixin;
 import com.basistech.rosette.dm.jackson.ResolvedEntityMixin;
 import com.basistech.rosette.dm.jackson.ScriptRegionMixin;
 import com.basistech.rosette.dm.jackson.SentenceMixin;
-import com.basistech.rosette.dm.jackson.TopicMixin;
+import com.basistech.rosette.dm.jackson.ConceptMixin;
 import com.basistech.rosette.dm.jackson.TranslatedDataMixin;
 import com.basistech.rosette.dm.jackson.TranslatedTokensMixin;
 import com.basistech.util.jackson.EnumModule;
@@ -118,7 +118,7 @@ public class AnnotatedDataModelArrayModule extends EnumModule {
         context.setMixInAnnotations(Dependency.class, DependencyMixin.class);
         context.setMixInAnnotations(EmbeddingCollection.class, EmbeddingCollectionMixin.class);
         context.setMixInAnnotations(Embeddings.class, EmbeddingsMixin.class);
-        context.setMixInAnnotations(Topic.class, TopicMixin.class);
+        context.setMixInAnnotations(Concept.class, ConceptMixin.class);
         context.setMixInAnnotations(Keyphrase.class, KeyphraseMixin.class);
     }
 

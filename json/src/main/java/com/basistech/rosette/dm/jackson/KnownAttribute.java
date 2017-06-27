@@ -29,7 +29,7 @@ import com.basistech.rosette.dm.RelationshipMention;
 import com.basistech.rosette.dm.ScriptRegion;
 import com.basistech.rosette.dm.Sentence;
 import com.basistech.rosette.dm.Token;
-import com.basistech.rosette.dm.Topic;
+import com.basistech.rosette.dm.Concept;
 import com.basistech.rosette.dm.TranslatedData;
 import com.basistech.rosette.dm.TranslatedTokens;
 import com.basistech.rosette.dm.UnknownAttribute;
@@ -62,7 +62,7 @@ public enum KnownAttribute {
     LIST("list", ListAttribute.class),
     UNKNOWN("unknown", UnknownAttribute.class),
     RELATION_ARGUMENT("RelationshipComponent", RelationshipComponent.class),
-    TOPIC("topics", Topic.class),
+    CONCEPT("concepts", Concept.class),
     KEYPHRASE("keyphrase", Keyphrase.class);
 
     private final String jsonTag;

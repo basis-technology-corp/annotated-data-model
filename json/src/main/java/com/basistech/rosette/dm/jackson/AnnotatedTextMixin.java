@@ -28,7 +28,7 @@ import com.basistech.rosette.dm.RelationshipMention;
 import com.basistech.rosette.dm.ScriptRegion;
 import com.basistech.rosette.dm.Sentence;
 import com.basistech.rosette.dm.Token;
-import com.basistech.rosette.dm.Topic;
+import com.basistech.rosette.dm.Concept;
 import com.basistech.rosette.dm.TranslatedData;
 import com.basistech.rosette.dm.TranslatedTokens;
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -128,7 +128,7 @@ public abstract class AnnotatedTextMixin {
     public abstract Embeddings getEmbeddings();
 
     @JsonIgnore
-    public abstract ListAttribute<Topic> getTopics();
+    public abstract ListAttribute<Concept> getConcepts();
 
     @JsonIgnore
     public abstract ListAttribute<Keyphrase> getKeyphrases();

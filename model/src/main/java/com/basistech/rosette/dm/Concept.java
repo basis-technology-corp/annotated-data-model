@@ -21,41 +21,41 @@ import java.io.Serializable;
 import java.util.Map;
 
 /**
- * A reference to a high-level "topic" of a document.  A topic can be an abstract
- * or concrete concept that is highly relevant to the document in question.  Topics
+ * A reference to a high-level "concept" of a document.  A concept can be an abstract
+ * or concrete topic that is highly relevant to the document in question.  Concepts
  * may or may not be explicitly referenced in the document, and as such do not refer to
  * any specific span of text.
- * Each {@linkplain Topic} provides:
+ * Each {@linkplain Concept} provides:
  * <ul>
- *     <li>the name of the specific topic</li>
+ *     <li>the name of the specific concept</li>
  *     <li>a salience value associated with the topic</li>
  *     <li>an ID that associates the topic some external knowledge base, e.g.
  * <a href="http://www.wikidata.org/wiki/Q23">Q23</a> from Wikidata.</li>
  * </ul>
  */
-public class Topic extends BaseAttribute implements Serializable {
+public class Concept extends BaseAttribute implements Serializable {
     private static final long serialVersionUID = 222L;
-    private final String concept;
+    private final String topic;
     private final Double salience;
     private final String conceptId;
 
-    protected Topic(String concept, Double salience, String conceptId, Map<String, Object> extendedProperties) {
+    protected Concept(String topic, Double salience, String conceptId, Map<String, Object> extendedProperties) {
         super(extendedProperties);
-        this.concept = concept;
+        this.topic = topic;
         this.salience = salience;
         this.conceptId = conceptId;
     }
 
     /**
-     * Returns the name for the topic
-     * @return concept the name of the topic
+     * Returns the name for the concept
+     * @return topic the name of the concept
      */
-    public String getConcept() {
-        return concept;
+    public String getTopic() {
+        return topic;
     }
 
     /**
-     * Returns the salience associated with this topic
+     * Returns the salience associated with this concept
      * @return the salience
      */
     public Double getSalience() {
@@ -63,8 +63,8 @@ public class Topic extends BaseAttribute implements Serializable {
     }
 
     /**
-     * Returns the ID associated with the topic
-     * @return the ID associated with the topic
+     * Returns the ID associated with the concept
+     * @return the ID associated with the concept
      */
     public String getConceptId() {
         return conceptId;
@@ -81,21 +81,21 @@ public class Topic extends BaseAttribute implements Serializable {
         if (!super.equals(o)) {
             return false;
         }
-        Topic topic = (Topic) o;
-        return java.util.Objects.equals(topic, topic.concept)
-                && java.util.Objects.equals(salience, topic.salience)
-                && java.util.Objects.equals(conceptId, topic.conceptId);
+        Concept concept = (Concept) o;
+        return java.util.Objects.equals(concept, concept.topic)
+                && java.util.Objects.equals(salience, concept.salience)
+                && java.util.Objects.equals(conceptId, concept.conceptId);
     }
 
     @Override
     public int hashCode() {
-        return java.util.Objects.hash(super.hashCode(), concept, salience, conceptId);
+        return java.util.Objects.hash(super.hashCode(), topic, salience, conceptId);
     }
 
     @Override
     protected Objects.ToStringHelper toStringHelper() {
         return super.toStringHelper()
-                .add("concept", concept)
+                .add("topic", topic)
                 .add("salience", salience)
                 .add("conceptId", conceptId);
     }
@@ -103,19 +103,19 @@ public class Topic extends BaseAttribute implements Serializable {
     /**
      * A Builder for topics
      */
-    public static class Builder extends BaseAttribute.Builder<Topic, Topic.Builder> {
-        protected String concept;
+    public static class Builder extends BaseAttribute.Builder<Concept, Concept.Builder> {
+        protected String topic;
         protected Double salience;
         protected String conceptId;
 
         /**
          * Construct a builder out of the required properties
-         * @param concept the name of the topic
+         * @param topic the name of the concept
          * @param salience the salience associated with the topic
          * @param conceptId the ID associated with the topic
          */
-        public Builder(String concept, Double salience, String conceptId) {
-            this.concept = concept;
+        public Builder(String topic, Double salience, String conceptId) {
+            this.topic = topic;
             this.salience = salience;
             this.conceptId = conceptId;
         }
@@ -126,20 +126,20 @@ public class Topic extends BaseAttribute implements Serializable {
          * @param toCopy the object to copy from
          * @adm.ignore
          */
-        public Builder(Topic toCopy) {
+        public Builder(Concept toCopy) {
             super(toCopy);
-            this.concept = toCopy.getConcept();
+            this.topic = toCopy.getTopic();
             this.salience = toCopy.getSalience();
             this.conceptId = toCopy.getConceptId();
         }
 
         /**
-         * Specify the name of the topic
-         * @param concept the name of the topic
+         * Specify the name of the concept
+         * @param topic the name of the concept
          * @return this
          */
-        public Builder concept(String concept) {
-            this.concept = concept;
+        public Builder topic(String topic) {
+            this.topic = topic;
             return this;
         }
 
@@ -167,8 +167,8 @@ public class Topic extends BaseAttribute implements Serializable {
          * Returns an immutable topic based on the content of the builder
          * @return the new topic
          */
-        public Topic build() {
-            return new Topic(concept, salience, conceptId, buildExtendedProperties());
+        public Concept build() {
+            return new Concept(topic, salience, conceptId, buildExtendedProperties());
         }
 
         @Override

@@ -528,8 +528,8 @@ public class AnnotatedText implements Serializable {
     }
 
     @SuppressWarnings("unchecked")
-    public ListAttribute<Topic> getTopics() {
-        return (ListAttribute<Topic>) attributes.get(AttributeKey.TOPIC.key());
+    public ListAttribute<Concept> getConcepts() {
+        return (ListAttribute<Concept>) attributes.get(AttributeKey.CONCEPT.key());
     }
 
     @SuppressWarnings("unchecked")
@@ -807,8 +807,8 @@ public class AnnotatedText implements Serializable {
             return this;
         }
 
-        public Builder topics(ListAttribute<Topic> topics) {
-            attributes.put(AttributeKey.TOPIC.key(), topics);
+        public Builder concepts(ListAttribute<Concept> concepts) {
+            attributes.put(AttributeKey.CONCEPT.key(), concepts);
             return this;
         }
 
