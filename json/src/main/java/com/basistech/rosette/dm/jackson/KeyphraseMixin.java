@@ -27,7 +27,7 @@ import java.util.Map;
  */
 public abstract class KeyphraseMixin {
     @JsonCreator
-    KeyphraseMixin(@JsonProperty("topic") String topic,
+    KeyphraseMixin(@JsonProperty("keyphrase") String keyphrase,
                    @JsonProperty("salience") Double salience,
                    @JsonProperty("extents")List<Extent> extents,
                    @JsonProperty("extendedProperties") Map<String, Object> extendedProperties) {

@@ -28,30 +28,30 @@ import java.util.Map;
  * Each {@linkplain Concept} provides:
  * <ul>
  *     <li>the name of the specific concept</li>
- *     <li>a salience value associated with the topic</li>
- *     <li>an ID that associates the topic some external knowledge base, e.g.
+ *     <li>a salience value associated with the concept</li>
+ *     <li>an ID that associates the concept some external knowledge base, e.g.
  * <a href="http://www.wikidata.org/wiki/Q23">Q23</a> from Wikidata.</li>
  * </ul>
  */
 public class Concept extends BaseAttribute implements Serializable {
     private static final long serialVersionUID = 222L;
-    private final String topic;
+    private final String concept;
     private final Double salience;
     private final String conceptId;
 
-    protected Concept(String topic, Double salience, String conceptId, Map<String, Object> extendedProperties) {
+    protected Concept(String concept, Double salience, String conceptId, Map<String, Object> extendedProperties) {
         super(extendedProperties);
-        this.topic = topic;
+        this.concept = concept;
         this.salience = salience;
         this.conceptId = conceptId;
     }
 
     /**
      * Returns the name for the concept
-     * @return topic the name of the concept
+     * @return concept the name of the concept
      */
-    public String getTopic() {
-        return topic;
+    public String getConcept() {
+        return concept;
     }
 
     /**
@@ -81,69 +81,69 @@ public class Concept extends BaseAttribute implements Serializable {
         if (!super.equals(o)) {
             return false;
         }
-        Concept concept = (Concept) o;
-        return java.util.Objects.equals(concept, concept.topic)
-                && java.util.Objects.equals(salience, concept.salience)
-                && java.util.Objects.equals(conceptId, concept.conceptId);
+        Concept that = (Concept) o;
+        return java.util.Objects.equals(concept, that.concept)
+                && java.util.Objects.equals(salience, that.salience)
+                && java.util.Objects.equals(conceptId, that.conceptId);
     }
 
     @Override
     public int hashCode() {
-        return java.util.Objects.hash(super.hashCode(), topic, salience, conceptId);
+        return java.util.Objects.hash(super.hashCode(), concept, salience, conceptId);
     }
 
     @Override
     protected Objects.ToStringHelper toStringHelper() {
         return super.toStringHelper()
-                .add("topic", topic)
+                .add("concept", concept)
                 .add("salience", salience)
                 .add("conceptId", conceptId);
     }
 
     /**
-     * A Builder for topics
+     * A Builder for concepts
      */
     public static class Builder extends BaseAttribute.Builder<Concept, Concept.Builder> {
-        protected String topic;
+        protected String concept;
         protected Double salience;
         protected String conceptId;
 
         /**
          * Construct a builder out of the required properties
-         * @param topic the name of the concept
-         * @param conceptId the ID associated with the topic
+         * @param concept the name of the concept
+         * @param conceptId the ID associated with the concept
          */
-        public Builder(String topic, String conceptId) {
-            this.topic = topic;
+        public Builder(String concept, String conceptId) {
+            this.concept = concept;
             this.conceptId = conceptId;
         }
 
         /**
-         * Constructs a builder by copying values from an existing topic
+         * Constructs a builder by copying values from an existing concept
          *
          * @param toCopy the object to copy from
          * @adm.ignore
          */
         public Builder(Concept toCopy) {
             super(toCopy);
-            this.topic = toCopy.getTopic();
+            this.concept = toCopy.getConcept();
             this.salience = toCopy.getSalience();
             this.conceptId = toCopy.getConceptId();
         }
 
         /**
          * Specify the name of the concept
-         * @param topic the name of the concept
+         * @param concept the name of the concept
          * @return this
          */
-        public Builder topic(String topic) {
-            this.topic = topic;
+        public Builder concept(String concept) {
+            this.concept = concept;
             return this;
         }
 
         /**
-         * Specify the salience associated with this topic
-         * @param salience the salience associated with the topic
+         * Specify the salience associated with this concept
+         * @param salience the salience associated with the concept
          * @return this
          */
         public Builder salience(Double salience) {
@@ -152,8 +152,8 @@ public class Concept extends BaseAttribute implements Serializable {
         }
 
         /**
-         * Specify the unique ID associated with this topic
-         * @param conceptId the unique ID associated with the topic
+         * Specify the unique ID associated with this concept
+         * @param conceptId the unique ID associated with the concept
          * @return this
          */
         public Builder conceptId(String conceptId) {
@@ -162,11 +162,11 @@ public class Concept extends BaseAttribute implements Serializable {
         }
 
         /**
-         * Returns an immutable topic based on the content of the builder
-         * @return the new topic
+         * Returns an immutable concept based on the content of the builder
+         * @return the new concept
          */
         public Concept build() {
-            return new Concept(topic, salience, conceptId, buildExtendedProperties());
+            return new Concept(concept, salience, conceptId, buildExtendedProperties());
         }
 
         @Override
