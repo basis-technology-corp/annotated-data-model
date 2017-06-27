@@ -311,13 +311,14 @@ public class JsonTest extends AdmAssert {
         builder.embeddings(embeddingsBuilder.build());
 
         ListAttribute.Builder<Concept> conceptBuilder = new ListAttribute.Builder<>(Concept.class);
-        concept = new Concept.Builder("concept", 0.7, "Q100").build();
+        concept = new Concept.Builder("concept", "Q100").salience(0.7).build();
         conceptBuilder.add(concept);
         builder.concepts(conceptBuilder.build());
 
         ListAttribute.Builder<Keyphrase> keyphraseBuilder = new ListAttribute.Builder<>(Keyphrase.class);
-        keyphrase = new Keyphrase.Builder("keyphrase", 1.0,
+        keyphrase = new Keyphrase.Builder("keyphrase",
                 Lists.newArrayList(new Extent.Builder(5, 6).build(), new Extent.Builder(6, 7).build()))
+                .salience(1.2)
                 .build();
         keyphraseBuilder.add(keyphrase);
         builder.keyphrases(keyphraseBuilder.build());

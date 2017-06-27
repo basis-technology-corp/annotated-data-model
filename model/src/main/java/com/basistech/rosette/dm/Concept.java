@@ -111,12 +111,10 @@ public class Concept extends BaseAttribute implements Serializable {
         /**
          * Construct a builder out of the required properties
          * @param topic the name of the concept
-         * @param salience the salience associated with the topic
          * @param conceptId the ID associated with the topic
          */
-        public Builder(String topic, Double salience, String conceptId) {
+        public Builder(String topic, String conceptId) {
             this.topic = topic;
-            this.salience = salience;
             this.conceptId = conceptId;
         }
 

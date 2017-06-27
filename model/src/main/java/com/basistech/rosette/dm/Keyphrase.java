@@ -122,13 +122,11 @@ public class Keyphrase extends BaseAttribute implements Serializable {
         /**
          * Constructs a builder from the required properties
          * @param topic the name of the keyphrase
-         * @param salience the salience associated with the keyphrase
          * @param extents the list of extents marking offsets for each mention of the
          *                keyphrase in the text
          */
-        public Builder(String topic, Double salience, List<Extent> extents) {
+        public Builder(String topic, List<Extent> extents) {
             this.topic = topic;
-            this.salience = salience;
             this.extents = extents;
         }
 
