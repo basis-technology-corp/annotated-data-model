@@ -46,6 +46,8 @@ import com.basistech.rosette.dm.TranslatedTokens;
 import com.basistech.util.jackson.EnumModule;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleSerializers;
+
 /**
  * Jackson module to configure Json serialization and deserialization for the
  * annotated data model.
@@ -90,6 +92,12 @@ public class  AnnotatedDataModelModule extends EnumModule {
         context.setMixInAnnotations(Embeddings.class, EmbeddingsMixin.class);
         context.setMixInAnnotations(Concept.class, ConceptMixin.class);
         context.setMixInAnnotations(Keyphrase.class, KeyphraseMixin.class);
+
+        // type-serializers
+        SimpleSerializers serializers = new SimpleSerializers();
+        // All doubles are serialized by DoubleSerializer
+        serializers.addSerializer(new DoubleSerializer());
+        context.addSerializers(serializers);
     }
 
     /**
@@ -100,6 +108,7 @@ public class  AnnotatedDataModelModule extends EnumModule {
     public static ObjectMapper setupObjectMapper(ObjectMapper mapper) {
         mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         final AnnotatedDataModelModule module = new AnnotatedDataModelModule();
+        module.addSerializer(Double.class, new DoubleSerializer());
         mapper.registerModule(module);
 
         return mapper;

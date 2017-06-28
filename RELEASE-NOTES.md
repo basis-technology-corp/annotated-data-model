@@ -1,5 +1,11 @@
 # Cumulative Release Notes for the Annotated Data Model
 
+## 2.2.3
+
+### [TEJ-975](https://basistech.atlassian.net/browse/TEJ-975) Double value serialization limit to 8 digits below decimal
+
+All Double-typed fields in com.basistech.dm.AnnotatedText are serialized to 8 digits below the decimal point.
+
 ## 2.2.2
 
 ### [ROS-268](https://basistech.atlassian.net/browse/ROS-268) Add Serializable
