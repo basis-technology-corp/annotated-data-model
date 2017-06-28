@@ -21,12 +21,14 @@ import com.basistech.rosette.dm.BaseNounPhrase;
 import com.basistech.rosette.dm.CategorizerResult;
 import com.basistech.rosette.dm.Dependency;
 import com.basistech.rosette.dm.Entity;
+import com.basistech.rosette.dm.Keyphrase;
 import com.basistech.rosette.dm.LanguageDetection;
 import com.basistech.rosette.dm.ListAttribute;
 import com.basistech.rosette.dm.RelationshipMention;
 import com.basistech.rosette.dm.ScriptRegion;
 import com.basistech.rosette.dm.Sentence;
 import com.basistech.rosette.dm.Token;
+import com.basistech.rosette.dm.Concept;
 import com.basistech.rosette.dm.TranslatedData;
 import com.basistech.rosette.dm.TranslatedTokens;
 import com.basistech.rosette.dm.jackson.DmTypeIdResolver;
@@ -122,4 +124,10 @@ public abstract class AnnotatedTextArrayMixin {
 
     @JsonIgnore
     public abstract ListAttribute<Dependency> getDependencies();
+
+    @JsonIgnore
+    public abstract ListAttribute<Concept> getConcepts();
+
+    @JsonIgnore
+    public abstract ListAttribute<Keyphrase> getKeyphrases();
 }

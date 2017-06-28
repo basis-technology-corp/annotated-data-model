@@ -527,6 +527,15 @@ public class AnnotatedText implements Serializable {
         return (Embeddings) attributes.get(AttributeKey.EMBEDDING.key());
     }
 
+    @SuppressWarnings("unchecked")
+    public ListAttribute<Concept> getConcepts() {
+        return (ListAttribute<Concept>) attributes.get(AttributeKey.CONCEPT.key());
+    }
+
+    @SuppressWarnings("unchecked")
+    public ListAttribute<Keyphrase> getKeyphrases() {
+        return (ListAttribute<Keyphrase>) attributes.get(AttributeKey.KEYPHRASE.key());
+    }
     /**
      * toString is a convenience for accessing the textual data, if any, in this annotated text.
      * @return the data for this AnnotatedText as a String.
@@ -795,6 +804,16 @@ public class AnnotatedText implements Serializable {
          */
         public Builder embeddings(Embeddings embeddings) {
             attributes.put(AttributeKey.EMBEDDING.key(), embeddings);
+            return this;
+        }
+
+        public Builder concepts(ListAttribute<Concept> concepts) {
+            attributes.put(AttributeKey.CONCEPT.key(), concepts);
+            return this;
+        }
+
+        public Builder keyphrases(ListAttribute<Keyphrase> keyphrases) {
+            attributes.put(AttributeKey.KEYPHRASE.key(), keyphrases);
             return this;
         }
 
