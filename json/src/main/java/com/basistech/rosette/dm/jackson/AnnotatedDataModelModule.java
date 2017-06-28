@@ -27,6 +27,7 @@ import com.basistech.rosette.dm.Embeddings;
 import com.basistech.rosette.dm.Entity;
 import com.basistech.rosette.dm.Extent;
 import com.basistech.rosette.dm.HanMorphoAnalysis;
+import com.basistech.rosette.dm.Keyphrase;
 import com.basistech.rosette.dm.KoreanMorphoAnalysis;
 import com.basistech.rosette.dm.LanguageDetection;
 import com.basistech.rosette.dm.ListAttribute;
@@ -39,6 +40,7 @@ import com.basistech.rosette.dm.RelationshipMention;
 import com.basistech.rosette.dm.ScriptRegion;
 import com.basistech.rosette.dm.Sentence;
 import com.basistech.rosette.dm.Token;
+import com.basistech.rosette.dm.Concept;
 import com.basistech.rosette.dm.TranslatedData;
 import com.basistech.rosette.dm.TranslatedTokens;
 import com.basistech.util.jackson.EnumModule;
@@ -88,6 +90,8 @@ public class  AnnotatedDataModelModule extends EnumModule {
         context.setMixInAnnotations(Dependency.class, DependencyMixin.class);
         context.setMixInAnnotations(EmbeddingCollection.class, EmbeddingCollectionMixin.class);
         context.setMixInAnnotations(Embeddings.class, EmbeddingsMixin.class);
+        context.setMixInAnnotations(Concept.class, ConceptMixin.class);
+        context.setMixInAnnotations(Keyphrase.class, KeyphraseMixin.class);
 
         // type-serializers
         SimpleSerializers serializers = new SimpleSerializers();
