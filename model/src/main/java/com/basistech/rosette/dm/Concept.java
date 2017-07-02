@@ -35,23 +35,23 @@ import java.util.Map;
  */
 public class Concept extends BaseAttribute implements Serializable {
     private static final long serialVersionUID = 222L;
-    private final String concept;
+    private final String phrase;
     private final Double salience;
     private final String conceptId;
 
-    protected Concept(String concept, Double salience, String conceptId, Map<String, Object> extendedProperties) {
+    protected Concept(String phrase, Double salience, String conceptId, Map<String, Object> extendedProperties) {
         super(extendedProperties);
-        this.concept = concept;
+        this.phrase = phrase;
         this.salience = salience;
         this.conceptId = conceptId;
     }
 
     /**
      * Returns the name for the concept
-     * @return concept the name of the concept
+     * @return phrase the name of the concept
      */
-    public String getConcept() {
-        return concept;
+    public String getPhrase() {
+        return phrase;
     }
 
     /**
@@ -82,20 +82,20 @@ public class Concept extends BaseAttribute implements Serializable {
             return false;
         }
         Concept that = (Concept) o;
-        return java.util.Objects.equals(concept, that.concept)
+        return java.util.Objects.equals(phrase, that.phrase)
                 && java.util.Objects.equals(salience, that.salience)
                 && java.util.Objects.equals(conceptId, that.conceptId);
     }
 
     @Override
     public int hashCode() {
-        return java.util.Objects.hash(super.hashCode(), concept, salience, conceptId);
+        return java.util.Objects.hash(super.hashCode(), phrase, salience, conceptId);
     }
 
     @Override
     protected Objects.ToStringHelper toStringHelper() {
         return super.toStringHelper()
-                .add("concept", concept)
+                .add("phrase", phrase)
                 .add("salience", salience)
                 .add("conceptId", conceptId);
     }
@@ -104,17 +104,17 @@ public class Concept extends BaseAttribute implements Serializable {
      * A Builder for concepts
      */
     public static class Builder extends BaseAttribute.Builder<Concept, Concept.Builder> {
-        protected String concept;
+        protected String phrase;
         protected Double salience;
         protected String conceptId;
 
         /**
          * Construct a builder out of the required properties
-         * @param concept the name of the concept
+         * @param phrase the name of the concept
          * @param conceptId the ID associated with the concept
          */
-        public Builder(String concept, String conceptId) {
-            this.concept = concept;
+        public Builder(String phrase, String conceptId) {
+            this.phrase = phrase;
             this.conceptId = conceptId;
         }
 
@@ -126,7 +126,7 @@ public class Concept extends BaseAttribute implements Serializable {
          */
         public Builder(Concept toCopy) {
             super(toCopy);
-            this.concept = toCopy.getConcept();
+            this.phrase = toCopy.getPhrase();
             this.salience = toCopy.getSalience();
             this.conceptId = toCopy.getConceptId();
         }
@@ -136,8 +136,8 @@ public class Concept extends BaseAttribute implements Serializable {
          * @param concept the name of the concept
          * @return this
          */
-        public Builder concept(String concept) {
-            this.concept = concept;
+        public Builder phrase(String concept) {
+            this.phrase = concept;
             return this;
         }
 
@@ -166,7 +166,7 @@ public class Concept extends BaseAttribute implements Serializable {
          * @return the new concept
          */
         public Concept build() {
-            return new Concept(concept, salience, conceptId, buildExtendedProperties());
+            return new Concept(phrase, salience, conceptId, buildExtendedProperties());
         }
 
         @Override
