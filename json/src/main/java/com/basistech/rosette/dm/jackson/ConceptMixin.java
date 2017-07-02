@@ -26,7 +26,7 @@ import java.util.Map;
  */
 public abstract class ConceptMixin {
     @JsonCreator
-    ConceptMixin(@JsonProperty("concept") String concept,
+    ConceptMixin(@JsonProperty("phrase") String phrase,
                  @JsonProperty("salience") Double salience,
                  @JsonProperty("conceptId") String conceptId,
                  @JsonProperty("extendedProperties") Map<String, Object> extendedProperties) {

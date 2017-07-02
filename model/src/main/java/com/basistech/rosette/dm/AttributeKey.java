@@ -52,8 +52,8 @@ enum AttributeKey {
     TRANSLATED_TOKENS("translatedTokens"),
     TOPIC_RESULTS("topicResults"),
 
-    CONCEPT("concepts"),
-    KEYPHRASE("keyphrases");
+    CONCEPT("concept"),
+    KEYPHRASE("keyphrase");
 
     private final String key;
 
