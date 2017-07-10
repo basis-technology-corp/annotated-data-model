@@ -62,7 +62,7 @@ public enum KnownAttribute {
     LIST("list", ListAttribute.class),
     UNKNOWN("unknown", UnknownAttribute.class),
     RELATION_ARGUMENT("RelationshipComponent", RelationshipComponent.class),
-    CONCEPT("concepts", Concept.class),
+    CONCEPT("concept", Concept.class),
     KEYPHRASE("keyphrase", Keyphrase.class);
 
     private final String jsonTag;
