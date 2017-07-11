@@ -31,6 +31,9 @@ import java.util.Map;
  * Each {@linkplain Entity} provides:
  * <ul>
  *     <li>a list of {@linkplain Mention}s</li>
+ *     <li>the index of the head {@linkplain Mention} in the mentions' list</li>
+ *     <li>the type of the entity, e.g. PERSON</li>
+ *     <li>(optionally) a salience score</li>
  *     <li>(optionally) an ID that associates the entity some external knowledge base, e.g.
  * <a href="http://www.wikidata.org/wiki/Q23">Q23</a> from Wikidata.</li>
  * <li>(optionally) a sentiment category associated with it
@@ -235,7 +238,7 @@ public class Entity extends BaseAttribute implements Serializable {
         }
 
         /**
-         * Specifies the confidence value.
+         * Specifies the confidence value of the resolved entity.
          *
          * @param confidence the confidence value
          * @return this

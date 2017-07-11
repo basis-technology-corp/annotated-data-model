@@ -32,7 +32,7 @@ import java.util.Map;
 /**
  * The root of the data model. An {@code AnnotatedText} is blob of text and its attributes.
  * The attributes are available from {@link #getAttributes()}, as well as from
- * some convenience accessors, such as {@link #getTokens()} or {@link #getEntityMentions()}.
+ * some convenience accessors, such as {@link #getTokens()} or {@link #getEntities()}.
  * <br>
  * Generally, offsets used in the data model are character (UTF-16 elements) offsets into the
  * original text.  Offset ranges are always half-open.  For example:
