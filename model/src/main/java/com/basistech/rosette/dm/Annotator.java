@@ -18,7 +18,7 @@ package com.basistech.rosette.dm;
 /**
  * An {@code Annotator} annotates text with attributes.  Typical annotations
  * are tokens, script/language regions, morphological analyses, sentences,
- * base noun phrases, and entity mentions.  A single annotator operates in one
+ * base noun phrases, and entities.  A single annotator operates in one
  * language; while the data model supports multi-language texts, this
  * interface does not (yet) provide support.
  * @adm.ignore
@@ -37,7 +37,7 @@ public interface Annotator {
      * Annotates an existing text object with additional attributes.
      * For example, an entity annotator may take the output of a base
      * linguistics annotator (which has token annotations) and add additional
-     * entity mention attributes.
+     * entities attributes.
      *
      * @param input data to process
      * @return annotated data
