@@ -487,6 +487,49 @@ public class EqualsTest {
 
     }
 
+    @Test
+    public void transliteration() throws Exception {
+        TransliterationResults t1 = new TransliterationResults.Builder()
+                .addTransliteration(LanguageCode.ENGLISH, Transliteration.of("Latn", "one"))
+                .build();
+
+        TransliterationResults t2 = new TransliterationResults.Builder()
+                .addTransliteration(LanguageCode.ENGLISH, Transliteration.of("Latn", "one"))
+                .addTransliteration(LanguageCode.ENGLISH, Transliteration.of("Arab", "one"))
+                .build();
+
+        TransliterationResults t3 = new TransliterationResults.Builder()
+                .addTransliteration(LanguageCode.ENGLISH, Transliteration.of("Latn", "on3"))
+                .build();
+
+        TransliterationResults t4 = new TransliterationResults.Builder()
+                .addTransliteration(LanguageCode.ARABIC, Transliteration.of("Latn", "one"))
+                .build();
+
+        TransliterationResults t5 = new TransliterationResults.Builder()
+                .addTransliteration(LanguageCode.ENGLISH, Transliteration.of("Arab", "one"))
+                .build();
+
+        // All different
+        assertFalse(t1.equals(t2));
+        assertFalse(t1.equals(t3));
+        assertFalse(t1.equals(t4));
+        assertFalse(t1.equals(t5));
+        assertFalse(t2.equals(t3));
+        assertFalse(t2.equals(t4));
+        assertFalse(t2.equals(t5));
+        assertFalse(t3.equals(t4));
+        assertFalse(t3.equals(t5));
+        assertFalse(t4.equals(t5));
+
+        // All the same
+        assertTrue(t1.equals(t1));
+        assertTrue(t2.equals(t2));
+        assertTrue(t3.equals(t3));
+        assertTrue(t4.equals(t4));
+        assertTrue(t5.equals(t5));
+    }
+
 
 
 }

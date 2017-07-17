@@ -41,6 +41,8 @@ import com.basistech.rosette.dm.Token;
 import com.basistech.rosette.dm.Concept;
 import com.basistech.rosette.dm.TranslatedData;
 import com.basistech.rosette.dm.TranslatedTokens;
+import com.basistech.rosette.dm.Transliteration;
+import com.basistech.rosette.dm.TransliterationResults;
 import com.basistech.rosette.dm.jackson.AnnotatedDataModelModule;
 import com.basistech.util.ISO15924;
 import com.basistech.util.LanguageCode;
@@ -73,6 +75,7 @@ import java.util.Set;
 public class JsonTest extends AdmAssert {
 
     private static final String THIS_IS_THE_TERRIER_SHOT_TO_BOSTON = "This is the terrier shot to Boston.";
+    private static final String THIS_IS_THE_TERRIER_SHOT_TO_BOSTON_ARABIC = "هذا هو النار ضربة الى بوسطن.";
     private BaseNounPhrase baseNounPhrase;
     private com.basistech.rosette.dm.EntityMention entityMention;
     private RelationshipMention relationshipMention;
@@ -324,6 +327,17 @@ public class JsonTest extends AdmAssert {
         keyphraseBuilder.add(keyphrase);
         builder.keyphrases(keyphraseBuilder.build());
 
+        TransliterationResults.Builder transliterationBuilder =
+                new TransliterationResults.Builder(LanguageCode.ENGLISH,
+                        "Latn",
+                        THIS_IS_THE_TERRIER_SHOT_TO_BOSTON);
+
+        // Translation: This is the terrier shot to boston
+        transliterationBuilder.addTransliteration(
+                LanguageCode.ARABIC, Transliteration.of("Arab", "هذا هو النار ضربة الى بوسطن."));
+
+        builder.transliteration(transliterationBuilder.build());
+
         referenceTextOldEntities = builder.build();
 
     }
@@ -541,6 +555,16 @@ public class JsonTest extends AdmAssert {
         embeddings = embeddingsBuilder.build();
         builder.embeddings(embeddingsBuilder.build());
 
+        TransliterationResults.Builder transliterationBuilder =
+                new TransliterationResults.Builder(LanguageCode.ENGLISH,
+                        "Latn",
+                        THIS_IS_THE_TERRIER_SHOT_TO_BOSTON);
+
+        transliterationBuilder.addTransliteration(
+                LanguageCode.ARABIC, Transliteration.of("Arab", THIS_IS_THE_TERRIER_SHOT_TO_BOSTON_ARABIC));
+
+        builder.transliteration(transliterationBuilder.build());
+
         referenceText = builder.build();
 
 
@@ -699,6 +723,15 @@ public class JsonTest extends AdmAssert {
         assertEquals(sentimentResult, read.getSentimentResults().get(0));
 
         assertEquals(topicResult, read.getTopicResults().get(0));
+
+        Transliteration engTransliteration =
+                read.getTransliteration().getTransliteration(LanguageCode.ENGLISH);
+        assertEquals(THIS_IS_THE_TERRIER_SHOT_TO_BOSTON, engTransliteration.getWithScript("Latn"));
+
+        Transliteration araTransliteration =
+                read.getTransliteration().getTransliteration(LanguageCode.ARABIC);
+        assertEquals(THIS_IS_THE_TERRIER_SHOT_TO_BOSTON_ARABIC, araTransliteration.getWithScript("Arab"));
+
     }
 
     @Test
@@ -779,6 +812,14 @@ public class JsonTest extends AdmAssert {
 
         Embeddings readEmbeddings = read.getEmbeddings();
         assertEquals(embeddings, readEmbeddings);
+
+        Transliteration engTransliteration =
+                read.getTransliteration().getTransliteration(LanguageCode.ENGLISH);
+        assertEquals(THIS_IS_THE_TERRIER_SHOT_TO_BOSTON, engTransliteration.getWithScript("Latn"));
+
+        Transliteration araTransliteration =
+                read.getTransliteration().getTransliteration(LanguageCode.ARABIC);
+        assertEquals(THIS_IS_THE_TERRIER_SHOT_TO_BOSTON_ARABIC, araTransliteration.getWithScript("Arab"));
     }
 
     @Test

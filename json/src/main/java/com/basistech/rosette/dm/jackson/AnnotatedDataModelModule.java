@@ -21,6 +21,7 @@ import com.basistech.rosette.dm.Attribute;
 import com.basistech.rosette.dm.BaseAttribute;
 import com.basistech.rosette.dm.BaseNounPhrase;
 import com.basistech.rosette.dm.CategorizerResult;
+import com.basistech.rosette.dm.Concept;
 import com.basistech.rosette.dm.Dependency;
 import com.basistech.rosette.dm.EmbeddingCollection;
 import com.basistech.rosette.dm.Embeddings;
@@ -40,9 +41,10 @@ import com.basistech.rosette.dm.RelationshipMention;
 import com.basistech.rosette.dm.ScriptRegion;
 import com.basistech.rosette.dm.Sentence;
 import com.basistech.rosette.dm.Token;
-import com.basistech.rosette.dm.Concept;
 import com.basistech.rosette.dm.TranslatedData;
 import com.basistech.rosette.dm.TranslatedTokens;
+import com.basistech.rosette.dm.Transliteration;
+import com.basistech.rosette.dm.TransliterationResults;
 import com.basistech.util.jackson.EnumModule;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -92,6 +94,8 @@ public class  AnnotatedDataModelModule extends EnumModule {
         context.setMixInAnnotations(Embeddings.class, EmbeddingsMixin.class);
         context.setMixInAnnotations(Concept.class, ConceptMixin.class);
         context.setMixInAnnotations(Keyphrase.class, KeyphraseMixin.class);
+        context.setMixInAnnotations(Transliteration.class, TransliterationMixin.class);
+        context.setMixInAnnotations(TransliterationResults.class, TransliterationResultsMixin.class);
 
         // type-serializers
         SimpleSerializers serializers = new SimpleSerializers();
