@@ -25,7 +25,7 @@ import java.util.Map;
 
 public final class TransliterationResults extends BaseAttribute {
 
-    private final Map<LanguageCode, Transliteration> transliterationResults;
+    private final Map<LanguageCode, Transliteration> results;
 
     protected TransliterationResults(Map<LanguageCode, Transliteration> results,
                                      Map<String, Object> extendedAttributes) {
@@ -35,16 +35,16 @@ public final class TransliterationResults extends BaseAttribute {
         for (LanguageCode lc : results.keySet()) {
             mapBuilder.put(lc, results.get(lc));
         }
-        this.transliterationResults = mapBuilder.build();
+        this.results = mapBuilder.build();
     }
 
     /**
      * Gets all the {@link Transliteration}s inside {@code this}
      * @return An immutable view of the transliterations.
      */
-    public Map<LanguageCode, Transliteration> getTransliterationResults() {
+    public Map<LanguageCode, Transliteration> getResults() {
         // This is immutable
-        return transliterationResults;
+        return results;
     }
 
     /**
@@ -53,7 +53,7 @@ public final class TransliterationResults extends BaseAttribute {
      * @return The transliteration, or {@code null} if there isn't one with the given language code.
      */
     public Transliteration getTransliteration(LanguageCode code) {
-        return getTransliterationResults().get(code);
+        return getResults().get(code);
     }
 
     /**
@@ -87,21 +87,21 @@ public final class TransliterationResults extends BaseAttribute {
 
         TransliterationResults that = (TransliterationResults) o;
 
-        return transliterationResults != null
-                ? transliterationResults.equals(that.transliterationResults) : that.transliterationResults == null;
+        return results != null
+                ? results.equals(that.results) : that.results == null;
     }
 
     @Override
     public int hashCode() {
         int result = super.hashCode();
-        result = 31 * result + (transliterationResults != null ? transliterationResults.hashCode() : 0);
+        result = 31 * result + (results != null ? results.hashCode() : 0);
         return result;
     }
 
     @Override
     public Objects.ToStringHelper toStringHelper() {
         return Objects.toStringHelper(this)
-                .add("transliterationResults", transliterationResults);
+                .add("results", results);
     }
 
     /**
@@ -136,7 +136,7 @@ public final class TransliterationResults extends BaseAttribute {
          * @param other The transliteration to start from.
          */
         public Builder(TransliterationResults other) {
-            results = copy(other.transliterationResults);
+            results = copy(other.results);
         }
 
         /**

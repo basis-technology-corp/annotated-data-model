@@ -66,7 +66,7 @@ public class TransliterationResultsTest {
                 .build();
         assertEquals(t, throughString(t));
 
-        assertEquals(ImmutableSet.of(LanguageCode.ARABIC), t.getTransliterationResults().keySet());
+        assertEquals(ImmutableSet.of(LanguageCode.ARABIC), t.getResults().keySet());
 
         assertEquals(ImmutableSet.of("Latn", "Arab"),
                 t.getTransliteration(LanguageCode.ARABIC).listScripts());
@@ -86,7 +86,7 @@ public class TransliterationResultsTest {
                 .build();
         assertEquals(t, throughString(t));
 
-        assertEquals(ImmutableSet.of(LanguageCode.ARABIC, LanguageCode.AFRIKAANS), t.getTransliterationResults().keySet());
+        assertEquals(ImmutableSet.of(LanguageCode.ARABIC, LanguageCode.AFRIKAANS), t.getResults().keySet());
 
         assertEquals(ImmutableSet.of("Latn"), t.getTransliteration(LanguageCode.ARABIC).listScripts());
 

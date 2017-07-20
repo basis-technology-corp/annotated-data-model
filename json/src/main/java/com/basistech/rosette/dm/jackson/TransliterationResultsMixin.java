@@ -29,11 +29,11 @@ public abstract class TransliterationResultsMixin {
 
     @JsonDeserialize(using = TransliterationResultsDeserializer.class)
     @JsonSerialize(using = TransliterationResultsSerializer.class)
-    Map<LanguageCode, Transliteration> transliterationResults;
+    Map<LanguageCode, Transliteration> results;
 
     @JsonCreator
     TransliterationResultsMixin(
-            @JsonProperty("transliterationResults") Map<LanguageCode, Transliteration> transliterationResults,
+            @JsonProperty("results") Map<LanguageCode, Transliteration> results,
             @JsonProperty("extendedProperties") Map<String, Object> extendedProperties) {
         //
     }
