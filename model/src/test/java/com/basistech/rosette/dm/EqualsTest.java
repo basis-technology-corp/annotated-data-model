@@ -490,24 +490,24 @@ public class EqualsTest {
     @Test
     public void transliteration() throws Exception {
         TransliterationResults t1 = new TransliterationResults.Builder()
-                .addTransliteration(LanguageCode.ENGLISH, Transliteration.of("Latn", "one"))
+                .addTransliteration(LanguageCode.ENGLISH, Transliteration.of(ISO15924.Latn, "one"))
                 .build();
 
         TransliterationResults t2 = new TransliterationResults.Builder()
-                .addTransliteration(LanguageCode.ENGLISH, Transliteration.of("Latn", "one"))
-                .addTransliteration(LanguageCode.ENGLISH, Transliteration.of("Arab", "one"))
+                .addTransliteration(LanguageCode.ENGLISH, Transliteration.of(ISO15924.Latn, "one"))
+                .addTransliteration(LanguageCode.ENGLISH, Transliteration.of(ISO15924.Arab, "one"))
                 .build();
 
         TransliterationResults t3 = new TransliterationResults.Builder()
-                .addTransliteration(LanguageCode.ENGLISH, Transliteration.of("Latn", "on3"))
+                .addTransliteration(LanguageCode.ENGLISH, Transliteration.of(ISO15924.Latn, "on3"))
                 .build();
 
         TransliterationResults t4 = new TransliterationResults.Builder()
-                .addTransliteration(LanguageCode.ARABIC, Transliteration.of("Latn", "one"))
+                .addTransliteration(LanguageCode.ARABIC, Transliteration.of(ISO15924.Latn, "one"))
                 .build();
 
         TransliterationResults t5 = new TransliterationResults.Builder()
-                .addTransliteration(LanguageCode.ENGLISH, Transliteration.of("Arab", "one"))
+                .addTransliteration(LanguageCode.ENGLISH, Transliteration.of(ISO15924.Arab, "one"))
                 .build();
 
         // All different

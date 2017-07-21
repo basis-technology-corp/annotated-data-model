@@ -19,6 +19,7 @@ package com.basistech.rosette.dm.json.plain;
 import com.basistech.rosette.dm.Transliteration;
 import com.basistech.rosette.dm.TransliterationResults;
 import com.basistech.rosette.dm.jackson.AnnotatedDataModelModule;
+import com.basistech.util.ISO15924;
 import com.basistech.util.LanguageCode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableSet;
@@ -50,7 +51,7 @@ public class TransliterationResultsTest {
     public void testClear() throws IOException {
         TransliterationResults empty = builder().build();
         TransliterationResults hopefullyEmpty = builder()
-                .addTransliteration(LanguageCode.ARABIC, Transliteration.of("Latn", "Some stuff"))
+                .addTransliteration(LanguageCode.ARABIC, Transliteration.of(ISO15924.Latn, "Some stuff"))
                 .clearResults()
                 .build();
         assertEquals(empty, throughString(hopefullyEmpty));
@@ -61,18 +62,18 @@ public class TransliterationResultsTest {
         String one = "some stuff";
         String two = "other stuff";
         TransliterationResults t = builder()
-                .addTransliteration(LanguageCode.ARABIC, Transliteration.of("Latn", one))
-                .addTransliteration(LanguageCode.ARABIC, Transliteration.of("Arab", two))
+                .addTransliteration(LanguageCode.ARABIC, Transliteration.of(ISO15924.Latn, one))
+                .addTransliteration(LanguageCode.ARABIC, Transliteration.of(ISO15924.Arab, two))
                 .build();
         assertEquals(t, throughString(t));
 
         assertEquals(ImmutableSet.of(LanguageCode.ARABIC), t.getResults().keySet());
 
-        assertEquals(ImmutableSet.of("Latn", "Arab"),
+        assertEquals(ImmutableSet.of(ISO15924.Latn, ISO15924.Arab),
                 t.getTransliteration(LanguageCode.ARABIC).listScripts());
 
-        assertEquals(one, t.getTransliterationInScript(LanguageCode.ARABIC, "Latn"));
-        assertEquals(two, t.getTransliterationInScript(LanguageCode.ARABIC, "Arab"));
+        assertEquals(one, t.getTransliterationInScript(LanguageCode.ARABIC, ISO15924.Latn));
+        assertEquals(two, t.getTransliterationInScript(LanguageCode.ARABIC, ISO15924.Arab));
 
     }
 
@@ -81,21 +82,21 @@ public class TransliterationResultsTest {
         String one = "some stuff";
         String two = "other stuff";
         TransliterationResults t = builder()
-                .addTransliteration(LanguageCode.ARABIC, Transliteration.of("Latn", one))
-                .addTransliteration(LanguageCode.AFRIKAANS, Transliteration.of("Arab", two))
+                .addTransliteration(LanguageCode.ARABIC, Transliteration.of(ISO15924.Latn, one))
+                .addTransliteration(LanguageCode.AFRIKAANS, Transliteration.of(ISO15924.Arab, two))
                 .build();
         assertEquals(t, throughString(t));
 
         assertEquals(ImmutableSet.of(LanguageCode.ARABIC, LanguageCode.AFRIKAANS), t.getResults().keySet());
 
-        assertEquals(ImmutableSet.of("Latn"), t.getTransliteration(LanguageCode.ARABIC).listScripts());
+        assertEquals(ImmutableSet.of(ISO15924.Latn), t.getTransliteration(LanguageCode.ARABIC).listScripts());
 
-        assertEquals(ImmutableSet.of("Arab"),
+        assertEquals(ImmutableSet.of(ISO15924.Arab),
                 t.getTransliteration(LanguageCode.AFRIKAANS).listScripts());
 
 
-        assertEquals(one, t.getTransliterationInScript(LanguageCode.ARABIC, "Latn"));
-        assertEquals(two, t.getTransliterationInScript(LanguageCode.AFRIKAANS, "Arab"));
+        assertEquals(one, t.getTransliterationInScript(LanguageCode.ARABIC, ISO15924.Latn));
+        assertEquals(two, t.getTransliterationInScript(LanguageCode.AFRIKAANS, ISO15924.Arab));
 
     }
 

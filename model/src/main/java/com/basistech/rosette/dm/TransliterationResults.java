@@ -16,6 +16,7 @@
 
 package com.basistech.rosette.dm;
 
+import com.basistech.util.ISO15924;
 import com.basistech.util.LanguageCode;
 import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableMap;
@@ -62,12 +63,12 @@ public final class TransliterationResults extends BaseAttribute {
      * @param script The script to check
      * @return The transliteration, or null if one doesn't exist matching the given criteria.
      */
-    public String getTransliterationInScript(LanguageCode code, String script) {
+    public String getTransliterationInScript(LanguageCode code, ISO15924 script) {
         Transliteration t = getTransliteration(code);
         if (t == null) {
             return null;
         } else {
-            return t.getWithScript(script);
+            return t.get(script);
         }
     }
 
@@ -118,7 +119,7 @@ public final class TransliterationResults extends BaseAttribute {
          * @param script The script for the new transliteration.
          * @param transliteration The text for the new transliteration.
          */
-        public Builder(LanguageCode languageCode, String script, String transliteration) {
+        public Builder(LanguageCode languageCode, ISO15924 script, String transliteration) {
             this.results = new HashMap<>();
             results.put(languageCode, Transliteration.Builder.of(script, transliteration));
 
@@ -161,7 +162,7 @@ public final class TransliterationResults extends BaseAttribute {
          */
         public Builder addTransliteration(LanguageCode languageCode, Transliteration transliteration) {
             if (results.containsKey(languageCode)) {
-                results.get(languageCode).addTransliterations(transliteration);
+                results.get(languageCode).add(transliteration);
             } else {
                 results.put(languageCode, Transliteration.Builder.of(transliteration));
             }

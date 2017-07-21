@@ -329,12 +329,12 @@ public class JsonTest extends AdmAssert {
 
         TransliterationResults.Builder transliterationBuilder =
                 new TransliterationResults.Builder(LanguageCode.ENGLISH,
-                        "Latn",
+                        ISO15924.Latn,
                         THIS_IS_THE_TERRIER_SHOT_TO_BOSTON);
 
         // Translation: This is the terrier shot to boston
         transliterationBuilder.addTransliteration(
-                LanguageCode.ARABIC, Transliteration.of("Arab", "هذا هو النار ضربة الى بوسطن."));
+                LanguageCode.ARABIC, Transliteration.of(ISO15924.Arab, "هذا هو النار ضربة الى بوسطن."));
 
         builder.transliteration(transliterationBuilder.build());
 
@@ -557,11 +557,11 @@ public class JsonTest extends AdmAssert {
 
         TransliterationResults.Builder transliterationBuilder =
                 new TransliterationResults.Builder(LanguageCode.ENGLISH,
-                        "Latn",
+                        ISO15924.Latn,
                         THIS_IS_THE_TERRIER_SHOT_TO_BOSTON);
 
         transliterationBuilder.addTransliteration(
-                LanguageCode.ARABIC, Transliteration.of("Arab", THIS_IS_THE_TERRIER_SHOT_TO_BOSTON_ARABIC));
+                LanguageCode.ARABIC, Transliteration.of(ISO15924.Arab, THIS_IS_THE_TERRIER_SHOT_TO_BOSTON_ARABIC));
 
         builder.transliteration(transliterationBuilder.build());
 
@@ -726,11 +726,11 @@ public class JsonTest extends AdmAssert {
 
         Transliteration engTransliteration =
                 read.getTransliteration().getTransliteration(LanguageCode.ENGLISH);
-        assertEquals(THIS_IS_THE_TERRIER_SHOT_TO_BOSTON, engTransliteration.getWithScript("Latn"));
+        assertEquals(THIS_IS_THE_TERRIER_SHOT_TO_BOSTON, engTransliteration.get(ISO15924.Latn));
 
         Transliteration araTransliteration =
                 read.getTransliteration().getTransliteration(LanguageCode.ARABIC);
-        assertEquals(THIS_IS_THE_TERRIER_SHOT_TO_BOSTON_ARABIC, araTransliteration.getWithScript("Arab"));
+        assertEquals(THIS_IS_THE_TERRIER_SHOT_TO_BOSTON_ARABIC, araTransliteration.get(ISO15924.Arab));
 
     }
 
@@ -815,11 +815,11 @@ public class JsonTest extends AdmAssert {
 
         Transliteration engTransliteration =
                 read.getTransliteration().getTransliteration(LanguageCode.ENGLISH);
-        assertEquals(THIS_IS_THE_TERRIER_SHOT_TO_BOSTON, engTransliteration.getWithScript("Latn"));
+        assertEquals(THIS_IS_THE_TERRIER_SHOT_TO_BOSTON, engTransliteration.get(ISO15924.Latn));
 
         Transliteration araTransliteration =
                 read.getTransliteration().getTransliteration(LanguageCode.ARABIC);
-        assertEquals(THIS_IS_THE_TERRIER_SHOT_TO_BOSTON_ARABIC, araTransliteration.getWithScript("Arab"));
+        assertEquals(THIS_IS_THE_TERRIER_SHOT_TO_BOSTON_ARABIC, araTransliteration.get(ISO15924.Arab));
     }
 
     @Test

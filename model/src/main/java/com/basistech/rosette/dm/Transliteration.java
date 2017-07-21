@@ -15,6 +15,7 @@
 */
 package com.basistech.rosette.dm;
 
+import com.basistech.util.ISO15924;
 import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
@@ -25,9 +26,9 @@ import java.util.Set;
 
 public final class Transliteration extends BaseAttribute {
 
-    private Map<String, String> scriptMap;
+    private Map<ISO15924, String> scriptMap;
 
-    protected Transliteration(Map<String, String> scriptMap,
+    protected Transliteration(Map<ISO15924, String> scriptMap,
                               Map<String, Object> extendedAttributes) {
         super(extendedAttributes);
         this.scriptMap = ImmutableMap.copyOf(scriptMap);
@@ -38,7 +39,7 @@ public final class Transliteration extends BaseAttribute {
      * @param script The script to look for.
      * @return The transliterated text, or {@code null} if no mapping was found.
      */
-    public String getWithScript(String script) {
+    public String get(ISO15924 script) {
         return scriptMap.get(script);
     }
 
@@ -48,7 +49,7 @@ public final class Transliteration extends BaseAttribute {
      * @param value The transliterated text.
      * @return A newly built immutable Transliteration containing the given transliterated text
      */
-    public static Transliteration of(String script, String value) {
+    public static Transliteration of(ISO15924 script, String value) {
         return Builder.of(script, value).build();
     }
 
@@ -56,7 +57,7 @@ public final class Transliteration extends BaseAttribute {
      * Lists all the scripts this transliteration has text for.
      * @return An immutable set of all the scripts.
      */
-    public Set<String> listScripts() {
+    public Set<ISO15924> listScripts() {
         return ImmutableSet.copyOf(scriptMap.keySet());
     }
 
@@ -64,7 +65,7 @@ public final class Transliteration extends BaseAttribute {
      * Gives all the mappings that this transliteration has.
      * @return An immutable map containing the transliterations
      */
-    public Map<String, String> getAllTransliterations() {
+    public Map<ISO15924, String> getAll() {
         return scriptMap;
     }
 
@@ -101,14 +102,14 @@ public final class Transliteration extends BaseAttribute {
     }
 
     public static final class Builder extends BaseAttribute.Builder<Transliteration, Transliteration.Builder> {
-        private Map<String, String> scriptMap;
+        private Map<ISO15924, String> scriptMap;
 
         /**
          * Creates a builder with the given transliteration text, and script pair.
          * @param script The script.
          * @param value The transliterated text.
          */
-        public Builder(String script, String value) {
+        public Builder(ISO15924 script, String value) {
             scriptMap = new HashMap<>();
             scriptMap.put(script, value);
         }
@@ -134,7 +135,7 @@ public final class Transliteration extends BaseAttribute {
          * @param value The transliterated text itself.
          * @return {@code this}.
          */
-        public Builder addTransliteration(String script, String value) {
+        public Builder add(ISO15924 script, String value) {
             scriptMap.put(script, value);
             return this;
         }
@@ -144,7 +145,7 @@ public final class Transliteration extends BaseAttribute {
          * @param transliteration The transliteration.
          * @return {@code this}.
          */
-        public Builder addTransliterations(Transliteration transliteration) {
+        public Builder add(Transliteration transliteration) {
             scriptMap.putAll(transliteration.scriptMap);
             return this;
         }
@@ -162,7 +163,7 @@ public final class Transliteration extends BaseAttribute {
          * Sets the internal script to transliterated text mapping to a copy of the given map.
          * @param forLang The map to copy.
          */
-        public void transliterations(Map<String, String> forLang) {
+        public void transliterations(Map<ISO15924, String> forLang) {
             scriptMap = new HashMap<>(forLang);
         }
 
@@ -172,7 +173,7 @@ public final class Transliteration extends BaseAttribute {
          * @param transliteration The transliterated text.
          * @return A builder that starts with the given mapping.
          */
-        public static Builder of(String script, String transliteration) {
+        public static Builder of(ISO15924 script, String transliteration) {
             return new Builder(script, transliteration);
         }
 

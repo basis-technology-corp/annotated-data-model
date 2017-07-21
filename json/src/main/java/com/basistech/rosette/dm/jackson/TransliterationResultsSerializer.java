@@ -32,7 +32,7 @@ public class TransliterationResultsSerializer extends JsonSerializer<Map<Languag
             throws IOException, JsonProcessingException {
         gen.writeStartObject();
         for (LanguageCode key : value.keySet()) {
-            gen.writeObjectField(key.ISO639_3(), value.get(key).getAllTransliterations());
+            gen.writeObjectField(key.ISO639_3(), value.get(key).getAll());
         }
         gen.writeEndObject();
     }
