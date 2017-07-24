@@ -1,5 +1,5 @@
 /*
-* Copyright 2014 Basis Technology Corp.
+* Copyright 2017 Basis Technology Corp.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -38,11 +38,10 @@ public class TransliterationResultsDeserializer extends JsonDeserializer<Map<Lan
 
         Map<String, Map<ISO15924, String>> val = p.readValueAs(REF);
         Map<LanguageCode, Transliteration> output = new HashMap<>();
-        for (String key : val.keySet()) {
-            Map<ISO15924, String> forLang = val.get(key);
+        for (Map.Entry<String, Map<ISO15924, String>> entry : val.entrySet()) {
             Transliteration.Builder b = new Transliteration.Builder();
-            b.transliterations(forLang);
-            output.put(LanguageCode.lookupByISO639(key), b.build());
+            b.transliterations(entry.getValue());
+            output.put(LanguageCode.lookupByISO639(entry.getKey()), b.build());
         }
 
         return output;

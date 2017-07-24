@@ -1,5 +1,5 @@
 /*
-* Copyright 2014 Basis Technology Corp.
+* Copyright 2017 Basis Technology Corp.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -44,7 +44,7 @@ public final class Transliteration extends BaseAttribute {
     }
 
     /**
-     * Convinience method to create a transliteration with the given script and value.
+     * Convenience method to create a transliteration with the given script and value.
      * @param script The script the transliteration is in
      * @param value The transliterated text.
      * @return A newly built immutable Transliteration containing the given transliterated text
@@ -163,8 +163,9 @@ public final class Transliteration extends BaseAttribute {
          * Sets the internal script to transliterated text mapping to a copy of the given map.
          * @param forLang The map to copy.
          */
-        public void transliterations(Map<ISO15924, String> forLang) {
+        public Builder transliterations(Map<ISO15924, String> forLang) {
             scriptMap = new HashMap<>(forLang);
+            return this;
         }
 
         /**

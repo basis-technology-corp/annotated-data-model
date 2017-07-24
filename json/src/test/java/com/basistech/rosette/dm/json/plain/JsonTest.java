@@ -1,5 +1,5 @@
 /*
-* Copyright 2014 Basis Technology Corp.
+* Copyright 2017 Basis Technology Corp.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -334,7 +334,7 @@ public class JsonTest extends AdmAssert {
 
         // Translation: This is the terrier shot to boston
         transliterationBuilder.addTransliteration(
-                LanguageCode.ARABIC, Transliteration.of(ISO15924.Arab, "هذا هو النار ضربة الى بوسطن."));
+                LanguageCode.ARABIC, Transliteration.of(ISO15924.Arab, THIS_IS_THE_TERRIER_SHOT_TO_BOSTON_ARABIC));
 
         builder.transliteration(transliterationBuilder.build());
 
