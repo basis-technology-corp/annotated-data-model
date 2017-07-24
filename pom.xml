@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <!--
   Copyright 2015 Basis Technology Corp.
- 
+
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
      You may obtain a copy of the License at
- 
+
          http://www.apache.org/licenses/LICENSE-2.0
- 
+
      Unless required by applicable law or agreed to in writing, software
      distributed under the License is distributed on an "AS IS" BASIS,
      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -23,7 +23,7 @@
     <parent>
         <artifactId>open-source-parent</artifactId>
         <groupId>com.basistech</groupId>
-        <version>1.1.0</version>
+        <version>1.1.2</version>
     </parent>
 
     <description>
@@ -137,24 +137,4 @@
             </plugins>
         </pluginManagement>
     </build>
-    <profiles>
-        <profile>
-            <id>internal-release</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.sonatype.plugins</groupId>
-                        <artifactId>nexus-staging-maven-plugin</artifactId>
-                        <version>${nexus-staging-plugin-version}</version>
-                        <extensions>true</extensions>
-                        <configuration>
-                            <serverId>basistech.repo</serverId>
-                            <nexusUrl>http://nexus.basistech.net:8081/nexus/</nexusUrl>
-                            <stagingProfileId>1dd11ca8866422</stagingProfileId>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
 </project>
