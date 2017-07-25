@@ -2,7 +2,6 @@ language: java
 script: mvn verify
 jdk:
 - oraclejdk8
-- oraclejdk7
 - openjdk7
 notifications:
   slack:

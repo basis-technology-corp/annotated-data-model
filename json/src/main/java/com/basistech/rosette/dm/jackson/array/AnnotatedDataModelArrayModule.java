@@ -1,5 +1,5 @@
 /*
-* Copyright 2014 Basis Technology Corp.
+* Copyright 2017 Basis Technology Corp.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -44,6 +44,8 @@ import com.basistech.rosette.dm.Token;
 import com.basistech.rosette.dm.Concept;
 import com.basistech.rosette.dm.TranslatedData;
 import com.basistech.rosette.dm.TranslatedTokens;
+import com.basistech.rosette.dm.Transliteration;
+import com.basistech.rosette.dm.TransliterationResults;
 import com.basistech.rosette.dm.jackson.ArabicMorphoAnalysisMixin;
 import com.basistech.rosette.dm.jackson.AttributeMixin;
 import com.basistech.rosette.dm.jackson.BaseNounPhraseMixin;
@@ -69,6 +71,8 @@ import com.basistech.rosette.dm.jackson.SentenceMixin;
 import com.basistech.rosette.dm.jackson.ConceptMixin;
 import com.basistech.rosette.dm.jackson.TranslatedDataMixin;
 import com.basistech.rosette.dm.jackson.TranslatedTokensMixin;
+import com.basistech.rosette.dm.jackson.TransliterationMixin;
+import com.basistech.rosette.dm.jackson.TransliterationResultsMixin;
 import com.basistech.util.jackson.EnumModule;
 import com.fasterxml.jackson.databind.ObjectMapper;
 /**
@@ -120,6 +124,8 @@ public class AnnotatedDataModelArrayModule extends EnumModule {
         context.setMixInAnnotations(Embeddings.class, EmbeddingsMixin.class);
         context.setMixInAnnotations(Concept.class, ConceptMixin.class);
         context.setMixInAnnotations(Keyphrase.class, KeyphraseMixin.class);
+        context.setMixInAnnotations(Transliteration.class, TransliterationMixin.class);
+        context.setMixInAnnotations(TransliterationResults.class, TransliterationResultsMixin.class);
     }
 
     /**

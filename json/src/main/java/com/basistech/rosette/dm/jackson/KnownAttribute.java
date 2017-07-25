@@ -1,5 +1,5 @@
 /*
-* Copyright 2014 Basis Technology Corp.
+* Copyright 2017 Basis Technology Corp.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -32,6 +32,7 @@ import com.basistech.rosette.dm.Token;
 import com.basistech.rosette.dm.Concept;
 import com.basistech.rosette.dm.TranslatedData;
 import com.basistech.rosette.dm.TranslatedTokens;
+import com.basistech.rosette.dm.TransliterationResults;
 import com.basistech.rosette.dm.UnknownAttribute;
 
 /**
@@ -63,7 +64,8 @@ public enum KnownAttribute {
     UNKNOWN("unknown", UnknownAttribute.class),
     RELATION_ARGUMENT("RelationshipComponent", RelationshipComponent.class),
     CONCEPT("concept", Concept.class),
-    KEYPHRASE("keyphrase", Keyphrase.class);
+    KEYPHRASE("keyphrase", Keyphrase.class),
+    TRANSLITERATION("transliteration", TransliterationResults.class);
 
     private final String jsonTag;
     private final Class<? extends BaseAttribute> attributeClass;

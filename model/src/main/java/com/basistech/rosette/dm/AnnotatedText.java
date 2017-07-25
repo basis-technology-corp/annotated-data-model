@@ -536,6 +536,11 @@ public class AnnotatedText implements Serializable {
     public ListAttribute<Keyphrase> getKeyphrases() {
         return (ListAttribute<Keyphrase>) attributes.get(AttributeKey.KEYPHRASE.key());
     }
+
+    public TransliterationResults getTransliteration() {
+        return (TransliterationResults) attributes.get(AttributeKey.TRANSLITERATION.key());
+    }
+
     /**
      * toString is a convenience for accessing the textual data, if any, in this annotated text.
      * @return the data for this AnnotatedText as a String.
@@ -814,6 +819,11 @@ public class AnnotatedText implements Serializable {
 
         public Builder keyphrases(ListAttribute<Keyphrase> keyphrases) {
             attributes.put(AttributeKey.KEYPHRASE.key(), keyphrases);
+            return this;
+        }
+
+        public Builder transliteration(TransliterationResults transliterationResults) {
+            attributes.put(AttributeKey.TRANSLITERATION.key(), transliterationResults);
             return this;
         }
 

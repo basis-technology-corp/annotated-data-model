@@ -1,5 +1,5 @@
 /*
-* Copyright 2014 Basis Technology Corp.
+* Copyright 2017 Basis Technology Corp.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@ package com.basistech.rosette.dm.jackson;
 import com.basistech.rosette.dm.BaseAttribute;
 import com.basistech.rosette.dm.BaseNounPhrase;
 import com.basistech.rosette.dm.CategorizerResult;
+import com.basistech.rosette.dm.Concept;
 import com.basistech.rosette.dm.Dependency;
 import com.basistech.rosette.dm.Embeddings;
 import com.basistech.rosette.dm.Entity;
@@ -28,9 +29,9 @@ import com.basistech.rosette.dm.RelationshipMention;
 import com.basistech.rosette.dm.ScriptRegion;
 import com.basistech.rosette.dm.Sentence;
 import com.basistech.rosette.dm.Token;
-import com.basistech.rosette.dm.Concept;
 import com.basistech.rosette.dm.TranslatedData;
 import com.basistech.rosette.dm.TranslatedTokens;
+import com.basistech.rosette.dm.TransliterationResults;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -132,4 +133,7 @@ public abstract class AnnotatedTextMixin {
 
     @JsonIgnore
     public abstract ListAttribute<Keyphrase> getKeyphrases();
+
+    @JsonIgnore
+    public abstract TransliterationResults getTransliteration();
 }

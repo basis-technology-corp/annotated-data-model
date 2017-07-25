@@ -1,5 +1,5 @@
 /*
-* Copyright 2014 Basis Technology Corp.
+* Copyright 2017 Basis Technology Corp.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -381,7 +381,8 @@ public class JsonTest extends AdmAssert {
         objectWriter.writeValue(writer, referenceText);
         // to tell that the version is there, we read as a tree
         JsonNode tree = mapper.readTree(writer.toString());
-        assertEquals("1.1.0", tree.get(4).asText());
+        // Property is injected at the end.
+        assertEquals("1.1.0", tree.get(tree.size() - 1).asText());
     }
 
     @Test
