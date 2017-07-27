@@ -760,8 +760,11 @@ public class JsonTest extends AdmAssert {
         // truncated to 8 digits after decimal point.
         assertEquals(entity.toString().replace("1.123456789", "1.12345679"), en.toString());
 
-        // also look for "score": "-0.2" to make sure no trailing 0s
-        assertTrue(writer.toString().contains("\"score\":\"-0.2\""));
+        // also look for "score":-0.2 to make sure no trailing 0s
+        assertTrue(writer.toString().contains("\"score\":-0.2"));
+
+        // also make sure "score":"-0.2" isn't there (i.e. doubles aren't strings)
+        assertFalse(writer.toString().contains("\"score\":\"-0.2\""));
 
         ListAttribute<RelationshipMention> rmList = read.getRelationshipMentions();
         assertNotNull(rmList);
