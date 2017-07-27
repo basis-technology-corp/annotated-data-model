@@ -326,6 +326,9 @@ public class AnnotatedText implements Serializable {
             if (mention.getConfidence() != null) {
                 emBuilder.confidence(mention.getConfidence());
             }
+            if (mention.getLinkingConfidence() != null) {
+                emBuilder.linkingConfidence(mention.getLinkingConfidence());
+            }
             if (mention.getExtendedProperties() != null && mention.getExtendedProperties().size() > 0) {
                 for (Map.Entry<String, Object> me : mention.getExtendedProperties().entrySet()) {
                     if (!me.getKey().equals("old-entity-type")) {

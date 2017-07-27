@@ -28,6 +28,7 @@ public abstract class MentionMixin {
     MentionMixin(@JsonProperty("startOffset") int startOffset,
                  @JsonProperty("endOffset") int endOffset,
                  @JsonProperty("confidence") Double confidence,
+                 @JsonProperty("linkingConfidence") Double linkingConfidence,
                  @JsonProperty("source") String source,
                  @JsonProperty("subsource") String subsource,
                  @JsonProperty("normalized") String normalized,

@@ -30,6 +30,7 @@ public class EntityMention extends Attribute implements Serializable {
     private static final long serialVersionUID = 222L;
     private final String entityType;
     private final Double confidence;
+    private final Double linkingConfidence;
     private final Integer coreferenceChainId;
     private final Integer flags; // allow to be null if none!
     private final String source;
@@ -39,12 +40,13 @@ public class EntityMention extends Attribute implements Serializable {
     protected EntityMention(int startOffset, int endOffset,
                             String entityType,
                             Integer coreferenceChainId,
-                            Double confidence, Integer flags,
+                            Double confidence, Double linkingConfidence, Integer flags,
                             String source, String subsource, String normalized,
                             Map<String, Object> extendedProperties) {
         super(startOffset, endOffset, extendedProperties);
         this.entityType = entityType;
         this.confidence = confidence;
+        this.linkingConfidence = linkingConfidence;
         this.coreferenceChainId = coreferenceChainId;
         this.flags = flags;
         this.source = source;
@@ -70,6 +72,16 @@ public class EntityMention extends Attribute implements Serializable {
      */
     public Double getConfidence() {
         return confidence;
+    }
+
+    /**
+     * Returns the linking confidence of the kb-linker in link this mention and entity id.
+     *
+     * @return the linking confidence of the kb-linker in link this mention and entity id.
+     * This value will be null if there is no calculated confidence value.
+     */
+    public Double getLinkingConfidence() {
+        return linkingConfidence;
     }
 
     /**
@@ -148,6 +160,9 @@ public class EntityMention extends Attribute implements Serializable {
         if (confidence != null ? !confidence.equals(that.confidence) : that.confidence != null) {
             return false;
         }
+        if (linkingConfidence != null ? !linkingConfidence.equals(that.linkingConfidence) : that.linkingConfidence != null) {
+            return false;
+        }
         if (coreferenceChainId != null ? !coreferenceChainId.equals(that.coreferenceChainId) : that.coreferenceChainId != null) {
             return false;
         }
@@ -172,6 +187,7 @@ public class EntityMention extends Attribute implements Serializable {
         int result = super.hashCode();
         result = 31 * result + (entityType != null ? entityType.hashCode() : 0);
         result = 31 * result + (confidence != null ? confidence.hashCode() : 0);
+        result = 31 * result + (linkingConfidence != null ? linkingConfidence.hashCode() : 0);
         result = 31 * result + (coreferenceChainId != null ? coreferenceChainId.hashCode() : 0);
         result = 31 * result + (flags != null ? flags.hashCode() : 0);
         result = 31 * result + (source != null ? source.hashCode() : 0);
@@ -185,6 +201,7 @@ public class EntityMention extends Attribute implements Serializable {
         return super.toStringHelper()
                 .add("entityType", entityType)
                 .add("confidence", confidence)
+                .add("linkingConfidence", linkingConfidence)
                 .add("coreferenceChainId", coreferenceChainId)
                 .add("flags", flags)
                 .add("source", source)
@@ -198,6 +215,7 @@ public class EntityMention extends Attribute implements Serializable {
     public static class Builder extends Attribute.Builder<EntityMention, EntityMention.Builder>  {
         private String entityType;
         private Double confidence;
+        private Double linkingConfidence;
         private Integer coreferenceChainId;
         private Integer flags;
         private String source;
@@ -226,6 +244,7 @@ public class EntityMention extends Attribute implements Serializable {
             super(toCopy);
             this.entityType = toCopy.entityType;
             this.confidence = toCopy.confidence;
+            this.linkingConfidence = linkingConfidence;
             this.coreferenceChainId = toCopy.coreferenceChainId;
             this.flags = toCopy.flags;
             this.source = toCopy.source;
@@ -252,6 +271,17 @@ public class EntityMention extends Attribute implements Serializable {
          */
         public Builder confidence(Double confidence) {
             this.confidence = confidence;
+            return this;
+        }
+
+        /**
+         * Specifies the linking confidence.
+         *
+         * @param linkingConfidence the confidence, or null to indicate that no confidence is available.
+         * @return this
+         */
+        public Builder linkingConfidence(Double linkingConfidence) {
+            this.linkingConfidence = linkingConfidence;
             return this;
         }
 
@@ -316,8 +346,8 @@ public class EntityMention extends Attribute implements Serializable {
          * @return the mention
          */
         public EntityMention build() {
-            return new EntityMention(startOffset, endOffset, entityType, coreferenceChainId, confidence, flags, source,
-                subsource, normalized, buildExtendedProperties());
+            return new EntityMention(startOffset, endOffset, entityType, coreferenceChainId, confidence,
+                    linkingConfidence, flags, source, subsource, normalized, buildExtendedProperties());
         }
 
         @Override
