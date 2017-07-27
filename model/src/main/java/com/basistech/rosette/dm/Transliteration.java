@@ -162,6 +162,7 @@ public final class Transliteration extends BaseAttribute {
         /**
          * Sets the internal script to transliterated text mapping to a copy of the given map.
          * @param forLang The map to copy.
+         * @return {@code this}.
          */
         public Builder transliterations(Map<ISO15924, String> forLang) {
             scriptMap = new HashMap<>(forLang);
