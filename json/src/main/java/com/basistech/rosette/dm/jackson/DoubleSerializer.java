@@ -51,6 +51,6 @@ public class DoubleSerializer extends StdSerializer<Double> {
     @Override
     public void serialize(Double value, JsonGenerator gen, SerializerProvider serializers) throws IOException, JsonProcessingException {
         // truncate to 8 digits below decimal for all Double fields.
-        gen.writeString(numberFormat.format(value));
+        gen.writeNumber(Double.parseDouble(numberFormat.format(value)));
     }
 }
