@@ -121,6 +121,7 @@ public class JsonTest extends AdmAssert {
         emBuilder.source("testsource");
         emBuilder.subsource("testsubsource");
         emBuilder.confidence(1.123456789);
+        emBuilder.linkingConfidence(1.123);
         // we cannot have a completely arbitrary chain ID and have all the compatibility work out.
         emBuilder.coreferenceChainId(0);
         emBuilder.extendedProperty("em-ex", "em-ex-val");
@@ -366,6 +367,7 @@ public class JsonTest extends AdmAssert {
         mentionBuilder.source("testsource");
         mentionBuilder.subsource("testsubsource");
         mentionBuilder.confidence(1.123456789); // 10 digits below decimal
+        mentionBuilder.linkingConfidence(1.123); // 10 digits below decimal
         mentionBuilder.extendedProperty("em-ex", "em-ex-val");
         entityBuilder.mention(mentionBuilder.build());
         // null mention except start and end

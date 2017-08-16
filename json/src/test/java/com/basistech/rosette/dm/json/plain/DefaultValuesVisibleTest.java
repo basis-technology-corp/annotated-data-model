@@ -40,6 +40,7 @@ public class DefaultValuesVisibleTest extends AdmAssert {
         //int startOffset, int endOffset, String entityType)
         Mention.Builder mentionBuilder = new Mention.Builder(0, 17);
         mentionBuilder.confidence(null); // null is the official default, but null is never rendered, default or not.
+        mentionBuilder.linkingConfidence(null); // null is the official default, but null is never rendered, default or not.
         Entity.Builder entityBuilder = new Entity.Builder();
         entityBuilder.mention(mentionBuilder.build());
         entityListBuilder.add(entityBuilder.build());

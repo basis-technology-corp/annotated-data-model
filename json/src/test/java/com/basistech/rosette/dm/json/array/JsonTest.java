@@ -102,6 +102,7 @@ public class JsonTest extends AdmAssert {
         emBuilder.source("testsource");
         emBuilder.subsource("testsubsource");
         emBuilder.confidence(1.0);
+        emBuilder.linkingConfidence(1.0);
         emBuilder.coreferenceChainId(0);
         emBuilder.extendedProperty("em-ex", "em-ex-val");
         entityMention = emBuilder.build();

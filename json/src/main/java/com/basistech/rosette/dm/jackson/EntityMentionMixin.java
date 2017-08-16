@@ -30,6 +30,7 @@ public abstract class EntityMentionMixin {
                        @JsonProperty("entityType") String entityType,
                        @JsonProperty("coreferenceChainId") Integer coreferenceChainId,
                        @JsonProperty("confidence") Double confidence,
+                       @JsonProperty("linkingConfidence") Double linkingConfidence,
                        @JsonProperty("flags") Integer flags,
                        @JsonProperty("source") String source,
                        @JsonProperty("subsource") String subsource,

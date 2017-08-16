@@ -89,6 +89,7 @@ public class SerializableTest {
         mentionBuilder.source("testsource");
         mentionBuilder.subsource("testsubsource");
         mentionBuilder.confidence(1.0);
+        mentionBuilder.linkingConfidence(0.5);
         mentionBuilder.extendedProperty("em-ex", "em-ex-val");
         entityBuilder.mention(mentionBuilder.build());
         entityBuilder.confidence(0.5);

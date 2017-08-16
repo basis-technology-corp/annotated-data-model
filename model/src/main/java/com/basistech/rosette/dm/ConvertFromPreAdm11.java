@@ -41,6 +41,9 @@ final class ConvertFromPreAdm11 {
         if (em.getConfidence() != null) {
             mentionBuilder.confidence(em.getConfidence());
         }
+        if (em.getLinkingConfidence() != null) {
+            mentionBuilder.linkingConfidence(em.getLinkingConfidence());
+        }
         if (em.getFlags() != null && em.getFlags() != 0) {
             mentionBuilder.extendedProperty("oldFlags", em.getFlags());
         }

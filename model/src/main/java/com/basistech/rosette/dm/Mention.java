@@ -27,18 +27,21 @@ import java.util.Map;
 public class Mention extends Attribute implements Serializable {
     private static final long serialVersionUID = 222L;
     private final Double confidence;
+    private final Double linkingConfidence;
     private final String source;
     private final String subsource;
     private final String normalized;
 
     protected Mention(int startOffset, int endOffset,
                       Double confidence,
+                      Double linkingConfidence,
                       String source,
                       String subsource,
                       String normalized,
                       Map<String, Object> extendedProperties) {
         super(startOffset, endOffset, extendedProperties);
         this.confidence = confidence;
+        this.linkingConfidence = linkingConfidence;
         this.source = source;
         this.subsource = subsource;
         this.normalized = normalized;
@@ -52,6 +55,16 @@ public class Mention extends Attribute implements Serializable {
      */
     public Double getConfidence() {
         return confidence;
+    }
+
+    /**
+     * Returns the linking confidence of the kb-linker in link this mention and entity id.
+     *
+     * @return the linking confidence of the kb-linker in link this mention and entity id.
+     * This value will be null if there is no calculated confidence value.
+     */
+    public Double getLinkingConfidence() {
+        return linkingConfidence;
     }
 
     /**
@@ -106,6 +119,10 @@ public class Mention extends Attribute implements Serializable {
             return false;
         }
 
+        if (linkingConfidence != null ? !linkingConfidence.equals(that.linkingConfidence) : that.linkingConfidence != null) {
+            return false;
+        }
+
         if (normalized != null ? !normalized.equals(that.normalized) : that.normalized != null) {
             return false;
         }
@@ -121,6 +138,7 @@ public class Mention extends Attribute implements Serializable {
     public int hashCode() {
         int result = super.hashCode();
         result = 31 * result + (confidence != null ? confidence.hashCode() : 0);
+        result = 31 * result + (linkingConfidence != null ? linkingConfidence.hashCode() : 0);
         result = 31 * result + (source != null ? source.hashCode() : 0);
         result = 31 * result + (subsource != null ? subsource.hashCode() : 0);
         result = 31 * result + (normalized != null ? normalized.hashCode() : 0);
@@ -131,6 +149,7 @@ public class Mention extends Attribute implements Serializable {
     protected Objects.ToStringHelper toStringHelper() {
         return super.toStringHelper()
                 .add("confidence", confidence)
+                .add("linkingConfidence", linkingConfidence)
                 .add("source", source)
                 .add("subsource", subsource)
                 .add("normalized", normalized);
@@ -141,6 +160,7 @@ public class Mention extends Attribute implements Serializable {
      */
     public static class Builder extends Attribute.Builder<Mention, Mention.Builder>  {
         private Double confidence;
+        private Double linkingConfidence;
         private String source;
         private String subsource;
         private String normalized;
@@ -177,6 +197,17 @@ public class Mention extends Attribute implements Serializable {
          */
         public Builder confidence(Double confidence) {
             this.confidence = confidence;
+            return this;
+        }
+
+        /**
+         * Specifies the linking confidence.
+         *
+         * @param linkingConfidence the linking confidence, or null to indicate that no confidence is available.
+         * @return this
+         */
+        public Builder linkingConfidence(Double linkingConfidence) {
+            this.linkingConfidence = linkingConfidence;
             return this;
         }
 
@@ -219,7 +250,7 @@ public class Mention extends Attribute implements Serializable {
          * @return the mention
          */
         public Mention build() {
-            return new Mention(startOffset, endOffset, confidence, source,
+            return new Mention(startOffset, endOffset, confidence, linkingConfidence, source,
                 subsource, normalized, buildExtendedProperties());
         }
 
