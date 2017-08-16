@@ -1,5 +1,12 @@
 # Cumulative Release Notes for the Annotated Data Model
 
+## 2.4.0
+
+### [TEJ-974](https://basistech.atlassian.net/browse/TEJ-974) Expose FLINX confidence score
+
+Added linkingConfidence in Mention.
+
+
 ## 2.2.3
 
 ### [TEJ-975](https://basistech.atlassian.net/browse/TEJ-975) Double value serialization limit to 8 digits below decimal
