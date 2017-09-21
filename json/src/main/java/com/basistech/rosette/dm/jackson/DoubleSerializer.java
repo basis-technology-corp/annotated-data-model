@@ -38,6 +38,7 @@ public class DoubleSerializer extends StdSerializer<Double> {
         if (f instanceof DecimalFormat) {
             f.setMaximumFractionDigits(8);
         }
+        f.setGroupingUsed(false);
         numberFormat = f;
     }
 
@@ -49,7 +50,7 @@ public class DoubleSerializer extends StdSerializer<Double> {
      * @param serializers Provider that can be used to get serializers for
      */
     @Override
-    public void serialize(Double value, JsonGenerator gen, SerializerProvider serializers) throws IOException, JsonProcessingException {
+    public void serialize(Double value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
         // truncate to 8 digits below decimal for all Double fields.
         gen.writeNumber(Double.parseDouble(numberFormat.format(value)));
     }
