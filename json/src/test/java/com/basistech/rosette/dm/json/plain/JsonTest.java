@@ -323,7 +323,7 @@ public class JsonTest extends AdmAssert {
         ListAttribute.Builder<Keyphrase> keyphraseBuilder = new ListAttribute.Builder<>(Keyphrase.class);
         keyphrase = new Keyphrase.Builder("phrase",
                 Lists.newArrayList(new Extent.Builder(5, 6).build(), new Extent.Builder(6, 7).build()))
-                .salience(1.2)
+                .salience(10000.2)
                 .build();
         keyphraseBuilder.add(keyphrase);
         builder.keyphrases(keyphraseBuilder.build());
@@ -566,6 +566,19 @@ public class JsonTest extends AdmAssert {
                 LanguageCode.ARABIC, Transliteration.of(ISO15924.Arab, THIS_IS_THE_TERRIER_SHOT_TO_BOSTON_ARABIC));
 
         builder.transliteration(transliterationBuilder.build());
+
+        ListAttribute.Builder<Concept> conceptBuilder = new ListAttribute.Builder<>(Concept.class);
+        concept = new Concept.Builder("phrase", "Q100").salience(0.7).build();
+        conceptBuilder.add(concept);
+        builder.concepts(conceptBuilder.build());
+
+        ListAttribute.Builder<Keyphrase> keyphraseBuilder = new ListAttribute.Builder<>(Keyphrase.class);
+        keyphrase = new Keyphrase.Builder("phrase",
+                Lists.newArrayList(new Extent.Builder(5, 6).build(), new Extent.Builder(6, 7).build()))
+                .salience(10000.2)
+                .build();
+        keyphraseBuilder.add(keyphrase);
+        builder.keyphrases(keyphraseBuilder.build());
 
         referenceText = builder.build();
 
@@ -825,6 +838,12 @@ public class JsonTest extends AdmAssert {
         Transliteration araTransliteration =
                 read.getTransliteration().getTransliteration(LanguageCode.ARABIC);
         assertEquals(THIS_IS_THE_TERRIER_SHOT_TO_BOSTON_ARABIC, araTransliteration.get(ISO15924.Arab));
+
+        assertEquals(keyphrase, read.getKeyphrases().get(0));
+        assertEquals(concept, read.getConcepts().get(0));
+        // We would've failed already, but make sure doubles don't have commas
+        assertTrue(writer.toString().contains("\"salience\":10000.2"));
+        assertFalse(writer.toString().contains("\"salience\":10,000.2"));
     }
 
     @Test

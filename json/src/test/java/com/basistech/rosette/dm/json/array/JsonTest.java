@@ -295,7 +295,7 @@ public class JsonTest extends AdmAssert {
         ListAttribute.Builder<Keyphrase> keyphraseBuilder = new ListAttribute.Builder<>(Keyphrase.class);
         keyphrase = new Keyphrase.Builder("phrase",
                 Lists.newArrayList(new Extent.Builder(5, 6).build(), new Extent.Builder(6, 7).build()))
-                .salience(1.2)
+                .salience(10000.2)
                 .build();
         keyphraseBuilder.add(keyphrase);
         builder.keyphrases(keyphraseBuilder.build());
@@ -372,6 +372,10 @@ public class JsonTest extends AdmAssert {
         assertEquals(sentimentResult, read.getSentimentResults().get(0));
 
         assertEquals(topicResult, read.getTopicResults().get(0));
+
+        assertEquals(concept, read.getConcepts().get(0));
+        assertEquals(keyphrase, read.getKeyphrases().get(0));
+
     }
 
     @Test
