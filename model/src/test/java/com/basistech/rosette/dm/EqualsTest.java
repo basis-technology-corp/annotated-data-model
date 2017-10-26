@@ -20,6 +20,7 @@ import com.basistech.util.LanguageCode;
 import com.google.common.collect.Lists;
 import org.junit.Test;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -246,6 +247,49 @@ public class EqualsTest {
         assertFalse(tok1.equals(tok2));
         assertFalse(tok2.equals(tok1));
         assertFalse(tok1.hashCode() == tok2.hashCode());
+    }
+
+    @Test
+    public void entity() throws Exception {
+        Entity e1 = new Entity.Builder()
+            .confidence(1.0)
+            .entityId("entity-id")
+            .headMentionIndex(0)
+            .salience(1.0)
+            .type("type1")
+            .mention(new Mention.Builder(1, 2).normalized("n1").source("s1").build())
+            .mention(new Mention.Builder(3, 4).normalized("n1").source("s1").build())
+            .build();
+
+        Entity e2 = new Entity.Builder(e1).build();
+
+        assertEquals(e1, e2);
+        assertEquals(e1.getMentions(), e2.getMentions());
+    }
+
+    @Test
+    public void mention() {
+        Mention m1 = new Mention.Builder(2, 9)
+            .confidence(1.0)
+            .linkingConfidence(1.0)
+            .normalized("nn")
+            .source("s1")
+            .subsource("ss")
+            .build();
+
+        Mention m2 = new Mention.Builder(m1).build();
+
+        assertEquals(m1, m2);
+
+        // these 2 should match entirely.
+        assertTrue(m1.startOffset == m2.startOffset
+            && m1.endOffset == m2.endOffset
+            && m1.getLinkingConfidence().equals(m2.getLinkingConfidence())
+            && m1.getConfidence().equals(m2.getConfidence())
+            && m1.getNormalized().equals(m2.getNormalized())
+            && m1.getSource().equals(m2.getSource())
+            && m1.getSubsource().equals(m2.getSubsource())
+        );
     }
 
     @Test

@@ -187,6 +187,7 @@ public class Mention extends Attribute implements Serializable {
             this.source = toCopy.source;
             this.subsource = toCopy.subsource;
             this.normalized = toCopy.normalized;
+            this.linkingConfidence = toCopy.linkingConfidence;
         }
 
         /**
