@@ -1,5 +1,11 @@
 # Cumulative Release Notes for the Annotated Data Model
 
+## 2.4.1
+
+### [ROS-305](https://basistech.atlassian.net/browse/ROS-305) Mention copy method doesn't include linkingConfidence
+
+Fixed copy constructor of Mention builder.
+
 ## 2.4.0
 
 ### [TEJ-974](https://basistech.atlassian.net/browse/TEJ-974) Expose FLINX confidence score
