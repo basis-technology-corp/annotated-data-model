@@ -15,7 +15,7 @@
 */
 package com.basistech.rosette.dm;
 
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 import com.google.common.collect.Lists;
 
 import java.io.Serializable;
@@ -135,8 +135,8 @@ public class Token extends Attribute implements Serializable {
     }
 
     @Override
-    protected Objects.ToStringHelper toStringHelper() {
-        return Objects.toStringHelper(this)
+    protected MoreObjects.ToStringHelper toStringHelper() {
+        return MoreObjects.toStringHelper(this)
                 .add("text", text)
                 .add("normalized", normalized)
                 .add("analyses", analyses)

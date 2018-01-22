@@ -16,7 +16,7 @@
 package com.basistech.rosette.dm;
 
 import com.basistech.util.TextDomain;
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 
 import java.io.Serializable;
 import java.util.Map;
@@ -99,8 +99,8 @@ public class TranslatedData extends BaseAttribute implements Serializable {
     }
 
     @Override
-    protected Objects.ToStringHelper toStringHelper() {
-        Objects.ToStringHelper helper = Objects.toStringHelper(this)
+    protected MoreObjects.ToStringHelper toStringHelper() {
+        MoreObjects.ToStringHelper helper = MoreObjects.toStringHelper(this)
                 .add("domain", domain)
                 .add("translation", translation);
         if (confidence != null) {

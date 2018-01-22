@@ -129,7 +129,7 @@ public class Dependency extends BaseAttribute implements Serializable {
     }
 
     @Override
-    protected com.google.common.base.Objects.ToStringHelper toStringHelper() {
+    protected com.google.common.base.MoreObjects.ToStringHelper toStringHelper() {
         return super.toStringHelper()
                 .add("relationship", relationship)
                 .add("dependencyTokenIndex", dependencyTokenIndex)

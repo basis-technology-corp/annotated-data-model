@@ -16,7 +16,7 @@
 package com.basistech.rosette.dm;
 
 import com.basistech.util.TextDomain;
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 import com.google.common.collect.Lists;
 
 import java.io.Serializable;
@@ -84,8 +84,8 @@ public class TranslatedTokens extends BaseAttribute implements Serializable {
     }
 
     @Override
-    protected Objects.ToStringHelper toStringHelper() {
-        return Objects.toStringHelper(this)
+    protected MoreObjects.ToStringHelper toStringHelper() {
+        return MoreObjects.toStringHelper(this)
             .add("domain", domain)
             .add("translations", translations);
     }

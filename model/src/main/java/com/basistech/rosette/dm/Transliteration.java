@@ -16,7 +16,7 @@
 package com.basistech.rosette.dm;
 
 import com.basistech.util.ISO15924;
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 
@@ -96,8 +96,8 @@ public final class Transliteration extends BaseAttribute {
     }
 
     @Override
-    public Objects.ToStringHelper toStringHelper() {
-        return Objects.toStringHelper(this)
+    public MoreObjects.ToStringHelper toStringHelper() {
+        return MoreObjects.toStringHelper(this)
                 .add("scriptMap", scriptMap);
     }
 

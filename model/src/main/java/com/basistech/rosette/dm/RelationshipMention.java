@@ -16,7 +16,7 @@
 
 package com.basistech.rosette.dm;
 
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 
 import java.io.Serializable;
 import java.util.HashSet;
@@ -202,7 +202,7 @@ public class RelationshipMention extends Attribute implements Serializable {
     }
 
     @Override
-    protected Objects.ToStringHelper toStringHelper() {
+    protected MoreObjects.ToStringHelper toStringHelper() {
         return super.toStringHelper()
                 .add("predicate", predicate)
                 .add("arg1", arg1)
