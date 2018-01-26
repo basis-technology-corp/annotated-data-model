@@ -17,7 +17,7 @@ package com.basistech.rosette.dm;
 
 import com.basistech.util.ISO15924;
 import com.basistech.util.LanguageCode;
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 
 import java.io.Serializable;
 import java.util.Map;
@@ -161,8 +161,8 @@ public class Name extends BaseAttribute implements Serializable {
     }
 
     @Override
-    protected Objects.ToStringHelper toStringHelper() {
-        Objects.ToStringHelper builder = super.toStringHelper().add("text", text);
+    protected MoreObjects.ToStringHelper toStringHelper() {
+        MoreObjects.ToStringHelper builder = super.toStringHelper().add("text", text);
         if (type != null) {
             builder.add("type", type);
         }

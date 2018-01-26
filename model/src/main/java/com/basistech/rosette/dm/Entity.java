@@ -15,7 +15,7 @@
 */
 package com.basistech.rosette.dm;
 
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 import com.google.common.collect.Lists;
 
 import java.io.Serializable;
@@ -157,7 +157,7 @@ public class Entity extends BaseAttribute implements Serializable {
     }
 
     @Override
-    protected Objects.ToStringHelper toStringHelper() {
+    protected MoreObjects.ToStringHelper toStringHelper() {
         return super.toStringHelper()
                 .add("type", type)
                 .add("entityId", entityId)

@@ -15,7 +15,7 @@
 */
 package com.basistech.rosette.dm;
 
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 
@@ -192,8 +192,8 @@ public class ListAttribute<Item extends BaseAttribute> extends BaseAttribute imp
     }
 
     @Override
-    protected Objects.ToStringHelper toStringHelper() {
-        return Objects.toStringHelper(this)
+    protected MoreObjects.ToStringHelper toStringHelper() {
+        return MoreObjects.toStringHelper(this)
                 .add("items", items)
                 .add("itemClass", itemClass);
     }
