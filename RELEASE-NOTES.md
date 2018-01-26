@@ -1,5 +1,11 @@
 # Cumulative Release Notes for the Annotated Data Model
 
+## 2.4.2
+
+### [ROS-307](https://basistech.atlassian.net/browse/ROS-307) Java 9 related
+
+Update guava to 23.6.
+
 ## 2.4.1
 
 ### [ROS-305](https://basistech.atlassian.net/browse/ROS-305) Mention copy method doesn't include linkingConfidence
