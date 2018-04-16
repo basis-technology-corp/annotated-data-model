@@ -1,5 +1,17 @@
 # Cumulative Release Notes for the Annotated Data Model
 
+## 2.4.4
+
+### [ROS-312](https://basistech.atlassian.net/browse/ROS-312) Consume new parent with updated guava
+
+## 2.4.3
+
+### [SUPPO-779](https://https://basistech.atlassian.net/browse/SUPPO-779) Update jackson
+
+## 2.4.2
+
+### [ROS-307](https://basistech.atlassian.net/browse/ROS-307) Support Java 9 JRE
+
 ## 2.4.1
 
 ### [ROS-305](https://basistech.atlassian.net/browse/ROS-305) Mention copy method doesn't include linkingConfidence
