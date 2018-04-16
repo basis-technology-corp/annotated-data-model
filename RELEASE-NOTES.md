@@ -4,6 +4,8 @@
 
 ### [ROS-312](https://basistech.atlassian.net/browse/ROS-312) Consume new parent with updated guava
 
+## 2.4.2
+
 ### [SUPPO-779](https://https://basistech.atlassian.net/browse/SUPPO-779) Update jackson
 
 ### [ROS-307](https://basistech.atlassian.net/browse/ROS-307) Support Java 9 JRE
