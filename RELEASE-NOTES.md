@@ -6,7 +6,7 @@
 
 ## 2.4.3
 
-### [SUPPO-779](https://https://basistech.atlassian.net/browse/SUPPO-779) Update jackson
+### [SUPPO-779](https://basistech.atlassian.net/browse/SUPPO-779) Update jackson
 
 ## 2.4.2
 
