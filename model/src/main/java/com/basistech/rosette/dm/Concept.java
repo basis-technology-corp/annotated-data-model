@@ -1,5 +1,5 @@
 /*
-* Copyright 2017 Basis Technology Corp.
+* Copyright 2018 Basis Technology Corp.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -15,10 +15,11 @@
 */
 package com.basistech.rosette.dm;
 
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 
 import java.io.Serializable;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * A reference to a high-level "concept" of a document.  A concept can be an abstract
@@ -82,18 +83,18 @@ public class Concept extends BaseAttribute implements Serializable {
             return false;
         }
         Concept that = (Concept) o;
-        return java.util.Objects.equals(phrase, that.phrase)
-                && java.util.Objects.equals(salience, that.salience)
-                && java.util.Objects.equals(conceptId, that.conceptId);
+        return Objects.equals(phrase, that.phrase)
+                && Objects.equals(salience, that.salience)
+                && Objects.equals(conceptId, that.conceptId);
     }
 
     @Override
     public int hashCode() {
-        return java.util.Objects.hash(super.hashCode(), phrase, salience, conceptId);
+        return Objects.hash(super.hashCode(), phrase, salience, conceptId);
     }
 
     @Override
-    protected Objects.ToStringHelper toStringHelper() {
+    protected MoreObjects.ToStringHelper toStringHelper() {
         return super.toStringHelper()
                 .add("phrase", phrase)
                 .add("salience", salience)

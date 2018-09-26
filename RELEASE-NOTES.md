@@ -1,5 +1,9 @@
 # Cumulative Release Notes for the Annotated Data Model
 
+## 2.4.5
+
+### [COMN-244](https://basistech.atlassian.net/browse/COMN-244) Consume new parent with updated Guava
+
 ## 2.4.4
 
 ### [ROS-312](https://basistech.atlassian.net/browse/ROS-312) Consume new parent with updated guava

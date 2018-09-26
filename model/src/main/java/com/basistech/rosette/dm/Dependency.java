@@ -1,5 +1,5 @@
 /*
-* Copyright 2016 Basis Technology Corp.
+* Copyright 2018 Basis Technology Corp.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -14,6 +14,8 @@
 * limitations under the License.
 */
 package com.basistech.rosette.dm;
+
+import com.google.common.base.MoreObjects;
 
 import java.io.Serializable;
 import java.util.Map;
@@ -129,7 +131,7 @@ public class Dependency extends BaseAttribute implements Serializable {
     }
 
     @Override
-    protected com.google.common.base.Objects.ToStringHelper toStringHelper() {
+    protected MoreObjects.ToStringHelper toStringHelper() {
         return super.toStringHelper()
                 .add("relationship", relationship)
                 .add("dependencyTokenIndex", dependencyTokenIndex)
