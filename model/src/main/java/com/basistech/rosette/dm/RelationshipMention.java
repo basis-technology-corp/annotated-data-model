@@ -1,5 +1,5 @@
 /*
-* Copyright 2014 Basis Technology Corp.
+* Copyright 2018 Basis Technology Corp.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -16,11 +16,12 @@
 
 package com.basistech.rosette.dm;
 
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -202,7 +203,7 @@ public class RelationshipMention extends Attribute implements Serializable {
     }
 
     @Override
-    protected Objects.ToStringHelper toStringHelper() {
+    protected MoreObjects.ToStringHelper toStringHelper() {
         return super.toStringHelper()
                 .add("predicate", predicate)
                 .add("arg1", arg1)
@@ -229,22 +230,22 @@ public class RelationshipMention extends Attribute implements Serializable {
             return false;
         }
         RelationshipMention that = (RelationshipMention) o;
-        return java.util.Objects.equals(predicate, that.predicate)
-                && java.util.Objects.equals(arg1, that.arg1)
-                && java.util.Objects.equals(arg2, that.arg2)
-                && java.util.Objects.equals(arg3, that.arg3)
-                && java.util.Objects.equals(adjuncts, that.adjuncts)
-                && java.util.Objects.equals(locatives, that.locatives)
-                && java.util.Objects.equals(temporals, that.temporals)
-                && java.util.Objects.equals(source, that.source)
-                && java.util.Objects.equals(confidence, that.confidence)
-                && java.util.Objects.equals(modality, that.modality)
-                && java.util.Objects.equals(salience, that.salience);
+        return Objects.equals(predicate, that.predicate)
+                && Objects.equals(arg1, that.arg1)
+                && Objects.equals(arg2, that.arg2)
+                && Objects.equals(arg3, that.arg3)
+                && Objects.equals(adjuncts, that.adjuncts)
+                && Objects.equals(locatives, that.locatives)
+                && Objects.equals(temporals, that.temporals)
+                && Objects.equals(source, that.source)
+                && Objects.equals(confidence, that.confidence)
+                && Objects.equals(modality, that.modality)
+                && Objects.equals(salience, that.salience);
     }
 
     @Override
     public int hashCode() {
-        return java.util.Objects.hash(super.hashCode(), predicate, arg1, arg2, arg3, adjuncts, locatives, temporals, source, confidence, modality, salience);
+        return Objects.hash(super.hashCode(), predicate, arg1, arg2, arg3, adjuncts, locatives, temporals, source, confidence, modality, salience);
     }
 
     public static class Builder extends Attribute.Builder<RelationshipMention, RelationshipMention.Builder> {

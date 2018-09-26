@@ -1,5 +1,5 @@
 /*
-* Copyright 2014 Basis Technology Corp.
+* Copyright 2018 Basis Technology Corp.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -15,12 +15,13 @@
 */
 package com.basistech.rosette.dm;
 
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 import com.google.common.collect.Lists;
 
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * A reference to a "real world" entity. Each entity in a document is
@@ -142,22 +143,22 @@ public class Entity extends BaseAttribute implements Serializable {
             return false;
         }
         Entity entity = (Entity) o;
-        return java.util.Objects.equals(mentions, entity.mentions)
-                && java.util.Objects.equals(headMentionIndex, entity.headMentionIndex)
-                && java.util.Objects.equals(type, entity.type)
-                && java.util.Objects.equals(entityId, entity.entityId)
-                && java.util.Objects.equals(confidence, entity.confidence)
-                && java.util.Objects.equals(sentiment, entity.sentiment)
-                && java.util.Objects.equals(salience, entity.salience);
+        return Objects.equals(mentions, entity.mentions)
+                && Objects.equals(headMentionIndex, entity.headMentionIndex)
+                && Objects.equals(type, entity.type)
+                && Objects.equals(entityId, entity.entityId)
+                && Objects.equals(confidence, entity.confidence)
+                && Objects.equals(sentiment, entity.sentiment)
+                && Objects.equals(salience, entity.salience);
     }
 
     @Override
     public int hashCode() {
-        return java.util.Objects.hash(super.hashCode(), mentions, headMentionIndex, type, entityId, confidence, sentiment, salience);
+        return Objects.hash(super.hashCode(), mentions, headMentionIndex, type, entityId, confidence, sentiment, salience);
     }
 
     @Override
-    protected Objects.ToStringHelper toStringHelper() {
+    protected MoreObjects.ToStringHelper toStringHelper() {
         return super.toStringHelper()
                 .add("type", type)
                 .add("entityId", entityId)

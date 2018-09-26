@@ -1,5 +1,5 @@
 /*
-* Copyright 2014 Basis Technology Corp.
+* Copyright 2018 Basis Technology Corp.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@ package com.basistech.rosette.dm;
 
 import com.basistech.util.ISO15924;
 import com.basistech.util.LanguageCode;
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 import com.google.common.collect.Lists;
 
 import java.io.Serializable;
@@ -130,7 +130,7 @@ public class LanguageDetection extends Attribute implements Serializable {
         }
 
         @Override
-        protected Objects.ToStringHelper toStringHelper() {
+        protected MoreObjects.ToStringHelper toStringHelper() {
             return super.toStringHelper()
                     .add("language", language)
                     .add("encoding", encoding)
@@ -247,7 +247,7 @@ public class LanguageDetection extends Attribute implements Serializable {
     }
 
     @Override
-    protected Objects.ToStringHelper toStringHelper() {
+    protected MoreObjects.ToStringHelper toStringHelper() {
         return super.toStringHelper()
                 .add("detectionResults", detectionResults);
     }
