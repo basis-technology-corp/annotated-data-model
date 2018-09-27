@@ -1,5 +1,11 @@
 # Cumulative Release Notes for the Annotated Data Model
 
+## 2.4.6
+
+### [COMN-244](https://basistech.atlassian.net/browse/COMN-244) Consume new parent with updated Guava
+
+Fixed dependencies to use new version of `common-api`.
+
 ## 2.4.5
 
 ### [COMN-244](https://basistech.atlassian.net/browse/COMN-244) Consume new parent with updated Guava
