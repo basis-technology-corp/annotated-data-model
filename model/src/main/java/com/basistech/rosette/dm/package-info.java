@@ -49,10 +49,10 @@
  * </p>
  * <h2>Serializable</h2>
  * <p>
- *     The classes in this data model implement <pre>java.io.Serializable</pre>. Each class has a
- *     <pre>serialVersionId</pre>, the ID is derived from the version number of the library in which the
+ *     The classes in this data model implement {@code java.io.Serializable}. Each class has a
+ *     {@code serialVersionId}, the ID is derived from the version number of the library in which the
  *     a change was made. Serializable support was added in version 2.2.2, so all the classes started
- *     with version <pre>222</pre>.
+ *     with version {@code 222}.
  * </p>
  * <h2>Builders</h2>
  * <p>
@@ -82,6 +82,11 @@
  *     All of the classes in here support json serialization and deserialization via Jackson 2.4.x. However, they require
  *     some customization to get a correct and efficient representation.
  *     This customization is provided in a separate module: adm-json.
+ * </p>
+ * <h2> Null Values</h2>
+ * <p>
+ *      Logically empty lists, sets, and maps are usually represented by {@code null} instead of by actual empty collections.
+ *      The fields of any attributes may be {@code null}, unless documented otherwise for a specific field.
  * </p>
  * {@adm.java}
  */
