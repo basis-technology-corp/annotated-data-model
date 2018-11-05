@@ -1,0 +1,41 @@
+{
+  "ext1": "val1",
+  "keyType": "languageCode",
+  "items": {
+    "eng": {
+      "startOffset": 0,
+      "endOffset": 3,
+      "text": "The",
+      "analyses": [
+        {
+          "partOfSpeech": "DET",
+          "lemma": "the"
+        }
+      ]
+    },
+    "spa": {
+      "startOffset": 4,
+      "endOffset": 10,
+      "text": "Boston",
+      "analyses": [
+        {
+          "partOfSpeech": "PROP",
+          "lemma": "Boston"
+        }
+      ]
+    },
+    "fra": {
+      "startOffset": 11,
+      "endOffset": 14,
+      "text": "Red",
+      "analyses": [
+        {
+          "partOfSpeech": "PROP",
+          "lemma": "Red"
+        }
+      ]
+    }
+  },
+  "valueType": "token",
+  "ext2": "val2"
+}

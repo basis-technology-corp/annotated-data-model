@@ -21,7 +21,7 @@ import java.util.Objects;
 /**
  * A term with some semantic similarity to an {@link AnnotatedText}.
  */
-public class RelatedTerm implements Serializable {
+public class RelatedTerm extends BaseAttribute implements Serializable {
     private final String term;
     private final Double similarity;
 
@@ -71,7 +71,7 @@ public class RelatedTerm implements Serializable {
     /**
      * Builder class for RelatedTerm
      */
-    public static class Builder {
+    public static class Builder extends BaseAttribute.Builder<RelatedTerm, RelatedTerm.Builder> {
         private String term;
         private Double similarity;
 
@@ -106,6 +106,11 @@ public class RelatedTerm implements Serializable {
          */
         public RelatedTerm build() {
             return new RelatedTerm(term, similarity);
+        }
+
+        @Override
+        protected Builder getThis() {
+            return this;
         }
     }
 }
