@@ -31,7 +31,7 @@ import java.util.Map;
  */
 @Deprecated
 public class ResolvedEntity extends Attribute implements Serializable {
-    private static final long serialVersionUID = 222L;
+    private static final long serialVersionUID = 250L;
     private final String entityId;
     //I prefer 'chainId' over 'coreferenceChainId' but picked the latter to make it consistent with EntityMention
     private final Integer coreferenceChainId;

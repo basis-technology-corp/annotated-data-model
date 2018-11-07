@@ -26,7 +26,7 @@ import java.util.Map;
  * Note that Extents have no properties of their own.
  */
 public class Extent extends Attribute implements Serializable {
-    private static final long serialVersionUID = 222L;
+    private static final long serialVersionUID = 250L;
 
     protected Extent(int startOffset, int endOffset) {
         super(startOffset, endOffset);

@@ -27,7 +27,7 @@ import java.util.Map;
  * A list of translations for the tokens. Each translation matches the corresponding token.
  */
 public class TranslatedTokens extends BaseAttribute implements Serializable {
-    private static final long serialVersionUID = 222L;
+    private static final long serialVersionUID = 250L;
     private final TextDomain domain;
     private final List<String> translations; // 1-1 with tokens
 

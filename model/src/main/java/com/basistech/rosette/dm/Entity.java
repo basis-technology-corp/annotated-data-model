@@ -44,7 +44,7 @@ import java.util.Objects;
  * The mentions in an entity are in document order.
  */
 public class Entity extends BaseAttribute implements Serializable {
-    private static final long serialVersionUID = 222L;
+    private static final long serialVersionUID = 250L;
     private List<Mention> mentions;
     private final Integer headMentionIndex;
     private final String type;

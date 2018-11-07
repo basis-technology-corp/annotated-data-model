@@ -23,6 +23,6 @@ import java.io.Serializable;
  * @adm.ignore
  */
 public class UnknownAttribute extends BaseAttribute implements Serializable {
-    private static final long serialVersionUID = 222L;
+    private static final long serialVersionUID = 250L;
     //
 }

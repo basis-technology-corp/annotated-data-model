@@ -27,7 +27,7 @@ import java.util.Map;
  * Korean morphology decomposes each word into a collection of tagged morphemes.
  */
 public class KoreanMorphoAnalysis extends MorphoAnalysis implements Serializable {
-    private static final long serialVersionUID = 222L;
+    private static final long serialVersionUID = 250L;
     private final List<String> morphemes;
     private final List<String> morphemeTags;
 

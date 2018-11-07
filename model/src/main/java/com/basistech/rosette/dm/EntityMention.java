@@ -27,7 +27,7 @@ import java.util.Map;
  */
 @Deprecated
 public class EntityMention extends Attribute implements Serializable {
-    private static final long serialVersionUID = 222L;
+    private static final long serialVersionUID = 250L;
     private final String entityType;
     private final Double confidence;
     private final Double linkingConfidence;

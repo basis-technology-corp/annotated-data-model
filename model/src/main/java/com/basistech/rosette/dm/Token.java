@@ -27,7 +27,7 @@ import java.util.Map;
  * generally a token corresponds to a word.
  */
 public class Token extends Attribute implements Serializable {
-    private static final long serialVersionUID = 222L;
+    private static final long serialVersionUID = 250L;
     // we don't want to have to go look at the parent {@link AnnotatedText}.
     private final String text;
     private final List<String> normalized;

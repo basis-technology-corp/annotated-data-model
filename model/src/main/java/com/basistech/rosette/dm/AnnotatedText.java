@@ -50,7 +50,7 @@ import java.util.Map;
  */
 @SuppressWarnings("deprecation")
 public class AnnotatedText implements Serializable {
-    private static final long serialVersionUID = 222L;
+    private static final long serialVersionUID = 250L;
     private final CharSequence data;
     /* The attributes for this text, indexed by type.
      * Only one attribute of a type is permitted, thus the concept

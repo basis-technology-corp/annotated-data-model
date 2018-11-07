@@ -75,7 +75,7 @@ import java.util.Objects;
  * around in isolation as a complete representation of a dependency arc.
  */
 public class Dependency extends BaseAttribute implements Serializable {
-    private static final long serialVersionUID = 222L;
+    private static final long serialVersionUID = 250L;
     private final String relationship;
     private final int governorTokenIndex;
     private final int dependencyTokenIndex;

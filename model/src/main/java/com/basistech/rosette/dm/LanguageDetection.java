@@ -30,7 +30,7 @@ import java.util.Map;
  * to reflect the multiple alternatives produced by language detectors.
  */
 public class LanguageDetection extends Attribute implements Serializable {
-    private static final long serialVersionUID = 222L;
+    private static final long serialVersionUID = 250L;
 
     /**
      * A single result from language detection.

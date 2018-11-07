@@ -32,7 +32,7 @@ import java.util.Set;
  * @param <V> The type of the values in the map.
  */
 public class MapAttribute<K, V extends BaseAttribute> extends BaseAttribute implements Map<K, V>, Serializable {
-    private static final long serialVersionUID = 222L;
+    private static final long serialVersionUID = 250L;
 
     private final Map<K, V> items;
     private final Class<?> keyClass;

@@ -35,7 +35,7 @@ import java.util.Map;
  * and topic generation.</p>
  */
 public class CategorizerResult extends BaseAttribute implements Serializable {
-    private static final long serialVersionUID = 222L;
+    private static final long serialVersionUID = 250L;
     private final String label;
     private final Double score;
     private final Double confidence;

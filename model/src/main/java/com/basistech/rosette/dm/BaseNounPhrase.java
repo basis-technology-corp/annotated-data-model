@@ -22,7 +22,7 @@ import java.util.Map;
  * A base noun phrase.
  */
 public class BaseNounPhrase extends Attribute implements Serializable {
-    private static final long serialVersionUID = 222L;
+    private static final long serialVersionUID = 250L;
 
     protected BaseNounPhrase(int startOffset, int endOffset, Map<String, Object> extendedProperties) {
         super(startOffset, endOffset, extendedProperties);

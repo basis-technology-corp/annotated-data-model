@@ -32,7 +32,7 @@ import java.util.Map;
  * multiple possible readings.
  */
 public class HanMorphoAnalysis extends MorphoAnalysis implements Serializable {
-    private static final long serialVersionUID = 222L;
+    private static final long serialVersionUID = 250L;
     private final List<String> readings;
 
     protected HanMorphoAnalysis(String partOfSpeech,
