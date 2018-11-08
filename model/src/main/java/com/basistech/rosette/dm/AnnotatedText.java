@@ -380,6 +380,23 @@ public class AnnotatedText implements Serializable {
     }
 
     /**
+     * Convenience accessor for a language's list of related terms.
+     *
+     * @param languageCode the language code whose related terms to retrieve
+     * @return the list of related terms
+     * @see #getRelatedTerms()
+     */
+    @SuppressWarnings("unchecked")
+    public ListAttribute<RelatedTerm> getRelatedTerms(LanguageCode languageCode) {
+        MapAttribute<LanguageCode, ListAttribute<RelatedTerm>> termMap = getRelatedTerms();
+        if (termMap == null) {
+            // Avoid NPE in missing case (same behavior as getRelatedTerms() when the attribute is missing)
+            return null;
+        }
+        return termMap.get(languageCode);
+    }
+
+    /**
      * Returns the list of relationship mentions.
      *
      * @return the list of relationship mentions
