@@ -110,6 +110,29 @@ public class TranslatedData extends BaseAttribute implements Serializable {
     }
 
     /**
+     * Factory method for {@link Builder} instances.
+     *
+     * @param domain specifies the language and script of the translation
+     * @param translation the translation for the text
+     * @return the new builder
+     * @see Builder#Builder(TextDomain, String)
+     */
+    public static Builder builder(TextDomain domain, String translation) {
+        return new Builder(domain, translation);
+    }
+
+    /**
+     * Factory method for {@link Builder} instances.
+     *
+     * @param toCopy the translated data to copy
+     * @return the new builder
+     * @see Builder#Builder(TranslatedData)
+     */
+    public static Builder builder(TranslatedData toCopy) {
+        return new Builder(toCopy);
+    }
+
+    /**
      * Builder class for TranslatedData.
      */
     public static class Builder extends BaseAttribute.Builder<TranslatedData, TranslatedData.Builder> {

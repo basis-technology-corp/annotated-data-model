@@ -179,6 +179,29 @@ public class CategorizerResult extends BaseAttribute implements Serializable {
     }
 
     /**
+     * Factory method for {@link Builder} instances.
+     *
+     * @param label the label
+     * @param score the raw score
+     * @return the new builder
+     * @see Builder#Builder(String, Double)
+     */
+    public static Builder builder(String label, Double score) {
+        return new Builder(label, score);
+    }
+
+    /**
+     * Factory method for {@link Builder} instances.
+     *
+     * @param toCopy the categorizer result to copy
+     * @return the new builder
+     * @see Builder#Builder(CategorizerResult)
+     */
+    public static Builder builder(CategorizerResult toCopy) {
+        return new Builder(toCopy);
+    }
+
+    /**
      * A builder for classifier results.
      */
     public static class Builder extends BaseAttribute.Builder<CategorizerResult, CategorizerResult.Builder> {

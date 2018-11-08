@@ -69,15 +69,48 @@ public class RelatedTerm extends BaseAttribute implements Serializable {
     }
 
     /**
+     * Factory method for {@link Builder} instances.
+     *
+     * @return the new builder
+     */
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    /**
+     * Factory method for {@link Builder} instances.
+     *
+     * @param toCopy the related term to copy
+     * @return the new builder
+     */
+    public static Builder builder(RelatedTerm toCopy) {
+        return new Builder(toCopy);
+    }
+
+    /**
      * Builder class for RelatedTerm
      */
     public static class Builder extends BaseAttribute.Builder<RelatedTerm, RelatedTerm.Builder> {
         private String term;
         private Double similarity;
 
+        /**
+         * Constructs a builder
+         */
         public Builder() {
             term = null;
             similarity = null;
+        }
+
+        /**
+         * Constructs a builder initialized with information from an existing related term
+         *
+         * @param toCopy the related term to copy
+         */
+        public Builder(RelatedTerm toCopy) {
+            super(toCopy);
+            this.term = toCopy.term;
+            this.similarity = toCopy.similarity;
         }
 
         /**

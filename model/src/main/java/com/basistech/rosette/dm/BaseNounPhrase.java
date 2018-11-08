@@ -29,6 +29,42 @@ public class BaseNounPhrase extends Attribute implements Serializable {
     }
 
     /**
+     * Factory method for {@link Builder} instances.
+     *
+     * @param startOffset start offset in characters
+     * @param endOffset end offset in characters
+     * @return the new builder
+     * @see Builder#Builder(int, int)
+     */
+    public static Builder builder(int startOffset, int endOffset) {
+        return new Builder(startOffset, endOffset);
+    }
+
+    /**
+     * Factory method for {@link Builder} instances.
+     *
+     * @param tokenOffsets array of token start/end offsets
+     * @param tokenStartIndex index in tokenOffsets for the start of the phrase
+     * @param tokenEndIndex index in tokenOffsets for the end of the phrase
+     * @return the new builder
+     * @see Builder#Builder(int[], int, int)
+     */
+    public static Builder builder(int[] tokenOffsets, int tokenStartIndex, int tokenEndIndex) {
+        return new Builder(tokenOffsets, tokenStartIndex, tokenEndIndex);
+    }
+
+    /**
+     * Factory method for {@link Builder} instances.
+     *
+     * @param toCopy the noun phrase to copy
+     * @return the new builder
+     * @see Builder#Builder(BaseNounPhrase)
+     */
+    public static Builder builder(BaseNounPhrase toCopy) {
+        return new Builder(toCopy);
+    }
+
+    /**
      * Builder for base noun phrase attributes.
      */
     public static class Builder extends Attribute.Builder<BaseNounPhrase, BaseNounPhrase.Builder> {

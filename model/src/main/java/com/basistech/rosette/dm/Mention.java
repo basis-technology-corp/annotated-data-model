@@ -156,6 +156,29 @@ public class Mention extends Attribute implements Serializable {
     }
 
     /**
+     * Factory method for {@link Builder} instances.
+     *
+     * @param startOffset the start offset in the text, in characters
+     * @param endOffset the end offset in the text, in characters
+     * @return the new builder
+     * @see Builder#Builder(int, int)
+     */
+    public static Builder builder(int startOffset, int endOffset) {
+        return new Builder(startOffset, endOffset);
+    }
+
+    /**
+     * Factory method for {@link Builder} instances.
+     *
+     * @param toCopy the mention to copy
+     * @return the new builder
+     * @see Builder#Builder(Mention)
+     */
+    public static Builder builder(Mention toCopy) {
+        return new Builder(toCopy);
+    }
+
+    /**
      * A builder for entity mentions.
      */
     public static class Builder extends Attribute.Builder<Mention, Mention.Builder>  {

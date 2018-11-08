@@ -115,6 +115,15 @@ public class RelationshipComponent extends BaseAttribute implements Serializable
         return result;
     }
 
+    /**
+     * Factory method for {@link Builder} instances.
+     *
+     * @return the new builder
+     */
+    public static Builder builder() {
+        return new Builder();
+    }
+
     public static class Builder extends BaseAttribute.Builder<RelationshipComponent, RelationshipComponent.Builder> {
         private String phrase;
         private String identifier;

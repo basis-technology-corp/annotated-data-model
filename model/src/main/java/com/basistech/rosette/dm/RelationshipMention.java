@@ -248,6 +248,29 @@ public class RelationshipMention extends Attribute implements Serializable {
         return Objects.hash(super.hashCode(), predicate, arg1, arg2, arg3, adjuncts, locatives, temporals, source, confidence, modality, salience);
     }
 
+    /**
+     * Factory method for {@link Builder} instances.
+     *
+     * @param startOffset the start offset in the text, in characters
+     * @param endOffset the end offset in the text, in characters
+     * @return the new builder
+     * @see Builder#Builder(int, int)
+     */
+    public static Builder builder(int startOffset, int endOffset) {
+        return new Builder(startOffset, endOffset);
+    }
+
+    /**
+     * Factory method for {@link Builder} instances.
+     *
+     * @param toCopy the relationship mention to copy
+     * @return the new builder
+     * @see Builder#Builder(RelationshipMention)
+     */
+    public static Builder builder(RelationshipMention toCopy) {
+        return new Builder(toCopy);
+    }
+
     public static class Builder extends Attribute.Builder<RelationshipMention, RelationshipMention.Builder> {
 
         private RelationshipComponent predicate;
@@ -331,6 +354,18 @@ public class RelationshipMention extends Attribute implements Serializable {
         }
 
         /**
+         * Attaches predicate
+         *
+         * @param predicateBuilder the predicate builder
+         * @param <B> the predicate builder's class
+         * @return this
+         * @see Builder#predicate(RelationshipComponent)
+         */
+        public <B extends BaseAttribute.Builder<RelationshipComponent, ?>> Builder predicate(B predicateBuilder) {
+            return predicate(predicateBuilder.build());
+        }
+
+        /**
          * Attaches arg1
          *
          * @param arg1 the arg1
@@ -339,6 +374,18 @@ public class RelationshipMention extends Attribute implements Serializable {
         public Builder arg1(RelationshipComponent arg1) {
             this.arg1 = arg1;
             return this;
+        }
+
+        /**
+         * Attaches arg1
+         *
+         * @param arg1Builder the arg1 builder
+         * @param <B> the arg1 builder's class
+         * @return this
+         * @see Builder#arg1(RelationshipComponent)
+         */
+        public <B extends BaseAttribute.Builder<RelationshipComponent, ?>> Builder arg1(B arg1Builder) {
+            return arg1(arg1Builder.build());
         }
 
         /**
@@ -353,6 +400,18 @@ public class RelationshipMention extends Attribute implements Serializable {
         }
 
         /**
+         * Attaches arg2
+         *
+         * @param arg2Builder the arg2 builder
+         * @param <B> the arg2 builder's class
+         * @return this
+         * @see Builder#arg2(RelationshipComponent)
+         */
+        public <B extends BaseAttribute.Builder<RelationshipComponent, ?>> Builder arg2(B arg2Builder) {
+            return arg2(arg2Builder.build());
+        }
+
+        /**
          * Attaches arg3
          *
          * @param arg3 the arg3
@@ -361,6 +420,18 @@ public class RelationshipMention extends Attribute implements Serializable {
         public Builder arg3(RelationshipComponent arg3) {
             this.arg3 = arg3;
             return this;
+        }
+
+        /**
+         * Attaches arg3
+         *
+         * @param arg3Builder the arg3 builder
+         * @param <B> the arg3 builder's class
+         * @return this
+         * @see Builder#arg3(RelationshipComponent)
+         */
+        public <B extends BaseAttribute.Builder<RelationshipComponent, ?>> Builder arg3(B arg3Builder) {
+            return arg3(arg3Builder.build());
         }
 
         /**
@@ -387,6 +458,18 @@ public class RelationshipMention extends Attribute implements Serializable {
         }
 
         /**
+         * Add an adjunct.
+         *
+         * @param adjunctBuilder the adjunct builder
+         * @param <B> the adjunct builder's class
+         * @return this
+         * @see Builder#addAdjunct(RelationshipComponent)
+         */
+        public <B extends BaseAttribute.Builder<RelationshipComponent, ?>> Builder addAdjunct(B adjunctBuilder) {
+            return addAdjunct(adjunctBuilder.build());
+        }
+
+        /**
          * Attaches a list of locatives
          *
          * @param locatives the locatives
@@ -410,6 +493,17 @@ public class RelationshipMention extends Attribute implements Serializable {
         }
 
         /**
+         * Add a locative.
+         *
+         * @param locativeBuilder the locative builder
+         * @param <B> the class of the locative builder
+         * @return this
+         */
+        public <B extends BaseAttribute.Builder<RelationshipComponent, ?>> Builder addLocative(B locativeBuilder) {
+            return addLocative(locativeBuilder.build());
+        }
+
+        /**
          * Attaches a list of temporals
          *
          * @param temporals the temporals
@@ -430,6 +524,17 @@ public class RelationshipMention extends Attribute implements Serializable {
         public Builder addTemporal(RelationshipComponent temporal) {
             temporals.add(temporal);
             return this;
+        }
+
+        /**
+         * Add a temporal.
+         *
+         * @param temporalBuilder the temporal builder
+         * @param <B> the class of the temporal builder
+         * @return this
+         */
+        public <B extends BaseAttribute.Builder<RelationshipComponent, ?>> Builder addTemporal(B temporalBuilder) {
+            return addTemporal(temporalBuilder.build());
         }
 
         /**

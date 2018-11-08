@@ -181,6 +181,8 @@ public abstract class BaseAttribute implements Serializable {
 
         protected abstract B getThis();
 
+        public abstract T build();
+
         /**
          * Cook up a map to pass to the constructor.
          * If we have an unmodified map to 'copy', we just use it. Otherwise, we build from the builder.

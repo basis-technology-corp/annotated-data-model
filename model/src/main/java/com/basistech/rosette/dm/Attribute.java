@@ -96,7 +96,7 @@ public abstract class Attribute extends BaseAttribute implements Serializable {
     /**
      * Base class for builders for attributes that inherit from {@link com.basistech.rosette.dm.Attribute}.
      */
-    public abstract static class Builder<T extends Attribute, B extends Builder<T, B>> extends BaseAttribute.Builder<Attribute, Builder<T, B>> {
+    public abstract static class Builder<T extends Attribute, B extends Builder<T, B>> extends BaseAttribute.Builder<T, Builder<T, B>> {
         protected int startOffset;
         protected int endOffset;
 

@@ -144,6 +144,30 @@ public class Token extends Attribute implements Serializable {
     }
 
     /**
+     * Factory method for {@link Builder} instances.
+     *
+     * @param startOffset the start offset in characters
+     * @param endOffset the end offset in characters
+     * @param text the text of the token
+     * @return the new builder
+     * @see Builder#Builder(int, int, String)
+     */
+    public static Builder builder(int startOffset, int endOffset, String text) {
+        return new Builder(startOffset, endOffset, text);
+    }
+
+    /**
+     * Factory method for {@link Builder} instances.
+     *
+     * @param toCopy the token to copy
+     * @return the new builder
+     * @see Builder#Builder(Token)
+     */
+    public static Builder builder(Token toCopy) {
+        return new Builder(toCopy);
+    }
+
+    /**
      * Builder for tokens.
      */
     public static class Builder extends Attribute.Builder<Token, Token.Builder> {
@@ -235,6 +259,18 @@ public class Token extends Attribute implements Serializable {
         public Builder addAnalysis(MorphoAnalysis analysis) {
             this.analyses.add(analysis);
             return this;
+        }
+
+        /**
+         * Adds an analysis
+         *
+         * @param analysisBuilder the analysis builder
+         * @param <B> the class of the analysis builder
+         * @return this
+         * @see Builder#addAnalysis(MorphoAnalysis)
+         */
+        public <B extends BaseAttribute.Builder<MorphoAnalysis, ?>> Builder addAnalysis(B analysisBuilder) {
+            return addAnalysis(analysisBuilder.build());
         }
 
         /**

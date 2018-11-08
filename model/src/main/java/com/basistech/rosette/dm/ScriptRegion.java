@@ -74,6 +74,30 @@ public class ScriptRegion extends Attribute implements Serializable {
     }
 
     /**
+     * Factory method for {@link Builder} instances.
+     *
+     * @param startOffset the start offset in characters
+     * @param endOffset the end offset in characters
+     * @param script the script
+     * @return the new builder
+     * @see Builder#Builder(int, int, ISO15924)
+     */
+    public static Builder builder(int startOffset, int endOffset, ISO15924 script) {
+        return new Builder(startOffset, endOffset, script);
+    }
+
+    /**
+     * Factory method for {@link Builder} instances.
+     *
+     * @param toCopy the script region to copy
+     * @return the new builder
+     * @see Builder#Builder(ScriptRegion)
+     */
+    public static Builder builder(ScriptRegion toCopy) {
+        return new Builder(toCopy);
+    }
+
+    /**
      * Builder for script regions.
      */
     public static class Builder extends Attribute.Builder<ScriptRegion, ScriptRegion.Builder> {

@@ -112,6 +112,29 @@ public class Keyphrase extends BaseAttribute implements Serializable {
     }
 
     /**
+     * Factory method for {@link Builder} instances.
+     *
+     * @param phrase the name of the keyphrase
+     * @param extents the list of extents marking offsets for each mention of the
+     *                keyphrase in the text
+     * @return the new builder
+     * @see Builder#Builder(String, List)
+     */
+    public static Builder builder(String phrase, List<Extent> extents) {
+        return new Builder(phrase, extents);
+    }
+
+    /**
+     * Factory method for {@link Builder} instances.
+     *
+     * @param toCopy the keyphrase to copy
+     * @return the new builder
+     */
+    public static Builder builder(Keyphrase toCopy) {
+        return new Builder(toCopy);
+    }
+
+    /**
      * A builder for keyphrases
      */
     public static class Builder extends BaseAttribute.Builder<Keyphrase, Keyphrase.Builder> {

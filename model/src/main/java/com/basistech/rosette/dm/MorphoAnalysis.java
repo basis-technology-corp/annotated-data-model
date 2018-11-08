@@ -148,6 +148,27 @@ public class MorphoAnalysis extends BaseAttribute implements Serializable {
     }
 
     /**
+     * Factory method for {@link Builder} instances.
+     *
+     * @return the new builder
+     * @see Builder#Builder()
+     */
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    /**
+     * Factory method for {@link Builder} instances.
+     *
+     * @param toCopy the morpho analysis to copy
+     * @return the new builder
+     * @see Builder#Builder(MorphoAnalysis)
+     */
+    public static Builder builder(MorphoAnalysis toCopy) {
+        return new Builder(toCopy);
+    }
+
+    /**
      * Builder for {@link com.basistech.rosette.dm.MorphoAnalysis}.
      */
     public static class Builder<T extends MorphoAnalysis, B extends Builder<T, B>> extends BaseAttribute.Builder<MorphoAnalysis, MorphoAnalysis.Builder<T, B>>  {
@@ -224,6 +245,18 @@ public class MorphoAnalysis extends BaseAttribute implements Serializable {
         public B addComponent(Token component) {
             this.components.add(component);
             return getThis();
+        }
+
+        /**
+         * Adds a compound component.
+         *
+         * @param componentBuilder the component builder
+         * @param <TB> the class of the component builder
+         * @return this
+         * @see Builder#addComponent(Token)
+         */
+        public <TB extends BaseAttribute.Builder<Token, ?>> B addComponent(TB componentBuilder) {
+            return addComponent(componentBuilder.build());
         }
 
         /**

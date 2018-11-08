@@ -179,6 +179,28 @@ public class Name extends BaseAttribute implements Serializable {
     }
 
     /**
+     * Factory method for {@link Builder} instances.
+     *
+     * @param text the text
+     * @return the new builder
+     * @see Builder#Builder(String)
+     */
+    public static Builder builder(String text) {
+        return new Builder(text);
+    }
+
+    /**
+     * Factory method for {@link Builder} instances.
+     *
+     * @param toCopy the name to copy
+     * @return the new builder
+     * @see Builder#Builder(Name)
+     */
+    public static Builder builder(Name toCopy) {
+        return new Builder(toCopy);
+    }
+
+    /**
      * Builder for {@link com.basistech.rosette.dm.Name}.
      */
     public static class Builder extends BaseAttribute.Builder<Name, Name.Builder> {
@@ -197,6 +219,20 @@ public class Name extends BaseAttribute implements Serializable {
             this.script = ISO15924.Zyyy;
             this.languageOfOrigin = LanguageCode.UNKNOWN;
             this.languageOfUse = LanguageCode.UNKNOWN;
+        }
+
+        /**
+         * Constructs a builder initialized with information from an existing name.
+         *
+         * @param toCopy the name to copy
+         * @adm.ignore
+         */
+        public Builder(Name toCopy) {
+            super(toCopy);
+            this.text = toCopy.text;
+            this.script = toCopy.script;
+            this.languageOfOrigin = toCopy.languageOfOrigin;
+            this.languageOfUse = toCopy.languageOfUse;
         }
 
         /**

@@ -618,6 +618,29 @@ public class AnnotatedTextTest {
         sbuilder.sentiment(new CategorizerResult.Builder("meh", 0.5).build());
     }
 
+    @Test
+    public void testFluentBuildEntity() throws Exception {
+        AnnotatedText text = AnnotatedText.builder()
+            .entities(ListAttribute.builder(Entity.class)
+                .add(Entity.builder()
+                    .mention(Mention.builder(10, 16).normalized("George"))
+                    .mention(Mention.builder(0, 6).normalized("George"))
+                    .type("PERSON")))
+            .build();
+
+        assertEquals(1, text.getEntities().size());
+        assertEquals(2, text.getEntityMentions().size());
+        assertEquals(0, text.getEntityMentions().get(0).getStartOffset());
+        assertEquals("PERSON", text.getEntityMentions().get(0).getEntityType());
+        assertEquals(10, text.getEntityMentions().get(1).getStartOffset());
+        assertEquals("PERSON", text.getEntityMentions().get(1).getEntityType());
+        assertNull(text.getResolvedEntities());
+
+        // This would crash before the fix to ROS-226.
+        Entity.Builder sbuilder = Entity.builder(text.getEntities().get(0));
+        sbuilder.sentiment(CategorizerResult.builder("meh", 0.5));
+    }
+
     @SuppressWarnings("deprecation")
     @Test
     public void corefChainCompat() throws Exception {

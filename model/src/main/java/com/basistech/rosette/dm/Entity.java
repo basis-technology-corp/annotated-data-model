@@ -169,6 +169,27 @@ public class Entity extends BaseAttribute implements Serializable {
     }
 
     /**
+     * Factory method for {@link Builder} instances.
+     *
+     * @return the new builder
+     * @see Builder#Builder()
+     */
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    /**
+     * Factory method for {@link Builder} instances.
+     *
+     * @param toCopy the entity to copy
+     * @return the new builder
+     * @see Builder#Builder(Entity)
+     */
+    public static Builder builder(Entity toCopy) {
+        return new Builder(toCopy);
+    }
+
+    /**
      * A builder for resolved entities.
      */
     public static class Builder extends BaseAttribute.Builder<Entity, Entity.Builder> {
@@ -229,6 +250,17 @@ public class Entity extends BaseAttribute implements Serializable {
         }
 
         /**
+         * Add one mention to the mentions.
+         * @param builder the mention builder.
+         * @param <B> the class of the mention builder.
+         * @return this.
+         * @see Builder#mention(Mention)
+         */
+        public <B extends Attribute.Builder<Mention, ?>> Builder mention(B builder) {
+            return mention(builder.build());
+        }
+
+        /**
          * Specifies the index of the head mention in the list of mentions, if any.
          * @param headMentionIndex the index.
          * @return this.
@@ -258,6 +290,18 @@ public class Entity extends BaseAttribute implements Serializable {
         public Builder sentiment(CategorizerResult sentiment) {
             this.sentiment.add(sentiment);
             return this;
+        }
+
+        /**
+         * Specifies the sentiment.
+         *
+         * @param builder the sentiment builder
+         * @param <B> the class of the sentiment builder
+         * @return this
+         * @see Builder#sentiment(CategorizerResult)
+         */
+        public <B extends BaseAttribute.Builder<CategorizerResult, ?>> Builder sentiment(B builder) {
+            return sentiment(builder.build());
         }
 
         /**

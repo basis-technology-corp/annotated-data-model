@@ -101,6 +101,29 @@ public final class Transliteration extends BaseAttribute {
                 .add("scriptMap", scriptMap);
     }
 
+    /**
+     * Factory method for {@link Builder} instances.
+     *
+     * @param script the script
+     * @param value the transliterated text
+     * @return the new builder
+     * @see Builder#Builder(ISO15924, String)
+     */
+    public static Builder builder(ISO15924 script, String value) {
+        return new Builder(script, value);
+    }
+
+    /**
+     * Factory method for {@link Builder} instances.
+     *
+     * @param toCopy the transliteration to copy
+     * @return the new builder
+     * @see Builder#Builder(Transliteration)
+     */
+    public static Builder builder(Transliteration toCopy) {
+        return new Builder(toCopy);
+    }
+
     public static final class Builder extends BaseAttribute.Builder<Transliteration, Transliteration.Builder> {
         private Map<ISO15924, String> scriptMap;
 

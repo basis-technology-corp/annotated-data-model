@@ -588,6 +588,26 @@ public class AnnotatedText implements Serializable {
     }
 
     /**
+     * Factory method for {@link Builder} instances.
+     *
+     * @return the new builder
+     * @see Builder#Builder()
+     */
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    /**
+     * Factory method for {@link Builder} instances.
+     *
+     * @param toCopy the annotated text to copy
+     * @return the new builder
+     */
+    public static Builder builder(AnnotatedText toCopy) {
+        return new Builder(toCopy);
+    }
+
+    /**
      * Builder class for {@link AnnotatedText} objects.
      */
     public static class Builder {
@@ -647,6 +667,17 @@ public class AnnotatedText implements Serializable {
         }
 
         /**
+         * Attaches a list of base noun phrases
+         * @param baseNounPhrasesBuilder the base noun phrases builder
+         * @param <B> the class of the base noun phrases builder
+         * @return this
+         * @see #baseNounPhrases(ListAttribute)
+         */
+        public <B extends BaseAttribute.Builder<ListAttribute<BaseNounPhrase>, ?>> Builder baseNounPhrases(B baseNounPhrasesBuilder) {
+            return baseNounPhrases(baseNounPhrasesBuilder.build());
+        }
+
+        /**
          * Attaches a list of entity mentions.
          *
          * @param entityMentions the entity mentions
@@ -673,6 +704,17 @@ public class AnnotatedText implements Serializable {
         }
 
         /**
+         * Attaches a per-language map of related terms.
+         *
+         * @param relatedTermsBuilder the related terms builder
+         * @param <B> the class of the related terms builder
+         * @return this
+         */
+        public <B extends BaseAttribute.Builder<MapAttribute<LanguageCode, ListAttribute<RelatedTerm>>, ?>> Builder relatedTerms(B relatedTermsBuilder) {
+            return relatedTerms(relatedTermsBuilder.build());
+        }
+
+        /**
          * Attaches a list of relationship mentions.
          *
          * @param relationshipMentions the relationship mentions.
@@ -681,6 +723,18 @@ public class AnnotatedText implements Serializable {
         public Builder relationshipMentions(ListAttribute<RelationshipMention> relationshipMentions) {
             attributes.put(AttributeKey.RELATIONSHIP_MENTION.key(), relationshipMentions);
             return this;
+        }
+
+        /**
+         * Attaches a list of relationship mentions.
+         *
+         * @param relationshipMentionsBuilder the relationship mentions builder
+         * @param <B> the class of the relationship mentions builder
+         * @return this
+         * @see #relationshipMentions(ListAttribute)
+         */
+        public <B extends BaseAttribute.Builder<ListAttribute<RelationshipMention>, ?>> Builder relationshipMentions(B relationshipMentionsBuilder) {
+            return relationshipMentions(relationshipMentionsBuilder.build());
         }
 
         /**
@@ -694,6 +748,18 @@ public class AnnotatedText implements Serializable {
             attributes.remove(AttributeKey.RESOLVED_ENTITY.key());
             attributes.put(AttributeKey.ENTITY.key(), entities);
             return this;
+        }
+
+        /**
+         * Attaches a list of entities.
+         *
+         * @param entitiesBuilder the entities builder
+         * @param <B> the class of the entities builder
+         * @return this
+         * @see #entities(ListAttribute)
+         */
+        public <B extends BaseAttribute.Builder<ListAttribute<Entity>, ?>> Builder entities(B entitiesBuilder) {
+            return entities(entitiesBuilder.build());
         }
 
         /**
@@ -735,6 +801,18 @@ public class AnnotatedText implements Serializable {
         }
 
         /**
+         * Attaches a list of language detections.
+         *
+         * @param languageDetectionRegionsBuilder the language detections builder
+         * @param <B> the class of the language detections builder
+         * @return this
+         * @see #languageDetectionRegions(ListAttribute)
+         */
+        public <B extends BaseAttribute.Builder<ListAttribute<LanguageDetection>, ?>> Builder languageDetectionRegions(B languageDetectionRegionsBuilder) {
+            return languageDetectionRegions(languageDetectionRegionsBuilder.build());
+        }
+
+        /**
          * Attaches a whole-document language detection.
          *
          * @param languageDetection the language detection
@@ -743,6 +821,18 @@ public class AnnotatedText implements Serializable {
         public Builder wholeDocumentLanguageDetection(LanguageDetection languageDetection) {
             attributes.put(AttributeKey.LANGUAGE_DETECTION.key(), languageDetection);
             return this;
+        }
+
+        /**
+         * Attaches a whole-document language detection.
+         *
+         * @param languageDetectionBuilder the language detection builder
+         * @param <B> the class of the language detection builder
+         * @return this
+         * @see #wholeDocumentLanguageDetection(LanguageDetection)
+         */
+        public <B extends BaseAttribute.Builder<LanguageDetection, ?>> Builder wholeDocumentLanguageDetection(B languageDetectionBuilder) {
+            return wholeDocumentLanguageDetection(languageDetectionBuilder.build());
         }
 
         /**
@@ -757,6 +847,18 @@ public class AnnotatedText implements Serializable {
         }
 
         /**
+         * Attaches a list of script regions.
+         *
+         * @param scriptRegionsBuilder the script regions builder
+         * @param <B> the class of the script regions builder
+         * @return this
+         * @see #scriptRegions(ListAttribute)
+         */
+        public <B extends BaseAttribute.Builder<ListAttribute<ScriptRegion>, ?>> Builder scriptRegions(B scriptRegionsBuilder) {
+            return scriptRegions(scriptRegionsBuilder.build());
+        }
+
+        /**
          * Attaches a list of sentences.
          *
          * @param sentences the sentences
@@ -765,6 +867,18 @@ public class AnnotatedText implements Serializable {
         public Builder sentences(ListAttribute<Sentence> sentences) {
             attributes.put(AttributeKey.SENTENCE.key(), sentences);
             return this;
+        }
+
+        /**
+         * Attaches a list of sentences.
+         *
+         * @param sentencesBuilder the sentences builder
+         * @param <B> the class of the sentences builder
+         * @return this
+         * @see #sentences(ListAttribute)
+         */
+        public <B extends BaseAttribute.Builder<ListAttribute<Sentence>, ?>> Builder sentences(B sentencesBuilder) {
+            return sentences(sentencesBuilder.build());
         }
 
         /**
@@ -779,6 +893,18 @@ public class AnnotatedText implements Serializable {
         }
 
         /**
+         * Attaches a list of tokens.
+         *
+         * @param tokensBuilder the tokens builder
+         * @param <B> the class of the tokens builder
+         * @return this
+         * @see #tokens(ListAttribute)
+         */
+        public <B extends BaseAttribute.Builder<ListAttribute<Token>, ?>> Builder tokens(B tokensBuilder) {
+            return tokens(tokensBuilder.build());
+        }
+
+        /**
          * Attaches a list of TranslatedTokens objects.
          *
          * @param translatedTokens a list of TranslatedTokens objects
@@ -787,6 +913,18 @@ public class AnnotatedText implements Serializable {
         public Builder translatedTokens(ListAttribute<TranslatedTokens> translatedTokens) {
             attributes.put(AttributeKey.TRANSLATED_TOKENS.key(), translatedTokens);
             return this;
+        }
+
+        /**
+         * Attaches a list of TranslatedTokens objects.
+         *
+         * @param translatedTokensBuilder a builder for a list of TranslatedTokens objects
+         * @param <B> the class of the list builder
+         * @return this
+         * @see #translatedTokens(ListAttribute)
+         */
+        public <B extends BaseAttribute.Builder<ListAttribute<TranslatedTokens>, ?>> Builder translatedTokens(B translatedTokensBuilder) {
+            return translatedTokens(translatedTokensBuilder.build());
         }
 
         /**
@@ -801,6 +939,18 @@ public class AnnotatedText implements Serializable {
         }
 
         /**
+         * Attaches a TranslatedData object
+         *
+         * @param translatedDataBuilder the translated data objects builder
+         * @param <B> the class of the translated data objects builder
+         * @return this
+         * @see #translatedData(ListAttribute)
+         */
+        public <B extends BaseAttribute.Builder<ListAttribute<TranslatedData>, ?>> Builder translatedData(B translatedDataBuilder) {
+            return translatedData(translatedDataBuilder.build());
+        }
+
+        /**
          * Attaches a list of categorizer results.
          *
          * @param categorizerResults the categorizer results
@@ -809,6 +959,18 @@ public class AnnotatedText implements Serializable {
         public Builder categorizerResults(ListAttribute<CategorizerResult> categorizerResults) {
             attributes.put(AttributeKey.CATEGORIZER_RESULTS.key(), categorizerResults);
             return this;
+        }
+
+        /**
+         * Attaches a list of categorizer results
+         *
+         * @param categorizerResultsBuilder the categorizer results builder
+         * @param <B> the class of the categorizer results builder
+         * @return this
+         * @see #categorizerResults(ListAttribute)
+         */
+        public <B extends BaseAttribute.Builder<ListAttribute<CategorizerResult>, ?>> Builder categorizerResults(B categorizerResultsBuilder) {
+            return categorizerResults(categorizerResultsBuilder.build());
         }
 
         /**
@@ -823,6 +985,18 @@ public class AnnotatedText implements Serializable {
         }
 
         /**
+         * Attaches a list of sentiment results.
+         *
+         * @param sentimentResultsBuilder the sentiment results builder
+         * @param <B> the class of the sentiment results builder
+         * @return this
+         * @see #sentimentResults(ListAttribute)
+         */
+        public <B extends BaseAttribute.Builder<ListAttribute<CategorizerResult>, ?>> Builder sentimentResults(B sentimentResultsBuilder) {
+            return sentimentResults(sentimentResultsBuilder.build());
+        }
+
+        /**
          * Attaches a list of dependencies.
          *
          * @param dependencies the dependencies.
@@ -831,6 +1005,18 @@ public class AnnotatedText implements Serializable {
         public Builder dependencies(ListAttribute<Dependency> dependencies) {
             attributes.put(AttributeKey.DEPENDENCY.key(), dependencies);
             return this;
+        }
+
+        /**
+         * Attaches a list of dependencies.
+         *
+         * @param dependenciesBuilder the dependencies builder
+         * @param <B> the class of the dependencies builder
+         * @return this
+         * @see #dependencies(ListAttribute)
+         */
+        public <B extends BaseAttribute.Builder<ListAttribute<Dependency>, ?>> Builder dependencies(B dependenciesBuilder) {
+            return dependencies(dependenciesBuilder.build());
         }
 
         /*
@@ -845,6 +1031,18 @@ public class AnnotatedText implements Serializable {
         }
 
         /**
+         * Attaches a list of topic results
+         *
+         * @param topicResultsBuilder the topic results builder
+         * @param <B> the class of the topic results builder
+         * @return this
+         * @see #topicResults(ListAttribute)
+         */
+        public <B extends BaseAttribute.Builder<ListAttribute<CategorizerResult>, ?>> Builder topicResults(B topicResultsBuilder) {
+            return topicResults(topicResultsBuilder.build());
+        }
+
+        /**
          * Attaches a set of embeddings.
          * @param embeddings the embeddings.
          * @return this.
@@ -854,19 +1052,85 @@ public class AnnotatedText implements Serializable {
             return this;
         }
 
+        /**
+         * Attaches a set of embeddings.
+         *
+         * @param embeddingsBuilder the embeddings builder
+         * @param <B> the class of the embeddings builder
+         * @return this
+         * @see #embeddings(Embeddings)
+         */
+        public <B extends BaseAttribute.Builder<Embeddings, ?>> Builder embeddings(B embeddingsBuilder) {
+            return embeddings(embeddingsBuilder.build());
+        }
+
+        /**
+         * Attaches a set of concepts.
+         *
+         * @param concepts the concepts
+         * @return this
+         */
         public Builder concepts(ListAttribute<Concept> concepts) {
             attributes.put(AttributeKey.CONCEPT.key(), concepts);
             return this;
         }
 
+        /**
+         * Attaches a set of concepts
+         *
+         * @param conceptsBuilder the concepts builder
+         * @param <B> the class of the concepts builder
+         * @return this
+         * @see #concepts(ListAttribute)
+         */
+        public <B extends BaseAttribute.Builder<ListAttribute<Concept>, ?>> Builder concepts(B conceptsBuilder) {
+            return concepts(conceptsBuilder.build());
+        }
+
+        /**
+         * Attaches a set of keyphrases.
+         *
+         * @param keyphrases the keyphrases
+         * @return this
+         */
         public Builder keyphrases(ListAttribute<Keyphrase> keyphrases) {
             attributes.put(AttributeKey.KEYPHRASE.key(), keyphrases);
             return this;
         }
 
+        /**
+         * Attaches a set of keyphrases.
+         *
+         * @param keyphrasesBuilder the keyphrases builder
+         * @param <B> the class of the keyphrases builder
+         * @return this
+         * @see #keyphrases(ListAttribute)
+         */
+        public <B extends BaseAttribute.Builder<ListAttribute<Keyphrase>, ?>> Builder keyphrases(B keyphrasesBuilder) {
+            return keyphrases(keyphrasesBuilder.build());
+        }
+
+        /**
+         * Attaches a set of transliterations
+         *
+         * @param transliterationResults the transliterations
+         * @return this
+         */
         public Builder transliteration(TransliterationResults transliterationResults) {
             attributes.put(AttributeKey.TRANSLITERATION.key(), transliterationResults);
             return this;
+        }
+
+        /**
+         * Attaches a set of transliterations
+         *
+         * @param transliterationResultsBuilder the transliterations builder
+         * @param <B> the class of the transliterations builder
+         * @return this
+         * @see #transliteration(TransliterationResults)
+         */
+        public <B extends BaseAttribute.Builder<TransliterationResults, ?>> Builder transliteration(B transliterationResultsBuilder) {
+            return transliteration(transliterationResultsBuilder.build());
         }
 
         /**

@@ -160,6 +160,18 @@ public class MapAttribute<K, V extends BaseAttribute> extends BaseAttribute impl
         return new UnsupportedOperationException("MapAttribute is read-only");
     }
 
+    /**
+     * Factory method for {@link Builder} instances.
+     *
+     * @param keyClass the class for the keys to be stored in the map
+     * @param valueClass the class for the values to be stored in the map
+     * @return the new builder
+     * @see Builder#Builder(Class, Class)
+     */
+    public static <K, V extends BaseAttribute> Builder<K, V> builder(Class<K> keyClass, Class<V> valueClass) {
+        return new Builder<>(keyClass, valueClass);
+    }
+
     public static class Builder<K, V extends BaseAttribute> extends BaseAttribute.Builder<MapAttribute<K, V>, MapAttribute.Builder<K, V>> {
         private Class<?> keyClass;
         private Class<? extends BaseAttribute> valueClass;
@@ -187,6 +199,19 @@ public class MapAttribute<K, V extends BaseAttribute> extends BaseAttribute impl
         public Builder<K, V> put(K key, V value) {
             items.put(key, value);
             return this;
+        }
+
+        /**
+         * Adds one entry to the map.
+         *
+         * @param key the key to add
+         * @param valueBuilder the builder for the value to add
+         * @param <B> the value builder's class
+         * @return this
+         * @see Builder#put(K, V)
+         */
+        public <B extends BaseAttribute.Builder<V, ?>> Builder<K, V> put(K key, B valueBuilder) {
+            return put(key, valueBuilder.build());
         }
 
         /**

@@ -199,6 +199,17 @@ public class ListAttribute<Item extends BaseAttribute> extends BaseAttribute imp
     }
 
     /**
+     * Factory method for {@link Builder} instances.
+     *
+     * @param itemClass the class for the items to be stored in the list
+     * @return the new builder
+     * @see Builder#Builder(Class)
+     */
+    public static <Item extends BaseAttribute> Builder<Item> builder(Class<Item> itemClass) {
+        return new Builder<>(itemClass);
+    }
+
+    /**
      * A builder for lists.
      *
      * @param <Item> the type of attribute in the list
@@ -226,6 +237,18 @@ public class ListAttribute<Item extends BaseAttribute> extends BaseAttribute imp
         public Builder<Item> add(Item item) {
             items.add(item);
             return this;
+        }
+
+        /**
+         * Adds one item to the list.
+         *
+         * @param itemBuilder the builder for the item to add
+         * @param <B> the class of the item builder
+         * @return this
+         * @see Builder#add(BaseAttribute)
+         */
+        public <B extends BaseAttribute.Builder<Item, ?>> Builder<Item> add(B itemBuilder) {
+            return add(itemBuilder.build());
         }
 
         /**

@@ -96,6 +96,16 @@ public class Embeddings extends BaseAttribute implements Serializable {
                 .add("collection", collections);
     }
 
+    /**
+     * Factory method for {@link Builder} instances.
+     *
+     * @return the new builder
+     * @see Builder#Builder()
+     */
+    public static Builder builder() {
+        return new Builder();
+    }
+
     public static class Builder extends BaseAttribute.Builder<Embeddings, Embeddings.Builder> {
         private Map<Name, EmbeddingCollection> collections;
 
@@ -106,13 +116,24 @@ public class Embeddings extends BaseAttribute implements Serializable {
 
         /**
          * Put a collection of embeddings into the embeddings.
-         * @param collectionName the name of the collection.
-         * @param collection the collection.
-         * @return this.
+         * @param collectionName the name of the collection
+         * @param collection the collection
+         * @return this
          */
         public Builder put(Name collectionName, EmbeddingCollection collection) {
             collections.put(collectionName, collection);
             return this;
+        }
+
+        /**
+         * Put a collection of embeddings into the embeddings.
+         * @param collectionName the name of the collection
+         * @param collectionBuilder the builder for the collection
+         * @return this
+         * @see Builder#put(Name, EmbeddingCollection)
+         */
+        public Builder put(Name collectionName, EmbeddingCollection.Builder collectionBuilder) {
+            return this.put(collectionName, collectionBuilder.build());
         }
 
         /**

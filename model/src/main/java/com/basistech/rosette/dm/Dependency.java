@@ -139,6 +139,30 @@ public class Dependency extends BaseAttribute implements Serializable {
     }
 
     /**
+     * Factory method for {@link Builder} instances.
+     *
+     * @param relationship the relationship label on this dependency
+     * @param governorTokenIndex the token index of the governing token
+     * @param dependencyTokenIndex the token index of the dependency token
+     * @return the new builder
+     * @see Builder#Builder(String, int, int)
+     */
+    public static Builder builder(String relationship, int governorTokenIndex, int dependencyTokenIndex) {
+        return new Builder(relationship, governorTokenIndex, dependencyTokenIndex);
+    }
+
+    /**
+     * Factory method for {@link Builder} instances.
+     *
+     * @param toCopy the dependency to copy
+     * @return the new builder
+     * @see Builder#Builder(Dependency)
+     */
+    public static Builder builder(Dependency toCopy) {
+        return new Builder(toCopy);
+    }
+
+    /**
      * Builder for Dependency.
      */
     public static class Builder extends BaseAttribute.Builder<Dependency, Dependency.Builder> {

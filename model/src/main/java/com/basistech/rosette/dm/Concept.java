@@ -102,6 +102,29 @@ public class Concept extends BaseAttribute implements Serializable {
     }
 
     /**
+     * Factory method for {@link Builder} instances.
+     *
+     * @param phrase the name of the concept
+     * @param conceptId the ID associated with the concept
+     * @return the new builder
+     * @see Builder#Builder(String, String)
+     */
+    public static Builder builder(String phrase, String conceptId) {
+        return new Builder(phrase, conceptId);
+    }
+
+    /**
+     * Factory method for {@link Builder} instances.
+     *
+     * @param toCopy the concept to copy
+     * @return the new builder
+     * @see Builder#Builder(Concept)
+     */
+    public static Builder builder(Concept toCopy) {
+        return new Builder(toCopy);
+    }
+
+    /**
      * A Builder for concepts
      */
     public static class Builder extends BaseAttribute.Builder<Concept, Concept.Builder> {

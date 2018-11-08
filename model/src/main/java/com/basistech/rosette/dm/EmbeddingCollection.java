@@ -84,6 +84,27 @@ public class EmbeddingCollection implements Serializable {
     }
 
     /**
+     * Factory method for {@link Builder} instances.
+     *
+     * @return the new builder
+     * @see Builder#Builder()
+     */
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    /**
+     * Factory method for {@link Builder} instances.
+     *
+     * @param toCopy the embedding collection to copy
+     * @return the new builder
+     * @see Builder#Builder(EmbeddingCollection)
+     */
+    public static Builder builder(EmbeddingCollection toCopy) {
+        return new Builder(toCopy);
+    }
+
+    /**
      * Builder class for EmbeddingsCollection.
      */
     public static class Builder {

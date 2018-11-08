@@ -139,6 +139,28 @@ public class LanguageDetection extends Attribute implements Serializable {
         }
 
         /**
+         * Factory method for {@link Builder} instances.
+         *
+         * @param language the detected language
+         * @return the new builder
+         * @see Builder#Builder(LanguageCode)
+         */
+        public static Builder builder(LanguageCode language) {
+            return new Builder(language);
+        }
+
+        /**
+         * Factory method for {@link Builder} instances.
+         *
+         * @param toCopy the detection result to copy
+         * @return the new builder
+         * @see Builder#Builder(DetectionResult)
+         */
+        public static Builder builder(DetectionResult toCopy) {
+            return new Builder(toCopy);
+        }
+
+        /**
          * Builder for detection results.
          */
         public static class Builder extends BaseAttribute.Builder<DetectionResult, DetectionResult.Builder> {
@@ -274,6 +296,30 @@ public class LanguageDetection extends Attribute implements Serializable {
         int result = super.hashCode();
         result = 31 * result + detectionResults.hashCode();
         return result;
+    }
+
+    /**
+     * Factory method for {@link Builder} instances.
+     *
+     * @param startOffset the start offset of the region in characters
+     * @param endOffset the end offset of the region in characters
+     * @param detectionResults the list of detection results
+     * @return the new builder
+     * @see Builder#Builder(int, int, List)
+     */
+    public static Builder builder(int startOffset, int endOffset, List<DetectionResult> detectionResults) {
+        return new Builder(startOffset, endOffset, detectionResults);
+    }
+
+    /**
+     * Factory method for {@link Builder} instances.
+     *
+     * @param toCopy the language detection to copy
+     * @return the new builder
+     * @see Builder#Builder(LanguageDetection)
+     */
+    public static Builder builder(LanguageDetection toCopy) {
+        return new Builder(toCopy);
     }
 
     /**

@@ -94,6 +94,27 @@ public class KoreanMorphoAnalysis extends MorphoAnalysis implements Serializable
     }
 
     /**
+     * Factory method for {@link Builder} instances.
+     *
+     * @return the new builder
+     * @see Builder#Builder()
+     */
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    /**
+     * Factory method for {@link Builder} instances.
+     *
+     * @param toCopy the morpho analysis to copy
+     * @return the new builder
+     * @see Builder#Builder(KoreanMorphoAnalysis)
+     */
+    public static Builder builder(KoreanMorphoAnalysis toCopy) {
+        return new Builder(toCopy);
+    }
+
+    /**
      * A builder for {@link com.basistech.rosette.dm.KoreanMorphoAnalysis}.
      */
     public static class Builder extends MorphoAnalysis.Builder<KoreanMorphoAnalysis, KoreanMorphoAnalysis.Builder> {

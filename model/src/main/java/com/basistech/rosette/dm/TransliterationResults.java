@@ -106,6 +106,40 @@ public final class TransliterationResults extends BaseAttribute {
     }
 
     /**
+     * Factory method for {@link Builder} instances.
+     *
+     * @param languageCode The language code to put the new transliteration under
+     * @param script The script for the new transliteration
+     * @param transliteration The text for the new transliteration
+     * @return the new builder
+     * @see Builder#Builder(LanguageCode, ISO15924, String)
+     */
+    public static Builder builder(LanguageCode languageCode, ISO15924 script, String transliteration) {
+        return new Builder(languageCode, script, transliteration);
+    }
+
+    /**
+     * Factory method for {@link Builder} instances.
+     *
+     * @return the new builder
+     * @see Builder#Builder()
+     */
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    /**
+     * Factory method for {@link Builder} instances.
+     *
+     * @param toCopy the transliteration results to copy
+     * @return the new builder
+     * @see Builder#Builder(TransliterationResults)
+     */
+    public static Builder builder(TransliterationResults toCopy) {
+        return new Builder(toCopy);
+    }
+
+    /**
      * Builder for immutable {@link TransliterationResults}
      */
     public static class Builder extends BaseAttribute.Builder<TransliterationResults, TransliterationResults.Builder> {

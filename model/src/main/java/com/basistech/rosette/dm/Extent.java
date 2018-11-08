@@ -37,6 +37,29 @@ public class Extent extends Attribute implements Serializable {
     }
 
     /**
+     * Factory method for {@link Builder} instances.
+     *
+     * @param startOffset start characters offset
+     * @param endOffset end characters offset
+     * @return the new builder
+     * @see Builder#Builder(int, int)
+     */
+    public static Builder builder(int startOffset, int endOffset) {
+        return new Builder(startOffset, endOffset);
+    }
+
+    /**
+     * Factory method for {@link Builder} instances.
+     *
+     * @param toCopy the attribute to copy
+     * @return the new builder
+     * @see Builder#Builder(Attribute)
+     */
+    public static Builder builder(Attribute toCopy) {
+        return new Builder(toCopy);
+    }
+
+    /**
      * Builder for Extent attributes.
      */
     public static class Builder extends Attribute.Builder<Extent, Extent.Builder>  {

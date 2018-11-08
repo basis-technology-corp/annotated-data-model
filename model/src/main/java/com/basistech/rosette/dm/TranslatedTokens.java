@@ -91,6 +91,28 @@ public class TranslatedTokens extends BaseAttribute implements Serializable {
     }
 
     /**
+     * Factory method for {@link Builder} instances.
+     *
+     * @param domain specifies the language and script of the translation
+     * @return the new builder
+     * @see Builder#Builder(TextDomain)
+     */
+    public static Builder builder(TextDomain domain) {
+        return new Builder(domain);
+    }
+
+    /**
+     * Factory method for {@link Builder} instances.
+     *
+     * @param toCopy the translated tokens to copy
+     * @return the new builder
+     * @see Builder#Builder(TranslatedTokens)
+     */
+    public static Builder builder(TranslatedTokens toCopy) {
+        return new Builder(toCopy);
+    }
+
+    /**
      * Builder class for TranslatedTokens.
      */
     public static class Builder extends BaseAttribute.Builder<TranslatedTokens, TranslatedTokens.Builder> {
