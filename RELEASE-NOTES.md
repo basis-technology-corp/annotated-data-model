@@ -1,5 +1,10 @@
 # Cumulative Release Notes for the Annotated Data Model
 
+## 2.5.1
+### [RD-2428](https://basistech.atlassian.net/browse/RD-2428) Implement ADM Updates for Nearest Neighbors
+
+Bugfix: `relatedTerms` was missing from `KnownAttributes`.
+
 ## 2.5.0
 
 ### [RD-2428](https://basistech.atlassian.net/browse/RD-2428) Implement ADM Updates for Nearest Neighbors
