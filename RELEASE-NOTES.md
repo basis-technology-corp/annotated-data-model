@@ -1,5 +1,11 @@
 # Cumulative Release Notes for the Annotated Data Model
 
+## 2.5.0
+
+### [RD-2428](https://basistech.atlassian.net/browse/RD-2428) Implement ADM Updates for Nearest Neighbors
+
+Adds the `relatedTerms` slot.
+
 ## 2.4.6
 
 ### [COMN-244](https://basistech.atlassian.net/browse/COMN-244) Consume new parent with updated Guava

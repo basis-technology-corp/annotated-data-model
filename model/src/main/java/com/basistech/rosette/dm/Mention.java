@@ -25,7 +25,7 @@ import java.util.Map;
  * "George Washington" are mentions of type "PERSON".
  */
 public class Mention extends Attribute implements Serializable {
-    private static final long serialVersionUID = 222L;
+    private static final long serialVersionUID = 250L;
     private final Double confidence;
     private final Double linkingConfidence;
     private final String source;

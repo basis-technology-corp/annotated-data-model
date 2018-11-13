@@ -29,7 +29,7 @@ import java.util.Map;
  *
  */
 public class RelationshipComponent extends BaseAttribute implements Serializable {
-    private static final long serialVersionUID = 222L;
+    private static final long serialVersionUID = 250L;
 
     private final String phrase;
     private final List<Extent> extents;

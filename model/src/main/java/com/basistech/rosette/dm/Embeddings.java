@@ -30,7 +30,7 @@ import java.util.Objects;
  * Constants are provided for some common cases.
  */
 public class Embeddings extends BaseAttribute implements Serializable {
-    private static final long serialVersionUID = 222L;
+    private static final long serialVersionUID = 250L;
     /**
      * The embedding name.
      */

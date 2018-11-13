@@ -24,6 +24,7 @@ import com.basistech.rosette.dm.Entity;
 import com.basistech.rosette.dm.Keyphrase;
 import com.basistech.rosette.dm.LanguageDetection;
 import com.basistech.rosette.dm.ListAttribute;
+import com.basistech.rosette.dm.MapAttribute;
 import com.basistech.rosette.dm.RelationshipComponent;
 import com.basistech.rosette.dm.RelationshipMention;
 import com.basistech.rosette.dm.ScriptRegion;
@@ -61,6 +62,7 @@ public enum KnownAttribute {
     SENTIMENT_RESULT("sentimentResults", CategorizerResult.class),
     TOPIC_RESULT("topicResults", CategorizerResult.class),
     LIST("list", ListAttribute.class),
+    MAP("map", MapAttribute.class),
     UNKNOWN("unknown", UnknownAttribute.class),
     RELATION_ARGUMENT("RelationshipComponent", RelationshipComponent.class),
     CONCEPT("concept", Concept.class),

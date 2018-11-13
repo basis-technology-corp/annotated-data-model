@@ -26,7 +26,7 @@ import java.util.Map;
  * ISO-15924.
  */
 public class ScriptRegion extends Attribute implements Serializable {
-    private static final long serialVersionUID = 222L;
+    private static final long serialVersionUID = 250L;
     private final ISO15924 script;
 
     protected ScriptRegion(int startOffset, int endOffset, ISO15924 script, Map<String, Object> extendedProperties) {

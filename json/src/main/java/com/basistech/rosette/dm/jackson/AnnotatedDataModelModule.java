@@ -32,10 +32,12 @@ import com.basistech.rosette.dm.Keyphrase;
 import com.basistech.rosette.dm.KoreanMorphoAnalysis;
 import com.basistech.rosette.dm.LanguageDetection;
 import com.basistech.rosette.dm.ListAttribute;
+import com.basistech.rosette.dm.MapAttribute;
 import com.basistech.rosette.dm.Mention;
 import com.basistech.rosette.dm.MorphoAnalysis;
 import com.basistech.rosette.dm.Name;
 import com.basistech.rosette.dm.RawData;
+import com.basistech.rosette.dm.RelatedTerm;
 import com.basistech.rosette.dm.RelationshipComponent;
 import com.basistech.rosette.dm.RelationshipMention;
 import com.basistech.rosette.dm.ScriptRegion;
@@ -79,6 +81,7 @@ public class  AnnotatedDataModelModule extends EnumModule {
         context.setMixInAnnotations(LanguageDetection.class, LanguageDetectionMixin.class);
         context.setMixInAnnotations(LanguageDetection.DetectionResult.class, LanguageDetectionMixin.DetectionResultMixin.class);
         context.setMixInAnnotations(ListAttribute.class, ListAttributeMixin.class);
+        context.setMixInAnnotations(MapAttribute.class, MapAttributeMixin.class);
         context.setMixInAnnotations(Mention.class, MentionMixin.class);
         context.setMixInAnnotations(MorphoAnalysis.class, MorphoAnalysisMixin.class);
         context.setMixInAnnotations(Name.class, NameMixin.class);
@@ -96,6 +99,7 @@ public class  AnnotatedDataModelModule extends EnumModule {
         context.setMixInAnnotations(Keyphrase.class, KeyphraseMixin.class);
         context.setMixInAnnotations(Transliteration.class, TransliterationMixin.class);
         context.setMixInAnnotations(TransliterationResults.class, TransliterationResultsMixin.class);
+        context.setMixInAnnotations(RelatedTerm.class, RelatedTermMixin.class);
 
         // type-serializers
         SimpleSerializers serializers = new SimpleSerializers();

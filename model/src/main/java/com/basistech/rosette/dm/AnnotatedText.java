@@ -16,6 +16,7 @@
 
 package com.basistech.rosette.dm;
 
+import com.basistech.util.LanguageCode;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
@@ -49,7 +50,7 @@ import java.util.Map;
  */
 @SuppressWarnings("deprecation")
 public class AnnotatedText implements Serializable {
-    private static final long serialVersionUID = 222L;
+    private static final long serialVersionUID = 250L;
     private final CharSequence data;
     /* The attributes for this text, indexed by type.
      * Only one attribute of a type is permitted, thus the concept
@@ -369,6 +370,33 @@ public class AnnotatedText implements Serializable {
     }
 
     /**
+     * Returns the map of related terms.
+     *
+     * @return the map of related terms
+     */
+    @SuppressWarnings("unchecked")
+    public MapAttribute<LanguageCode, ListAttribute<RelatedTerm>> getRelatedTerms() {
+        return (MapAttribute<LanguageCode, ListAttribute<RelatedTerm>>) attributes.get(AttributeKey.RELATED_TERMS.key());
+    }
+
+    /**
+     * Convenience accessor for a language's list of related terms.
+     *
+     * @param languageCode the language code whose related terms to retrieve
+     * @return the list of related terms
+     * @see #getRelatedTerms()
+     */
+    @SuppressWarnings("unchecked")
+    public ListAttribute<RelatedTerm> getRelatedTerms(LanguageCode languageCode) {
+        MapAttribute<LanguageCode, ListAttribute<RelatedTerm>> termMap = getRelatedTerms();
+        if (termMap == null) {
+            // Avoid NPE in missing case (same behavior as getRelatedTerms() when the attribute is missing)
+            return null;
+        }
+        return termMap.get(languageCode);
+    }
+
+    /**
      * Returns the list of relationship mentions.
      *
      * @return the list of relationship mentions
@@ -630,6 +658,17 @@ public class AnnotatedText implements Serializable {
             // a new set of old objects replaces any prior set of new objects.
             attributes.remove(AttributeKey.ENTITY.key());
             attributes.put(AttributeKey.ENTITY_MENTION.key(), entityMentions);
+            return this;
+        }
+
+        /**
+         * Attaches a per-language map of related terms.
+         *
+         * @param relatedTerms the related terms
+         * @return this
+         */
+        public Builder relatedTerms(MapAttribute<LanguageCode, ListAttribute<RelatedTerm>> relatedTerms) {
+            attributes.put(AttributeKey.RELATED_TERMS.key(), relatedTerms);
             return this;
         }
 

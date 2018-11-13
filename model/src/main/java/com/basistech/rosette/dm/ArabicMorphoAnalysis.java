@@ -47,7 +47,7 @@ import java.util.Map;
  * </pre>
  */
 public class ArabicMorphoAnalysis extends MorphoAnalysis implements Serializable {
-    private static final long serialVersionUID = 222L;
+    private static final long serialVersionUID = 250L;
     private final int prefixLength;
     private final int stemLength;
     private final String root;

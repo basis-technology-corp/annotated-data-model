@@ -27,7 +27,7 @@ import java.util.Map;
  * translation may be Simplified Chinese.
  */
 public class TranslatedData extends BaseAttribute implements Serializable {
-    private static final long serialVersionUID = 222L;
+    private static final long serialVersionUID = 250L;
     private final TextDomain domain;
     private final String translation;
     private final Double confidence;

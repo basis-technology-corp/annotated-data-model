@@ -43,7 +43,7 @@ import java.util.Set;
  * </pre></blockquote>
  */
 public class RelationshipMention extends Attribute implements Serializable {
-    private static final long serialVersionUID = 222L;
+    private static final long serialVersionUID = 250L;
 
     private final RelationshipComponent predicate;
     private final RelationshipComponent arg1;

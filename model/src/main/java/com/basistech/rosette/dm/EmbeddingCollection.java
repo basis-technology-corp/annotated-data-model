@@ -30,7 +30,7 @@ import java.util.Objects;
  * the index value is 0.
  */
 public class EmbeddingCollection implements Serializable {
-    private static final long serialVersionUID = 222L;
+    private static final long serialVersionUID = 250L;
     private final Map<Integer, float[]> embeddings;
 
     protected EmbeddingCollection(Map<Integer, float[]> embeddings) {

@@ -26,7 +26,7 @@ import java.util.Map;
  * of characters (UTF-16 elements).
  */
 public abstract class Attribute extends BaseAttribute implements Serializable {
-    private static final long serialVersionUID = 222L;
+    private static final long serialVersionUID = 250L;
     protected final int startOffset;
     protected final int endOffset;
 

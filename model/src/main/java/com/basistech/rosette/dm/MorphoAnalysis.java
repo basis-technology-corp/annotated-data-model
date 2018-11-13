@@ -34,7 +34,7 @@ import java.util.Map;
  * In some languages, words are decompounded into pieces that can, themselves, be analyzed.
  */
 public class MorphoAnalysis extends BaseAttribute implements Serializable {
-    private static final long serialVersionUID = 222L;
+    private static final long serialVersionUID = 250L;
     // every language we support has part-of-speech and lemma
     private final String partOfSpeech;
     private final String lemma;

@@ -1,5 +1,5 @@
 /*
-* Copyright 2014 Basis Technology Corp.
+* Copyright 2018 Basis Technology Corp.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -13,16 +13,19 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-package com.basistech.rosette.dm;
+package com.basistech.rosette.dm.jackson;
 
-import java.io.Serializable;
+import com.basistech.rosette.dm.RelatedTerm;
+import com.basistech.util.LanguageCode;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-/**
- * Class used for future-proof representation of attributes in json that we
- * don't have classes for.
- * @adm.ignore
- */
-public class UnknownAttribute extends BaseAttribute implements Serializable {
-    private static final long serialVersionUID = 250L;
-    //
+import java.util.List;
+import java.util.Map;
+
+public abstract class RelatedTermsMixin {
+    @JsonCreator
+    RelatedTermsMixin(@JsonProperty("terms") Map<LanguageCode, List<RelatedTerm>> terms) {
+        //
+    }
 }

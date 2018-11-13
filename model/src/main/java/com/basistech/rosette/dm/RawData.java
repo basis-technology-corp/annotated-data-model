@@ -30,7 +30,7 @@ import java.util.Map;
  * @adm.ignore
  */
 public class RawData implements Serializable {
-    private static final long serialVersionUID = 222L;
+    private static final long serialVersionUID = 250L;
     private final ByteBuffer data;
     // a compromise between String and Object
     private final Map<String, List<String>> metadata;

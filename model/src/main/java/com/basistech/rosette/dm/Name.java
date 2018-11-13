@@ -35,7 +35,7 @@ import java.util.Map;
  * {@linkplain Name} is used for names unrelated to documents.
  */
 public class Name extends BaseAttribute implements Serializable {
-    private static final long serialVersionUID = 222L;
+    private static final long serialVersionUID = 250L;
     private final String text;
     private final String type;
     private final ISO15924 script;

@@ -34,7 +34,7 @@ import java.util.Set;
  * @adm.ignore
  */
 public abstract class BaseAttribute implements Serializable {
-    private static final long serialVersionUID = 222L;
+    private static final long serialVersionUID = 250L;
 
     protected Map<String, Object> extendedProperties;
 

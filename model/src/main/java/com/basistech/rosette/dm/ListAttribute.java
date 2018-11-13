@@ -34,7 +34,7 @@ import java.util.Map;
  * @param <Item> The type of the attributes in the list.
  */
 public class ListAttribute<Item extends BaseAttribute> extends BaseAttribute implements List<Item>, Serializable {
-    private static final long serialVersionUID = 222L;
+    private static final long serialVersionUID = 250L;
 
     private final List<Item> items;
     private final Class<? extends BaseAttribute> itemClass;
