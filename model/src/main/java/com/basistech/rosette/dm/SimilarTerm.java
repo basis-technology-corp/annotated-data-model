@@ -21,11 +21,11 @@ import java.util.Objects;
 /**
  * A term with some semantic similarity to an {@link AnnotatedText}.
  */
-public class RelatedTerm extends BaseAttribute implements Serializable {
+public class SimilarTerm extends BaseAttribute implements Serializable {
     private final String term;
     private final Double similarity;
 
-    protected RelatedTerm(String term, Double similarity) {
+    protected SimilarTerm(String term, Double similarity) {
         this.term = term;
         this.similarity = similarity;
     }
@@ -54,7 +54,7 @@ public class RelatedTerm extends BaseAttribute implements Serializable {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        RelatedTerm that = (RelatedTerm) o;
+        SimilarTerm that = (SimilarTerm) o;
         return Objects.equals(term, that.term) && Objects.equals(similarity, that.similarity);
     }
 
@@ -65,13 +65,13 @@ public class RelatedTerm extends BaseAttribute implements Serializable {
 
     @Override
     public String toString() {
-        return String.format("RelatedTerm{term=%s; similarity=%s}", term, similarity);
+        return String.format("SimilarTerm{term=%s; similarity=%s}", term, similarity);
     }
 
     /**
-     * Builder class for RelatedTerm
+     * Builder class for SimilarTerm
      */
-    public static class Builder extends BaseAttribute.Builder<RelatedTerm, RelatedTerm.Builder> {
+    public static class Builder extends BaseAttribute.Builder<SimilarTerm, SimilarTerm.Builder> {
         private String term;
         private Double similarity;
 
@@ -101,11 +101,11 @@ public class RelatedTerm extends BaseAttribute implements Serializable {
         }
 
         /**
-         * Returns an immutable RelatedTerm from the current state of this builder
-         * @return the new RelatedTerm instance
+         * Returns an immutable SimilarTerm from the current state of this builder
+         * @return the new SimilarTerm instance
          */
-        public RelatedTerm build() {
-            return new RelatedTerm(term, similarity);
+        public SimilarTerm build() {
+            return new SimilarTerm(term, similarity);
         }
 
         @Override

@@ -25,7 +25,7 @@ import com.basistech.rosette.dm.Keyphrase;
 import com.basistech.rosette.dm.LanguageDetection;
 import com.basistech.rosette.dm.ListAttribute;
 import com.basistech.rosette.dm.MapAttribute;
-import com.basistech.rosette.dm.RelatedTerm;
+import com.basistech.rosette.dm.SimilarTerm;
 import com.basistech.rosette.dm.RelationshipComponent;
 import com.basistech.rosette.dm.RelationshipMention;
 import com.basistech.rosette.dm.ScriptRegion;
@@ -68,7 +68,7 @@ public enum KnownAttribute {
     RELATION_ARGUMENT("RelationshipComponent", RelationshipComponent.class),
     CONCEPT("concept", Concept.class),
     KEYPHRASE("keyphrase", Keyphrase.class),
-    RELATED_TERM("relatedTerm", RelatedTerm.class),
+    SIMILAR_TERM("similarTerm", SimilarTerm.class),
     TRANSLITERATION("transliteration", TransliterationResults.class);
 
     private final String jsonTag;

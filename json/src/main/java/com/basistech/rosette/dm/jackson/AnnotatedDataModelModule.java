@@ -37,7 +37,7 @@ import com.basistech.rosette.dm.Mention;
 import com.basistech.rosette.dm.MorphoAnalysis;
 import com.basistech.rosette.dm.Name;
 import com.basistech.rosette.dm.RawData;
-import com.basistech.rosette.dm.RelatedTerm;
+import com.basistech.rosette.dm.SimilarTerm;
 import com.basistech.rosette.dm.RelationshipComponent;
 import com.basistech.rosette.dm.RelationshipMention;
 import com.basistech.rosette.dm.ScriptRegion;
@@ -99,7 +99,7 @@ public class  AnnotatedDataModelModule extends EnumModule {
         context.setMixInAnnotations(Keyphrase.class, KeyphraseMixin.class);
         context.setMixInAnnotations(Transliteration.class, TransliterationMixin.class);
         context.setMixInAnnotations(TransliterationResults.class, TransliterationResultsMixin.class);
-        context.setMixInAnnotations(RelatedTerm.class, RelatedTermMixin.class);
+        context.setMixInAnnotations(SimilarTerm.class, SimilarTermMixin.class);
 
         // type-serializers
         SimpleSerializers serializers = new SimpleSerializers();

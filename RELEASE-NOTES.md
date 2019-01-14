@@ -1,15 +1,26 @@
 # Cumulative Release Notes for the Annotated Data Model
 
+## 2.5.2
+
+### [RD-2427](https://basistech.atlassian.net/browse/RD-2427) Implement ADM Updates for Nearest Neighbors
+
+`relatedTerms` renamed to `similarTerms` to match its endpoint.
+
 ## 2.5.1
+
 ### [RD-2428](https://basistech.atlassian.net/browse/RD-2428) Implement ADM Updates for Nearest Neighbors
 
 Bugfix: `relatedTerms` was missing from `KnownAttributes`.
+
+NOTE: `relatedTerms` has been renamed to `similarTerms` in version 2.5.2, and this version should not be used.
 
 ## 2.5.0
 
 ### [RD-2428](https://basistech.atlassian.net/browse/RD-2428) Implement ADM Updates for Nearest Neighbors
 
 Adds the `relatedTerms` slot.
+
+NOTE: `relatedTerms` has been renamed to `similarTerms` in version 2.5.2, and this version should not be used.
 
 ## 2.4.6
 

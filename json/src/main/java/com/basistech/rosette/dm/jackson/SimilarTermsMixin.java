@@ -15,7 +15,7 @@
 */
 package com.basistech.rosette.dm.jackson;
 
-import com.basistech.rosette.dm.RelatedTerm;
+import com.basistech.rosette.dm.SimilarTerm;
 import com.basistech.util.LanguageCode;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -23,9 +23,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 import java.util.Map;
 
-public abstract class RelatedTermsMixin {
+public abstract class SimilarTermsMixin {
     @JsonCreator
-    RelatedTermsMixin(@JsonProperty("terms") Map<LanguageCode, List<RelatedTerm>> terms) {
+    SimilarTermsMixin(@JsonProperty("terms") Map<LanguageCode, List<SimilarTerm>> terms) {
         //
     }
 }
