@@ -370,27 +370,27 @@ public class AnnotatedText implements Serializable {
     }
 
     /**
-     * Returns the map of related terms.
+     * Returns the map of similar terms.
      *
-     * @return the map of related terms
+     * @return the map of similar terms
      */
     @SuppressWarnings("unchecked")
-    public MapAttribute<LanguageCode, ListAttribute<RelatedTerm>> getRelatedTerms() {
-        return (MapAttribute<LanguageCode, ListAttribute<RelatedTerm>>) attributes.get(AttributeKey.RELATED_TERMS.key());
+    public MapAttribute<LanguageCode, ListAttribute<SimilarTerm>> getSimilarTerms() {
+        return (MapAttribute<LanguageCode, ListAttribute<SimilarTerm>>) attributes.get(AttributeKey.SIMILAR_TERMS.key());
     }
 
     /**
-     * Convenience accessor for a language's list of related terms.
+     * Convenience accessor for a language's list of similar terms.
      *
-     * @param languageCode the language code whose related terms to retrieve
-     * @return the list of related terms
-     * @see #getRelatedTerms()
+     * @param languageCode the language code whose similar terms to retrieve
+     * @return the list of similar terms
+     * @see #getSimilarTerms()
      */
     @SuppressWarnings("unchecked")
-    public ListAttribute<RelatedTerm> getRelatedTerms(LanguageCode languageCode) {
-        MapAttribute<LanguageCode, ListAttribute<RelatedTerm>> termMap = getRelatedTerms();
+    public ListAttribute<SimilarTerm> getSimilarTerms(LanguageCode languageCode) {
+        MapAttribute<LanguageCode, ListAttribute<SimilarTerm>> termMap = getSimilarTerms();
         if (termMap == null) {
-            // Avoid NPE in missing case (same behavior as getRelatedTerms() when the attribute is missing)
+            // Avoid NPE in missing case (same behavior as getSimilarTerms() when the attribute is missing)
             return null;
         }
         return termMap.get(languageCode);
@@ -662,13 +662,13 @@ public class AnnotatedText implements Serializable {
         }
 
         /**
-         * Attaches a per-language map of related terms.
+         * Attaches a per-language map of similar terms.
          *
-         * @param relatedTerms the related terms
+         * @param similarTerms the similar terms
          * @return this
          */
-        public Builder relatedTerms(MapAttribute<LanguageCode, ListAttribute<RelatedTerm>> relatedTerms) {
-            attributes.put(AttributeKey.RELATED_TERMS.key(), relatedTerms);
+        public Builder similarTerms(MapAttribute<LanguageCode, ListAttribute<SimilarTerm>> similarTerms) {
+            attributes.put(AttributeKey.SIMILAR_TERMS.key(), similarTerms);
             return this;
         }
 

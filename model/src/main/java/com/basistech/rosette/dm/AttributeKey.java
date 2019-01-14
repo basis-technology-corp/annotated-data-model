@@ -39,7 +39,7 @@ enum AttributeKey {
      * The language detection for the entire document.
      */
     LANGUAGE_DETECTION("languageDetection"),
-    RELATED_TERMS("relatedTerms"),
+    SIMILAR_TERMS("similarTerms"),
     RELATIONSHIP_MENTION("relationshipMentions"),
     @Deprecated
     RESOLVED_ENTITY("resolvedEntities"),

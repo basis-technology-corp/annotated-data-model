@@ -18,9 +18,9 @@ package com.basistech.rosette.dm.jackson;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public abstract class RelatedTermMixin {
+public abstract class SimilarTermMixin {
     @JsonCreator
-    RelatedTermMixin(@JsonProperty("term") String term, @JsonProperty("similarity") Double similarity) {
+    SimilarTermMixin(@JsonProperty("term") String term, @JsonProperty("similarity") Double similarity) {
         //
     }
 }
