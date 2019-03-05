@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.org/basis-technology-corp/annotated-data-model.svg?branch=master)](https://travis-ci.org/basis-technology-corp/annotated-data-model)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.basistech/annotated-data-model/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.basistech/annotated-data-model)
+[![Javadocs](https://www.javadoc.io/badge/com.basistech/annotated-data-model.svg)](https://www.javadoc.io/doc/com.basistech/annotated-data-model)
 
 # Annotated Data Model #
 
