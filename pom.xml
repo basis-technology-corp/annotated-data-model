@@ -23,12 +23,18 @@
     <parent>
         <artifactId>open-source-parent</artifactId>
         <groupId>com.basistech</groupId>
-        <version>2.0.0</version>
+        <version>3.0.0</version>
     </parent>
 
     <description>
       Data model for text and its annotations.
     </description>
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
     <prerequisites>
         <maven>3.2.5</maven>
     </prerequisites>
@@ -38,7 +44,7 @@
         <connection>scm:git:git@github.com:basis-technology-corp/annotated-data-model.git</connection>
         <developerConnection>scm:git:git@github.com:basis-technology-corp/annotated-data-model.git</developerConnection>
       <tag>HEAD</tag>
-  </scm>
+    </scm>
     <distributionManagement>
         <site>
             <id>adm-site</id>
@@ -46,7 +52,7 @@
         </site>
     </distributionManagement>
     <properties>
-        <bt-common-api-version>37.0.0</bt-common-api-version>
+        <skip-dependency-convergence>true</skip-dependency-convergence>
     </properties>
     <modules>
         <module>taglets</module>
@@ -70,6 +76,9 @@
     </dependencyManagement>
     <build>
         <plugins>
+            <plugin>
+                <artifactId>maven-source-plugin</artifactId>
+            </plugin>
             <plugin>
                 <groupId>com.basistech</groupId>
                 <artifactId>bbh-maven-plugin</artifactId>
