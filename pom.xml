@@ -53,6 +53,7 @@
     </distributionManagement>
     <properties>
         <skip-dependency-convergence>true</skip-dependency-convergence>
+        <maven-javadoc-plugin.version>2.9.1</maven-javadoc-plugin.version>
     </properties>
     <modules>
         <module>taglets</module>
@@ -78,6 +79,12 @@
         <plugins>
             <plugin>
                 <artifactId>maven-source-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <configuration>
+                    <failOnError>false</failOnError>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>com.basistech</groupId>
