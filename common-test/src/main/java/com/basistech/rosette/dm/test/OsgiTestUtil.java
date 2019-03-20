@@ -104,7 +104,7 @@ public final class OsgiTestUtil {
             bundleUrls.add(String.format("file:%s/%s-%s.jar", projectBuildDirectory, projectBaseBundleJarName, projectVersion));
         }
 
-        String[] bundles = bundleUrls.toArray(new String[bundleUrls.size()]);
+        String[] bundles = bundleUrls.toArray(new String[0]);
 
         String paxLoggingLevel = System.getProperty("bt.osgi.pax.logging.level", "WARN");
 
