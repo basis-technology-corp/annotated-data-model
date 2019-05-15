@@ -1,5 +1,5 @@
 /*
-* Copyright 2018 Basis Technology Corp.
+* Copyright 2019 Basis Technology Corp.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -313,6 +313,12 @@ public class ArabicMorphoAnalysis extends MorphoAnalysis implements Serializable
          */
         public Builder(ArabicMorphoAnalysis toCopy) {
             super(toCopy);
+            prefixLength = toCopy.prefixLength;
+            stemLength = toCopy.stemLength;
+            root = toCopy.root;
+            definiteArticle = toCopy.definiteArticle;
+            strippablePrefix = toCopy.strippablePrefix;
+
             prefixes = Lists.newArrayList();
             stems = Lists.newArrayList();
             suffixes = Lists.newArrayList();
