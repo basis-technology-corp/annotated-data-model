@@ -1,5 +1,5 @@
 /*
-* Copyright 2014 Basis Technology Corp.
+* Copyright 2019 Basis Technology Corp.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -668,5 +668,22 @@ public class AnnotatedTextTest {
         Entity entity = new Entity.Builder().mention(mention).headMentionIndex(0).build();
         Entity.Builder entityBuilder = new Entity.Builder(entity);
         assertEquals(0, (int)entityBuilder.build().getHeadMentionIndex());
+    }
+
+    @Test
+    public void testArabicMorphoAnalysisBuilderCopy() {
+        int prefixLength = 1;
+        int stemLength = 2;
+        ArabicMorphoAnalysis analysis = new ArabicMorphoAnalysis.Builder()
+                .lengths(prefixLength, stemLength)
+                .root("root")
+                .definiteArticle(true)
+                .strippablePrefix(true)
+                .prefixes(Lists.newArrayList("prefix1", "prefix2"), Lists.newArrayList("prefixTag1", "prefixTag2"))
+                .suffixes(Lists.newArrayList("suffix1", "suffix2"), Lists.newArrayList("suffixTag1", "suffixTag2"))
+                .stems(Lists.newArrayList("stem1", "stem2"), Lists.newArrayList("stemTag1", "stemTag2"))
+                .build();
+        ArabicMorphoAnalysis copy = new ArabicMorphoAnalysis.Builder(analysis).build();
+        assertEquals(analysis, copy);
     }
 }
