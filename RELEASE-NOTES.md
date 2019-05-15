@@ -1,5 +1,11 @@
 # Cumulative Release Notes for the Annotated Data Model
 
+## 2.5.4
+
+### [COMN-254](https://basistech.atlassian.net.browse/COMN-254) Fix lossy copy constructor
+
+Fixed `ArabicMorphoAnalysis.Builder`'s copy constructor so it copies all data.
+
 ## 2.5.2
 
 ### [RD-2427](https://basistech.atlassian.net/browse/RD-2427) Implement ADM Updates for Nearest Neighbors
