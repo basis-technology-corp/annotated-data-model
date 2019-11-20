@@ -1,8 +1,15 @@
 # Cumulative Release Notes for the Annotated Data Model
 
+## Unreleased
+
+### [ETROG-3126](https://basistech.atlassian.net/browse/ETROG-3126) Analyze foreign tokens within Russian as English
+
+Ignore null attribute values in the constructor of `AnnotatedText`.
+Previously, it would throw a `NullPointerException`.
+
 ## 2.5.4
 
-### [COMN-254](https://basistech.atlassian.net.browse/COMN-254) Fix lossy copy constructor
+### [COMN-254](https://basistech.atlassian.net/browse/COMN-254) Fix lossy copy constructor
 
 Fixed `ArabicMorphoAnalysis.Builder`'s copy constructor so it copies all data.
 

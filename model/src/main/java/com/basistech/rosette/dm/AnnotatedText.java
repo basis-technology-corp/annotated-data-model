@@ -96,7 +96,8 @@ public class AnnotatedText implements Serializable {
         ListAttribute<Entity> sourceEntityList = (ListAttribute<Entity>) attributes.get(AttributeKey.ENTITY.key());
 
         for (Map.Entry<String, BaseAttribute> me : attributes.entrySet()) {
-            if (!AttributeKey.RESOLVED_ENTITY.key().equals(me.getKey())
+            if (me.getValue() != null
+                && !AttributeKey.RESOLVED_ENTITY.key().equals(me.getKey())
                 && !AttributeKey.ENTITY_MENTION.key().equals(me.getKey())
                     // defer entity
                 && !AttributeKey.ENTITY.key().equals(me.getKey())) {
