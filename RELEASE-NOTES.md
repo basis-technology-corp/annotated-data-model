@@ -1,6 +1,11 @@
 # Cumulative Release Notes for the Annotated Data Model
 
-## Unreleased
+## 2.6.0
+
+### [ETROG-3125](https://basistech.atlassian.net/browse/ETROG-3125) Add a POS tag set field to MorphoAnalysis
+
+Adds a `TagSet` enumeration and a field to `MorphoAnalysis` to store 
+which `TagSet` the analysis's part of speech comes from.
 
 ### [ETROG-3126](https://basistech.atlassian.net/browse/ETROG-3126) Analyze foreign tokens within Russian as English
 
