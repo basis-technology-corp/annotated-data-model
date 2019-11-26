@@ -23,7 +23,7 @@
     <parent>
         <artifactId>open-source-parent</artifactId>
         <groupId>com.basistech</groupId>
-        <version>4.0.0</version>
+        <version>4.1.0</version>
     </parent>
 
     <description>
