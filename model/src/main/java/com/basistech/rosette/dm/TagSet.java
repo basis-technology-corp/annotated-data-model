@@ -22,16 +22,6 @@ package com.basistech.rosette.dm;
 public enum TagSet {
 
     /**
-     * UPT-16 version 1 tag set
-     */
-    UPT16_V1,
-
-    /**
-     * Basis Technology's language neutral tag set, used for emojis, emoticons, hashtags, etc.
-     */
-    BT_LANGUAGE_NEUTRAL,
-
-    /**
      * Basis Technology's tag set for Arabic
      */
     BT_ARABIC,
@@ -78,11 +68,6 @@ public enum TagSet {
     BT_GREEK,
 
     /**
-     * The MILA tag set for Hebrew
-     */
-    MILA_HEBREW,
-
-    /**
      * Basis Technology's tag set for Hungarian
      */
     BT_HUNGARIAN,
@@ -107,6 +92,11 @@ public enum TagSet {
      * Basis Technology's tag set for Korean
      */
     BT_KOREAN,
+
+    /**
+     * Basis Technology's language neutral tag set, used for emojis, emoticons, hashtags, etc.
+     */
+    BT_LANGUAGE_NEUTRAL,
 
     /**
      * Basis Technology's tag set for Persian
@@ -139,7 +129,18 @@ public enum TagSet {
     BT_URDU,
 
     /**
+     * The MILA tag set for Hebrew
+     */
+    MILA_HEBREW,
+
+    /**
      * Penn Treebank tag set for English
      */
     PTB_ENGLISH,
+
+    /**
+     * UPT-16 version 1 tag set
+     */
+    UPT16_V1,
+
 }
