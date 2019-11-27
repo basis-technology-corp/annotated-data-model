@@ -19,6 +19,7 @@ import com.basistech.rosette.dm.AnnotatedText;
 import com.basistech.rosette.dm.ArabicMorphoAnalysis;
 import com.basistech.rosette.dm.BaseNounPhrase;
 import com.basistech.rosette.dm.CategorizerResult;
+import com.basistech.rosette.dm.Concept;
 import com.basistech.rosette.dm.Extent;
 import com.basistech.rosette.dm.HanMorphoAnalysis;
 import com.basistech.rosette.dm.Keyphrase;
@@ -30,8 +31,8 @@ import com.basistech.rosette.dm.RelationshipComponent;
 import com.basistech.rosette.dm.RelationshipMention;
 import com.basistech.rosette.dm.ScriptRegion;
 import com.basistech.rosette.dm.Sentence;
+import com.basistech.rosette.dm.TagSet;
 import com.basistech.rosette.dm.Token;
-import com.basistech.rosette.dm.Concept;
 import com.basistech.rosette.dm.TranslatedData;
 import com.basistech.rosette.dm.TranslatedTokens;
 import com.basistech.rosette.dm.jackson.AnnotatedDataModelModule;
@@ -193,6 +194,7 @@ public class JsonTest extends AdmAssert {
         maBuilder.partOfSpeech("+woof");
         Token.Builder compTokBuilder = new Token.Builder(0, 2, "Th");
         maBuilder.addComponent(compTokBuilder.build());
+        maBuilder.tagSet(TagSet.BT_ENGLISH);
         MorphoAnalysis morphoAnalysis = maBuilder.build();
         tokenBuilder.addAnalysis(morphoAnalysis);
 
@@ -207,12 +209,14 @@ public class JsonTest extends AdmAssert {
         araMaBuilder.lemma("lemma");
         araMaBuilder.partOfSpeech("pos");
         araMaBuilder.raw("raw");
+        araMaBuilder.tagSet(TagSet.BT_ARABIC);
         tokenBuilder.addAnalysis(araMaBuilder.build());
 
         HanMorphoAnalysis.Builder hanMaBuilder = new HanMorphoAnalysis.Builder();
         hanMaBuilder.addReading("proust");
         hanMaBuilder.lemma("lemma");
         hanMaBuilder.partOfSpeech("pos");
+        // test null tag set
         tokenBuilder.addAnalysis(hanMaBuilder.build());
 
         KoreanMorphoAnalysis.Builder korMaBuilder = new KoreanMorphoAnalysis.Builder();
@@ -220,6 +224,7 @@ public class JsonTest extends AdmAssert {
         korMaBuilder.addMorpheme("m2", "t2");
         korMaBuilder.partOfSpeech("korean");
         korMaBuilder.lemma("koreanLemma");
+        korMaBuilder.tagSet(TagSet.BT_KOREAN);
         tokenBuilder.addAnalysis(korMaBuilder.build());
 
         token = tokenBuilder.build();

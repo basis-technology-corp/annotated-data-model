@@ -235,6 +235,9 @@ public final class MorphoAnalysisListDeserializer extends JsonDeserializer<List<
         if (analysis.getRaw() != null && !"".equals(analysis.getRaw())) {
             builder.raw(analysis.getRaw());
         }
+        if (analysis.getTagSet() != null) {
+            builder.tagSet(analysis.getTagSet());
+        }
         if (analysis.getComponents() != null) {
             for (Token token : analysis.getComponents()) {
                 builder.addComponent(token);

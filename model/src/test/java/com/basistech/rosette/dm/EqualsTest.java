@@ -44,7 +44,7 @@ public class EqualsTest {
      * For testing morph analysis, assume that we can use quite basic tokens inside, since
      * we'll be testing token equality in detail further down.
      */
-    private void componentList(MorphoAnalysis.Builder maBuilder, String ... strings) {
+    private void componentList(MorphoAnalysis.Builder maBuilder, String... strings) {
         for (String text : strings) {
             maBuilder.addComponent(new Token.Builder(0, text.length(), text).build());
         }

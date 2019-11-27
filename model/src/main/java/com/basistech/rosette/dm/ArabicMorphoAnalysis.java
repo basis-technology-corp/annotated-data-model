@@ -77,8 +77,9 @@ public class ArabicMorphoAnalysis extends MorphoAnalysis implements Serializable
                          List<String> prefixTags,
                          List<String> stemTags,
                          List<String> suffixTags,
+                         TagSet tagSet,
                          Map<String, Object> extendedProperties) {
-        super(partOfSpeech, lemma, components, raw, extendedProperties);
+        super(partOfSpeech, lemma, components, raw, tagSet, extendedProperties);
         this.prefixLength = prefixLength;
         this.stemLength = stemLength;
         this.root = root;
@@ -90,6 +91,27 @@ public class ArabicMorphoAnalysis extends MorphoAnalysis implements Serializable
         this.suffixTags = listOrNull(suffixTags);
         this.definiteArticle = definiteArticle;
         this.strippablePrefix = strippablePrefix;
+    }
+
+    protected ArabicMorphoAnalysis(String partOfSpeech,
+                                   String lemma,
+                                   List<Token> components,
+                                   String raw,
+                                   int prefixLength,
+                                   int stemLength,
+                                   String root,
+                                   boolean definiteArticle,
+                                   boolean strippablePrefix,
+                                   List<String> prefixes,
+                                   List<String> stems,
+                                   List<String> suffixes,
+                                   List<String> prefixTags,
+                                   List<String> stemTags,
+                                   List<String> suffixTags,
+                                   Map<String, Object> extendedProperties) {
+        this(partOfSpeech, lemma, components, raw, prefixLength, stemLength, root, definiteArticle,
+                strippablePrefix, prefixes, stems, suffixes, prefixTags, stemTags, suffixTags,
+                null, extendedProperties);
     }
 
     /**
@@ -469,6 +491,7 @@ public class ArabicMorphoAnalysis extends MorphoAnalysis implements Serializable
                     prefixTags,
                     stemTags,
                     suffixTags,
+                    tagSet,
                     buildExtendedProperties());
         }
     }

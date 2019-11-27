@@ -1,5 +1,5 @@
 /*
-* Copyright 2018 Basis Technology Corp.
+* Copyright 2019 Basis Technology Corp.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -37,10 +37,21 @@ public class KoreanMorphoAnalysis extends MorphoAnalysis implements Serializable
                                    String raw,
                                    List<String> morphemes,
                                    List<String> morphemeTags,
+                                   TagSet tagSet,
                                    Map<String, Object> extendedProperties) {
-        super(partOfSpeech, lemma, components, raw, extendedProperties);
+        super(partOfSpeech, lemma, components, raw, tagSet, extendedProperties);
         this.morphemes = listOrNull(morphemes);
         this.morphemeTags = listOrNull(morphemeTags);
+    }
+
+    protected KoreanMorphoAnalysis(String partOfSpeech,
+                                   String lemma,
+                                   List<Token> components,
+                                   String raw,
+                                   List<String> morphemes,
+                                   List<String> morphemeTags,
+                                   Map<String, Object> extendedProperties) {
+        this(partOfSpeech, lemma, components, raw, morphemes, morphemeTags, null, extendedProperties);
     }
 
     /**
@@ -153,7 +164,7 @@ public class KoreanMorphoAnalysis extends MorphoAnalysis implements Serializable
          * @return the analysis
          */
         public KoreanMorphoAnalysis build() {
-            return new KoreanMorphoAnalysis(partOfSpeech, lemma, components, raw, morphemes, morphemeTags,
+            return new KoreanMorphoAnalysis(partOfSpeech, lemma, components, raw, morphemes, morphemeTags, tagSet,
                     buildExtendedProperties());
         }
     }
