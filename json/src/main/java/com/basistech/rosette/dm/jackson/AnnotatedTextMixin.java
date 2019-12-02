@@ -1,5 +1,5 @@
 /*
-* Copyright 2017 Basis Technology Corp.
+* Copyright 2019 Basis Technology Corp.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@ import com.basistech.rosette.dm.BaseAttribute;
 import com.basistech.rosette.dm.BaseNounPhrase;
 import com.basistech.rosette.dm.CategorizerResult;
 import com.basistech.rosette.dm.Concept;
+import com.basistech.rosette.dm.DataTypeRegion;
 import com.basistech.rosette.dm.Dependency;
 import com.basistech.rosette.dm.Embeddings;
 import com.basistech.rosette.dm.Entity;
@@ -100,6 +101,9 @@ public abstract class AnnotatedTextMixin {
 
     @JsonIgnore
     public abstract ListAttribute<Sentence> getSentences();
+
+    @JsonIgnore
+    public abstract ListAttribute<DataTypeRegion> getDataTypeRegions();
 
     @JsonIgnore
     public abstract ListAttribute<BaseNounPhrase> getBaseNounPhrases();

@@ -1,5 +1,5 @@
 /*
-* Copyright 2017 Basis Technology Corp.
+* Copyright 2019 Basis Technology Corp.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@ import com.basistech.rosette.dm.ArabicMorphoAnalysis;
 import com.basistech.rosette.dm.BaseAttribute;
 import com.basistech.rosette.dm.BaseNounPhrase;
 import com.basistech.rosette.dm.CategorizerResult;
+import com.basistech.rosette.dm.DataTypeRegion;
 import com.basistech.rosette.dm.Dependency;
 import com.basistech.rosette.dm.EmbeddingCollection;
 import com.basistech.rosette.dm.Embeddings;
@@ -84,6 +85,7 @@ public class JsonTest extends AdmAssert {
     private LanguageDetection languageDetection;
     private ScriptRegion scriptRegion;
     private Sentence sentence;
+    private DataTypeRegion dataTypeRegion;
     private MorphoAnalysis morphoAnalysis;
     private TextDomain germanDomain;
     private TextDomain spanishDomain;
@@ -202,6 +204,12 @@ public class JsonTest extends AdmAssert {
         sentence = sentBuilder.build();
         sentListBuilder.add(sentence);
         builder.sentences(sentListBuilder.build());
+
+        ListAttribute.Builder<DataTypeRegion> dtrListBuilder = new ListAttribute.Builder<>(DataTypeRegion.class);
+        DataTypeRegion.Builder dtrBuilder = new DataTypeRegion.Builder(0, builder.data().length(), DataTypeRegion.Type.UNSTRUCTURED);
+        dataTypeRegion = dtrBuilder.build();
+        dtrListBuilder.add(dataTypeRegion);
+        builder.dataTypeRegions(dtrListBuilder.build());
 
         ListAttribute.Builder<Token> tokenListBuilder = new ListAttribute.Builder<>(Token.class);
         Token.Builder tokenBuilder = new Token.Builder(0, 4, "This");
@@ -441,6 +449,12 @@ public class JsonTest extends AdmAssert {
         sentence = sentBuilder.build();
         sentListBuilder.add(sentence);
         builder.sentences(sentListBuilder.build());
+
+        ListAttribute.Builder<DataTypeRegion> dtrListBuilder = new ListAttribute.Builder<>(DataTypeRegion.class);
+        DataTypeRegion.Builder dtrBuilder = new DataTypeRegion.Builder(0, builder.data().length(), DataTypeRegion.Type.UNSTRUCTURED);
+        dataTypeRegion = dtrBuilder.build();
+        dtrListBuilder.add(dataTypeRegion);
+        builder.dataTypeRegions(dtrListBuilder.build());
 
         ListAttribute.Builder<Token> tokenListBuilder = new ListAttribute.Builder<>(Token.class);
         Token.Builder tokenBuilder = new Token.Builder(0, 4, "This");
@@ -720,6 +734,11 @@ public class JsonTest extends AdmAssert {
 
         assertEquals(sentence, sentences.get(0));
 
+        ListAttribute<DataTypeRegion> dataTypeRegions = read.getDataTypeRegions();
+        assertNotNull(dataTypeRegions);
+        assertEquals(1, dataTypeRegions.size());
+        assertEquals(dataTypeRegion, dataTypeRegions.get(0));
+
         ListAttribute<Token> tokenList = read.getTokens();
         assertNotNull(tokenList);
         assertEquals(1, tokenList.size());
@@ -804,6 +823,11 @@ public class JsonTest extends AdmAssert {
         assertNotNull(sentences);
 
         assertEquals(sentence, sentences.get(0));
+
+        ListAttribute<DataTypeRegion> dataTypeRegions = read.getDataTypeRegions();
+        assertNotNull(dataTypeRegions);
+        assertEquals(1, dataTypeRegions.size());
+        assertEquals(dataTypeRegion, dataTypeRegions.get(0));
 
         ListAttribute<Token> tokenList = read.getTokens();
         assertNotNull(tokenList);

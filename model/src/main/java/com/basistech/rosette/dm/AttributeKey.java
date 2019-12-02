@@ -1,5 +1,5 @@
 /*
-* Copyright 2014 Basis Technology Corp.
+* Copyright 2019 Basis Technology Corp.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -45,6 +45,7 @@ enum AttributeKey {
     RESOLVED_ENTITY("resolvedEntities"),
     SCRIPT_REGION("scriptRegion"),
     SENTENCE("sentence"),
+    DATA_TYPE_REGION("dataTypeRegion"),
 
 
     SENTIMENT_RESULTS("sentimentResults"),

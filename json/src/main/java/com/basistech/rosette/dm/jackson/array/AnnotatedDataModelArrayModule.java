@@ -1,5 +1,5 @@
 /*
-* Copyright 2017 Basis Technology Corp.
+* Copyright 2019 Basis Technology Corp.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -22,6 +22,8 @@ import com.basistech.rosette.dm.Attribute;
 import com.basistech.rosette.dm.BaseAttribute;
 import com.basistech.rosette.dm.BaseNounPhrase;
 import com.basistech.rosette.dm.CategorizerResult;
+import com.basistech.rosette.dm.Concept;
+import com.basistech.rosette.dm.DataTypeRegion;
 import com.basistech.rosette.dm.Dependency;
 import com.basistech.rosette.dm.EmbeddingCollection;
 import com.basistech.rosette.dm.Embeddings;
@@ -41,7 +43,6 @@ import com.basistech.rosette.dm.RelationshipMention;
 import com.basistech.rosette.dm.ScriptRegion;
 import com.basistech.rosette.dm.Sentence;
 import com.basistech.rosette.dm.Token;
-import com.basistech.rosette.dm.Concept;
 import com.basistech.rosette.dm.TranslatedData;
 import com.basistech.rosette.dm.TranslatedTokens;
 import com.basistech.rosette.dm.Transliteration;
@@ -50,6 +51,8 @@ import com.basistech.rosette.dm.jackson.ArabicMorphoAnalysisMixin;
 import com.basistech.rosette.dm.jackson.AttributeMixin;
 import com.basistech.rosette.dm.jackson.BaseNounPhraseMixin;
 import com.basistech.rosette.dm.jackson.CategorizerResultMixin;
+import com.basistech.rosette.dm.jackson.ConceptMixin;
+import com.basistech.rosette.dm.jackson.DataTypeRegionMixin;
 import com.basistech.rosette.dm.jackson.DependencyMixin;
 import com.basistech.rosette.dm.jackson.EmbeddingCollectionMixin;
 import com.basistech.rosette.dm.jackson.EmbeddingsMixin;
@@ -68,7 +71,6 @@ import com.basistech.rosette.dm.jackson.RelationshipMentionMixin;
 import com.basistech.rosette.dm.jackson.ResolvedEntityMixin;
 import com.basistech.rosette.dm.jackson.ScriptRegionMixin;
 import com.basistech.rosette.dm.jackson.SentenceMixin;
-import com.basistech.rosette.dm.jackson.ConceptMixin;
 import com.basistech.rosette.dm.jackson.TranslatedDataMixin;
 import com.basistech.rosette.dm.jackson.TranslatedTokensMixin;
 import com.basistech.rosette.dm.jackson.TransliterationMixin;
@@ -116,6 +118,7 @@ public class AnnotatedDataModelArrayModule extends EnumModule {
         context.setMixInAnnotations(com.basistech.rosette.dm.ResolvedEntity.class, ResolvedEntityMixin.class);
         context.setMixInAnnotations(Sentence.class, SentenceMixin.class);
         context.setMixInAnnotations(ScriptRegion.class, ScriptRegionMixin.class);
+        context.setMixInAnnotations(DataTypeRegion.class, DataTypeRegionMixin.class);
         context.setMixInAnnotations(Token.class, TokenArrayMixin.class);
         context.setMixInAnnotations(TranslatedData.class, TranslatedDataMixin.class);
         context.setMixInAnnotations(TranslatedTokens.class, TranslatedTokensMixin.class);

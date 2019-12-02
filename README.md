@@ -88,6 +88,11 @@ into regions according to script, as defined in ISO15924.
 This annotation describes the sentences of the text. By convention, the sentences cover the entire text.
 Whitespace at the end of each sentences is incorporated into that sentence.
 
+### DATA_TYPE_REGION ###
+
+This annotation describes separates the text into regions of structured
+and unstructured text.
+
 ### TOKEN ###
 
 The token annotations identify the tokens of the text and annotate them with the results of 
