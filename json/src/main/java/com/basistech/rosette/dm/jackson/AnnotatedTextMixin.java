@@ -19,7 +19,7 @@ import com.basistech.rosette.dm.BaseAttribute;
 import com.basistech.rosette.dm.BaseNounPhrase;
 import com.basistech.rosette.dm.CategorizerResult;
 import com.basistech.rosette.dm.Concept;
-import com.basistech.rosette.dm.DataTypeRegion;
+import com.basistech.rosette.dm.LayoutRegion;
 import com.basistech.rosette.dm.Dependency;
 import com.basistech.rosette.dm.Embeddings;
 import com.basistech.rosette.dm.Entity;
@@ -103,7 +103,7 @@ public abstract class AnnotatedTextMixin {
     public abstract ListAttribute<Sentence> getSentences();
 
     @JsonIgnore
-    public abstract ListAttribute<DataTypeRegion> getDataTypeRegions();
+    public abstract ListAttribute<LayoutRegion> getLayoutRegions();
 
     @JsonIgnore
     public abstract ListAttribute<BaseNounPhrase> getBaseNounPhrases();

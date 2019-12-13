@@ -20,7 +20,7 @@ import com.basistech.rosette.dm.ArabicMorphoAnalysis;
 import com.basistech.rosette.dm.BaseAttribute;
 import com.basistech.rosette.dm.BaseNounPhrase;
 import com.basistech.rosette.dm.CategorizerResult;
-import com.basistech.rosette.dm.DataTypeRegion;
+import com.basistech.rosette.dm.LayoutRegion;
 import com.basistech.rosette.dm.Dependency;
 import com.basistech.rosette.dm.EmbeddingCollection;
 import com.basistech.rosette.dm.Embeddings;
@@ -85,7 +85,7 @@ public class JsonTest extends AdmAssert {
     private LanguageDetection languageDetection;
     private ScriptRegion scriptRegion;
     private Sentence sentence;
-    private DataTypeRegion dataTypeRegion;
+    private LayoutRegion layoutRegion;
     private MorphoAnalysis morphoAnalysis;
     private TextDomain germanDomain;
     private TextDomain spanishDomain;
@@ -205,11 +205,11 @@ public class JsonTest extends AdmAssert {
         sentListBuilder.add(sentence);
         builder.sentences(sentListBuilder.build());
 
-        ListAttribute.Builder<DataTypeRegion> dtrListBuilder = new ListAttribute.Builder<>(DataTypeRegion.class);
-        DataTypeRegion.Builder dtrBuilder = new DataTypeRegion.Builder(0, builder.data().length(), DataTypeRegion.Type.UNSTRUCTURED);
-        dataTypeRegion = dtrBuilder.build();
-        dtrListBuilder.add(dataTypeRegion);
-        builder.dataTypeRegions(dtrListBuilder.build());
+        ListAttribute.Builder<LayoutRegion> dtrListBuilder = new ListAttribute.Builder<>(LayoutRegion.class);
+        LayoutRegion.Builder dtrBuilder = new LayoutRegion.Builder(0, builder.data().length(), LayoutRegion.Layout.UNSTRUCTURED);
+        layoutRegion = dtrBuilder.build();
+        dtrListBuilder.add(layoutRegion);
+        builder.layoutRegions(dtrListBuilder.build());
 
         ListAttribute.Builder<Token> tokenListBuilder = new ListAttribute.Builder<>(Token.class);
         Token.Builder tokenBuilder = new Token.Builder(0, 4, "This");
@@ -450,11 +450,11 @@ public class JsonTest extends AdmAssert {
         sentListBuilder.add(sentence);
         builder.sentences(sentListBuilder.build());
 
-        ListAttribute.Builder<DataTypeRegion> dtrListBuilder = new ListAttribute.Builder<>(DataTypeRegion.class);
-        DataTypeRegion.Builder dtrBuilder = new DataTypeRegion.Builder(0, builder.data().length(), DataTypeRegion.Type.UNSTRUCTURED);
-        dataTypeRegion = dtrBuilder.build();
-        dtrListBuilder.add(dataTypeRegion);
-        builder.dataTypeRegions(dtrListBuilder.build());
+        ListAttribute.Builder<LayoutRegion> dtrListBuilder = new ListAttribute.Builder<>(LayoutRegion.class);
+        LayoutRegion.Builder dtrBuilder = new LayoutRegion.Builder(0, builder.data().length(), LayoutRegion.Layout.UNSTRUCTURED);
+        layoutRegion = dtrBuilder.build();
+        dtrListBuilder.add(layoutRegion);
+        builder.layoutRegions(dtrListBuilder.build());
 
         ListAttribute.Builder<Token> tokenListBuilder = new ListAttribute.Builder<>(Token.class);
         Token.Builder tokenBuilder = new Token.Builder(0, 4, "This");
@@ -734,10 +734,10 @@ public class JsonTest extends AdmAssert {
 
         assertEquals(sentence, sentences.get(0));
 
-        ListAttribute<DataTypeRegion> dataTypeRegions = read.getDataTypeRegions();
-        assertNotNull(dataTypeRegions);
-        assertEquals(1, dataTypeRegions.size());
-        assertEquals(dataTypeRegion, dataTypeRegions.get(0));
+        ListAttribute<LayoutRegion> layoutRegions = read.getLayoutRegions();
+        assertNotNull(layoutRegions);
+        assertEquals(1, layoutRegions.size());
+        assertEquals(layoutRegion, layoutRegions.get(0));
 
         ListAttribute<Token> tokenList = read.getTokens();
         assertNotNull(tokenList);
@@ -824,10 +824,10 @@ public class JsonTest extends AdmAssert {
 
         assertEquals(sentence, sentences.get(0));
 
-        ListAttribute<DataTypeRegion> dataTypeRegions = read.getDataTypeRegions();
-        assertNotNull(dataTypeRegions);
-        assertEquals(1, dataTypeRegions.size());
-        assertEquals(dataTypeRegion, dataTypeRegions.get(0));
+        ListAttribute<LayoutRegion> layoutRegions = read.getLayoutRegions();
+        assertNotNull(layoutRegions);
+        assertEquals(1, layoutRegions.size());
+        assertEquals(layoutRegion, layoutRegions.get(0));
 
         ListAttribute<Token> tokenList = read.getTokens();
         assertNotNull(tokenList);

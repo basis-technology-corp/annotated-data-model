@@ -18,7 +18,7 @@ package com.basistech.rosette.dm.jackson;
 import com.basistech.rosette.dm.BaseAttribute;
 import com.basistech.rosette.dm.BaseNounPhrase;
 import com.basistech.rosette.dm.CategorizerResult;
-import com.basistech.rosette.dm.DataTypeRegion;
+import com.basistech.rosette.dm.LayoutRegion;
 import com.basistech.rosette.dm.Dependency;
 import com.basistech.rosette.dm.Embeddings;
 import com.basistech.rosette.dm.Entity;
@@ -57,7 +57,7 @@ public enum KnownAttribute {
     LANGUAGE_DETECTION("languageDetection", LanguageDetection.class),
     SCRIPT_REGION("scriptRegion", ScriptRegion.class),
     SENTENCE("sentence", Sentence.class),
-    DATA_TYPE_REGION("dataTypeRegion", DataTypeRegion.class),
+    LAYOUT_REGION("layoutRegion", LayoutRegion.class),
     TOKEN("token", Token.class),
     TRANSLATED_DATA("translatedData", TranslatedData.class),
     TRANSLATED_TOKENS("translatedTokens", TranslatedTokens.class),

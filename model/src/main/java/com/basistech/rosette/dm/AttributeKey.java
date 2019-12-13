@@ -45,7 +45,7 @@ enum AttributeKey {
     RESOLVED_ENTITY("resolvedEntities"),
     SCRIPT_REGION("scriptRegion"),
     SENTENCE("sentence"),
-    DATA_TYPE_REGION("dataTypeRegion"),
+    LAYOUT_REGION("layoutRegion"),
 
 
     SENTIMENT_RESULTS("sentimentResults"),

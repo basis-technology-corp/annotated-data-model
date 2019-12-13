@@ -497,13 +497,13 @@ public class AnnotatedText implements Serializable {
     }
 
     /**
-     * Returns the list of data type regions.
+     * Returns the list of layout regions.
      *
-     * @return the list of data type regions
+     * @return the list of layout regions
      */
     @SuppressWarnings("unchecked")
-    public ListAttribute<DataTypeRegion> getDataTypeRegions() {
-        return (ListAttribute<DataTypeRegion>) attributes.get(AttributeKey.DATA_TYPE_REGION.key());
+    public ListAttribute<LayoutRegion> getLayoutRegions() {
+        return (ListAttribute<LayoutRegion>) attributes.get(AttributeKey.LAYOUT_REGION.key());
     }
 
     /**
@@ -779,13 +779,13 @@ public class AnnotatedText implements Serializable {
         }
 
         /**
-         * Attaches a list of data type regions.
+         * Attaches a list of layout regions.
          *
-         * @param dataTypeRegions the data type regions
+         * @param layoutRegions the layout regions
          * @return this
          */
-        public Builder dataTypeRegions(ListAttribute<DataTypeRegion> dataTypeRegions) {
-            attributes.put(AttributeKey.DATA_TYPE_REGION.key(), dataTypeRegions);
+        public Builder layoutRegions(ListAttribute<LayoutRegion> layoutRegions) {
+            attributes.put(AttributeKey.LAYOUT_REGION.key(), layoutRegions);
             return this;
         }
 

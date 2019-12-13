@@ -16,20 +16,20 @@
 
 package com.basistech.rosette.dm.jackson;
 
-import com.basistech.rosette.dm.DataTypeRegion;
+import com.basistech.rosette.dm.LayoutRegion;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Map;
 
 /**
- * {@link com.basistech.rosette.dm.DataTypeRegion}.
+ * {@link LayoutRegion}.
  */
-public abstract class DataTypeRegionMixin {
+public abstract class LayoutRegionMixin {
     @JsonCreator
-    DataTypeRegionMixin(@JsonProperty("startOffset") int startOffset,
+    LayoutRegionMixin(@JsonProperty("startOffset") int startOffset,
                       @JsonProperty("endOffset") int endOffset,
-                      @JsonProperty("type") DataTypeRegion.Type type,
+                      @JsonProperty("layout") LayoutRegion.Layout layout,
                       @JsonProperty("extendedProperties") Map<String, Object> extendedProperties) {
         //
     }

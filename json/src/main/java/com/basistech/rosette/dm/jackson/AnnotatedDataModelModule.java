@@ -22,7 +22,7 @@ import com.basistech.rosette.dm.BaseAttribute;
 import com.basistech.rosette.dm.BaseNounPhrase;
 import com.basistech.rosette.dm.CategorizerResult;
 import com.basistech.rosette.dm.Concept;
-import com.basistech.rosette.dm.DataTypeRegion;
+import com.basistech.rosette.dm.LayoutRegion;
 import com.basistech.rosette.dm.Dependency;
 import com.basistech.rosette.dm.EmbeddingCollection;
 import com.basistech.rosette.dm.Embeddings;
@@ -90,7 +90,7 @@ public class  AnnotatedDataModelModule extends EnumModule {
         context.setMixInAnnotations(com.basistech.rosette.dm.ResolvedEntity.class, ResolvedEntityMixin.class);
         context.setMixInAnnotations(Sentence.class, SentenceMixin.class);
         context.setMixInAnnotations(ScriptRegion.class, ScriptRegionMixin.class);
-        context.setMixInAnnotations(DataTypeRegion.class, DataTypeRegionMixin.class);
+        context.setMixInAnnotations(LayoutRegion.class, LayoutRegionMixin.class);
         context.setMixInAnnotations(Token.class, TokenMixin.class);
         context.setMixInAnnotations(TranslatedData.class, TranslatedDataMixin.class);
         context.setMixInAnnotations(TranslatedTokens.class, TranslatedTokensMixin.class);

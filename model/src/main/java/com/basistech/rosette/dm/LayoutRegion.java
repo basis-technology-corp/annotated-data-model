@@ -23,29 +23,29 @@ import java.io.Serializable;
 import java.util.Map;
 
 /**
- * Data type defines text as spans defined by structured or unstructured regions.
+ * Layout defines text as spans defined by structured or unstructured regions.
  */
-public class DataTypeRegion extends Attribute implements Serializable {
+public class LayoutRegion extends Attribute implements Serializable {
 
-    public enum Type {
+    public enum Layout {
         UNSTRUCTURED,
         STRUCTURED,
     }
 
     private static final long serialVersionUID = 250L;
-    private final Type type;
+    private final Layout layout;
 
-    protected DataTypeRegion(int startOffset, int endOffset, Type type, Map<String, Object> extendedProperties) {
+    protected LayoutRegion(int startOffset, int endOffset, Layout layout, Map<String, Object> extendedProperties) {
         super(startOffset, endOffset, extendedProperties);
-        this.type = type;
+        this.layout = layout;
     }
 
     /**
-     * Gets the type.
-     * @return the type
+     * Gets the layout.
+     * @return the layout
      */
-    public Type getType() {
-        return type;
+    public Layout getLayout() {
+        return layout;
     }
 
     @Override
@@ -60,64 +60,64 @@ public class DataTypeRegion extends Attribute implements Serializable {
             return false;
         }
 
-        DataTypeRegion that = (DataTypeRegion) o;
+        LayoutRegion that = (LayoutRegion) o;
 
-        return type == that.type;
+        return layout == that.layout;
     }
 
     @Override
     public int hashCode() {
         int result = super.hashCode();
-        result = 31 * result + type.hashCode();
+        result = 31 * result + layout.hashCode();
         return result;
     }
 
     @Override
     protected MoreObjects.ToStringHelper toStringHelper() {
         return super.toStringHelper()
-                .add("type", type);
+                .add("layout", layout);
     }
 
     /**
-     * Builder for data type regions.
+     * Builder for layout regions.
      */
-    public static class Builder extends Attribute.Builder<DataTypeRegion, DataTypeRegion.Builder> {
-        private Type type;
+    public static class Builder extends Attribute.Builder<LayoutRegion, LayoutRegion.Builder> {
+        private Layout layout;
 
         /**
-         * Constructs a data type region builder from the required values.
+         * Constructs a layout region builder from the required values.
          *
          * @param startOffset the start offset in characters
          * @param endOffset the end offset in characters
-         * @param type the type
+         * @param layout the layout type
          */
-        public Builder(int startOffset, int endOffset, Type type) {
+        public Builder(int startOffset, int endOffset, Layout layout) {
             super(startOffset, endOffset);
-            this.type = type;
+            this.layout = layout;
         }
 
         /**
-         * Constructs a builder from an existing data type region.
+         * Constructs a builder from an existing layout region.
          *
          * @param toCopy the object to copy
          * @adm.ignore
          */
-        public Builder(DataTypeRegion toCopy) {
+        public Builder(LayoutRegion toCopy) {
             super(toCopy);
-            this.type = toCopy.type;
+            this.layout = toCopy.layout;
         }
 
         /**
-         * Builds an immutable data type region from the current state of this builder.
+         * Builds an immutable layout region from the current state of this builder.
          *
          * @return the new region
          */
-        public DataTypeRegion build() {
-            return new DataTypeRegion(startOffset, endOffset, type, buildExtendedProperties());
+        public LayoutRegion build() {
+            return new LayoutRegion(startOffset, endOffset, layout, buildExtendedProperties());
         }
 
         @Override
-        protected DataTypeRegion.Builder getThis() {
+        protected LayoutRegion.Builder getThis() {
             return this;
         }
     }

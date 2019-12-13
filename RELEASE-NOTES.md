@@ -1,10 +1,10 @@
 # Cumulative Release Notes for the Annotated Data Model
 
-## 2.6.1
+## 2.7.0
 
-### [ETROG-3125](https://basistech.atlassian.net/browse/ETROG-3177) Fragment Boundaries Exposed in ADM
+### [ETROG-3117](https://basistech.atlassian.net/browse/ETROG-3117) Fragment Boundaries Exposed in ADM
 
-Adds a `DataTypeRegion` field to the ADM to break the text into structured
+Adds a `LayoutRegion` field to the ADM to break the text into structured
 and unstructured segments.
 
 ## 2.6.0

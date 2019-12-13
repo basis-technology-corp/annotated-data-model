@@ -88,9 +88,9 @@ into regions according to script, as defined in ISO15924.
 This annotation describes the sentences of the text. By convention, the sentences cover the entire text.
 Whitespace at the end of each sentences is incorporated into that sentence.
 
-### DATA_TYPE_REGION ###
+### LAYOUT_REGION ###
 
-This annotation describes separates the text into regions of structured
+This annotation separates the text into regions of structured text, such as lists or tables,
 and unstructured text.
 
 ### TOKEN ###
