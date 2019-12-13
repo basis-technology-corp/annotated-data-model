@@ -63,10 +63,9 @@ Entities are the output of REX. Entities are a result of document-level grouping
 to the same thing. Mentions are spans of characters, not necessarily aligned with tokens.
 See the REX documentation for the information delivered with an entity mention.
 
-### RELATION_MENTIONS ###
+### LANGUAGE_DETECTION ###
 
-Relationship Mentions are the output of RELAX which identifies how entities and other noun phrases are connected
-to each other in the text. THIS IS AN ALPHA FEATURE OF THE ANNOTATED DATA MODEL.
+This annotation provides language-detection results for the the entire text.
 
 ### LANGUAGE_DETECTION_REGIONS ###
 
@@ -74,9 +73,15 @@ This annotation provides for splitting a text into regions by language.
 For each region, the data structure provides details on the 
 language detection.
 
-### LANGUAGE_DETECTION ###
+### LAYOUT_REGION ###
 
-This annotation provides language-detection results for the the entire text.
+This annotation separates the text into regions of structured text, such as lists or tables,
+and unstructured text.
+
+### RELATION_MENTIONS ###
+
+Relationship Mentions are the output of RELAX which identifies how entities and other noun phrases are connected
+to each other in the text. THIS IS AN ALPHA FEATURE OF THE ANNOTATED DATA MODEL.
 
 ### SCRIPT_REGION ###
 
@@ -87,11 +92,6 @@ into regions according to script, as defined in ISO15924.
 
 This annotation describes the sentences of the text. By convention, the sentences cover the entire text.
 Whitespace at the end of each sentences is incorporated into that sentence.
-
-### LAYOUT_REGION ###
-
-This annotation separates the text into regions of structured text, such as lists or tables,
-and unstructured text.
 
 ### TOKEN ###
 

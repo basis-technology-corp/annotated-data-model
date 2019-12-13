@@ -18,21 +18,21 @@ package com.basistech.rosette.dm.jackson;
 import com.basistech.rosette.dm.BaseAttribute;
 import com.basistech.rosette.dm.BaseNounPhrase;
 import com.basistech.rosette.dm.CategorizerResult;
-import com.basistech.rosette.dm.LayoutRegion;
+import com.basistech.rosette.dm.Concept;
 import com.basistech.rosette.dm.Dependency;
 import com.basistech.rosette.dm.Embeddings;
 import com.basistech.rosette.dm.Entity;
 import com.basistech.rosette.dm.Keyphrase;
 import com.basistech.rosette.dm.LanguageDetection;
+import com.basistech.rosette.dm.LayoutRegion;
 import com.basistech.rosette.dm.ListAttribute;
 import com.basistech.rosette.dm.MapAttribute;
-import com.basistech.rosette.dm.SimilarTerm;
 import com.basistech.rosette.dm.RelationshipComponent;
 import com.basistech.rosette.dm.RelationshipMention;
 import com.basistech.rosette.dm.ScriptRegion;
 import com.basistech.rosette.dm.Sentence;
+import com.basistech.rosette.dm.SimilarTerm;
 import com.basistech.rosette.dm.Token;
-import com.basistech.rosette.dm.Concept;
 import com.basistech.rosette.dm.TranslatedData;
 import com.basistech.rosette.dm.TranslatedTokens;
 import com.basistech.rosette.dm.TransliterationResults;
@@ -46,32 +46,32 @@ import com.basistech.rosette.dm.UnknownAttribute;
  */
 public enum KnownAttribute {
     BASE_NOUN_PHRASE("baseNounPhrases", BaseNounPhrase.class),
+    CATEGORIZATION_RESULT("categorizerResults", CategorizerResult.class),
+    CONCEPT("concept", Concept.class),
     DEPENDENCY("dependency", Dependency.class),
     EMBEDDING("embedding", Embeddings.class),
     ENTITY("entities", Entity.class),
     @SuppressWarnings("deprecation")
     ENTITY_MENTION("entityMentions", com.basistech.rosette.dm.EntityMention.class),
+    KEYPHRASE("keyphrase", Keyphrase.class),
+    LANGUAGE_DETECTION("languageDetection", LanguageDetection.class),
+    LAYOUT_REGION("layoutRegion", LayoutRegion.class),
+    LIST("list", ListAttribute.class),
+    MAP("map", MapAttribute.class),
+    RELATION_ARGUMENT("RelationshipComponent", RelationshipComponent.class),
     RELATIONSHIP_MENTION("relationshipMentions", RelationshipMention.class),
     @SuppressWarnings("deprecation")
     RESOLVED_ENTITY("resolvedEntities", com.basistech.rosette.dm.ResolvedEntity.class),
-    LANGUAGE_DETECTION("languageDetection", LanguageDetection.class),
     SCRIPT_REGION("scriptRegion", ScriptRegion.class),
     SENTENCE("sentence", Sentence.class),
-    LAYOUT_REGION("layoutRegion", LayoutRegion.class),
+    SENTIMENT_RESULT("sentimentResults", CategorizerResult.class),
+    SIMILAR_TERM("similarTerm", SimilarTerm.class),
     TOKEN("token", Token.class),
+    TOPIC_RESULT("topicResults", CategorizerResult.class),
     TRANSLATED_DATA("translatedData", TranslatedData.class),
     TRANSLATED_TOKENS("translatedTokens", TranslatedTokens.class),
-    CATEGORIZATION_RESULT("categorizerResults", CategorizerResult.class),
-    SENTIMENT_RESULT("sentimentResults", CategorizerResult.class),
-    TOPIC_RESULT("topicResults", CategorizerResult.class),
-    LIST("list", ListAttribute.class),
-    MAP("map", MapAttribute.class),
-    UNKNOWN("unknown", UnknownAttribute.class),
-    RELATION_ARGUMENT("RelationshipComponent", RelationshipComponent.class),
-    CONCEPT("concept", Concept.class),
-    KEYPHRASE("keyphrase", Keyphrase.class),
-    SIMILAR_TERM("similarTerm", SimilarTerm.class),
-    TRANSLITERATION("transliteration", TransliterationResults.class);
+    TRANSLITERATION("transliteration", TransliterationResults.class),
+    UNKNOWN("unknown", UnknownAttribute.class);
 
     private final String jsonTag;
     private final Class<? extends BaseAttribute> attributeClass;

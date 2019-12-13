@@ -23,6 +23,7 @@ import com.basistech.rosette.dm.Dependency;
 import com.basistech.rosette.dm.Entity;
 import com.basistech.rosette.dm.Keyphrase;
 import com.basistech.rosette.dm.LanguageDetection;
+import com.basistech.rosette.dm.LayoutRegion;
 import com.basistech.rosette.dm.ListAttribute;
 import com.basistech.rosette.dm.RelationshipMention;
 import com.basistech.rosette.dm.ScriptRegion;
@@ -100,6 +101,9 @@ public abstract class AnnotatedTextArrayMixin {
 
     @JsonIgnore
     public abstract ListAttribute<Sentence> getSentences();
+
+    @JsonIgnore
+    public abstract ListAttribute<LayoutRegion> getLayoutRegions();
 
     @JsonIgnore
     public abstract ListAttribute<BaseNounPhrase> getBaseNounPhrases();

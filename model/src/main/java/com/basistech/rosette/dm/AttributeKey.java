@@ -25,38 +25,34 @@ package com.basistech.rosette.dm;
 enum AttributeKey {
     BASE_NOUN_PHRASE("baseNounPhrases"),
     CATEGORIZER_RESULTS("categorizerResults"),
+    CONCEPT("concepts"),
     DEPENDENCY("dependency"),
     EMBEDDING("embeddings"),
     ENTITY("entities"),
-    MENTION("mentions"),
+    KEYPHRASE("keyphrases"),
     @Deprecated
     ENTITY_MENTION("entityMentions"),
-    /**
-     * The list of language detections by region of the document.
-     */
-    LANGUAGE_DETECTION_REGIONS("languageDetectionRegions"),
+    MENTION("mentions"),
     /**
      * The language detection for the entire document.
      */
     LANGUAGE_DETECTION("languageDetection"),
-    SIMILAR_TERMS("similarTerms"),
+    /**
+     * The list of language detections by region of the document.
+     */
+    LANGUAGE_DETECTION_REGIONS("languageDetectionRegions"),
+    LAYOUT_REGION("layoutRegion"),
     RELATIONSHIP_MENTION("relationshipMentions"),
     @Deprecated
     RESOLVED_ENTITY("resolvedEntities"),
     SCRIPT_REGION("scriptRegion"),
     SENTENCE("sentence"),
-    LAYOUT_REGION("layoutRegion"),
-
-
     SENTIMENT_RESULTS("sentimentResults"),
+    SIMILAR_TERMS("similarTerms"),
     TOKEN("token"),
+    TOPIC_RESULTS("topicResults"),
     TRANSLATED_DATA("translatedData"),
     TRANSLATED_TOKENS("translatedTokens"),
-    TOPIC_RESULTS("topicResults"),
-
-    CONCEPT("concepts"),
-    KEYPHRASE("keyphrases"),
-
     TRANSLITERATION("transliteration");
 
     private final String key;
