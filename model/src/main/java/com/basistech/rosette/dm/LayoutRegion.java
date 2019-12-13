@@ -27,12 +27,21 @@ import java.util.Map;
  */
 public class LayoutRegion extends Attribute implements Serializable {
 
+    /**
+     * Layout types
+     */
     public enum Layout {
+        /**
+         * For unstructured text.
+         */
         UNSTRUCTURED,
+        /**
+         * For structured text, such as lists or tables.
+         */
         STRUCTURED,
     }
 
-    private static final long serialVersionUID = 250L;
+    private static final long serialVersionUID = 270L;
     private final Layout layout;
 
     protected LayoutRegion(int startOffset, int endOffset, Layout layout, Map<String, Object> extendedProperties) {
