@@ -1,5 +1,5 @@
 /*
-* Copyright 2017 Basis Technology Corp.
+* Copyright 2019 Basis Technology Corp.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -25,6 +25,7 @@ import com.basistech.rosette.dm.HanMorphoAnalysis;
 import com.basistech.rosette.dm.Keyphrase;
 import com.basistech.rosette.dm.KoreanMorphoAnalysis;
 import com.basistech.rosette.dm.LanguageDetection;
+import com.basistech.rosette.dm.LayoutRegion;
 import com.basistech.rosette.dm.ListAttribute;
 import com.basistech.rosette.dm.MorphoAnalysis;
 import com.basistech.rosette.dm.RelationshipComponent;
@@ -72,6 +73,7 @@ public class JsonTest extends AdmAssert {
     private LanguageDetection languageDetection;
     private ScriptRegion scriptRegion;
     private Sentence sentence;
+    private LayoutRegion layoutRegion;
     private Token token;
     private TranslatedData germanTranslatedData;
     private TranslatedData spanishTranslatedData;
@@ -182,6 +184,12 @@ public class JsonTest extends AdmAssert {
         sentence = sentBuilder.build();
         sentListBuilder.add(sentence);
         builder.sentences(sentListBuilder.build());
+
+        ListAttribute.Builder<LayoutRegion> dtrListBuilder = new ListAttribute.Builder<>(LayoutRegion.class);
+        LayoutRegion.Builder dtrBuilder = new LayoutRegion.Builder(0, builder.data().length(), LayoutRegion.Layout.UNSTRUCTURED);
+        layoutRegion = dtrBuilder.build();
+        dtrListBuilder.add(layoutRegion);
+        builder.layoutRegions(dtrListBuilder.build());
 
         ListAttribute.Builder<Token> tokenListBuilder = new ListAttribute.Builder<>(Token.class);
         Token.Builder tokenBuilder = new Token.Builder(0, 4, "This");
@@ -358,6 +366,11 @@ public class JsonTest extends AdmAssert {
         assertNotNull(sentences);
 
         assertEquals(sentence, sentences.get(0));
+
+        ListAttribute<LayoutRegion> layoutRegions = read.getLayoutRegions();
+        assertNotNull(layoutRegions);
+        assertEquals(1, layoutRegions.size());
+        assertEquals(layoutRegion, layoutRegions.get(0));
 
         ListAttribute<Token> tokenList = read.getTokens();
         assertNotNull(tokenList);

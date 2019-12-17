@@ -1,5 +1,5 @@
 /*
-* Copyright 2014 Basis Technology Corp.
+* Copyright 2019 Basis Technology Corp.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -497,6 +497,16 @@ public class AnnotatedText implements Serializable {
     }
 
     /**
+     * Returns the list of layout regions.
+     *
+     * @return the list of layout regions
+     */
+    @SuppressWarnings("unchecked")
+    public ListAttribute<LayoutRegion> getLayoutRegions() {
+        return (ListAttribute<LayoutRegion>) attributes.get(AttributeKey.LAYOUT_REGION.key());
+    }
+
+    /**
      * Returns the list of base noun phrases.
      *
      * @return the list of base noun phrases
@@ -765,6 +775,17 @@ public class AnnotatedText implements Serializable {
          */
         public Builder sentences(ListAttribute<Sentence> sentences) {
             attributes.put(AttributeKey.SENTENCE.key(), sentences);
+            return this;
+        }
+
+        /**
+         * Attaches a list of layout regions.
+         *
+         * @param layoutRegions the layout regions
+         * @return this
+         */
+        public Builder layoutRegions(ListAttribute<LayoutRegion> layoutRegions) {
+            attributes.put(AttributeKey.LAYOUT_REGION.key(), layoutRegions);
             return this;
         }
 

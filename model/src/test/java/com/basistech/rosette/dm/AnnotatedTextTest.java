@@ -686,4 +686,26 @@ public class AnnotatedTextTest {
         ArabicMorphoAnalysis copy = new ArabicMorphoAnalysis.Builder(analysis).build();
         assertEquals(analysis, copy);
     }
+
+    @Test
+    public void testLayoutRegions() {
+        final String data = "This is unstructured text. bla bla bla.\nThis\tis\tfragmented\t\text.\n";
+        AnnotatedText.Builder builder = new AnnotatedText.Builder().data(data);
+
+        ListAttribute.Builder<LayoutRegion> layoutRegionBuilder = new ListAttribute.Builder<>(LayoutRegion.class);
+        LayoutRegion.Builder dtrBuilder = new LayoutRegion.Builder(0, 41, LayoutRegion.Layout.UNSTRUCTURED);
+        layoutRegionBuilder.add(dtrBuilder.build());
+        dtrBuilder = new LayoutRegion.Builder(42, 70, LayoutRegion.Layout.STRUCTURED);
+        layoutRegionBuilder.add(dtrBuilder.build());
+
+        builder.layoutRegions(layoutRegionBuilder.build());
+        AnnotatedText text = builder.build();
+
+        ListAttribute<LayoutRegion> layoutRegions = text.getLayoutRegions();
+        assertEquals(0, layoutRegions.get(0).getStartOffset());
+        assertEquals(41, layoutRegions.get(0).getEndOffset());
+
+        assertEquals(42, layoutRegions.get(1).getStartOffset());
+        assertEquals(70, layoutRegions.get(1).getEndOffset());
+    }
 }

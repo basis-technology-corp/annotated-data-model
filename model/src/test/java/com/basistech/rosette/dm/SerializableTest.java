@@ -1,5 +1,5 @@
 /*
-* Copyright 2014 Basis Technology Corp.
+* Copyright 2019 Basis Technology Corp.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -50,6 +50,7 @@ public class SerializableTest {
     private LanguageDetection languageDetection;
     private ScriptRegion scriptRegion;
     private Sentence sentence;
+    private LayoutRegion layoutRegion;
     private MorphoAnalysis morphoAnalysis;
     private TextDomain germanDomain;
     private TextDomain spanishDomain;
@@ -161,6 +162,12 @@ public class SerializableTest {
         sentence = sentBuilder.build();
         sentListBuilder.add(sentence);
         builder.sentences(sentListBuilder.build());
+
+        ListAttribute.Builder<LayoutRegion> dtrListBuilder = new ListAttribute.Builder<>(LayoutRegion.class);
+        LayoutRegion.Builder dtrBuilder = new LayoutRegion.Builder(0, builder.data().length(), LayoutRegion.Layout.UNSTRUCTURED);
+        layoutRegion = dtrBuilder.build();
+        dtrListBuilder.add(layoutRegion);
+        builder.layoutRegions(dtrListBuilder.build());
 
         ListAttribute.Builder<Token> tokenListBuilder = new ListAttribute.Builder<>(Token.class);
         Token.Builder tokenBuilder = new Token.Builder(0, 4, "This");
@@ -332,6 +339,11 @@ public class SerializableTest {
             assertNotNull(sentences);
 
             assertEquals(sentence, sentences.get(0));
+
+            ListAttribute<LayoutRegion> layoutRegions = read.getLayoutRegions();
+            assertNotNull(layoutRegions);
+            assertEquals(1, layoutRegions.size());
+            assertEquals(layoutRegion, layoutRegions.get(0));
 
             ListAttribute<Token> tokenList = read.getTokens();
             assertNotNull(tokenList);

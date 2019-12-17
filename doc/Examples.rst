@@ -231,6 +231,24 @@ sentence usually includes any trailing whitespace.
     // [14, 26)
 
 
+Layout Regions
+--------------
+
+Layout regions are represented as start/end offsets into the text, along with what
+type of layout the region has, structured or unstructured. A layout region usually
+includes any trailing whitespace.
+
+::
+
+    AnnotatedText output = annotator.annotate("Consider the following table. City\tState\nBoston\tMassachusetts\nConcord\tNew Hampshire\n");
+    for (LayoutRegion layoutRegion : output.getLayoutRegions()) {
+        System.out.printf("[%d, %d), %s%n", layoutRegion.getStartOffset(),
+            layoutRegion.getEndOffset(), layoutRegion.getLayout());
+    }
+
+    // [0, 30), UNSTRUCTURED
+    // [30, 84), STRUCTURED
+
 Base Noun Phrases
 -----------------
 
