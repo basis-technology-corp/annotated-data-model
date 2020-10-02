@@ -22,7 +22,6 @@ import java.io.Serializable;
 /**
  * Class used for future-proof representation of attributes in json that we
  * don't have classes for.
- * @adm.ignore
  */
 @EqualsAndHashCode(callSuper = true)
 public class UnknownAttribute extends BaseAttribute implements Serializable {

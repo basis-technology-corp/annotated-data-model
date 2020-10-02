@@ -63,7 +63,6 @@ public class Sentence extends Attribute implements Serializable {
          * @param tokenOffsets array of token start/end offsets
          * @param tokenStartIndex index in tokenOffsets for the start of the phrase
          * @param tokenEndIndex index in tokenOffsets for the end of the phrase
-         * @adm.ignore
          */
         public Builder(int[] tokenOffsets, int tokenStartIndex, int tokenEndIndex) {
             this(tokenOffsets[2 * tokenStartIndex], tokenOffsets[2 * (tokenEndIndex - 1) + 1]);
@@ -73,7 +72,6 @@ public class Sentence extends Attribute implements Serializable {
          * Constructs a builder from the contents of an existing sentence.
          *
          * @param toCopy the object to copy
-         * @adm.ignore
          */
         public Builder(Sentence toCopy) {
             super(toCopy);

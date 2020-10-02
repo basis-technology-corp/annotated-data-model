@@ -267,7 +267,6 @@ public class ArabicMorphoAnalysis extends MorphoAnalysis implements Serializable
          * Constructs a builder from an existing analysis.
          *
          * @param toCopy the analysis to copy.
-         * @adm.ignore
          */
         public Builder(ArabicMorphoAnalysis toCopy) {
             super(toCopy);

@@ -32,14 +32,12 @@
  *     Thus, attributes that refer to the {@code AnnotatedText} as a whole inherit from {@code BaseAttribute}, while attributes
  *     that refer to subsequences of text inherit from {@code Attribute}.
  * </p>
- * {@adm.java}
  * <h2>RawData</h2>
  *     <p>In some cases, applications of this data model may also need to represent initial raw data.
  *     The {@link com.basistech.rosette.dm.RawData}
  *     class supports that usage. {@code RawData} stores a {@link java.nio.ByteBuffer} and a {@code Map<String, <List<String>>} of
  *     metadata. There is no connection in the code between {@code AnnotatedText} and {@code RawData}.
  *     </p>
- *     {@adm.java}
  * <h2>Immutability</h2>
  * <p>
  *     All of the classes in this package are immutable. If a program needs to modify, it needs to construct new classes.
@@ -59,7 +57,6 @@
  *     Because these classes are immutable, they have many arguments to their constructors. Each class has a
  *     nested {@code Builder} class to avoid this inconvenience; the constructors are thus not public.
  * </p>
- * {@adm.java}
  * <h2>Extensibility Model</h2>
  * <p>
  *     We could have designed this data model to defer all the binding until runtime -- essentially, a giant
@@ -88,7 +85,6 @@
  *      Logically empty lists, sets, and maps are usually represented by {@code null} instead of by actual empty collections.
  *      The fields of any attributes may be {@code null}, unless documented otherwise for a specific field.
  * </p>
- * {@adm.java}
  */
 @RosetteSystemBundlePackage
 package com.basistech.rosette.dm;

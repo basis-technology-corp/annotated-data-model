@@ -134,7 +134,6 @@ public class ResolvedEntity extends Attribute implements Serializable {
          * Constructs a builder by copying values from an existing resolved entity.
          *
          * @param toCopy the object to create
-         * @adm.ignore
          */
         public Builder(ResolvedEntity toCopy) {
             super(toCopy);

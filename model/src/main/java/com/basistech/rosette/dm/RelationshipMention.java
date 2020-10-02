@@ -254,7 +254,6 @@ public class RelationshipMention extends Attribute implements Serializable {
          * Constructs a builder by copying values from an existing relationship mention.
          *
          * @param toCopy the object to create
-         * @adm.ignore
          */
         public Builder(RelationshipMention toCopy) {
             super(toCopy);

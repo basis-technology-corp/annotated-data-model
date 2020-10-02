@@ -77,7 +77,7 @@ public final class OsgiTestUtil {
      *                                 this project is just testing other bundles. This method builds
      *                                 projectBuildDirectory/THIS-VERSION.jar
      * @param useFragmentBundle if true, expect there to be -root-fragment bundle in projectBuildDirectory, and install it.
-     * @return
+     * @return options
      */
     public static Option[] standardPaxExamConfig(File projectBuildDirectory,
                                                  String projectVersion,

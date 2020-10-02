@@ -87,7 +87,6 @@ public class LayoutRegion extends Attribute implements Serializable {
          * Constructs a builder from an existing layout region.
          *
          * @param toCopy the object to copy
-         * @adm.ignore
          */
         public Builder(LayoutRegion toCopy) {
             super(toCopy);

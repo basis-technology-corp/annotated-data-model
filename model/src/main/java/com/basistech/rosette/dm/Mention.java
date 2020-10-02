@@ -137,7 +137,6 @@ public class Mention extends Attribute implements Serializable {
          * Constructs a builder initialized with information from an existing entity mention.
          *
          * @param toCopy the mention to copy.
-         * @adm.ignore
          */
         public Builder(Mention toCopy) {
             super(toCopy);

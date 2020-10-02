@@ -28,7 +28,6 @@ import java.util.Map;
  * A container for incoming raw data (bytes).
  * {@link com.basistech.rosette.dm.AnnotatedText} does not store bytes; this class
  * serves components that consume bytes, e.g. encoding identification.
- * @adm.ignore
  */
 @EqualsAndHashCode
 public class RawData implements Serializable {

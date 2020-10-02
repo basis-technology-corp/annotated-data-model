@@ -102,7 +102,6 @@ public class Concept extends BaseAttribute implements Serializable {
          * Constructs a builder by copying values from an existing concept
          *
          * @param toCopy the object to copy from
-         * @adm.ignore
          */
         public Builder(Concept toCopy) {
             super(toCopy);

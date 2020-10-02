@@ -167,7 +167,6 @@ public class CategorizerResult extends BaseAttribute implements Serializable {
          * result.
          *
          * @param toCopy the object to create
-         * @adm.ignore
          */
         public Builder(CategorizerResult toCopy) {
             super(toCopy);

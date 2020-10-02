@@ -174,7 +174,6 @@ public class MorphoAnalysis extends BaseAttribute implements Serializable {
          * Constructs a builder from an existing analysis.
          *
          * @param toCopy the object to copy
-         * @adm.ignore
          */
         public Builder(MorphoAnalysis toCopy) {
             super(toCopy);
