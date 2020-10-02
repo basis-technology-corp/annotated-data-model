@@ -17,6 +17,7 @@ package com.basistech.rosette.dm;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.Maps;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -31,6 +32,7 @@ import java.util.Set;
  * @param <K> The type of the keys in the map.
  * @param <V> The type of the values in the map.
  */
+@EqualsAndHashCode(callSuper = true)
 public class MapAttribute<K, V extends BaseAttribute> extends BaseAttribute implements Map<K, V>, Serializable {
     private static final long serialVersionUID = 250L;
 
@@ -136,16 +138,6 @@ public class MapAttribute<K, V extends BaseAttribute> extends BaseAttribute impl
     @Override
     public Set<Entry<K, V>> entrySet() {
         return items.entrySet();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        return items.equals(o);
-    }
-
-    @Override
-    public int hashCode() {
-        return items.hashCode();
     }
 
     @Override

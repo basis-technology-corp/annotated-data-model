@@ -16,6 +16,7 @@
 package com.basistech.rosette.dm;
 
 import com.google.common.base.MoreObjects;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 import java.util.Map;
@@ -25,6 +26,7 @@ import java.util.Map;
  * have a start and end offset.  The offsets refer to a half-open range
  * of characters (UTF-16 elements).
  */
+@EqualsAndHashCode(callSuper = true)
 public abstract class Attribute extends BaseAttribute implements Serializable {
     private static final long serialVersionUID = 250L;
     protected final int startOffset;
@@ -63,34 +65,6 @@ public abstract class Attribute extends BaseAttribute implements Serializable {
     protected MoreObjects.ToStringHelper toStringHelper() {
         return super.toStringHelper().add("startOffset", startOffset)
                 .add("endOffset", endOffset);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        if (!super.equals(o)) {
-            return false;
-        }
-
-        Attribute attribute = (Attribute) o;
-
-        if (endOffset != attribute.endOffset) {
-            return false;
-        }
-        return startOffset == attribute.startOffset;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + startOffset;
-        result = 31 * result + endOffset;
-        return result;
     }
 
     /**

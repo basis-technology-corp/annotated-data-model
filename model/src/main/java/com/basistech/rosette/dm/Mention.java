@@ -16,6 +16,7 @@
 package com.basistech.rosette.dm;
 
 import com.google.common.base.MoreObjects;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 import java.util.Map;
@@ -24,6 +25,7 @@ import java.util.Map;
  * A mention of a entity in the text.  For example, "George" and
  * "George Washington" are mentions of type "PERSON".
  */
+@EqualsAndHashCode(callSuper = true)
 public class Mention extends Attribute implements Serializable {
     private static final long serialVersionUID = 250L;
     private final Double confidence;
@@ -99,50 +101,6 @@ public class Mention extends Attribute implements Serializable {
      */
     public String getNormalized() {
         return normalized;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        if (!super.equals(o)) {
-            return false;
-        }
-
-        Mention that = (Mention) o;
-
-        if (confidence != null ? !confidence.equals(that.confidence) : that.confidence != null) {
-            return false;
-        }
-
-        if (linkingConfidence != null ? !linkingConfidence.equals(that.linkingConfidence) : that.linkingConfidence != null) {
-            return false;
-        }
-
-        if (normalized != null ? !normalized.equals(that.normalized) : that.normalized != null) {
-            return false;
-        }
-
-        if (source != null ? !source.equals(that.source) : that.source != null) {
-            return false;
-        }
-        return !(subsource != null ? !subsource.equals(that.subsource) : that.subsource != null);
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + (confidence != null ? confidence.hashCode() : 0);
-        result = 31 * result + (linkingConfidence != null ? linkingConfidence.hashCode() : 0);
-        result = 31 * result + (source != null ? source.hashCode() : 0);
-        result = 31 * result + (subsource != null ? subsource.hashCode() : 0);
-        result = 31 * result + (normalized != null ? normalized.hashCode() : 0);
-        return result;
     }
 
     @Override

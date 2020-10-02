@@ -17,6 +17,7 @@ package com.basistech.rosette.dm;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.Lists;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 import java.util.List;
@@ -26,6 +27,7 @@ import java.util.Map;
  * Morphological analysis objects for Korean.
  * Korean morphology decomposes each word into a collection of tagged morphemes.
  */
+@EqualsAndHashCode(callSuper = true)
 public class KoreanMorphoAnalysis extends MorphoAnalysis implements Serializable {
     private static final long serialVersionUID = 250L;
     private final List<String> morphemes;
@@ -66,35 +68,6 @@ public class KoreanMorphoAnalysis extends MorphoAnalysis implements Serializable
      */
     public List<String> getMorphemeTags() {
         return morphemeTags;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        if (!super.equals(o)) {
-            return false;
-        }
-
-        KoreanMorphoAnalysis that = (KoreanMorphoAnalysis) o;
-
-        if (morphemeTags != null ? !morphemeTags.equals(that.morphemeTags) : that.morphemeTags != null) {
-            return false;
-        }
-        return !(morphemes != null ? !morphemes.equals(that.morphemes) : that.morphemes != null);
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + (morphemes != null ? morphemes.hashCode() : 0);
-        result = 31 * result + (morphemeTags != null ? morphemeTags.hashCode() : 0);
-        return result;
     }
 
     @Override

@@ -17,11 +17,11 @@ package com.basistech.rosette.dm;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.Lists;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * A reference to a "real world" entity. Each entity in a document is
@@ -43,6 +43,7 @@ import java.util.Objects;
  * Entities are not spans of text.
  * The mentions in an entity are in document order.
  */
+@EqualsAndHashCode(callSuper = true)
 public class Entity extends BaseAttribute implements Serializable {
     private static final long serialVersionUID = 250L;
     private List<Mention> mentions;
@@ -129,32 +130,6 @@ public class Entity extends BaseAttribute implements Serializable {
      */
     public Double getSalience() {
         return salience;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        if (!super.equals(o)) {
-            return false;
-        }
-        Entity entity = (Entity) o;
-        return Objects.equals(mentions, entity.mentions)
-                && Objects.equals(headMentionIndex, entity.headMentionIndex)
-                && Objects.equals(type, entity.type)
-                && Objects.equals(entityId, entity.entityId)
-                && Objects.equals(confidence, entity.confidence)
-                && Objects.equals(sentiment, entity.sentiment)
-                && Objects.equals(salience, entity.salience);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), mentions, headMentionIndex, type, entityId, confidence, sentiment, salience);
     }
 
     @Override

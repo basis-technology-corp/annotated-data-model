@@ -574,6 +574,13 @@ public class EqualsTest {
         assertTrue(t5.equals(t5));
     }
 
-
+    @Test
+    public void adm() throws Exception {
+        AnnotatedText t1 = new AnnotatedText.Builder().data("foo").build();
+        AnnotatedText t2 = new AnnotatedText.Builder().data("foo").build();
+        AnnotatedText t3 = new AnnotatedText.Builder().data("bar").build();
+        assertTrue(t1.equals(t2));
+        assertFalse(t1.equals(t3));
+    }
 
 }

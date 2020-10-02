@@ -17,6 +17,7 @@ package com.basistech.rosette.dm;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.Lists;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 import java.util.List;
@@ -46,6 +47,7 @@ import java.util.Map;
  * suffixTags:     [NO_FUNC]
  * </pre>
  */
+@EqualsAndHashCode(callSuper = true)
 public class ArabicMorphoAnalysis extends MorphoAnalysis implements Serializable {
     private static final long serialVersionUID = 250L;
     private final int prefixLength;
@@ -211,72 +213,6 @@ public class ArabicMorphoAnalysis extends MorphoAnalysis implements Serializable
      */
     public boolean isStrippablePrefix() {
         return strippablePrefix;
-    }
-
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        if (!super.equals(o)) {
-            return false;
-        }
-
-        ArabicMorphoAnalysis that = (ArabicMorphoAnalysis) o;
-
-        if (definiteArticle != that.definiteArticle) {
-            return false;
-        }
-        if (prefixLength != that.prefixLength) {
-            return false;
-        }
-        if (stemLength != that.stemLength) {
-            return false;
-        }
-        if (strippablePrefix != that.strippablePrefix) {
-            return false;
-        }
-        if (prefixTags != null ? !prefixTags.equals(that.prefixTags) : that.prefixTags != null) {
-            return false;
-        }
-        if (prefixes != null ? !prefixes.equals(that.prefixes) : that.prefixes != null) {
-            return false;
-        }
-        if (root != null ? !root.equals(that.root) : that.root != null) {
-            return false;
-        }
-        if (stemTags != null ? !stemTags.equals(that.stemTags) : that.stemTags != null) {
-            return false;
-        }
-        if (stems != null ? !stems.equals(that.stems) : that.stems != null) {
-            return false;
-        }
-        if (suffixTags != null ? !suffixTags.equals(that.suffixTags) : that.suffixTags != null) {
-            return false;
-        }
-        return !(suffixes != null ? !suffixes.equals(that.suffixes) : that.suffixes != null);
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + prefixLength;
-        result = 31 * result + stemLength;
-        result = 31 * result + (root != null ? root.hashCode() : 0);
-        result = 31 * result + (definiteArticle ? 1 : 0);
-        result = 31 * result + (strippablePrefix ? 1 : 0);
-        result = 31 * result + (prefixes != null ? prefixes.hashCode() : 0);
-        result = 31 * result + (stems != null ? stems.hashCode() : 0);
-        result = 31 * result + (suffixes != null ? suffixes.hashCode() : 0);
-        result = 31 * result + (prefixTags != null ? prefixTags.hashCode() : 0);
-        result = 31 * result + (stemTags != null ? stemTags.hashCode() : 0);
-        result = 31 * result + (suffixTags != null ? suffixTags.hashCode() : 0);
-        return result;
     }
 
     @Override

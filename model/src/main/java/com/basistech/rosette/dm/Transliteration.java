@@ -19,11 +19,13 @@ import com.basistech.util.ISO15924;
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
+import lombok.EqualsAndHashCode;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+@EqualsAndHashCode(callSuper = true)
 public final class Transliteration extends BaseAttribute {
 
     private Map<ISO15924, String> scriptMap;
@@ -67,32 +69,6 @@ public final class Transliteration extends BaseAttribute {
      */
     public Map<ISO15924, String> getAll() {
         return scriptMap;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        if (!super.equals(o)) {
-            return false;
-        }
-
-        Transliteration that = (Transliteration) o;
-
-        return scriptMap != null ? scriptMap.equals(that.scriptMap) : that.scriptMap == null;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + (scriptMap != null ? scriptMap.hashCode() : 0);
-        return result;
     }
 
     @Override

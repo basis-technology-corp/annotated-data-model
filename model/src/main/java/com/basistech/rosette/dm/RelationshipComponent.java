@@ -19,6 +19,7 @@ package com.basistech.rosette.dm;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.Lists;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 import java.util.List;
@@ -28,6 +29,7 @@ import java.util.Map;
  * A Relationship Component: a building block of a relationship mention, such as an argument, predicate or adjunct.
  *
  */
+@EqualsAndHashCode(callSuper = true)
 public class RelationshipComponent extends BaseAttribute implements Serializable {
     private static final long serialVersionUID = 250L;
 
@@ -78,41 +80,6 @@ public class RelationshipComponent extends BaseAttribute implements Serializable
                 .add("phrase", phrase)
                 .add("extents", extents)
                 .add("identifier", identifier);
-    }
-
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        if (!super.equals(o)) {
-            return false;
-        }
-
-        RelationshipComponent that = (RelationshipComponent) o;
-
-        if (identifier != null ? !identifier.equals(that.identifier) : that.identifier != null) {
-            return false;
-        }
-
-        if (phrase != null ? !phrase.equals(that.phrase) : that.phrase != null) {
-            return false;
-        }
-
-        return !(extents != null ? !extents.equals(that.extents) : that.extents != null);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + phrase.hashCode();
-        result = 31 * result + (identifier != null ? identifier.hashCode() : 0);
-        result = 31 * result + (extents != null ? extents.hashCode() : 0);
-        return result;
     }
 
     public static class Builder extends BaseAttribute.Builder<RelationshipComponent, RelationshipComponent.Builder> {

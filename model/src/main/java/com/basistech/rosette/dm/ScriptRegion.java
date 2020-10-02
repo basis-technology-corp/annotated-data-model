@@ -17,6 +17,7 @@ package com.basistech.rosette.dm;
 
 import com.basistech.util.ISO15924;
 import com.google.common.base.MoreObjects;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 import java.util.Map;
@@ -25,6 +26,7 @@ import java.util.Map;
  * A script region. Script regions describe text as spans defined by
  * ISO-15924.
  */
+@EqualsAndHashCode(callSuper = true)
 public class ScriptRegion extends Attribute implements Serializable {
     private static final long serialVersionUID = 250L;
     private final ISO15924 script;
@@ -41,30 +43,6 @@ public class ScriptRegion extends Attribute implements Serializable {
      */
     public ISO15924 getScript() {
         return script;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        if (!super.equals(o)) {
-            return false;
-        }
-
-        ScriptRegion that = (ScriptRegion) o;
-
-        return script == that.script;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + script.hashCode();
-        return result;
     }
 
     @Override

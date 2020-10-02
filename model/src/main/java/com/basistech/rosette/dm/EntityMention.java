@@ -16,6 +16,7 @@
 package com.basistech.rosette.dm;
 
 import com.google.common.base.MoreObjects;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 import java.util.Map;
@@ -26,6 +27,7 @@ import java.util.Map;
  * @deprecated This class is replaced by {@link Mention}.
  */
 @Deprecated
+@EqualsAndHashCode(callSuper = true)
 public class EntityMention extends Attribute implements Serializable {
     private static final long serialVersionUID = 250L;
     private final String entityType;
@@ -141,59 +143,6 @@ public class EntityMention extends Attribute implements Serializable {
      */
     public String getNormalized() {
         return normalized;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        if (!super.equals(o)) {
-            return false;
-        }
-
-        EntityMention that = (EntityMention) o;
-
-        if (confidence != null ? !confidence.equals(that.confidence) : that.confidence != null) {
-            return false;
-        }
-        if (linkingConfidence != null ? !linkingConfidence.equals(that.linkingConfidence) : that.linkingConfidence != null) {
-            return false;
-        }
-        if (coreferenceChainId != null ? !coreferenceChainId.equals(that.coreferenceChainId) : that.coreferenceChainId != null) {
-            return false;
-        }
-        if (entityType != null ? !entityType.equals(that.entityType) : that.entityType != null) {
-            return false;
-        }
-        if (flags != null ? !flags.equals(that.flags) : that.flags != null) {
-            return false;
-        }
-        if (normalized != null ? !normalized.equals(that.normalized) : that.normalized != null) {
-            return false;
-        }
-        if (source != null ? !source.equals(that.source) : that.source != null) {
-            return false;
-        }
-        return !(subsource != null ? !subsource.equals(that.subsource) : that.subsource != null);
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + (entityType != null ? entityType.hashCode() : 0);
-        result = 31 * result + (confidence != null ? confidence.hashCode() : 0);
-        result = 31 * result + (linkingConfidence != null ? linkingConfidence.hashCode() : 0);
-        result = 31 * result + (coreferenceChainId != null ? coreferenceChainId.hashCode() : 0);
-        result = 31 * result + (flags != null ? flags.hashCode() : 0);
-        result = 31 * result + (source != null ? source.hashCode() : 0);
-        result = 31 * result + (subsource != null ? subsource.hashCode() : 0);
-        result = 31 * result + (normalized != null ? normalized.hashCode() : 0);
-        return result;
     }
 
     @Override

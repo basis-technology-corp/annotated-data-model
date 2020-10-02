@@ -18,6 +18,7 @@ package com.basistech.rosette.dm;
 import com.basistech.util.ISO15924;
 import com.basistech.util.LanguageCode;
 import com.google.common.base.MoreObjects;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 import java.util.Map;
@@ -34,6 +35,7 @@ import java.util.Map;
  * {@linkplain com.basistech.rosette.dm.Mention} is used for reference inside of documents, while
  * {@linkplain Name} is used for names unrelated to documents.
  */
+@EqualsAndHashCode(callSuper = true)
 public class Name extends BaseAttribute implements Serializable {
     private static final long serialVersionUID = 250L;
     private final String text;
@@ -118,46 +120,6 @@ public class Name extends BaseAttribute implements Serializable {
      */
     public LanguageCode getLanguageOfUse() {
         return languageOfUse;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        if (!super.equals(o)) {
-            return false;
-        }
-
-        Name name = (Name) o;
-
-        if (languageOfOrigin != name.languageOfOrigin) {
-            return false;
-        }
-        if (languageOfUse != name.languageOfUse) {
-            return false;
-        }
-        if (script != name.script) {
-            return false;
-        }
-        if (!text.equals(name.text)) {
-            return false;
-        }
-        return !(type != null ? !type.equals(name.type) : name.type != null);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + text.hashCode();
-        result = 31 * result + (type != null ? type.hashCode() : 0);
-        result = 31 * result + script.hashCode();
-        result = 31 * result + languageOfOrigin.hashCode();
-        result = 31 * result + languageOfUse.hashCode();
-        return result;
     }
 
     @Override

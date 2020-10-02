@@ -17,11 +17,11 @@
 package com.basistech.rosette.dm;
 
 import com.google.common.base.MoreObjects;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * Embeddings for a text.
@@ -29,6 +29,7 @@ import java.util.Objects;
  * items inside the text, such as the tokens or entities. The collections are identified by strings.
  * Constants are provided for some common cases.
  */
+@EqualsAndHashCode(callSuper = true)
 public class Embeddings extends BaseAttribute implements Serializable {
     private static final long serialVersionUID = 250L;
     /**
@@ -68,26 +69,6 @@ public class Embeddings extends BaseAttribute implements Serializable {
      */
     public Map<Name, EmbeddingCollection> getCollections() {
         return collections;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        if (!super.equals(o)) {
-            return false;
-        }
-        Embeddings that = (Embeddings) o;
-        return Objects.equals(collections, that.collections);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), collections);
     }
 
     @Override

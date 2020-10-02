@@ -21,6 +21,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -49,6 +50,7 @@ import java.util.Map;
  * For Json, and Java, the 'adm-json' module provides the supported serialization.
  */
 @SuppressWarnings("deprecation")
+@EqualsAndHashCode
 public class AnnotatedText implements Serializable {
     private static final long serialVersionUID = 250L;
     private final CharSequence data;

@@ -18,6 +18,7 @@ package com.basistech.rosette.dm;
 
 
 import com.google.common.base.MoreObjects;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 import java.util.Map;
@@ -25,6 +26,7 @@ import java.util.Map;
 /**
  * Layout defines text as spans defined by structured or unstructured regions.
  */
+@EqualsAndHashCode(callSuper = true)
 public class LayoutRegion extends Attribute implements Serializable {
 
     /**
@@ -55,30 +57,6 @@ public class LayoutRegion extends Attribute implements Serializable {
      */
     public Layout getLayout() {
         return layout;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        if (!super.equals(o)) {
-            return false;
-        }
-
-        LayoutRegion that = (LayoutRegion) o;
-
-        return layout == that.layout;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + layout.hashCode();
-        return result;
     }
 
     @Override

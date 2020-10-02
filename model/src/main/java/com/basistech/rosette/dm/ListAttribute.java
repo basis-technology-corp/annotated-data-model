@@ -18,6 +18,7 @@ package com.basistech.rosette.dm;
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -33,6 +34,7 @@ import java.util.Map;
  *
  * @param <Item> The type of the attributes in the list.
  */
+@EqualsAndHashCode(callSuper = true)
 public class ListAttribute<Item extends BaseAttribute> extends BaseAttribute implements List<Item>, Serializable {
     private static final long serialVersionUID = 250L;
 
@@ -59,16 +61,6 @@ public class ListAttribute<Item extends BaseAttribute> extends BaseAttribute imp
      */
     public List<Item> getItems() {
         return items;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        return items.equals(o);
-    }
-
-    @Override
-    public int hashCode() {
-        return items.hashCode();
     }
 
     // this is only used by the serializer, never let it get processed automatically.
