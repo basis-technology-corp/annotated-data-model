@@ -16,6 +16,7 @@
 package com.basistech.rosette.dm;
 
 import com.google.common.collect.ImmutableMap;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 import java.nio.ByteBuffer;
@@ -29,6 +30,7 @@ import java.util.Map;
  * serves components that consume bytes, e.g. encoding identification.
  * @adm.ignore
  */
+@EqualsAndHashCode
 public class RawData implements Serializable {
     private static final long serialVersionUID = 250L;
     private final ByteBuffer data;

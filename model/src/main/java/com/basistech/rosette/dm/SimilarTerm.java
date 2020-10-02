@@ -15,12 +15,14 @@
 */
 package com.basistech.rosette.dm;
 
+import lombok.EqualsAndHashCode;
+
 import java.io.Serializable;
-import java.util.Objects;
 
 /**
  * A term with some semantic similarity to an {@link AnnotatedText}.
  */
+@EqualsAndHashCode(callSuper = true)
 public class SimilarTerm extends BaseAttribute implements Serializable {
     private final String term;
     private final Double similarity;
@@ -44,23 +46,6 @@ public class SimilarTerm extends BaseAttribute implements Serializable {
      */
     public Double getSimilarity() {
         return similarity;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        SimilarTerm that = (SimilarTerm) o;
-        return Objects.equals(term, that.term) && Objects.equals(similarity, that.similarity);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(term, similarity);
     }
 
     @Override

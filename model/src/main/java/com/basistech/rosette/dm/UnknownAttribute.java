@@ -15,6 +15,8 @@
 */
 package com.basistech.rosette.dm;
 
+import lombok.EqualsAndHashCode;
+
 import java.io.Serializable;
 
 /**
@@ -22,6 +24,7 @@ import java.io.Serializable;
  * don't have classes for.
  * @adm.ignore
  */
+@EqualsAndHashCode(callSuper = true)
 public class UnknownAttribute extends BaseAttribute implements Serializable {
     private static final long serialVersionUID = 250L;
     //

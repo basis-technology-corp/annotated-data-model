@@ -20,6 +20,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 import java.util.List;
@@ -33,6 +34,7 @@ import java.util.Set;
  *
  * @adm.ignore
  */
+@EqualsAndHashCode
 public abstract class BaseAttribute implements Serializable {
     private static final long serialVersionUID = 250L;
 
@@ -80,21 +82,6 @@ public abstract class BaseAttribute implements Serializable {
         }
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        BaseAttribute that = (BaseAttribute) o;
-
-        return extendedProperties.equals(that.extendedProperties);
-
-    }
-
     protected MoreObjects.ToStringHelper toStringHelper() {
         return MoreObjects.toStringHelper(this).omitNullValues()
                 .add("extendedProperties", extendedProperties);
@@ -103,11 +90,6 @@ public abstract class BaseAttribute implements Serializable {
     @Override
     public String toString() {
         return toStringHelper().toString();
-    }
-
-    @Override
-    public int hashCode() {
-        return extendedProperties.hashCode();
     }
 
     /**

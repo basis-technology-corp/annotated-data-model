@@ -15,12 +15,15 @@
 */
 package com.basistech.rosette.dm;
 
+import lombok.EqualsAndHashCode;
+
 import java.io.Serializable;
 import java.util.Map;
 
 /**
  * A base noun phrase.
  */
+@EqualsAndHashCode(callSuper = true)
 public class BaseNounPhrase extends Attribute implements Serializable {
     private static final long serialVersionUID = 250L;
 

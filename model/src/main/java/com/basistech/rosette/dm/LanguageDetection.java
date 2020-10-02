@@ -19,6 +19,7 @@ import com.basistech.util.ISO15924;
 import com.basistech.util.LanguageCode;
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.Lists;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 import java.util.List;
@@ -29,6 +30,7 @@ import java.util.Map;
  * The results are composed as a list of {@link com.basistech.rosette.dm.LanguageDetection.DetectionResult},
  * to reflect the multiple alternatives produced by language detectors.
  */
+@EqualsAndHashCode(callSuper = true)
 public class LanguageDetection extends Attribute implements Serializable {
     private static final long serialVersionUID = 250L;
 
@@ -37,6 +39,7 @@ public class LanguageDetection extends Attribute implements Serializable {
      * Typically, the language identifier produces multiple results with
      * different confidence values.
      */
+    @EqualsAndHashCode(callSuper = true)
     public static class DetectionResult extends BaseAttribute {
         private final LanguageCode language;
         private final String encoding;
@@ -90,43 +93,6 @@ public class LanguageDetection extends Attribute implements Serializable {
          */
         public Double getConfidence() {
             return confidence;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) {
-                return true;
-            }
-            if (o == null || getClass() != o.getClass()) {
-                return false;
-            }
-            if (!super.equals(o)) {
-                return false;
-            }
-
-            DetectionResult that = (DetectionResult) o;
-
-            if (confidence != null ? !confidence.equals(that.confidence) : that.confidence != null) {
-                return false;
-            }
-            if (encoding != null ? !encoding.equals(that.encoding) : that.encoding != null) {
-                return false;
-            }
-            if (language != that.language) {
-                return false;
-            }
-            return script == that.script;
-
-        }
-
-        @Override
-        public int hashCode() {
-            int result = super.hashCode();
-            result = 31 * result + (language != null ? language.hashCode() : 0);
-            result = 31 * result + (encoding != null ? encoding.hashCode() : 0);
-            result = 31 * result + (script != null ? script.hashCode() : 0);
-            result = 31 * result + (confidence != null ? confidence.hashCode() : 0);
-            return result;
         }
 
         @Override
@@ -250,30 +216,6 @@ public class LanguageDetection extends Attribute implements Serializable {
     protected MoreObjects.ToStringHelper toStringHelper() {
         return super.toStringHelper()
                 .add("detectionResults", detectionResults);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        if (!super.equals(o)) {
-            return false;
-        }
-
-        LanguageDetection that = (LanguageDetection) o;
-
-        return detectionResults.equals(that.detectionResults);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + detectionResults.hashCode();
-        return result;
     }
 
     /**

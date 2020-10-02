@@ -45,6 +45,7 @@ public class EmbeddingCollection implements Serializable {
         return embeddings;
     }
 
+    // Because of the float[] fields, we need to write our own implementation of equals() here
     @Override
     public boolean equals(Object o) {
         if (this == o) {

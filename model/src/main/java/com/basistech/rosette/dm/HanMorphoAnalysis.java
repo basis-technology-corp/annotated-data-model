@@ -18,6 +18,7 @@ package com.basistech.rosette.dm;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.Lists;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 import java.util.List;
@@ -31,6 +32,7 @@ import java.util.Map;
  * Pinyin for Chinese and Hiragana for Japanese.  A single surface form may have
  * multiple possible readings.
  */
+@EqualsAndHashCode(callSuper = true)
 public class HanMorphoAnalysis extends MorphoAnalysis implements Serializable {
     private static final long serialVersionUID = 250L;
     private final List<String> readings;
@@ -62,37 +64,6 @@ public class HanMorphoAnalysis extends MorphoAnalysis implements Serializable {
      */
     public List<String> getReadings() {
         return readings;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        if (!super.equals(o)) {
-            return false;
-        }
-
-        HanMorphoAnalysis that = (HanMorphoAnalysis) o;
-
-        if (readings == null) {
-            return that.readings == null;
-        }
-
-        return readings.equals(that.readings);
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = super.hashCode();
-        if (readings != null) {
-            result = 31 * result + readings.hashCode();
-        }
-        return result;
     }
 
     @Override

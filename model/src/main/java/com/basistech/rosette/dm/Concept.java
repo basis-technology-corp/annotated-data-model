@@ -16,10 +16,10 @@
 package com.basistech.rosette.dm;
 
 import com.google.common.base.MoreObjects;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * A reference to a high-level "concept" of a document.  A concept can be an abstract
@@ -34,6 +34,7 @@ import java.util.Objects;
  * <a href="http://www.wikidata.org/wiki/Q23">Q23</a> from Wikidata.</li>
  * </ul>
  */
+@EqualsAndHashCode(callSuper = true)
 public class Concept extends BaseAttribute implements Serializable {
     private static final long serialVersionUID = 250L;
     private final String phrase;
@@ -69,28 +70,6 @@ public class Concept extends BaseAttribute implements Serializable {
      */
     public String getConceptId() {
         return conceptId;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        if (!super.equals(o)) {
-            return false;
-        }
-        Concept that = (Concept) o;
-        return Objects.equals(phrase, that.phrase)
-                && Objects.equals(salience, that.salience)
-                && Objects.equals(conceptId, that.conceptId);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), phrase, salience, conceptId);
     }
 
     @Override

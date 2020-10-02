@@ -16,6 +16,7 @@
 package com.basistech.rosette.dm;
 
 import com.google.common.base.MoreObjects;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 import java.util.List;
@@ -31,6 +32,7 @@ import java.util.Map;
  *     <li>a list of {@linkplain Extent}s marking each location of the keyphrase in the text</li>
  * </ul>
  */
+@EqualsAndHashCode(callSuper = true)
 public class Keyphrase extends BaseAttribute implements Serializable {
     private static final long serialVersionUID = 250L;
     private final String phrase;
@@ -75,40 +77,6 @@ public class Keyphrase extends BaseAttribute implements Serializable {
                 .add("phrase", phrase)
                 .add("salience", salience)
                 .add("extents", extents);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        if (!super.equals(o)) {
-            return false;
-        }
-
-        Keyphrase that = (Keyphrase) o;
-
-        if (phrase != null ? !phrase.equals(that.phrase) : that.phrase != null) {
-            return false;
-        }
-
-        if (salience != null ? !salience.equals(that.salience) : that.salience != null) {
-            return false;
-        }
-
-        return !(extents != null ? !extents.equals(that.extents) : that.extents != null);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + (phrase != null ? phrase.hashCode() : 0);
-        result = 31 * result + (salience != null ? salience.hashCode() : 0);
-        result = 31 * result + (extents != null ? extents.hashCode() : 0);
-        return result;
     }
 
     /**

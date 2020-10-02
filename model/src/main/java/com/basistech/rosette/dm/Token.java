@@ -17,6 +17,7 @@ package com.basistech.rosette.dm;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.Lists;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 import java.util.List;
@@ -26,6 +27,7 @@ import java.util.Map;
  * The token. The definition of a token can vary by language, but
  * generally a token corresponds to a word.
  */
+@EqualsAndHashCode(callSuper = true)
 public class Token extends Attribute implements Serializable {
     private static final long serialVersionUID = 250L;
     // we don't want to have to go look at the parent {@link AnnotatedText}.
@@ -90,48 +92,6 @@ public class Token extends Attribute implements Serializable {
      */
     public String getSource() {
         return source;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        if (!super.equals(o)) {
-            return false;
-        }
-
-        Token token = (Token) o;
-
-        if (analyses != null ? !analyses.equals(token.analyses) : token.analyses  != null) {
-            return false;
-        }
-        if (normalized != null ? !normalized.equals(token.normalized) : token.normalized != null) {
-            return false;
-        }
-        if (source != null ? !source.equals(token.source) : token.source != null) {
-            return false;
-        }
-        return !(text != null ? !text.equals(token.text) : token.text != null);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + text.hashCode();
-        if (normalized != null) {
-            result = 31 * result + normalized.hashCode();
-        }
-        if (analyses != null) {
-            result = 31 * result + analyses.hashCode();
-        }
-        if (source != null) {
-            result = 31 * result + source.hashCode();
-        }
-        return result;
     }
 
     @Override

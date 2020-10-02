@@ -20,10 +20,12 @@ import com.basistech.util.ISO15924;
 import com.basistech.util.LanguageCode;
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.ImmutableMap;
+import lombok.EqualsAndHashCode;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@EqualsAndHashCode(callSuper = true)
 public final class TransliterationResults extends BaseAttribute {
 
     private final Map<LanguageCode, Transliteration> results;
@@ -70,33 +72,6 @@ public final class TransliterationResults extends BaseAttribute {
         } else {
             return t.get(script);
         }
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        if (!super.equals(o)) {
-            return false;
-        }
-
-        TransliterationResults that = (TransliterationResults) o;
-
-        return results != null
-                ? results.equals(that.results) : that.results == null;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + (results != null ? results.hashCode() : 0);
-        return result;
     }
 
     @Override

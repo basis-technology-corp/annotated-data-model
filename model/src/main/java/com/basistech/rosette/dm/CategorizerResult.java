@@ -18,6 +18,7 @@ package com.basistech.rosette.dm;
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 import java.util.List;
@@ -34,6 +35,7 @@ import java.util.Map;
  * result is currently used for document categorization, sentiment analysis,
  * and topic generation.</p>
  */
+@EqualsAndHashCode(callSuper = true)
 public class CategorizerResult extends BaseAttribute implements Serializable {
     private static final long serialVersionUID = 250L;
     private final String label;
@@ -135,47 +137,6 @@ public class CategorizerResult extends BaseAttribute implements Serializable {
             .add("confidence", confidence)
             .add("explanationSet", explanationSet)
             .add("perFeatureScores", perFeatureScores);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        if (!super.equals(o)) {
-            return false;
-        }
-
-        CategorizerResult that = (CategorizerResult) o;
-
-        if (confidence != null ? !confidence.equals(that.confidence) : that.confidence != null) {
-            return false;
-        }
-        if (explanationSet != null ? !explanationSet.equals(that.explanationSet) : that.explanationSet != null) {
-            return false;
-        }
-        if (label != null ? !label.equals(that.label) : that.label != null) {
-            return false;
-        }
-        if (perFeatureScores != null ? !perFeatureScores.equals(that.perFeatureScores) : that.perFeatureScores != null) {
-            return false;
-        }
-        return !(score != null ? !score.equals(that.score) : that.score != null);
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + (label != null ? label.hashCode() : 0);
-        result = 31 * result + (score != null ? score.hashCode() : 0);
-        result = 31 * result + (confidence != null ? confidence.hashCode() : 0);
-        result = 31 * result + (explanationSet != null ? explanationSet.hashCode() : 0);
-        result = 31 * result + (perFeatureScores != null ? perFeatureScores.hashCode() : 0);
-        return result;
     }
 
     /**

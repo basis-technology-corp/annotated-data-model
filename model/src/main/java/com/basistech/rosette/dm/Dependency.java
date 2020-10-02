@@ -16,10 +16,10 @@
 package com.basistech.rosette.dm;
 
 import com.google.common.base.MoreObjects;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * An inter-token dependency from a parser.
@@ -74,6 +74,7 @@ import java.util.Objects;
  * Viewed as a list, the {@code dependencyTokenIndex} is redundant, but it is useful to pass a single dependency
  * around in isolation as a complete representation of a dependency arc.
  */
+@EqualsAndHashCode(callSuper = true)
 public class Dependency extends BaseAttribute implements Serializable {
     private static final long serialVersionUID = 250L;
     private final String relationship;
@@ -106,28 +107,6 @@ public class Dependency extends BaseAttribute implements Serializable {
      */
     public int getDependencyTokenIndex() {
         return dependencyTokenIndex;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        if (!super.equals(o)) {
-            return false;
-        }
-        Dependency that = (Dependency) o;
-        return governorTokenIndex == that.governorTokenIndex
-                && dependencyTokenIndex == that.dependencyTokenIndex
-                && Objects.equals(relationship, that.relationship);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), relationship, governorTokenIndex, dependencyTokenIndex);
     }
 
     @Override

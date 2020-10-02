@@ -17,6 +17,7 @@ package com.basistech.rosette.dm;
 
 import com.basistech.util.TextDomain;
 import com.google.common.base.MoreObjects;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 import java.util.Map;
@@ -26,6 +27,7 @@ import java.util.Map;
  * for example the original text may be Traditional Chinese, and the
  * translation may be Simplified Chinese.
  */
+@EqualsAndHashCode(callSuper = true)
 public class TranslatedData extends BaseAttribute implements Serializable {
     private static final long serialVersionUID = 250L;
     private final TextDomain domain;
@@ -64,38 +66,6 @@ public class TranslatedData extends BaseAttribute implements Serializable {
      */
     public Double getConfidence() {
         return confidence;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        if (!super.equals(o)) {
-            return false;
-        }
-
-        TranslatedData that = (TranslatedData) o;
-
-        if (confidence != null ? !confidence.equals(that.confidence) : that.confidence != null) {
-            return false;
-        }
-        if (!domain.equals(that.domain)) {
-            return false;
-        }
-        return translation.equals(that.translation);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + domain.hashCode();
-        result = 31 * result + translation.hashCode();
-        result = 31 * result + (confidence != null ? confidence.hashCode() : 0);
-        return result;
     }
 
     @Override

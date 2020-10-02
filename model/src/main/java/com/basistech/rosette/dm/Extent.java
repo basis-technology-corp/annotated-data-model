@@ -16,6 +16,8 @@
 
 package com.basistech.rosette.dm;
 
+import lombok.EqualsAndHashCode;
+
 import java.io.Serializable;
 import java.util.Map;
 
@@ -25,6 +27,7 @@ import java.util.Map;
  * The offsets refer to a half-open range of characters (UTF-16 elements)
  * Note that Extents have no properties of their own.
  */
+@EqualsAndHashCode(callSuper = true)
 public class Extent extends Attribute implements Serializable {
     private static final long serialVersionUID = 250L;
 

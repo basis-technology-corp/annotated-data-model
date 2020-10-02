@@ -17,11 +17,11 @@
 package com.basistech.rosette.dm;
 
 import com.google.common.base.MoreObjects;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -42,6 +42,7 @@ import java.util.Set;
  *     confidence:    [0.679]
  * </pre></blockquote>
  */
+@EqualsAndHashCode(callSuper = true)
 public class RelationshipMention extends Attribute implements Serializable {
     private static final long serialVersionUID = 250L;
 
@@ -216,36 +217,6 @@ public class RelationshipMention extends Attribute implements Serializable {
                 .add("confidence", confidence)
                 .add("salience", salience)
                 .add("modality", modality);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        if (!super.equals(o)) {
-            return false;
-        }
-        RelationshipMention that = (RelationshipMention) o;
-        return Objects.equals(predicate, that.predicate)
-                && Objects.equals(arg1, that.arg1)
-                && Objects.equals(arg2, that.arg2)
-                && Objects.equals(arg3, that.arg3)
-                && Objects.equals(adjuncts, that.adjuncts)
-                && Objects.equals(locatives, that.locatives)
-                && Objects.equals(temporals, that.temporals)
-                && Objects.equals(source, that.source)
-                && Objects.equals(confidence, that.confidence)
-                && Objects.equals(modality, that.modality)
-                && Objects.equals(salience, that.salience);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), predicate, arg1, arg2, arg3, adjuncts, locatives, temporals, source, confidence, modality, salience);
     }
 
     public static class Builder extends Attribute.Builder<RelationshipMention, RelationshipMention.Builder> {

@@ -17,6 +17,7 @@ package com.basistech.rosette.dm;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.Lists;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 import java.util.List;
@@ -33,6 +34,7 @@ import java.util.Map;
  * <br>
  * In some languages, words are decompounded into pieces that can, themselves, be analyzed.
  */
+@EqualsAndHashCode(callSuper = true)
 public class MorphoAnalysis extends BaseAttribute implements Serializable {
     private static final long serialVersionUID = 250L;
     // every language we support has part-of-speech and lemma
@@ -130,42 +132,6 @@ public class MorphoAnalysis extends BaseAttribute implements Serializable {
      */
     public TagSet getTagSet() {
         return tagSet;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        MorphoAnalysis that = (MorphoAnalysis) o;
-
-        if (components != null ? !components.equals(that.components) : that.components != null) {
-            return false;
-        }
-        if (lemma != null ? !lemma.equals(that.lemma) : that.lemma != null) {
-            return false;
-        }
-        if (partOfSpeech != null ? !partOfSpeech.equals(that.partOfSpeech) : that.partOfSpeech != null) {
-            return false;
-        }
-        if (raw != null ? !raw.equals(that.raw) : that.raw != null) {
-            return false;
-        }
-        return !(tagSet != null ? tagSet != that.tagSet : that.tagSet != null);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = partOfSpeech != null ? partOfSpeech.hashCode() : 0;
-        result = 31 * result + (lemma != null ? lemma.hashCode() : 0);
-        result = 31 * result + (components != null ? components.hashCode() : 0);
-        result = 31 * result + (raw != null ? raw.hashCode() : 0);
-        result = 31 * result + (tagSet != null ? tagSet.hashCode() : 0);
-        return result;
     }
 
     protected MoreObjects.ToStringHelper toStringHelper() {
