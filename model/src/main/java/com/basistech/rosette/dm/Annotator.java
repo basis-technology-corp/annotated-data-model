@@ -21,7 +21,6 @@ package com.basistech.rosette.dm;
  * base noun phrases, and entities.  A single annotator operates in one
  * language; while the data model supports multi-language texts, this
  * interface does not (yet) provide support.
- * @adm.ignore
  */
 public interface Annotator {
     /**

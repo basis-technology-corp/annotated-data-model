@@ -133,7 +133,6 @@ public class AnnotatedText implements Serializable {
      * Returns the character data for this text.
      *
      * @return the character data for this text
-     * @adm.ignore
      */
     public CharSequence getData() {
         return data;
@@ -144,7 +143,6 @@ public class AnnotatedText implements Serializable {
      * values are lists of strings.
      *
      * @return map of metadata associated with the document
-     * @adm.ignore
      */
     public Map<String, List<String>> getDocumentMetadata() {
         return documentMetadata;
@@ -162,8 +160,6 @@ public class AnnotatedText implements Serializable {
      * which are deprecated; they are only available from the specific accessors.
      *
      * @return all of the annotations on this text
-     *
-     * @adm.ignore
      */
     public Map<String, BaseAttribute> getAttributes() {
         return attributes;

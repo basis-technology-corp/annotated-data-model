@@ -126,7 +126,6 @@ public class LanguageDetection extends Attribute implements Serializable {
              * Constructs a builder initialized from an existing detection result.
              *
              * @param toCopy the item to copy
-             * @adm.ignore
              */
             public Builder(DetectionResult toCopy) {
                 super(toCopy);

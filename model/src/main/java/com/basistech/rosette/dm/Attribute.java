@@ -90,7 +90,6 @@ public abstract class Attribute extends BaseAttribute implements Serializable {
          * Constructs a builder by copying values from an existing object.
          *
          * @param toCopy the object to copy
-         * @adm.ignore
          */
         public Builder(Attribute toCopy) {
             super(toCopy);

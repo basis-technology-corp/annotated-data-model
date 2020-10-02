@@ -73,7 +73,6 @@ public class ScriptRegion extends Attribute implements Serializable {
          * Constructs a builder from an existing script region.
          *
          * @param toCopy the object to copy
-         * @adm.ignore
          */
         public Builder(ScriptRegion toCopy) {
             super(toCopy);

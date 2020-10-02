@@ -167,7 +167,6 @@ public class Entity extends BaseAttribute implements Serializable {
          * Constructs a builder by copying values from an existing resolved entity.
          *
          * @param toCopy the object to create
-         * @adm.ignore
          */
         public Builder(Entity toCopy) {
             super(toCopy);

@@ -90,7 +90,6 @@ public class HanMorphoAnalysis extends MorphoAnalysis implements Serializable {
          * Constructs a builder initialized from an existing analysis.
          *
          * @param toCopy the analysis to copy
-         * @adm.ignore
          */
         public Builder(HanMorphoAnalysis toCopy) {
             super(toCopy);

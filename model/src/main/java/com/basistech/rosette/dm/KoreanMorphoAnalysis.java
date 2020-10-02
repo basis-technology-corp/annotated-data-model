@@ -97,7 +97,6 @@ public class KoreanMorphoAnalysis extends MorphoAnalysis implements Serializable
          * Constructs a builder initialized from an existing analysis.
          *
          * @param toCopy the analysis to copy
-         * @adm.ignore
          */
         public Builder(KoreanMorphoAnalysis toCopy) {
             super(toCopy);

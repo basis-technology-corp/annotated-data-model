@@ -31,8 +31,6 @@ import java.util.Set;
  * Base class for attributes that annotate text.  Each attribute contains
  * an extended properties map of String to Object to hold optional
  * "user-defined" elements.
- *
- * @adm.ignore
  */
 @EqualsAndHashCode
 public abstract class BaseAttribute implements Serializable {

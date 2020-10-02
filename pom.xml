@@ -56,7 +56,6 @@
         <maven-javadoc-plugin.version>2.9.1</maven-javadoc-plugin.version>
     </properties>
     <modules>
-        <module>taglets</module>
         <module>common-test</module>
         <module>model</module>
         <module>json</module>
