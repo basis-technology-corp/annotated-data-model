@@ -28,9 +28,13 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Base class for attributes that annotate text.  Each attribute contains
- * an extended properties map of String to Object to hold optional
- * "user-defined" elements.
+ * Base class for attributes that annotate text.
+ * <p>
+ * Each attribute contains an extended properties map of {@code String}
+ * to {@code Object} to hold optional "user-defined" elements. An
+ * extended property key should be prefixed with a reversed domain name,
+ * e.g. {@code "com.example.key"}. Keys that are valid Java identifiers
+ * are reserved for use by Basis Technology.
  */
 @EqualsAndHashCode
 public abstract class BaseAttribute implements Serializable {
