@@ -1,0 +1,1908 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Annotated Text",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "data": {
+      "type": "string"
+    },
+    "documentMetadata": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      }
+    },
+    "attributes": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "translatedTokens": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "type": {
+              "type": "string"
+            },
+            "itemType": {
+              "type": "string"
+            },
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/TranslatedTokens"
+              }
+            }
+          }
+        },
+        "translatedData": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "type": {
+              "type": "string"
+            },
+            "itemType": {
+              "type": "string"
+            },
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/TranslatedData"
+              }
+            }
+          }
+        },
+        "languageDetectionRegions": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "type": {
+              "type": "string"
+            },
+            "itemType": {
+              "type": "string"
+            },
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/LanguageDetection"
+              }
+            }
+          }
+        },
+        "wholeTextLanguageDetection": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "type": {
+              "type": "string"
+            },
+            "itemType": {
+              "type": "string"
+            },
+            "items": {
+              "$ref": "#/definitions/LanguageDetection"
+            }
+          }
+        },
+        "entityMentions": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "type": {
+              "type": "string"
+            },
+            "itemType": {
+              "type": "string"
+            },
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/EntityMention"
+              }
+            }
+          }
+        },
+        "similarTerms": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "type": {
+              "type": "string"
+            },
+            "itemType": {
+              "type": "string"
+            },
+            "items": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/SimilarTerm"
+                }
+              }
+            }
+          }
+        },
+        "relationshipMentions": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "type": {
+              "type": "string"
+            },
+            "itemType": {
+              "type": "string"
+            },
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/RelationshipMention"
+              }
+            }
+          }
+        },
+        "resolvedEntities": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "type": {
+              "type": "string"
+            },
+            "itemType": {
+              "type": "string"
+            },
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ResolvedEntity"
+              }
+            }
+          }
+        },
+        "scriptRegion": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "type": {
+              "type": "string"
+            },
+            "itemType": {
+              "type": "string"
+            },
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ScriptRegion"
+              }
+            }
+          }
+        },
+        "sentence": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "type": {
+              "type": "string"
+            },
+            "itemType": {
+              "type": "string"
+            },
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Sentence"
+              }
+            }
+          }
+        },
+        "layoutRegion": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "type": {
+              "type": "string"
+            },
+            "itemType": {
+              "type": "string"
+            },
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/LayoutRegion"
+              }
+            }
+          }
+        },
+        "baseNounPhrases": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "type": {
+              "type": "string"
+            },
+            "itemType": {
+              "type": "string"
+            },
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/BaseNounPhrase"
+              }
+            }
+          }
+        },
+        "categorizerResults": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "type": {
+              "type": "string"
+            },
+            "itemType": {
+              "type": "string"
+            },
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/CategorizerResult"
+              }
+            }
+          }
+        },
+        "sentimentResults": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "type": {
+              "type": "string"
+            },
+            "itemType": {
+              "type": "string"
+            },
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/CategorizerResult"
+              }
+            }
+          }
+        },
+        "topicResults": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "type": {
+              "type": "string"
+            },
+            "itemType": {
+              "type": "string"
+            },
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/CategorizerResult"
+              }
+            }
+          }
+        },
+        "embeddings": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "type": {
+              "type": "string"
+            },
+            "itemType": {
+              "type": "string"
+            },
+            "items": {
+              "$ref": "#/definitions/Embeddings"
+            }
+          }
+        },
+        "concepts": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "type": {
+              "type": "string"
+            },
+            "itemType": {
+              "type": "string"
+            },
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Concept"
+              }
+            }
+          }
+        },
+        "keyphrases": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "type": {
+              "type": "string"
+            },
+            "itemType": {
+              "type": "string"
+            },
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Keyphrase"
+              }
+            }
+          }
+        },
+        "transliteration": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "type": {
+              "type": "string"
+            },
+            "itemType": {
+              "type": "string"
+            },
+            "items": {
+              "$ref": "#/definitions/TransliterationResults"
+            }
+          }
+        },
+        "entities": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "type": {
+              "type": "string"
+            },
+            "itemType": {
+              "type": "string"
+            },
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Entity"
+              }
+            }
+          }
+        },
+        "dependencies": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "type": {
+              "type": "string"
+            },
+            "itemType": {
+              "type": "string"
+            },
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Dependency"
+              }
+            }
+          }
+        },
+        "token": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "type": {
+              "type": "string"
+            },
+            "itemType": {
+              "type": "string"
+            },
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Token"
+              }
+            }
+          }
+        },
+        "languageDetection": {
+          "$ref": "#/definitions/LanguageDetection"
+        }
+      }
+    },
+    "version": {
+      "type": "string"
+    }
+  },
+  "definitions": {
+    "BaseAttribute": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "extendedProperties": {
+          "type": "object",
+          "additionalProperties": {}
+        }
+      }
+    },
+    "TranslatedTokens": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "extendedProperties": {
+          "type": "object",
+          "additionalProperties": {}
+        },
+        "domain": {
+          "$ref": "#/definitions/TextDomain"
+        },
+        "translations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "TextDomain": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "script": {
+          "type": "string",
+          "enum": [
+            "Afak",
+            "Aghb",
+            "Ahom",
+            "Arab",
+            "Armi",
+            "Armn",
+            "Avst",
+            "Bali",
+            "Bamu",
+            "Bass",
+            "Batk",
+            "Beng",
+            "Blis",
+            "Bopo",
+            "Brah",
+            "Brai",
+            "Bugi",
+            "Buhd",
+            "Cakm",
+            "Cans",
+            "Cari",
+            "Cham",
+            "Cher",
+            "Cirt",
+            "Copt",
+            "Cprt",
+            "Cyrl",
+            "Cyrs",
+            "Deva",
+            "Dsrt",
+            "Dupl",
+            "Egyd",
+            "Egyh",
+            "Egyp",
+            "Elba",
+            "Ethi",
+            "Geor",
+            "Geok",
+            "Glag",
+            "Goth",
+            "Gran",
+            "Grek",
+            "Gujr",
+            "Guru",
+            "Hang",
+            "Hani",
+            "Hano",
+            "Hans",
+            "Hant",
+            "Hatr",
+            "Hebr",
+            "Hira",
+            "Hluw",
+            "Hmng",
+            "Hrkt",
+            "Hung",
+            "Inds",
+            "Ital",
+            "Java",
+            "Jpan",
+            "Jurc",
+            "Kali",
+            "Kana",
+            "Khar",
+            "Khmr",
+            "Khoj",
+            "Knda",
+            "Kore",
+            "Kpel",
+            "Kthi",
+            "Lana",
+            "Laoo",
+            "Latf",
+            "Latg",
+            "Latn",
+            "Lepc",
+            "Limb",
+            "Lina",
+            "Linb",
+            "Lisu",
+            "Loma",
+            "Lyci",
+            "Lydi",
+            "Mahj",
+            "Mand",
+            "Mani",
+            "Maya",
+            "Mend",
+            "Merc",
+            "Mero",
+            "Mlym",
+            "Modi",
+            "Moon",
+            "Mong",
+            "Mroo",
+            "Mtei",
+            "Mult",
+            "Mymr",
+            "Narb",
+            "Nbat",
+            "Nkgb",
+            "Nkoo",
+            "Nshu",
+            "Ogam",
+            "Olck",
+            "Orkh",
+            "Orya",
+            "Osma",
+            "Palm",
+            "Pauc",
+            "Perm",
+            "Phag",
+            "Phli",
+            "Phlp",
+            "Phlv",
+            "Phnx",
+            "Plrd",
+            "Prti",
+            "Qaaa",
+            "Qabx",
+            "Rjng",
+            "Roro",
+            "Runr",
+            "Samr",
+            "Sara",
+            "Sarb",
+            "Saur",
+            "Sgnw",
+            "Shaw",
+            "Shrd",
+            "Sidd",
+            "Sind",
+            "Sinh",
+            "Sora",
+            "Sund",
+            "Sylo",
+            "Syrc",
+            "Syre",
+            "Syrj",
+            "Syrn",
+            "Tagb",
+            "Takr",
+            "Tale",
+            "Talu",
+            "Taml",
+            "Tang",
+            "Tavt",
+            "Telu",
+            "Teng",
+            "Tfng",
+            "Tglg",
+            "Thaa",
+            "Thai",
+            "Tibt",
+            "Tirh",
+            "Ugar",
+            "Vaii",
+            "Visp",
+            "Wara",
+            "Wole",
+            "Xpeo",
+            "Xsux",
+            "Yiii",
+            "Zinh",
+            "Zmth",
+            "Zsym",
+            "Zxxx",
+            "Zyyy",
+            "Zzzz"
+          ]
+        },
+        "transliterationScheme": {
+          "type": "string",
+          "enum": [
+            "FBIS",
+            "BGN",
+            "BASIS",
+            "IC",
+            "SATTS",
+            "BUCKWALTER",
+            "UNRSGN",
+            "ALA_LC",
+            "IGN",
+            "RJGC",
+            "ISO233_1984",
+            "SES",
+            "DMG",
+            "EI",
+            "KNAB",
+            "ALLWORTH",
+            "ISO9_1995",
+            "WWS",
+            "JDEC_AF",
+            "MELTS",
+            "ISO233_2_1993",
+            "ISO233_3_1999",
+            "WIKIPEDIA_ASCII",
+            "ELOT743",
+            "ISO843_1997",
+            "ISO259_1984",
+            "ISO259_2_1994",
+            "ANSIZ39_25_1975",
+            "ASCII",
+            "IC_BGN",
+            "UND_BGN",
+            "EXT_IC",
+            "ICU",
+            "BASIS_DIA",
+            "KORDA",
+            "MORSE",
+            "YALE",
+            "MCR",
+            "LUKOFF",
+            "SK",
+            "JG",
+            "MOCT",
+            "HYPY",
+            "HYPY_TONED",
+            "WADE_GILES",
+            "TYPY",
+            "TYPY_TONED",
+            "ZWPY",
+            "CTPY",
+            "POJ",
+            "GAUNGDONG",
+            "CTC",
+            "ISO_11940",
+            "ISO_11940_2",
+            "RTGS",
+            "ISO11940_1998",
+            "ISO11940_2_2007",
+            "HEBON",
+            "KUNREI",
+            "ISCII",
+            "PASCII",
+            "ARABTEX",
+            "LSI",
+            "NCC",
+            "PRIVATE_USE",
+            "FOLK",
+            "UNKNOWN",
+            "NATIVE"
+          ]
+        },
+        "language": {
+          "type": "string",
+          "enum": [
+            "xxx",
+            "afr",
+            "sqi",
+            "amh",
+            "ara",
+            "ben",
+            "bul",
+            "cat",
+            "zho",
+            "hrv",
+            "ces",
+            "dan",
+            "prs",
+            "nld",
+            "eng",
+            "uen",
+            "est",
+            "fin",
+            "fra",
+            "deu",
+            "ell",
+            "guj",
+            "heb",
+            "hin",
+            "hun",
+            "isl",
+            "ind",
+            "ita",
+            "jpn",
+            "kan",
+            "kin",
+            "kor",
+            "kur",
+            "lav",
+            "lit",
+            "mkd",
+            "mlg",
+            "msa",
+            "zsm",
+            "mal",
+            "qkp",
+            "nor",
+            "nob",
+            "nno",
+            "nya",
+            "nso",
+            "fas",
+            "plt",
+            "pol",
+            "por",
+            "pus",
+            "ron",
+            "run",
+            "rus",
+            "sag",
+            "srp",
+            "crs",
+            "sna",
+            "zhs",
+            "slk",
+            "slv",
+            "som",
+            "sot",
+            "qkr",
+            "nbl",
+            "spa",
+            "swa",
+            "ssw",
+            "swe",
+            "tgl",
+            "tam",
+            "tel",
+            "tha",
+            "tir",
+            "zht",
+            "tso",
+            "tsn",
+            "tur",
+            "ukr",
+            "urd",
+            "uzb",
+            "ven",
+            "vie",
+            "pes",
+            "xho",
+            "zul"
+          ]
+        }
+      }
+    },
+    "TranslatedData": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "extendedProperties": {
+          "type": "object",
+          "additionalProperties": {}
+        },
+        "domain": {
+          "$ref": "#/definitions/TextDomain"
+        },
+        "translation": {
+          "type": "string"
+        },
+        "confidence": {
+          "type": "number"
+        }
+      }
+    },
+    "LanguageDetection": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "extendedProperties": {
+          "type": "object",
+          "additionalProperties": {}
+        },
+        "startOffset": {
+          "type": "integer"
+        },
+        "endOffset": {
+          "type": "integer"
+        },
+        "detectionResults": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DetectionResult"
+          }
+        },
+        "type": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "startOffset",
+        "endOffset"
+      ]
+    },
+    "DetectionResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "extendedProperties": {
+          "type": "object",
+          "additionalProperties": {}
+        },
+        "language": {
+          "type": "string",
+          "enum": [
+            "xxx",
+            "afr",
+            "sqi",
+            "amh",
+            "ara",
+            "ben",
+            "bul",
+            "cat",
+            "zho",
+            "hrv",
+            "ces",
+            "dan",
+            "prs",
+            "nld",
+            "eng",
+            "uen",
+            "est",
+            "fin",
+            "fra",
+            "deu",
+            "ell",
+            "guj",
+            "heb",
+            "hin",
+            "hun",
+            "isl",
+            "ind",
+            "ita",
+            "jpn",
+            "kan",
+            "kin",
+            "kor",
+            "kur",
+            "lav",
+            "lit",
+            "mkd",
+            "mlg",
+            "msa",
+            "zsm",
+            "mal",
+            "qkp",
+            "nor",
+            "nob",
+            "nno",
+            "nya",
+            "nso",
+            "fas",
+            "plt",
+            "pol",
+            "por",
+            "pus",
+            "ron",
+            "run",
+            "rus",
+            "sag",
+            "srp",
+            "crs",
+            "sna",
+            "zhs",
+            "slk",
+            "slv",
+            "som",
+            "sot",
+            "qkr",
+            "nbl",
+            "spa",
+            "swa",
+            "ssw",
+            "swe",
+            "tgl",
+            "tam",
+            "tel",
+            "tha",
+            "tir",
+            "zht",
+            "tso",
+            "tsn",
+            "tur",
+            "ukr",
+            "urd",
+            "uzb",
+            "ven",
+            "vie",
+            "pes",
+            "xho",
+            "zul"
+          ]
+        },
+        "encoding": {
+          "type": "string"
+        },
+        "script": {
+          "type": "string",
+          "enum": [
+            "Afak",
+            "Aghb",
+            "Ahom",
+            "Arab",
+            "Armi",
+            "Armn",
+            "Avst",
+            "Bali",
+            "Bamu",
+            "Bass",
+            "Batk",
+            "Beng",
+            "Blis",
+            "Bopo",
+            "Brah",
+            "Brai",
+            "Bugi",
+            "Buhd",
+            "Cakm",
+            "Cans",
+            "Cari",
+            "Cham",
+            "Cher",
+            "Cirt",
+            "Copt",
+            "Cprt",
+            "Cyrl",
+            "Cyrs",
+            "Deva",
+            "Dsrt",
+            "Dupl",
+            "Egyd",
+            "Egyh",
+            "Egyp",
+            "Elba",
+            "Ethi",
+            "Geor",
+            "Geok",
+            "Glag",
+            "Goth",
+            "Gran",
+            "Grek",
+            "Gujr",
+            "Guru",
+            "Hang",
+            "Hani",
+            "Hano",
+            "Hans",
+            "Hant",
+            "Hatr",
+            "Hebr",
+            "Hira",
+            "Hluw",
+            "Hmng",
+            "Hrkt",
+            "Hung",
+            "Inds",
+            "Ital",
+            "Java",
+            "Jpan",
+            "Jurc",
+            "Kali",
+            "Kana",
+            "Khar",
+            "Khmr",
+            "Khoj",
+            "Knda",
+            "Kore",
+            "Kpel",
+            "Kthi",
+            "Lana",
+            "Laoo",
+            "Latf",
+            "Latg",
+            "Latn",
+            "Lepc",
+            "Limb",
+            "Lina",
+            "Linb",
+            "Lisu",
+            "Loma",
+            "Lyci",
+            "Lydi",
+            "Mahj",
+            "Mand",
+            "Mani",
+            "Maya",
+            "Mend",
+            "Merc",
+            "Mero",
+            "Mlym",
+            "Modi",
+            "Moon",
+            "Mong",
+            "Mroo",
+            "Mtei",
+            "Mult",
+            "Mymr",
+            "Narb",
+            "Nbat",
+            "Nkgb",
+            "Nkoo",
+            "Nshu",
+            "Ogam",
+            "Olck",
+            "Orkh",
+            "Orya",
+            "Osma",
+            "Palm",
+            "Pauc",
+            "Perm",
+            "Phag",
+            "Phli",
+            "Phlp",
+            "Phlv",
+            "Phnx",
+            "Plrd",
+            "Prti",
+            "Qaaa",
+            "Qabx",
+            "Rjng",
+            "Roro",
+            "Runr",
+            "Samr",
+            "Sara",
+            "Sarb",
+            "Saur",
+            "Sgnw",
+            "Shaw",
+            "Shrd",
+            "Sidd",
+            "Sind",
+            "Sinh",
+            "Sora",
+            "Sund",
+            "Sylo",
+            "Syrc",
+            "Syre",
+            "Syrj",
+            "Syrn",
+            "Tagb",
+            "Takr",
+            "Tale",
+            "Talu",
+            "Taml",
+            "Tang",
+            "Tavt",
+            "Telu",
+            "Teng",
+            "Tfng",
+            "Tglg",
+            "Thaa",
+            "Thai",
+            "Tibt",
+            "Tirh",
+            "Ugar",
+            "Vaii",
+            "Visp",
+            "Wara",
+            "Wole",
+            "Xpeo",
+            "Xsux",
+            "Yiii",
+            "Zinh",
+            "Zmth",
+            "Zsym",
+            "Zxxx",
+            "Zyyy",
+            "Zzzz"
+          ]
+        },
+        "confidence": {
+          "type": "number"
+        }
+      }
+    },
+    "EntityMention": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "extendedProperties": {
+          "type": "object",
+          "additionalProperties": {}
+        },
+        "startOffset": {
+          "type": "integer"
+        },
+        "endOffset": {
+          "type": "integer"
+        },
+        "entityType": {
+          "type": "string"
+        },
+        "confidence": {
+          "type": "number"
+        },
+        "linkingConfidence": {
+          "type": "number"
+        },
+        "coreferenceChainId": {
+          "type": "integer"
+        },
+        "flags": {
+          "type": "integer"
+        },
+        "source": {
+          "type": "string"
+        },
+        "subsource": {
+          "type": "string"
+        },
+        "normalized": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "startOffset",
+        "endOffset"
+      ]
+    },
+    "SimilarTerm": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "extendedProperties": {
+          "type": "object",
+          "additionalProperties": {}
+        },
+        "term": {
+          "type": "string"
+        },
+        "similarity": {
+          "type": "number"
+        }
+      }
+    },
+    "RelationshipMention": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "extendedProperties": {
+          "type": "object",
+          "additionalProperties": {}
+        },
+        "startOffset": {
+          "type": "integer"
+        },
+        "endOffset": {
+          "type": "integer"
+        },
+        "predicate": {
+          "$ref": "#/definitions/RelationshipComponent"
+        },
+        "arg1": {
+          "$ref": "#/definitions/RelationshipComponent"
+        },
+        "arg2": {
+          "$ref": "#/definitions/RelationshipComponent"
+        },
+        "arg3": {
+          "$ref": "#/definitions/RelationshipComponent"
+        },
+        "adjuncts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/RelationshipComponent"
+          }
+        },
+        "locatives": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/RelationshipComponent"
+          }
+        },
+        "temporals": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/RelationshipComponent"
+          }
+        },
+        "source": {
+          "type": "string"
+        },
+        "confidence": {
+          "type": "number"
+        },
+        "modality": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "salience": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "startOffset",
+        "endOffset"
+      ]
+    },
+    "RelationshipComponent": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "extendedProperties": {
+          "type": "object",
+          "additionalProperties": {}
+        },
+        "phrase": {
+          "type": "string"
+        },
+        "extents": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Extent"
+          }
+        },
+        "identifier": {
+          "type": "string"
+        }
+      }
+    },
+    "Extent": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "extendedProperties": {
+          "type": "object",
+          "additionalProperties": {}
+        },
+        "startOffset": {
+          "type": "integer"
+        },
+        "endOffset": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "startOffset",
+        "endOffset"
+      ]
+    },
+    "ResolvedEntity": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "extendedProperties": {
+          "type": "object",
+          "additionalProperties": {}
+        },
+        "startOffset": {
+          "type": "integer"
+        },
+        "endOffset": {
+          "type": "integer"
+        },
+        "entityId": {
+          "type": "string"
+        },
+        "coreferenceChainId": {
+          "type": "integer"
+        },
+        "confidence": {
+          "type": "number"
+        },
+        "sentiment": {
+          "$ref": "#/definitions/CategorizerResult"
+        }
+      },
+      "required": [
+        "startOffset",
+        "endOffset"
+      ]
+    },
+    "CategorizerResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "extendedProperties": {
+          "type": "object",
+          "additionalProperties": {}
+        },
+        "label": {
+          "type": "string"
+        },
+        "score": {
+          "type": "number"
+        },
+        "confidence": {
+          "type": "number"
+        },
+        "explanationSet": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "perFeatureScores": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "ScriptRegion": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "extendedProperties": {
+          "type": "object",
+          "additionalProperties": {}
+        },
+        "startOffset": {
+          "type": "integer"
+        },
+        "endOffset": {
+          "type": "integer"
+        },
+        "script": {
+          "type": "string",
+          "enum": [
+            "Afak",
+            "Aghb",
+            "Ahom",
+            "Arab",
+            "Armi",
+            "Armn",
+            "Avst",
+            "Bali",
+            "Bamu",
+            "Bass",
+            "Batk",
+            "Beng",
+            "Blis",
+            "Bopo",
+            "Brah",
+            "Brai",
+            "Bugi",
+            "Buhd",
+            "Cakm",
+            "Cans",
+            "Cari",
+            "Cham",
+            "Cher",
+            "Cirt",
+            "Copt",
+            "Cprt",
+            "Cyrl",
+            "Cyrs",
+            "Deva",
+            "Dsrt",
+            "Dupl",
+            "Egyd",
+            "Egyh",
+            "Egyp",
+            "Elba",
+            "Ethi",
+            "Geor",
+            "Geok",
+            "Glag",
+            "Goth",
+            "Gran",
+            "Grek",
+            "Gujr",
+            "Guru",
+            "Hang",
+            "Hani",
+            "Hano",
+            "Hans",
+            "Hant",
+            "Hatr",
+            "Hebr",
+            "Hira",
+            "Hluw",
+            "Hmng",
+            "Hrkt",
+            "Hung",
+            "Inds",
+            "Ital",
+            "Java",
+            "Jpan",
+            "Jurc",
+            "Kali",
+            "Kana",
+            "Khar",
+            "Khmr",
+            "Khoj",
+            "Knda",
+            "Kore",
+            "Kpel",
+            "Kthi",
+            "Lana",
+            "Laoo",
+            "Latf",
+            "Latg",
+            "Latn",
+            "Lepc",
+            "Limb",
+            "Lina",
+            "Linb",
+            "Lisu",
+            "Loma",
+            "Lyci",
+            "Lydi",
+            "Mahj",
+            "Mand",
+            "Mani",
+            "Maya",
+            "Mend",
+            "Merc",
+            "Mero",
+            "Mlym",
+            "Modi",
+            "Moon",
+            "Mong",
+            "Mroo",
+            "Mtei",
+            "Mult",
+            "Mymr",
+            "Narb",
+            "Nbat",
+            "Nkgb",
+            "Nkoo",
+            "Nshu",
+            "Ogam",
+            "Olck",
+            "Orkh",
+            "Orya",
+            "Osma",
+            "Palm",
+            "Pauc",
+            "Perm",
+            "Phag",
+            "Phli",
+            "Phlp",
+            "Phlv",
+            "Phnx",
+            "Plrd",
+            "Prti",
+            "Qaaa",
+            "Qabx",
+            "Rjng",
+            "Roro",
+            "Runr",
+            "Samr",
+            "Sara",
+            "Sarb",
+            "Saur",
+            "Sgnw",
+            "Shaw",
+            "Shrd",
+            "Sidd",
+            "Sind",
+            "Sinh",
+            "Sora",
+            "Sund",
+            "Sylo",
+            "Syrc",
+            "Syre",
+            "Syrj",
+            "Syrn",
+            "Tagb",
+            "Takr",
+            "Tale",
+            "Talu",
+            "Taml",
+            "Tang",
+            "Tavt",
+            "Telu",
+            "Teng",
+            "Tfng",
+            "Tglg",
+            "Thaa",
+            "Thai",
+            "Tibt",
+            "Tirh",
+            "Ugar",
+            "Vaii",
+            "Visp",
+            "Wara",
+            "Wole",
+            "Xpeo",
+            "Xsux",
+            "Yiii",
+            "Zinh",
+            "Zmth",
+            "Zsym",
+            "Zxxx",
+            "Zyyy",
+            "Zzzz"
+          ]
+        }
+      },
+      "required": [
+        "startOffset",
+        "endOffset"
+      ]
+    },
+    "Sentence": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "extendedProperties": {
+          "type": "object",
+          "additionalProperties": {}
+        },
+        "startOffset": {
+          "type": "integer"
+        },
+        "endOffset": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "startOffset",
+        "endOffset"
+      ]
+    },
+    "LayoutRegion": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "extendedProperties": {
+          "type": "object",
+          "additionalProperties": {}
+        },
+        "startOffset": {
+          "type": "integer"
+        },
+        "endOffset": {
+          "type": "integer"
+        },
+        "layout": {
+          "type": "string",
+          "enum": [
+            "UNSTRUCTURED",
+            "STRUCTURED"
+          ]
+        }
+      },
+      "required": [
+        "startOffset",
+        "endOffset"
+      ]
+    },
+    "BaseNounPhrase": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "extendedProperties": {
+          "type": "object",
+          "additionalProperties": {}
+        },
+        "startOffset": {
+          "type": "integer"
+        },
+        "endOffset": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "startOffset",
+        "endOffset"
+      ]
+    },
+    "Embeddings": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "extendedProperties": {
+          "type": "object",
+          "additionalProperties": {}
+        },
+        "collections": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/EmbeddingCollection"
+          }
+        }
+      }
+    },
+    "EmbeddingCollection": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "embeddings": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            }
+          }
+        }
+      }
+    },
+    "Concept": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "extendedProperties": {
+          "type": "object",
+          "additionalProperties": {}
+        },
+        "phrase": {
+          "type": "string"
+        },
+        "salience": {
+          "type": "number"
+        },
+        "conceptId": {
+          "type": "string"
+        }
+      }
+    },
+    "Keyphrase": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "extendedProperties": {
+          "type": "object",
+          "additionalProperties": {}
+        },
+        "phrase": {
+          "type": "string"
+        },
+        "salience": {
+          "type": "number"
+        },
+        "extents": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Extent"
+          }
+        }
+      }
+    },
+    "TransliterationResults": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "extendedProperties": {
+          "type": "object",
+          "additionalProperties": {}
+        },
+        "results": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/Transliteration"
+          }
+        }
+      }
+    },
+    "Transliteration": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "extendedProperties": {
+          "type": "object",
+          "additionalProperties": {}
+        },
+        "all": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "Entity": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "extendedProperties": {
+          "type": "object",
+          "additionalProperties": {}
+        },
+        "mentions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Mention"
+          }
+        },
+        "headMentionIndex": {
+          "type": "integer"
+        },
+        "type": {
+          "type": "string"
+        },
+        "entityId": {
+          "type": "string"
+        },
+        "confidence": {
+          "type": "number"
+        },
+        "sentiment": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CategorizerResult"
+          }
+        },
+        "salience": {
+          "type": "number"
+        }
+      }
+    },
+    "Mention": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "extendedProperties": {
+          "type": "object",
+          "additionalProperties": {}
+        },
+        "startOffset": {
+          "type": "integer"
+        },
+        "endOffset": {
+          "type": "integer"
+        },
+        "confidence": {
+          "type": "number"
+        },
+        "linkingConfidence": {
+          "type": "number"
+        },
+        "source": {
+          "type": "string"
+        },
+        "subsource": {
+          "type": "string"
+        },
+        "normalized": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "startOffset",
+        "endOffset"
+      ]
+    },
+    "Dependency": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "extendedProperties": {
+          "type": "object",
+          "additionalProperties": {}
+        },
+        "relationship": {
+          "type": "string"
+        },
+        "governorTokenIndex": {
+          "type": "integer"
+        },
+        "dependencyTokenIndex": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "governorTokenIndex",
+        "dependencyTokenIndex"
+      ]
+    },
+    "Token": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "extendedProperties": {
+          "type": "object",
+          "additionalProperties": {}
+        },
+        "startOffset": {
+          "type": "integer"
+        },
+        "endOffset": {
+          "type": "integer"
+        },
+        "text": {
+          "type": "string"
+        },
+        "normalized": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "analyses": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/MorphoAnalysis"
+          }
+        },
+        "source": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "startOffset",
+        "endOffset"
+      ]
+    },
+    "MorphoAnalysis": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "extendedProperties": {
+          "type": "object",
+          "additionalProperties": {}
+        },
+        "partOfSpeech": {
+          "type": "string"
+        },
+        "lemma": {
+          "type": "string"
+        },
+        "components": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Token"
+          }
+        },
+        "raw": {
+          "type": "string"
+        },
+        "tagSet": {
+          "type": "string",
+          "enum": [
+            "BT_ARABIC",
+            "BT_CHINESE",
+            "BT_CHINESE_RBLJE_2",
+            "BT_CZECH",
+            "BT_DUTCH",
+            "BT_ENGLISH",
+            "BT_FRENCH",
+            "BT_GERMAN",
+            "BT_GREEK",
+            "BT_HUNGARIAN",
+            "BT_ITALIAN",
+            "BT_JAPANESE",
+            "BT_JAPANESE_RBLJE_2",
+            "BT_KOREAN",
+            "BT_LANGUAGE_NEUTRAL",
+            "BT_PERSIAN",
+            "BT_POLISH",
+            "BT_PORTUGUESE",
+            "BT_RUSSIAN",
+            "BT_SPANISH",
+            "BT_URDU",
+            "MILA_HEBREW",
+            "PTB_ENGLISH",
+            "UPT16_V1"
+          ]
+        }
+      }
+    }
+  }
+}
