@@ -42,7 +42,7 @@ with open("adm-schema-generated.json") as f:
 
     # fix-up "attributes"
     props["attributes"] = {"type": "object", "additionalProperties": False,
-        "properties": ap }
+        "properties": dict(sorted(ap.items())) }
 
     # version is missing
     props["version"] = {"type": "string"}
@@ -52,14 +52,31 @@ with open("adm-schema-generated.json") as f:
     # definitions are all good except language codes
     definitions = schema["definitions"]
 
+    definitions["LanguageCode"] = {
+        "type": "string",
+        "enum": language_codes
+    }
+
     # languages are in DetectionResult and TextDomain
-    definitions["DetectionResult"]["properties"]["language"]["enum"] = language_codes
-    definitions["TextDomain"]["properties"]["language"]["enum"] = language_codes
+    langref = {"$ref": "#/definitions/LanguageCode"}
+    definitions["DetectionResult"]["properties"]["language"] = langref
+    definitions["TextDomain"]["properties"]["language"] = langref
+
+    # script
+    definitions["ISO15924"] = {
+        "type": "string",
+        "enum": definitions["DetectionResult"]["properties"]["script"]["enum"]
+    }
+
+    scriptref = {"$ref": "#/definitions/ISO15924"}
+    definitions["DetectionResult"]["properties"]["script"] = scriptref
+    definitions["TextDomain"]["properties"]["script"] = scriptref
+    definitions["ScriptRegion"]["properties"]["script"] = scriptref
 
     # LanguageDetection is missing "type"
     definitions["LanguageDetection"]["properties"]["type"] = {"type": "string"}
 
-    transformed["definitions"] = definitions
+    transformed["definitions"] = dict(sorted(definitions.items()))
 
     with open("adm-schema.json", mode="w") as f1:
         json.dump(transformed, f1, indent=2)
