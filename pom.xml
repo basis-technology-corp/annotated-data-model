@@ -59,6 +59,7 @@
         <module>common-test</module>
         <module>model</module>
         <module>json</module>
+        <module>schema</module>
     </modules>
     <dependencyManagement>
       <dependencies>
