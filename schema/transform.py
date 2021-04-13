@@ -30,15 +30,32 @@ with open("adm-schema-generated.json") as f:
             if k in ["tokens", "sentences", "layoutRegions", "scriptRegions"]:
                 k = k[0:-1]
 
+            if k == "concepts":
+                itemType = "concept"
+            elif k == "keyphrases":
+                itemType = "keyphrase"
+            elif k == "sentimentResults":
+                itemType = "categorizerResults"
+            else:
+                itemType = k
+
             # ListAttribute may have any k/v as metadata ("token" uses it)
             ap[k] = {"type": "object", "additionalProperties": True,
                 "properties": {
-                    "type": { "type": "string" },
-                    "itemType": { "type": "string" },
+                    "type": { "type": "string", "enum": ["list"] },
+                    "itemType": { "type": "string", "enum": [itemType]},
                     "items": v}}
 
-    # "languageDetection" doesn't return ListAttribute, but just plain attribute...
+    # "languageDetection" doesn't return ListAttribute, but just plain attribute.
     ap["languageDetection"] = { "$ref": "#/definitions/LanguageDetection" }
+
+    # languageDetectionRegions returns ListAttribute of languageDetection
+    ap["languageDetectionRegions"]["properties"]["itemType"]["enum"] = ["languageDetection"]
+
+    ap["transliteration"] = {"type": "object", "additionalProperties": True,
+                "properties": {
+                    "type": { "type": "string", "enum": ["transliteration"] },
+                    "results": { "$ref": "#/definitions/Transliteration"}}}
 
     # fix-up "attributes"
     props["attributes"] = {"type": "object", "additionalProperties": False,

@@ -22,6 +22,7 @@ import com.basistech.rosette.dm.Concept;
 import com.basistech.rosette.dm.Dependency;
 import com.basistech.rosette.dm.Embeddings;
 import com.basistech.rosette.dm.Entity;
+import com.basistech.rosette.dm.Event;
 import com.basistech.rosette.dm.Keyphrase;
 import com.basistech.rosette.dm.LanguageDetection;
 import com.basistech.rosette.dm.LayoutRegion;
@@ -53,6 +54,7 @@ public enum KnownAttribute {
     ENTITY("entities", Entity.class),
     @SuppressWarnings("deprecation")
     ENTITY_MENTION("entityMentions", com.basistech.rosette.dm.EntityMention.class),
+    EVENT("event", Event.class),
     KEYPHRASE("keyphrase", Keyphrase.class),
     LANGUAGE_DETECTION("languageDetection", LanguageDetection.class),
     LAYOUT_REGION("layoutRegion", LayoutRegion.class),

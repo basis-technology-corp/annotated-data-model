@@ -1,0 +1,404 @@
+{
+  "data": "I want to book a flight from Boston to Tokyo\n",
+  "documentMetadata": {
+    "processedBy": [
+      "language-identification@10.39.76.87",
+      "entity-extraction@10.39.76.87"
+    ]
+  },
+  "attributes": {
+    "baseNounPhrases": null,
+    "categorizerResults": null,
+    "concepts": null,
+    "dependencies": null,
+    "embeddings": null,
+    "entities": {
+      "type": "list",
+      "itemType": "entities",
+      "items": [
+        {
+          "extendedProperties": null,
+          "mentions": [
+            {
+              "confidence": null,
+              "startOffset": 29,
+              "endOffset": 35,
+              "extendedProperties": null,
+              "linkingConfidence": 0.23213014,
+              "source": "gazetteer",
+              "subsource": "/data/roots//rex/7.47.0.c62.2/data/gazetteer/eng/accept/gaz-LE.bin",
+              "normalized": "Boston"
+            }
+          ],
+          "headMentionIndex": 0,
+          "type": "LOCATION",
+          "entityId": "Q100",
+          "confidence": null,
+          "sentiment": null,
+          "salience": null
+        },
+        {
+          "extendedProperties": null,
+          "mentions": [
+            {
+              "confidence": null,
+              "startOffset": 39,
+              "endOffset": 44,
+              "extendedProperties": null,
+              "linkingConfidence": 0.41695136,
+              "source": "gazetteer",
+              "subsource": "/data/roots//rex/7.47.0.c62.2/data/gazetteer/eng/accept/gaz-LE.bin",
+              "normalized": "Tokyo"
+            }
+          ],
+          "headMentionIndex": 0,
+          "type": "LOCATION",
+          "entityId": "Q1490",
+          "confidence": null,
+          "sentiment": null,
+          "salience": null
+        }
+      ]
+    },
+    "entityMentions": null,
+    "events": {
+      "type": "list",
+      "itemType": "event",
+      "items": [
+        {
+          "eventType": "flight_booking_schema.flight_booking",
+          "mentions": [
+            {
+              "confidence": null,
+              "startOffset": 0,
+              "endOffset": 0,
+              "roles": [
+                {
+                  "confidence": null,
+                  "startOffset": 17,
+                  "endOffset": 23,
+                  "dataSpan": "flight",
+                  "name": "key",
+                  "id": null
+                },
+                {
+                  "confidence": null,
+                  "startOffset": 29,
+                  "endOffset": 35,
+                  "dataSpan": "Boston",
+                  "name": "origin",
+                  "id": "Q100"
+                },
+                {
+                  "confidence": null,
+                  "startOffset": 39,
+                  "endOffset": 44,
+                  "dataSpan": "Tokyo",
+                  "name": "destination",
+                  "id": "Q1490"
+                }
+              ]
+            }
+          ],
+          "confidence": 0.9715276559193929
+        }
+      ]
+    },
+    "keyphrases": null,
+    "languageDetection": {
+      "extendedProperties": null,
+      "startOffset": 0,
+      "endOffset": 45,
+      "detectionResults": [
+        {
+          "extendedProperties": null,
+          "language": "eng",
+          "encoding": "UTF-16BE",
+          "script": "Latn",
+          "confidence": 0.82451944
+        }
+      ],
+      "type": "languageDetection"
+    },
+    "languageDetectionRegions": null,
+    "layoutRegion": {
+      "type": "list",
+      "itemType": "layoutRegion",
+      "items": [
+        {
+          "extendedProperties": null,
+          "startOffset": 0,
+          "endOffset": 45,
+          "layout": "UNSTRUCTURED"
+        }
+      ]
+    },
+    "relationshipMentions": null,
+    "resolvedEntities": null,
+    "scriptRegion": {
+      "type": "list",
+      "itemType": "scriptRegion",
+      "items": [
+        {
+          "extendedProperties": null,
+          "startOffset": 0,
+          "endOffset": 45,
+          "script": "Latn"
+        }
+      ]
+    },
+    "sentence": {
+      "type": "list",
+      "itemType": "sentence",
+      "items": [
+        {
+          "extendedProperties": null,
+          "startOffset": 0,
+          "endOffset": 45
+        }
+      ]
+    },
+    "sentimentResults": null,
+    "similarTerms": null,
+    "token": {
+      "type": "list",
+      "itemType": "token",
+      "items": [
+        {
+          "extendedProperties": null,
+          "startOffset": 0,
+          "endOffset": 1,
+          "text": "I",
+          "normalized": null,
+          "analyses": [
+            {
+              "extendedProperties": null,
+              "partOfSpeech": "PRONPERS",
+              "lemma": "I",
+              "components": null,
+              "raw": "I[+PRONPERS]",
+              "tagSet": "BT_ENGLISH"
+            }
+          ],
+          "source": null
+        },
+        {
+          "extendedProperties": null,
+          "startOffset": 2,
+          "endOffset": 6,
+          "text": "want",
+          "normalized": null,
+          "analyses": [
+            {
+              "extendedProperties": null,
+              "partOfSpeech": "VPRES",
+              "lemma": "want",
+              "components": null,
+              "raw": "want[+VPRES]",
+              "tagSet": "BT_ENGLISH"
+            },
+            {
+              "extendedProperties": null,
+              "partOfSpeech": "VI",
+              "lemma": "want",
+              "components": null,
+              "raw": "want[+VI]",
+              "tagSet": "BT_ENGLISH"
+            },
+            {
+              "extendedProperties": null,
+              "partOfSpeech": "NOUN",
+              "lemma": "want",
+              "components": null,
+              "raw": "want[+NOUN]",
+              "tagSet": "BT_ENGLISH"
+            }
+          ],
+          "source": null
+        },
+        {
+          "extendedProperties": null,
+          "startOffset": 7,
+          "endOffset": 9,
+          "text": "to",
+          "normalized": null,
+          "analyses": [
+            {
+              "extendedProperties": null,
+              "partOfSpeech": "INFTO",
+              "lemma": "to",
+              "components": null,
+              "raw": "to[+INFTO]",
+              "tagSet": "BT_ENGLISH"
+            },
+            {
+              "extendedProperties": null,
+              "partOfSpeech": "PREP",
+              "lemma": "to",
+              "components": null,
+              "raw": "to[+PREP]",
+              "tagSet": "BT_ENGLISH"
+            }
+          ],
+          "source": null
+        },
+        {
+          "extendedProperties": null,
+          "startOffset": 10,
+          "endOffset": 14,
+          "text": "book",
+          "normalized": null,
+          "analyses": [
+            {
+              "extendedProperties": null,
+              "partOfSpeech": "VI",
+              "lemma": "book",
+              "components": null,
+              "raw": "book[+VI]",
+              "tagSet": "BT_ENGLISH"
+            },
+            {
+              "extendedProperties": null,
+              "partOfSpeech": "VPRES",
+              "lemma": "book",
+              "components": null,
+              "raw": "book[+VPRES]",
+              "tagSet": "BT_ENGLISH"
+            },
+            {
+              "extendedProperties": null,
+              "partOfSpeech": "NOUN",
+              "lemma": "book",
+              "components": null,
+              "raw": "book[+NOUN]",
+              "tagSet": "BT_ENGLISH"
+            }
+          ],
+          "source": null
+        },
+        {
+          "extendedProperties": null,
+          "startOffset": 15,
+          "endOffset": 16,
+          "text": "a",
+          "normalized": null,
+          "analyses": [
+            {
+              "extendedProperties": null,
+              "partOfSpeech": "DET",
+              "lemma": "a",
+              "components": null,
+              "raw": "a[+DET]",
+              "tagSet": "BT_ENGLISH"
+            }
+          ],
+          "source": null
+        },
+        {
+          "extendedProperties": null,
+          "startOffset": 17,
+          "endOffset": 23,
+          "text": "flight",
+          "normalized": null,
+          "analyses": [
+            {
+              "extendedProperties": null,
+              "partOfSpeech": "NOUN",
+              "lemma": "flight",
+              "components": null,
+              "raw": "flight[+NOUN]",
+              "tagSet": "BT_ENGLISH"
+            }
+          ],
+          "source": null
+        },
+        {
+          "extendedProperties": null,
+          "startOffset": 24,
+          "endOffset": 28,
+          "text": "from",
+          "normalized": null,
+          "analyses": [
+            {
+              "extendedProperties": null,
+              "partOfSpeech": "PREP",
+              "lemma": "from",
+              "components": null,
+              "raw": "from[+PREP]",
+              "tagSet": "BT_ENGLISH"
+            }
+          ],
+          "source": null
+        },
+        {
+          "extendedProperties": null,
+          "startOffset": 29,
+          "endOffset": 35,
+          "text": "Boston",
+          "normalized": null,
+          "analyses": [
+            {
+              "extendedProperties": null,
+              "partOfSpeech": "PROP",
+              "lemma": "Boston",
+              "components": null,
+              "raw": "Boston[+Prop][+Place][+City][+PROP]",
+              "tagSet": "BT_ENGLISH"
+            }
+          ],
+          "source": null
+        },
+        {
+          "extendedProperties": null,
+          "startOffset": 36,
+          "endOffset": 38,
+          "text": "to",
+          "normalized": null,
+          "analyses": [
+            {
+              "extendedProperties": null,
+              "partOfSpeech": "PREP",
+              "lemma": "to",
+              "components": null,
+              "raw": "to[+PREP]",
+              "tagSet": "BT_ENGLISH"
+            },
+            {
+              "extendedProperties": null,
+              "partOfSpeech": "INFTO",
+              "lemma": "to",
+              "components": null,
+              "raw": "to[+INFTO]",
+              "tagSet": "BT_ENGLISH"
+            }
+          ],
+          "source": null
+        },
+        {
+          "extendedProperties": null,
+          "startOffset": 39,
+          "endOffset": 44,
+          "text": "Tokyo",
+          "normalized": null,
+          "analyses": [
+            {
+              "extendedProperties": null,
+              "partOfSpeech": "PROP",
+              "lemma": "Tokyo",
+              "components": null,
+              "raw": "Tokyo[+Prop][+Place][+City][+PROP]",
+              "tagSet": "BT_ENGLISH"
+            }
+          ],
+          "source": null
+        }
+      ]
+    },
+    "topicResults": null,
+    "translatedData": null,
+    "translatedTokens": null,
+    "transliteration": null,
+    "wholeTextLanguageDetection": null
+  },
+  "version": "1.1.0"
+}
