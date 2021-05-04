@@ -1,5 +1,11 @@
 # Cumulative Release Notes for the Annotated Data Model
 
+## 2.7.1
+
+### [WS-2181](https://basistech.atlassian.net/browse/WS-2181) Events support
+
+Adds an `Events` field to the ADM.
+
 ## 2.7.0
 
 ### [ETROG-3117](https://basistech.atlassian.net/browse/ETROG-3117) Fragment Boundaries Exposed in ADM
@@ -11,7 +17,7 @@ and unstructured segments.
 
 ### [ETROG-3125](https://basistech.atlassian.net/browse/ETROG-3125) Add a POS tag set field to MorphoAnalysis
 
-Adds a `TagSet` enumeration and a field to `MorphoAnalysis` to store 
+Adds a `TagSet` enumeration and a field to `MorphoAnalysis` to store
 which `TagSet` the analysis's part of speech comes from.
 
 ### [ETROG-3126](https://basistech.atlassian.net/browse/ETROG-3126) Analyze foreign tokens within Russian as English
@@ -168,7 +174,7 @@ Entity.Builder created via the copy constructor.
 ### [ROS-228](https://basistech.atlassian.net/browse/ROS-228) Coreference chain ID compatibility
 
 The EntityMention objects created in response to AnnotatedText.getEntityMentions()
-contain correct coreferenceChainId fields derived from the head mentions in the 
+contain correct coreferenceChainId fields derived from the head mentions in the
 Entity objects.
 
 ## 2.1.0
@@ -329,7 +335,7 @@ to
 ## 1.15.0 because we added to the api
 
 ### [ROS-183](https://basistech.atlassian.net/browse/ROS-183) new parent and some checkstyle repairs
- 
+
 ### [ROS-181](https://basistech.atlassian.net/browse/ROS-181) add entity-level sentiment
 
 ResolvedEntity now has slots for sentimentCategory (e.g. "positive",
@@ -355,17 +361,17 @@ ResolvedEntity now has slots for sentimentCategory (e.g. "positive",
  need it. When moving to this version, please be sure to take
  advantage of AbstractAnnotator and note the switch to Jackson 2.6.2.
 
-### [ROS-39](https://basistech.atlassian.net/browse/ROS-39) 
+### [ROS-39](https://basistech.atlassian.net/browse/ROS-39)
   Throw an appropriate Jackson exception (InvalidFormatException) when we encounter a bad
   ISO-639 code.
 
 ### no jira: add AbstractAnnotator to avoid repeated code to map from
     String to AnnotatedText.
 
-### [ROS-161](https://basistech.atlassian.net/browse/ROS-161) 
+### [ROS-161](https://basistech.atlassian.net/browse/ROS-161)
   Annotator.annotate no longer declares `throws RosetteException`.
 
-### [ROS-78](https://basistech.atlassian.net/browse/ROS-78) 
+### [ROS-78](https://basistech.atlassian.net/browse/ROS-78)
   AnnotateText no longer `implements CharSequence`. Callers will need
   to use `getData()` to get to the textual data.
 
@@ -374,7 +380,7 @@ ResolvedEntity now has slots for sentimentCategory (e.g. "positive",
 ### no jira: updated to parent 57.1.2, thus using Jackson 2.6.2.
 
 ### [ROS-97](https://basistech.atlassian.net/browse/ROS-97) More OSGi/shade improvements
-     
+
 We got rid of the adm-model-osgi vs. adm-model distinction. There's
 just adm-model with OSGi metadata. The MANIFEST is maintained by
 configuration in the pom.xml.
@@ -404,11 +410,11 @@ imports it via OSGi metadata.
 
 ### [RELAX-139] (https://basistech.atlassian.net/browse/RELAX-139) Fixing  a crash in the copy builder of RelationshipMention
   Missing initializations
-  
+
 
 ### [ROS-88](https://basistech.atlassian.net/browse/ROS-88) Parent  57.1.1
-    
-## 1.13.1    
+
+## 1.13.1
 
 ### [ROS-76](https://basistech.atlassian.net/browse/ROS-76) Fix serialization for CharSequence
 
@@ -436,12 +442,12 @@ instead of 34.x.x. Let this be a lesson to us in picking version numbers.
 adm-shaded was a mistake.
 
 ### [COMN-198](https://basistech.atlassian.net/browse/COMN-198) Add  Relationship Support
-    
+
 This also includes a move to basis parent 57.0.0, and so a requirement
 for Java 1.7.
 
 ### [COMN-189](https://basistech.atlassian.net/browse/COMN-189) Add ComposingAnnotator
-    
+
 `com.basistech.rosette.dm.util.ComposingAnnotator` provides a function
 needed in RBL-JVM, which is to group a sequence of annotators into a
 single annotator.
@@ -505,7 +511,7 @@ projects that are using the json support today.
 ## 1.10.2
 
 ### [COMN-163](http://jira.basistech.net/browse/COMN-163) Restructure OSGi
-    
+
 All the OSGi metadata moves to a new artifact, adm-osgi. This avoids
 'split package' issues with multiple OSGi components with code in the
 same package.
@@ -559,7 +565,7 @@ convenience method to build metadata from a map.
 These allow serialization from ISO codes rather than the enum string,
 e.g. "eng" instead of "ENGLISH".
 
-### [COMN-147](http://jira.basistech.net/browse/COMN-147) Dispatching Annotator 
+### [COMN-147](http://jira.basistech.net/browse/COMN-147) Dispatching Annotator
 
 `com.basistech.rosette.dm.util.WholeDocumentLanguageDispatchAnnotatorBuilder`
 creates `Annotator` objects that delegate based on language. This
@@ -568,8 +574,8 @@ language, and then aggregate them into a single annotator. It is a DRY
 feature; it's not complex, it's just that we don't want to end up with
 multiple copies of this in multiple places.
 
-### [COMN-151](http://jira.basistech.net/browse/COMN-151) New Parent/New Common 
-   
+### [COMN-151](http://jira.basistech.net/browse/COMN-151) New Parent/New Common
+
 Pick up rosette-common-java 34.0.0, with new jar structure, via
 textanalytics 56.3.1.
 

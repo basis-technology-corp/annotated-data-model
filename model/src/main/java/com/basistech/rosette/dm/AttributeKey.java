@@ -29,6 +29,7 @@ enum AttributeKey {
     DEPENDENCY("dependency"),
     EMBEDDING("embeddings"),
     ENTITY("entities"),
+    EVENT("events"),
     KEYPHRASE("keyphrases"),
     @Deprecated
     ENTITY_MENTION("entityMentions"),

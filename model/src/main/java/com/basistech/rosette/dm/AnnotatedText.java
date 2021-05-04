@@ -368,6 +368,11 @@ public class AnnotatedText implements Serializable {
         return (ListAttribute<Entity>) attributes.get(AttributeKey.ENTITY.key());
     }
 
+    @SuppressWarnings("unchecked")
+    public ListAttribute<Event> getEvents() {
+        return (ListAttribute<Event>) attributes.get(AttributeKey.EVENT.key());
+    }
+
     /**
      * Returns the map of similar terms.
      *
@@ -729,6 +734,16 @@ public class AnnotatedText implements Serializable {
                 }
                 attributes.put(AttributeKey.RESOLVED_ENTITY.key(), resolvedEntities);
             }
+            return this;
+        }
+
+        /**
+         * Attaches a list of events.
+         * @param events events
+         * @return this
+         */
+        public Builder events(ListAttribute<Event> events) {
+            attributes.put(AttributeKey.EVENT.key(), events);
             return this;
         }
 

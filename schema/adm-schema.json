@@ -25,10 +25,16 @@
           "additionalProperties": true,
           "properties": {
             "type": {
-              "type": "string"
+              "type": "string",
+              "enum": [
+                "list"
+              ]
             },
             "itemType": {
-              "type": "string"
+              "type": "string",
+              "enum": [
+                "baseNounPhrases"
+              ]
             },
             "items": {
               "type": "array",
@@ -43,10 +49,16 @@
           "additionalProperties": true,
           "properties": {
             "type": {
-              "type": "string"
+              "type": "string",
+              "enum": [
+                "list"
+              ]
             },
             "itemType": {
-              "type": "string"
+              "type": "string",
+              "enum": [
+                "categorizerResults"
+              ]
             },
             "items": {
               "type": "array",
@@ -61,10 +73,16 @@
           "additionalProperties": true,
           "properties": {
             "type": {
-              "type": "string"
+              "type": "string",
+              "enum": [
+                "list"
+              ]
             },
             "itemType": {
-              "type": "string"
+              "type": "string",
+              "enum": [
+                "concept"
+              ]
             },
             "items": {
               "type": "array",
@@ -79,10 +97,16 @@
           "additionalProperties": true,
           "properties": {
             "type": {
-              "type": "string"
+              "type": "string",
+              "enum": [
+                "list"
+              ]
             },
             "itemType": {
-              "type": "string"
+              "type": "string",
+              "enum": [
+                "dependencies"
+              ]
             },
             "items": {
               "type": "array",
@@ -97,10 +121,16 @@
           "additionalProperties": true,
           "properties": {
             "type": {
-              "type": "string"
+              "type": "string",
+              "enum": [
+                "list"
+              ]
             },
             "itemType": {
-              "type": "string"
+              "type": "string",
+              "enum": [
+                "embeddings"
+              ]
             },
             "items": {
               "$ref": "#/definitions/Embeddings"
@@ -112,10 +142,16 @@
           "additionalProperties": true,
           "properties": {
             "type": {
-              "type": "string"
+              "type": "string",
+              "enum": [
+                "list"
+              ]
             },
             "itemType": {
-              "type": "string"
+              "type": "string",
+              "enum": [
+                "entities"
+              ]
             },
             "items": {
               "type": "array",
@@ -130,10 +166,16 @@
           "additionalProperties": true,
           "properties": {
             "type": {
-              "type": "string"
+              "type": "string",
+              "enum": [
+                "list"
+              ]
             },
             "itemType": {
-              "type": "string"
+              "type": "string",
+              "enum": [
+                "entityMentions"
+              ]
             },
             "items": {
               "type": "array",
@@ -148,10 +190,16 @@
           "additionalProperties": true,
           "properties": {
             "type": {
-              "type": "string"
+              "type": "string",
+              "enum": [
+                "list"
+              ]
             },
             "itemType": {
-              "type": "string"
+              "type": "string",
+              "enum": [
+                "keyphrase"
+              ]
             },
             "items": {
               "type": "array",
@@ -169,10 +217,16 @@
           "additionalProperties": true,
           "properties": {
             "type": {
-              "type": "string"
+              "type": "string",
+              "enum": [
+                "list"
+              ]
             },
             "itemType": {
-              "type": "string"
+              "type": "string",
+              "enum": [
+                "languageDetection"
+              ]
             },
             "items": {
               "type": "array",
@@ -187,10 +241,16 @@
           "additionalProperties": true,
           "properties": {
             "type": {
-              "type": "string"
+              "type": "string",
+              "enum": [
+                "list"
+              ]
             },
             "itemType": {
-              "type": "string"
+              "type": "string",
+              "enum": [
+                "layoutRegion"
+              ]
             },
             "items": {
               "type": "array",
@@ -205,10 +265,16 @@
           "additionalProperties": true,
           "properties": {
             "type": {
-              "type": "string"
+              "type": "string",
+              "enum": [
+                "list"
+              ]
             },
             "itemType": {
-              "type": "string"
+              "type": "string",
+              "enum": [
+                "relationshipMentions"
+              ]
             },
             "items": {
               "type": "array",
@@ -223,10 +289,16 @@
           "additionalProperties": true,
           "properties": {
             "type": {
-              "type": "string"
+              "type": "string",
+              "enum": [
+                "list"
+              ]
             },
             "itemType": {
-              "type": "string"
+              "type": "string",
+              "enum": [
+                "resolvedEntities"
+              ]
             },
             "items": {
               "type": "array",
@@ -241,10 +313,16 @@
           "additionalProperties": true,
           "properties": {
             "type": {
-              "type": "string"
+              "type": "string",
+              "enum": [
+                "list"
+              ]
             },
             "itemType": {
-              "type": "string"
+              "type": "string",
+              "enum": [
+                "scriptRegion"
+              ]
             },
             "items": {
               "type": "array",
@@ -259,10 +337,16 @@
           "additionalProperties": true,
           "properties": {
             "type": {
-              "type": "string"
+              "type": "string",
+              "enum": [
+                "list"
+              ]
             },
             "itemType": {
-              "type": "string"
+              "type": "string",
+              "enum": [
+                "sentence"
+              ]
             },
             "items": {
               "type": "array",
@@ -277,10 +361,16 @@
           "additionalProperties": true,
           "properties": {
             "type": {
-              "type": "string"
+              "type": "string",
+              "enum": [
+                "list"
+              ]
             },
             "itemType": {
-              "type": "string"
+              "type": "string",
+              "enum": [
+                "categorizerResults"
+              ]
             },
             "items": {
               "type": "array",
@@ -295,10 +385,16 @@
           "additionalProperties": true,
           "properties": {
             "type": {
-              "type": "string"
+              "type": "string",
+              "enum": [
+                "list"
+              ]
             },
             "itemType": {
-              "type": "string"
+              "type": "string",
+              "enum": [
+                "similarTerms"
+              ]
             },
             "items": {
               "type": "object",
@@ -316,10 +412,16 @@
           "additionalProperties": true,
           "properties": {
             "type": {
-              "type": "string"
+              "type": "string",
+              "enum": [
+                "list"
+              ]
             },
             "itemType": {
-              "type": "string"
+              "type": "string",
+              "enum": [
+                "token"
+              ]
             },
             "items": {
               "type": "array",
@@ -334,10 +436,16 @@
           "additionalProperties": true,
           "properties": {
             "type": {
-              "type": "string"
+              "type": "string",
+              "enum": [
+                "list"
+              ]
             },
             "itemType": {
-              "type": "string"
+              "type": "string",
+              "enum": [
+                "topicResults"
+              ]
             },
             "items": {
               "type": "array",
@@ -352,10 +460,16 @@
           "additionalProperties": true,
           "properties": {
             "type": {
-              "type": "string"
+              "type": "string",
+              "enum": [
+                "list"
+              ]
             },
             "itemType": {
-              "type": "string"
+              "type": "string",
+              "enum": [
+                "translatedData"
+              ]
             },
             "items": {
               "type": "array",
@@ -370,10 +484,16 @@
           "additionalProperties": true,
           "properties": {
             "type": {
-              "type": "string"
+              "type": "string",
+              "enum": [
+                "list"
+              ]
             },
             "itemType": {
-              "type": "string"
+              "type": "string",
+              "enum": [
+                "translatedTokens"
+              ]
             },
             "items": {
               "type": "array",
@@ -388,13 +508,13 @@
           "additionalProperties": true,
           "properties": {
             "type": {
-              "type": "string"
+              "type": "string",
+              "enum": [
+                "transliteration"
+              ]
             },
-            "itemType": {
-              "type": "string"
-            },
-            "items": {
-              "$ref": "#/definitions/TransliterationResults"
+            "results": {
+              "$ref": "#/definitions/Transliteration"
             }
           }
         },
@@ -403,10 +523,16 @@
           "additionalProperties": true,
           "properties": {
             "type": {
-              "type": "string"
+              "type": "string",
+              "enum": [
+                "list"
+              ]
             },
             "itemType": {
-              "type": "string"
+              "type": "string",
+              "enum": [
+                "wholeTextLanguageDetection"
+              ]
             },
             "items": {
               "$ref": "#/definitions/LanguageDetection"
