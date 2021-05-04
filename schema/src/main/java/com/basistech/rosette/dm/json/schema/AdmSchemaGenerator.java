@@ -23,11 +23,19 @@ import com.kjetland.jackson.jsonSchema.JsonSchemaGenerator;
 
 import java.io.File;
 
+/**
+ * CLI helper to run JsonSchemaGenerator for AnnotatedText.
+ */
 public final class AdmSchemaGenerator {
     private AdmSchemaGenerator() {
 
     }
 
+    /**
+     * Entrypoint to run JsonSchemaGenerator for AnnotatedText.
+     * @param args string output file path for the JSON schema output.
+     * @throws Exception processing exception may be thrown.
+     */
     public static void main(String[] args) throws Exception {
         ObjectMapper mapper = new ObjectMapper();
         JsonSchemaGenerator generator = new JsonSchemaGenerator(mapper);
