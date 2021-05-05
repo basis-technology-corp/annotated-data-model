@@ -185,6 +185,30 @@
             }
           }
         },
+        "events": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": [
+                "list"
+              ]
+            },
+            "itemType": {
+              "type": "string",
+              "enum": [
+                "events"
+              ]
+            },
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Event"
+              }
+            }
+          }
+        },
         "keyphrases": {
           "type": "object",
           "additionalProperties": true,
@@ -776,6 +800,83 @@
         },
         "normalized": {
           "type": "string"
+        }
+      },
+      "required": [
+        "startOffset",
+        "endOffset"
+      ]
+    },
+    "Event": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "extendedProperties": {
+          "type": "object",
+          "additionalProperties": {}
+        },
+        "eventType": {
+          "type": "string"
+        },
+        "mentions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/EventMention"
+          }
+        }
+      }
+    },
+    "EventMention": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "extendedProperties": {
+          "type": "object",
+          "additionalProperties": {}
+        },
+        "startOffset": {
+          "type": "integer"
+        },
+        "endOffset": {
+          "type": "integer"
+        },
+        "roles": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/EventRole"
+          }
+        },
+        "confidence": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "startOffset",
+        "endOffset"
+      ]
+    },
+    "EventRole": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "extendedProperties": {
+          "type": "object",
+          "additionalProperties": {}
+        },
+        "startOffset": {
+          "type": "integer"
+        },
+        "endOffset": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "confidence": {
+          "type": "number"
         }
       },
       "required": [
@@ -1417,9 +1518,6 @@
       "type": "object",
       "additionalProperties": false,
       "properties": {
-        "script": {
-          "$ref": "#/definitions/ISO15924"
-        },
         "transliterationScheme": {
           "type": "string",
           "enum": [
@@ -1492,6 +1590,9 @@
             "UNKNOWN",
             "NATIVE"
           ]
+        },
+        "script": {
+          "$ref": "#/definitions/ISO15924"
         },
         "language": {
           "$ref": "#/definitions/LanguageCode"
