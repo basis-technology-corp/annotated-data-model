@@ -198,7 +198,7 @@
             "itemType": {
               "type": "string",
               "enum": [
-                "events"
+                "event"
               ]
             },
             "items": {
@@ -823,6 +823,9 @@
           "items": {
             "$ref": "#/definitions/EventMention"
           }
+        },
+        "confidence": {
+          "type": "number"
         }
       }
     },
@@ -873,6 +876,9 @@
           "type": "string"
         },
         "id": {
+          "type": "string"
+        },
+        "dataSpan": {
           "type": "string"
         },
         "confidence": {

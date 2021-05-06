@@ -28,6 +28,7 @@ public abstract class EventMixin {
     EventMixin(
         @JsonProperty("eventType") String eventType,
         @JsonProperty("mentions") List<EventMention> mentions,
+        @JsonProperty("confidence") Double confidence,
         @JsonProperty("extendedProperties") Map<String, Object> extendedProperties) {
         //
     }
