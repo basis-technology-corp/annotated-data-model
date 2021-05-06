@@ -32,6 +32,8 @@ with open("adm-schema-generated.json") as f:
 
             if k == "concepts":
                 itemType = "concept"
+            elif k == "events":
+                itemType = "event"
             elif k == "keyphrases":
                 itemType = "keyphrase"
             elif k == "sentimentResults":

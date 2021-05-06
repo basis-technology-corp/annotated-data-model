@@ -27,10 +27,12 @@ import java.util.Map;
 public class Event extends BaseAttribute {
     private final String eventType;
     private List<EventMention> mentions;
+    private final Double confidence;
 
-    Event(String eventType, List<EventMention> mentions, Map<String, Object> extendedProperties) {
+    Event(String eventType, List<EventMention> mentions, Double confidence, Map<String, Object> extendedProperties) {
         super(extendedProperties);
         this.eventType = eventType;
         this.mentions = mentions;
+        this.confidence = confidence;
     }
 }

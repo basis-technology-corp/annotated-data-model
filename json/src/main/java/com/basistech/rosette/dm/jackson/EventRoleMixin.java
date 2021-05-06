@@ -29,6 +29,7 @@ public abstract class EventRoleMixin {
         @JsonProperty("extendedProperties") Map<String, Object> extendedProperties,
         @JsonProperty("name") String name,
         @JsonProperty("id") String id,
+        @JsonProperty("dataSpan") String dataSpan,
         @JsonProperty("confidence") Double confidence
     ) {
         //

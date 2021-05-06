@@ -26,12 +26,15 @@ import java.util.Map;
 public class EventRole extends Attribute {
     private final String name;
     private final String id;
+    private final String dataSpan;
     private final Double confidence;
 
-    public EventRole(int startOffset, int endOffset, Map<String, Object> extendedProperties, String name, String id, Double confidence) {
+    public EventRole(int startOffset, int endOffset, Map<String, Object> extendedProperties, String name, String id,
+                     String dataSpan, Double confidence) {
         super(startOffset, endOffset, extendedProperties);
         this.name = name;
         this.id = id;
+        this.dataSpan = dataSpan;
         this.confidence = confidence;
     }
 }
