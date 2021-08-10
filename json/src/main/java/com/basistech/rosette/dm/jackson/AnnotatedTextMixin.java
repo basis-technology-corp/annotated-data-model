@@ -22,6 +22,7 @@ import com.basistech.rosette.dm.Concept;
 import com.basistech.rosette.dm.Dependency;
 import com.basistech.rosette.dm.Embeddings;
 import com.basistech.rosette.dm.Entity;
+import com.basistech.rosette.dm.Event;
 import com.basistech.rosette.dm.Keyphrase;
 import com.basistech.rosette.dm.LanguageDetection;
 import com.basistech.rosette.dm.LayoutRegion;
@@ -140,4 +141,7 @@ public abstract class AnnotatedTextMixin {
 
     @JsonIgnore
     public abstract TransliterationResults getTransliteration();
+
+    @JsonIgnore
+    public abstract ListAttribute<Event> getEvents();
 }
