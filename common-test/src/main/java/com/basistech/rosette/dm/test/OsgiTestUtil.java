@@ -24,6 +24,7 @@ import org.ops4j.pax.exam.Option;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
@@ -53,8 +54,8 @@ public final class OsgiTestUtil {
     public static String getDependencyVersion(String groupId, String artifactId) {
         URL depPropsUrl = Resources.getResource("META-INF/maven/dependencies.properties");
         Properties depProps = new Properties();
-        try {
-            depProps.load(Resources.asByteSource(depPropsUrl).openStream());
+        try (InputStream inStream = Resources.asByteSource(depPropsUrl).openStream()) {
+            depProps.load(inStream);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

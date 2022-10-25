@@ -16,7 +16,10 @@
 
 package com.basistech.rosette.dm.json.plain;
 
+import com.basistech.rosette.dm.AnnotatedText;
+import com.basistech.rosette.dm.ListAttribute;
 import com.basistech.rosette.dm.MapAttribute;
+import com.basistech.rosette.dm.SimilarTerm;
 import com.basistech.rosette.dm.Token;
 import com.basistech.rosette.dm.jackson.AnnotatedDataModelModule;
 import com.basistech.util.LanguageCode;
@@ -26,6 +29,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
+import java.util.List;
 
 public class MapAttributeDeserializerTest extends AdmAssert {
 
@@ -52,5 +56,19 @@ public class MapAttributeDeserializerTest extends AdmAssert {
         assertEquals("Red", tokens.get(LanguageCode.FRENCH).getText());
         assertEquals("val1", tokens.getExtendedProperties().get("ext1"));
         assertEquals("val2", tokens.getExtendedProperties().get("ext2"));
+    }
+
+    @Test
+    public void annotatedTextOutOfOrder() throws Exception {
+        final AnnotatedText text =
+                mapper.readValue(new File("test-data/disordered-map-in-annotated-text.json"), AnnotatedText.class);
+        final MapAttribute<LanguageCode, ListAttribute<SimilarTerm>> similarTerms = text.getSimilarTerms();
+        assertEquals(1, similarTerms.size());
+        for (final Object similarTermList : similarTerms.values()) {
+            assertTrue(similarTermList instanceof List);
+        }
+        assertEquals(1, similarTerms.get(LanguageCode.ENGLISH).size());
+        assertEquals("element", similarTerms.get(LanguageCode.ENGLISH).get(0).getTerm());
+        assertEquals(0.8, similarTerms.get(LanguageCode.ENGLISH).get(0).getSimilarity(), 0.0001);
     }
 }
