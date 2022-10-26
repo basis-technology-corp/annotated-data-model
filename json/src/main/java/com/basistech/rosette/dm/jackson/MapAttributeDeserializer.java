@@ -102,7 +102,7 @@ public class MapAttributeDeserializer extends JsonDeserializer<MapAttribute> {
     private MapAttribute deserialize(JsonParser jp, DeserializationContext ctxt, TokenBuffer tb, String keyName, String valueName) throws IOException {
 
         if (tb != null) { // need to put back skipped properties?
-            jp = JsonParserSequence.createFlattened(false, tb.asParser(jp), jp);
+            jp = putBackSkippedProperties(jp, tb);
         }
         // Must point to the next value; tb had no current, jp pointed to VALUE_STRING:
 
@@ -157,5 +157,9 @@ public class MapAttributeDeserializer extends JsonDeserializer<MapAttribute> {
         }
         builder.setItems(items);
         return builder.build();
+    }
+
+    private JsonParserSequence putBackSkippedProperties(final JsonParser jp, final TokenBuffer tb) {
+        return JsonParserSequence.createFlattened(false, tb.asParser(jp), jp);
     }
 }

@@ -13,6 +13,7 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
+
 package com.basistech.rosette.dm.jackson;
 
 import com.basistech.rosette.dm.BaseAttribute;
@@ -68,7 +69,7 @@ public class ListAttributeDeserializer extends JsonDeserializer<ListAttribute> {
         String keyName = jp.getText();
 
         if (tb != null) { // need to put back skipped properties?
-            jp = JsonParserSequence.createFlattened(tb.asParser(jp), jp);
+            jp = putBackSkippedProperties(jp, tb);
         }
         // Must point to the next value; tb had no current, jp pointed to VALUE_STRING:
 
@@ -120,5 +121,9 @@ public class ListAttributeDeserializer extends JsonDeserializer<ListAttribute> {
         }
         builder.setItems(items);
         return builder.build();
+    }
+
+    private JsonParserSequence putBackSkippedProperties(final JsonParser jp, final TokenBuffer tb) {
+        return JsonParserSequence.createFlattened(false, tb.asParser(jp), jp);
     }
 }

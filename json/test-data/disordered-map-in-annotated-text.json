@@ -1,0 +1,23 @@
+{
+  "attributes": {
+    "similarTerms": {
+      "type": "map",
+      "ext1": "ext-val1",
+      "keyType": "languageCode",
+      "items": {
+        "eng": {
+          "itemType": "similarTerm",
+          "items": [
+            {
+              "term": "element",
+              "similarity": 0.8
+            }
+          ]
+        }
+      },
+      "valueType": "list",
+      "ext2": "ext-val2"
+    }
+  },
+  "documentMetadata": {}
+}
