@@ -23,14 +23,14 @@ import com.basistech.util.LanguageCode;
 import com.google.common.collect.Lists;
 import mockit.Expectations;
 import mockit.Mocked;
-import mockit.integration.junit4.JMockit;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import mockit.Tested;
+import org.junit.Ignore;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test the dispatcher.
  */
-@RunWith(JMockit.class)
 public class WholeDocumentLanguageDispatchAnnotatorTest {
 
     @Mocked
@@ -61,10 +61,9 @@ public class WholeDocumentLanguageDispatchAnnotatorTest {
 
         new Expectations() {
             {
-                fraAnnotator.annotate(fraText); returns(fraResult);
-                spaAnnotator.annotate(spaText); returns(spaResult);
+                fraAnnotator.annotate(fraText); result = fraResult;
+                spaAnnotator.annotate(spaText); result = spaResult;
             }
-
         };
 
         WholeDocumentLanguageDispatchAnnotatorBuilder builder = new WholeDocumentLanguageDispatchAnnotatorBuilder();
@@ -75,15 +74,18 @@ public class WholeDocumentLanguageDispatchAnnotatorTest {
         delegator.annotate(spaText);
     }
 
-    @Test(expected = RosetteUnsupportedLanguageException.class)
-    public void noHandler() throws Exception {
-        AnnotatedText.Builder textBuilder = new AnnotatedText.Builder();
-        LanguageDetection.DetectionResult.Builder drBuilder = new LanguageDetection.DetectionResult.Builder(LanguageCode.FRENCH);
-        LanguageDetection.Builder ldBuilder = new LanguageDetection.Builder(0, 0, Lists.newArrayList(drBuilder.build()));
-        textBuilder.wholeDocumentLanguageDetection(ldBuilder.build());
-        final AnnotatedText fraText = textBuilder.build();
-        WholeDocumentLanguageDispatchAnnotatorBuilder builder = new WholeDocumentLanguageDispatchAnnotatorBuilder();
-        Annotator delegator = builder.build();
-        delegator.annotate(fraText);
+    @Test
+    public void noHandler(){
+        RosetteUnsupportedLanguageException thrown = Assertions.assertThrows(RosetteUnsupportedLanguageException.class, ()-> {
+            AnnotatedText.Builder textBuilder = new AnnotatedText.Builder();
+            LanguageDetection.DetectionResult.Builder drBuilder = new LanguageDetection.DetectionResult.Builder(LanguageCode.FRENCH);
+            LanguageDetection.Builder ldBuilder = new LanguageDetection.Builder(0, 0, Lists.newArrayList(drBuilder.build()));
+            textBuilder.wholeDocumentLanguageDetection(ldBuilder.build());
+            final AnnotatedText fraText = textBuilder.build();
+            WholeDocumentLanguageDispatchAnnotatorBuilder builder = new WholeDocumentLanguageDispatchAnnotatorBuilder();
+            Annotator delegator = builder.build();
+            delegator.annotate(fraText);
+        }, "RosetteUnsupportedLanguageException was expected");
+
     }
 }
