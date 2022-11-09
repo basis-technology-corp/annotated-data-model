@@ -75,6 +75,7 @@
                 <version>${maven-surefire-plugin.version}</version>
                 <executions>
                     <execution>
+                        <phase>none</phase>
                         <goals>
                             <goal>integration-test</goal>
                             <goal>verify</goal>
