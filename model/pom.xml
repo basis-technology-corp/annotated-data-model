@@ -156,7 +156,7 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${maven-surefire-plugin.version}</version>
                 <configuration>
-                    <argLine>-javaagent:/Users/mauriciogodoy/.m2/repository/org/jmockit/jmockit/1.49/jmockit-1.49.jar ${argLine}</argLine>
+                    <argLine>--add-opens=java.base/java.lang=ALL-UNNAMED -Dfile.encoding=utf-8 -Xmx5g -javaagent:${settings.localRepository}/org/jmockit/jmockit/1.49/jmockit-1.49.jar ${argLine}</argLine>
                 </configuration>
             </plugin>
 
@@ -223,7 +223,7 @@
         <dependency>
             <groupId>com.basistech</groupId>
             <artifactId>pax-exam-test-composite</artifactId>
-            <version>0.0.5</version>
+            <version>0.0.11</version>
             <type>pom</type>
             <scope>test</scope>
         </dependency>

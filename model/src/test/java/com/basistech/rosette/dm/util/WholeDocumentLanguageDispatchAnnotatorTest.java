@@ -26,11 +26,15 @@ import mockit.Mocked;
 import mockit.Tested;
 import org.junit.Ignore;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 /**
  * Test the dispatcher.
  */
+
+@Deprecated
+@Disabled("Not used")
 public class WholeDocumentLanguageDispatchAnnotatorTest {
 
     @Mocked
