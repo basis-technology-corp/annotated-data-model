@@ -75,12 +75,14 @@
                 <version>${maven-surefire-plugin.version}</version>
                 <executions>
                     <execution>
-                        <phase>none</phase>
                         <goals>
                             <goal>integration-test</goal>
                             <goal>verify</goal>
                         </goals>
                         <configuration>
+                            <argLine>--add-opens java.base/java.lang=ALL-UNNAMED
+                                --add-opens java.base/java.net=ALL-UNNAMED
+                                --add-opens java.base/java.security=ALL-UNNAMED</argLine>
                             <systemPropertyVariables>
                                 <java.awt.headless>true</java.awt.headless>
                                 <project.build.directory>${project.build.directory}</project.build.directory>
@@ -110,6 +112,19 @@
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.felix</groupId>
+            <artifactId>org.apache.felix.framework</artifactId>
+            <version>7.0.3</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.basistech</groupId>
+            <artifactId>pax-exam-test-composite</artifactId>
+            <version>0.0.11</version>
+            <type>pom</type>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
@@ -162,7 +177,7 @@
         <dependency>
             <groupId>org.osgi</groupId>
             <artifactId>org.osgi.core</artifactId>
-            <version>5.0.0</version>
+            <version>6.0.0</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

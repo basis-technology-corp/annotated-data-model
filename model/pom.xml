@@ -157,7 +157,6 @@
                 <version>${maven-surefire-plugin.version}</version>
                 <executions>
                     <execution>
-                        <phase>none</phase>
                         <goals>
                             <goal>integration-test</goal>
                             <goal>verify</goal>
@@ -179,6 +178,12 @@
             <groupId>com.basistech</groupId>
             <artifactId>adm-common-test</artifactId>
             <version>${project.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.felix</groupId>
+            <artifactId>org.apache.felix.framework</artifactId>
+            <version>7.0.3</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -233,7 +238,7 @@
         <dependency>
             <groupId>org.osgi</groupId>
             <artifactId>org.osgi.core</artifactId>
-            <version>5.0.0</version>
+            <version>6.0.0</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
