@@ -30,14 +30,15 @@
             <artifactId>common-api</artifactId>
         </dependency>
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <scope>compile</scope>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>5.9.1</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.basistech</groupId>
             <artifactId>pax-exam-test-composite</artifactId>
-            <version>0.0.5</version>
+            <version>0.0.11</version>
             <type>pom</type>
             <scope>compile</scope>
         </dependency>
@@ -48,7 +49,7 @@
         <dependency>
             <groupId>org.osgi</groupId>
             <artifactId>org.osgi.core</artifactId>
-            <version>5.0.0</version>
+            <version>6.0.0</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
