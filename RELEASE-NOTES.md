@@ -1,5 +1,23 @@
 # Cumulative Release Notes for the Annotated Data Model
 
+## 2.7.4
+
+### [WS-2599](https://basistech.atlassian.net/browse/WS-2599) annotated data model works with the latest Jackson version
+
+Updates Jackson to 2.14.0
+
+## 2.7.3
+
+### [WS-2279](https://basistech.atlassian.net/browse/WS-2279) Events support
+
+Fixes serialization of `Event` in `AnnotatedData`
+
+## 2.7.2
+
+### [WS-2181](https://basistech.atlassian.net/browse/WS-2181) Events support
+
+Fixes fields in `Event` and `EventRole`
+
 ## 2.7.1
 
 ### [WS-2181](https://basistech.atlassian.net/browse/WS-2181) Events support

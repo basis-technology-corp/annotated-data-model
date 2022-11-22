@@ -35,7 +35,8 @@ import java.util.Map;
  * </pre>
  * Each token has two columns related to dependencies: the 'governor' and the 'label'. In the ADM,
  * this would turn into a list of {@code Dependency} objects as follows:
- * <table summary="An example list of Dependencies">
+ * <table>
+ *     <caption>An example list of Dependencies</caption>
  *     <thead>
  *         <tr>
  *             <td>relationship</td>

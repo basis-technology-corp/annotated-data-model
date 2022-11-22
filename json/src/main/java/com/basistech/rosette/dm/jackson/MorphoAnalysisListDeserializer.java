@@ -13,6 +13,7 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
+
 package com.basistech.rosette.dm.jackson;
 
 import com.basistech.rosette.dm.ArabicMorphoAnalysis;
@@ -78,10 +79,8 @@ public final class MorphoAnalysisListDeserializer extends JsonDeserializer<List<
         hanMaDeserializer = ctxt.findRootValueDeserializer(type);
         type = ctxt.constructType(ArabicMorphoAnalysis.class);
         arMaDeserializer = ctxt.findRootValueDeserializer(type);
-        ctxt.setAttribute(MorphoAnalysisListDeserializer.class, maDeserializer);
         type = ctxt.constructType(KoreanMorphoAnalysis.class);
         korMaDeserializer = ctxt.findRootValueDeserializer(type);
-        ctxt.setAttribute(KoreanMorphoAnalysis.class, korMaDeserializer);
         cached = true;
     }
 
