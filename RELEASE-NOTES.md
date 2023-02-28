@@ -1,5 +1,9 @@
 # Cumulative Release Notes for the Annotated Data Model
 
+## 2.7.5
+
+### [COMN-297](https://basistech.atlassian.net/browse/COMN-297) Parent POM 13.0.0
+
 ## 2.7.4
 
 ### [WS-2599](https://basistech.atlassian.net/browse/WS-2599) annotated data model works with the latest Jackson version
