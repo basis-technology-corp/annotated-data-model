@@ -1,0 +1,331 @@
+{
+  "data": "I don't want to book a flight from Boston to Tokyo",
+  "documentMetadata": {
+    "processedBy": [
+      "base-linguistics@192.168.32.2",
+      "entity-extraction@192.168.32.2"
+    ],
+    "eventsModelFingerprints": [
+      "{\"v\": \"a1814333af412bcb2d7103f91674c41bef99248b9eb0a5a8c34620527d898309\", \"t\": 1679598871.272712}"
+    ],
+    "eventsModels": [
+      "641ca515b03481afb2e2cf29"
+    ]
+  },
+  "attributes": {
+    "entities": {
+      "type": "list",
+      "itemType": "entities",
+      "items": [
+        {
+          "mentions": [
+            {
+              "startOffset": 35,
+              "endOffset": 41,
+              "linkingConfidence": 0.14421102,
+              "source": "gazetteer",
+              "subsource": "/rosette/server/bin/../roots//rex/7.55.4.c68.0/data/gazetteer/eng/accept/gaz-LE.bin",
+              "normalized": "Boston"
+            }
+          ],
+          "headMentionIndex": 0,
+          "type": "LOCATION",
+          "entityId": "Q100"
+        },
+        {
+          "mentions": [
+            {
+              "startOffset": 45,
+              "endOffset": 50,
+              "linkingConfidence": 0.44404073,
+              "source": "gazetteer",
+              "subsource": "/rosette/server/bin/../roots//rex/7.55.4.c68.0/data/gazetteer/eng/accept/gaz-LE.bin",
+              "normalized": "Tokyo"
+            }
+          ],
+          "headMentionIndex": 0,
+          "type": "LOCATION",
+          "entityId": "Q1490",
+          "DBpediaType": [
+            "Place/PopulatedPlace/Settlement"
+          ]
+        }
+      ]
+    },
+    "events": {
+      "type": "list",
+      "itemType": "event",
+      "items": [
+        {
+          "eventType": "flight_booking_schema.flight_booking",
+          "mentions": [
+            {
+              "confidence": null,
+              "startOffset": 0,
+              "endOffset": 0,
+              "roles": [
+                {
+                  "confidence": null,
+                  "startOffset": 23,
+                  "endOffset": 29,
+                  "dataSpan": "flight",
+                  "name": "key",
+                  "id": null
+                },
+                {
+                  "confidence": null,
+                  "startOffset": 35,
+                  "endOffset": 41,
+                  "dataSpan": "Boston",
+                  "name": "origin",
+                  "id": "Q100"
+                },
+                {
+                  "confidence": null,
+                  "startOffset": 45,
+                  "endOffset": 60,
+                  "dataSpan": "Tokyo",
+                  "name": "destination",
+                  "id": "Q1490"
+                }
+              ],
+              "polarity": "Negative",
+              "negationCues": [
+                {
+                  "startOffset": 2,
+                  "endOffset": 7,
+                  "dataSpan": "don't"
+                }
+              ]
+            }
+          ],
+          "confidence": 0.9715276559193929
+        }
+      ]
+    },
+    "layoutRegion": {
+      "type": "list",
+      "itemType": "layoutRegion",
+      "items": [
+        {
+          "startOffset": 0,
+          "endOffset": 50,
+          "layout": "UNSTRUCTURED"
+        }
+      ]
+    },
+    "scriptRegion": {
+      "type": "list",
+      "itemType": "scriptRegion",
+      "items": [
+        {
+          "startOffset": 0,
+          "endOffset": 50,
+          "script": "Latn"
+        }
+      ]
+    },
+    "sentence": {
+      "type": "list",
+      "itemType": "sentence",
+      "items": [
+        {
+          "startOffset": 0,
+          "endOffset": 50
+        }
+      ]
+    },
+    "token": {
+      "type": "list",
+      "itemType": "token",
+      "items": [
+        {
+          "startOffset": 0,
+          "endOffset": 1,
+          "text": "I",
+          "analyses": [
+            {
+              "partOfSpeech": "PRON",
+              "lemma": "I",
+              "raw": "I[+Pron][+Pers][+Nom][+1P][+Sg][+PRONPERS]",
+              "tagSet": "UPT16_V1"
+            }
+          ]
+        },
+        {
+          "startOffset": 2,
+          "endOffset": 7,
+          "text": "don't",
+          "analyses": [
+            {
+              "partOfSpeech": "VERB",
+              "lemma": "do not",
+              "raw": "do[+Verb][+Pres][+Non3sg][^=]not[+Adv][+VDPRES]",
+              "tagSet": "UPT16_V1"
+            },
+            {
+              "partOfSpeech": "NOUN",
+              "lemma": "don't",
+              "raw": "don't[+Noun][+Sg][+NOUN]",
+              "tagSet": "UPT16_V1"
+            }
+          ]
+        },
+        {
+          "startOffset": 8,
+          "endOffset": 12,
+          "text": "want",
+          "analyses": [
+            {
+              "partOfSpeech": "VERB",
+              "lemma": "want",
+              "raw": "want[+Verb][+Pres][+Non3sg][+VI]",
+              "tagSet": "UPT16_V1"
+            },
+            {
+              "partOfSpeech": "VERB",
+              "lemma": "want",
+              "raw": "want[+Verb][+Pres][+Non3sg][+VPRES]",
+              "tagSet": "UPT16_V1"
+            },
+            {
+              "partOfSpeech": "NOUN",
+              "lemma": "want",
+              "raw": "want[+Noun][+Sg][+NOUN]",
+              "tagSet": "UPT16_V1"
+            }
+          ]
+        },
+        {
+          "startOffset": 13,
+          "endOffset": 15,
+          "text": "to",
+          "analyses": [
+            {
+              "partOfSpeech": "PART",
+              "lemma": "to",
+              "raw": "to[+Adv][+INFTO]",
+              "tagSet": "UPT16_V1"
+            },
+            {
+              "partOfSpeech": "ADP",
+              "lemma": "to",
+              "raw": "to[+Prep][+PREP]",
+              "tagSet": "UPT16_V1"
+            }
+          ]
+        },
+        {
+          "startOffset": 16,
+          "endOffset": 20,
+          "text": "book",
+          "analyses": [
+            {
+              "partOfSpeech": "VERB",
+              "lemma": "book",
+              "raw": "book[+Verb][+Pres][+Non3sg][+VI]",
+              "tagSet": "UPT16_V1"
+            },
+            {
+              "partOfSpeech": "VERB",
+              "lemma": "book",
+              "raw": "book[+Verb][+Pres][+Non3sg][+VPRES]",
+              "tagSet": "UPT16_V1"
+            },
+            {
+              "partOfSpeech": "NOUN",
+              "lemma": "book",
+              "raw": "book[+Noun][+Sg][+NOUN]",
+              "tagSet": "UPT16_V1"
+            }
+          ]
+        },
+        {
+          "startOffset": 21,
+          "endOffset": 22,
+          "text": "a",
+          "analyses": [
+            {
+              "partOfSpeech": "DET",
+              "lemma": "a",
+              "raw": "a[+Det][+Indef][+Sg][+DET]",
+              "tagSet": "UPT16_V1"
+            }
+          ]
+        },
+        {
+          "startOffset": 23,
+          "endOffset": 29,
+          "text": "flight",
+          "analyses": [
+            {
+              "partOfSpeech": "NOUN",
+              "lemma": "flight",
+              "raw": "flight[+Noun][+Sg][+NOUN]",
+              "tagSet": "UPT16_V1"
+            }
+          ]
+        },
+        {
+          "startOffset": 30,
+          "endOffset": 34,
+          "text": "from",
+          "analyses": [
+            {
+              "partOfSpeech": "ADP",
+              "lemma": "from",
+              "raw": "from[+Prep][+PREP]",
+              "tagSet": "UPT16_V1"
+            }
+          ]
+        },
+        {
+          "startOffset": 35,
+          "endOffset": 41,
+          "text": "Boston",
+          "analyses": [
+            {
+              "partOfSpeech": "PROPN",
+              "lemma": "Boston",
+              "raw": "Boston[+Prop][+Place][+City][+PROP]",
+              "tagSet": "UPT16_V1"
+            }
+          ]
+        },
+        {
+          "startOffset": 42,
+          "endOffset": 44,
+          "text": "to",
+          "analyses": [
+            {
+              "partOfSpeech": "ADP",
+              "lemma": "to",
+              "raw": "to[+Prep][+PREP]",
+              "tagSet": "UPT16_V1"
+            },
+            {
+              "partOfSpeech": "PART",
+              "lemma": "to",
+              "raw": "to[+Adv][+INFTO]",
+              "tagSet": "UPT16_V1"
+            }
+          ]
+        },
+        {
+          "startOffset": 45,
+          "endOffset": 50,
+          "text": "Tokyo",
+          "analyses": [
+            {
+              "partOfSpeech": "PROPN",
+              "lemma": "Tokyo",
+              "raw": "Tokyo[+Prop][+Place][+City][+PROP]",
+              "tagSet": "UPT16_V1"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "version": "1.1.0"
+}

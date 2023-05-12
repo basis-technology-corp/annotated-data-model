@@ -21,30 +21,14 @@ import lombok.Getter;
 
 import java.util.List;
 import java.util.Map;
-import java.util.ArrayList;
 
 @EqualsAndHashCode(callSuper = true)
 @Getter
-public class EventMention extends Attribute {
-    private final List<EventRole> roles;
-    private final Double confidence;
-    private final String polarity;
-    private final List<NegationCue> negationCues;
+public class NegationCue extends Attribute {
+    private final String dataSpan;
 
-    EventMention(int startOffset, int endOffset, Map<String, Object> extendedProperties, List<EventRole> roles, Double confidence) {
+    NegationCue(int startOffset, int endOffset, Map<String, Object> extendedProperties, String dataSpan) {
         super(startOffset, endOffset, extendedProperties);
-        this.roles = roles;
-        this.confidence = confidence;
-        this.polarity = "";
-        this.negationCues = new ArrayList<>();
-    }
-
-    EventMention(int startOffset, int endOffset, Map<String, Object> extendedProperties, List<EventRole> roles, Double confidence,
-                 String polarity, List<NegationCue> negationCues) {
-        super(startOffset, endOffset, extendedProperties);
-        this.roles = roles;
-        this.confidence = confidence;
-        this.polarity = polarity;
-        this.negationCues = negationCues;
+        this.dataSpan = dataSpan;
     }
 }
