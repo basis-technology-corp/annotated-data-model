@@ -26,7 +26,7 @@ import java.io.File;
 
 public class EventsTest extends AdmAssert {
     @Test
-    public void simple() throws Exception {
+    public void testDeserializeEvent() throws Exception {
         ObjectMapper mapper = objectMapper();
         ObjectReader reader = mapper.readerFor(AnnotatedText.class);
         // threw
@@ -36,6 +36,22 @@ public class EventsTest extends AdmAssert {
         assertNotNull(adm.getEvents().get(0).getEventType());
         assertEquals("flight_booking_schema.flight_booking", adm.getEvents().get(0).getEventType());
         assertEquals(3, adm.getEvents().get(0).getMentions().get(0).getRoles().size());
+    }
+
+    @Test
+    public void testDeserializeNegatedEvent() throws Exception {
+        ObjectMapper mapper = objectMapper();
+        ObjectReader reader = mapper.readerFor(AnnotatedText.class);
+        // threw
+        AnnotatedText adm = reader.readValue(new File("test-data/negatedEvents.json"));
+        assertNotNull(adm.getEvents());
+        assertEquals(Event.class, adm.getEvents().getItemClass());
+        assertNotNull(adm.getEvents().get(0).getEventType());
+        assertEquals("flight_booking_schema.flight_booking", adm.getEvents().get(0).getEventType());
+        assertEquals(3, adm.getEvents().get(0).getMentions().get(0).getRoles().size());
+        assertEquals("Negative", adm.getEvents().get(0).getMentions().get(0).getPolarity());
+        assertEquals(1, adm.getEvents().get(0).getMentions().get(0).getNegationCues().size());
+        assertEquals("don't", adm.getEvents().get(0).getMentions().get(0).getNegationCues().get(0).getDataSpan());
     }
 
 }

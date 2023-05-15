@@ -29,6 +29,7 @@ import com.basistech.rosette.dm.Entity;
 import com.basistech.rosette.dm.Event;
 import com.basistech.rosette.dm.EventMention;
 import com.basistech.rosette.dm.EventRole;
+import com.basistech.rosette.dm.NegationCue;
 import com.basistech.rosette.dm.Extent;
 import com.basistech.rosette.dm.HanMorphoAnalysis;
 import com.basistech.rosette.dm.Keyphrase;
@@ -84,6 +85,7 @@ public class  AnnotatedDataModelModule extends EnumModule {
         context.setMixInAnnotations(Event.class, EventMixin.class);
         context.setMixInAnnotations(EventMention.class, EventMentionMixin.class);
         context.setMixInAnnotations(EventRole.class, EventRoleMixin.class);
+        context.setMixInAnnotations(NegationCue.class, NegationCueMixin.class);
         context.setMixInAnnotations(Extent.class, ExtentMixin.class);
         context.setMixInAnnotations(HanMorphoAnalysis.class, HanMorphoAnalysisMixin.class);
         context.setMixInAnnotations(Keyphrase.class, KeyphraseMixin.class);

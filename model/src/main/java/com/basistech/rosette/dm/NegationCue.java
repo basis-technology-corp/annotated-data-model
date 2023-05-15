@@ -14,27 +14,21 @@
  * limitations under the License.
  ******************************************************************************/
 
-package com.basistech.rosette.dm.jackson;
+package com.basistech.rosette.dm;
 
-import com.basistech.rosette.dm.EventRole;
-import com.basistech.rosette.dm.NegationCue;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
 import java.util.List;
 import java.util.Map;
 
-public abstract class EventMentionMixin {
-    @JsonCreator
-    EventMentionMixin(
-        @JsonProperty("startOffset") int startOffset,
-        @JsonProperty("endOffset") int endOffset,
-        @JsonProperty("extendedProperties") Map<String, Object> extendedProperties,
-        @JsonProperty("roles") List<EventRole> roles,
-        @JsonProperty("confidence") Double confidence,
-        @JsonProperty("polarity") String polarity,
-        @JsonProperty("negationCues") List<NegationCue> negationCues
-    ) {
-        //
+@EqualsAndHashCode(callSuper = true)
+@Getter
+public class NegationCue extends Attribute {
+    private final String dataSpan;
+
+    NegationCue(int startOffset, int endOffset, Map<String, Object> extendedProperties, String dataSpan) {
+        super(startOffset, endOffset, extendedProperties);
+        this.dataSpan = dataSpan;
     }
 }
