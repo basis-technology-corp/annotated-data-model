@@ -1,5 +1,13 @@
 # Cumulative Release Notes for the Annotated Data Model
 
+## 2.8.0
+
+### [COMN-299](https://basistech.atlassian.net/browse/COMN-299) New parent POM for 2023 Q2
+
+## 2.7.6
+
+### [EDA-272](https://basistech.atlassian.net/browse/EDA-272) Update ADM java library for event negation
+
 ## 2.7.5
 
 ### [COMN-297](https://basistech.atlassian.net/browse/COMN-297) Parent POM 13.0.0
