@@ -384,7 +384,7 @@ itself may have analyses, but in this case only the surface form of
 the component is used.
 
 In the example below, the word has three possible analyses, all with
-the same lemma and part-of-speech (NOUN).  But they differ in how the
+the same lemma and part of speech (NOUN).  But they differ in how the
 token gets broken into compound components.  The first analysis is the
 disambiguated result, so the preferred components are "Bund" +
 "Innenminister".

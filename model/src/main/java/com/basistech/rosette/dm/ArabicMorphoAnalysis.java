@@ -1,5 +1,5 @@
 /*
-* Copyright 2019 Basis Technology Corp.
+* Copyright 2023 Basis Technology Corp.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -38,7 +38,7 @@ import java.util.Map;
  * prefix:         wAl
  * stem:           ktb
  * suffix:
- * part-of-speech: NOUN
+ * part of speech: NOUN
  * prefix:         [w, Al]
  * prefixTags:     [CONJ, DET]
  * stems:          [ktb]

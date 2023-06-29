@@ -1,5 +1,5 @@
 /*
-* Copyright 2019 Basis Technology Corp.
+* Copyright 2023 Basis Technology Corp.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -37,7 +37,7 @@ import java.util.Map;
 @EqualsAndHashCode(callSuper = true)
 public class MorphoAnalysis extends BaseAttribute implements Serializable {
     private static final long serialVersionUID = 250L;
-    // every language we support has part-of-speech and lemma
+    // every language we support has part of speech and lemma
     private final String partOfSpeech;
     private final String lemma;
     // several language have compounds; we store a full token so that we can have analyses of the components.
@@ -48,7 +48,7 @@ public class MorphoAnalysis extends BaseAttribute implements Serializable {
     /**
      * Creates an analysis.
      *
-     * @param partOfSpeech part-of-speech
+     * @param partOfSpeech part of speech
      * @param lemma the lemma
      * @param components compound components
      * @param raw raw analysis
@@ -72,7 +72,7 @@ public class MorphoAnalysis extends BaseAttribute implements Serializable {
     /**
      * Creates an analysis.
      *
-     * @param partOfSpeech part-of-speech
+     * @param partOfSpeech part of speech
      * @param lemma the lemma
      * @param components compound components
      * @param raw raw analysis
@@ -87,9 +87,9 @@ public class MorphoAnalysis extends BaseAttribute implements Serializable {
     }
 
     /**
-     * Returns the part-of-speech.
+     * Returns the part of speech.
      *
-     * @return the part-of-speech
+     * @return the part of speech
      */
     public String getPartOfSpeech() {
         return partOfSpeech;
@@ -186,9 +186,9 @@ public class MorphoAnalysis extends BaseAttribute implements Serializable {
         }
 
         /**
-         * Specifies the part-of-speech.
+         * Specifies the part of speech.
          *
-         * @param partOfSpeech the part-of-speech
+         * @param partOfSpeech the part of speech
          * @return this
          */
         public B partOfSpeech(String partOfSpeech) {
