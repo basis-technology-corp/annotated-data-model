@@ -1,5 +1,5 @@
 /*
-* Copyright 2014 Basis Technology Corp.
+* Copyright 2023 Basis Technology Corp.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -33,7 +33,7 @@ public class MorphoListTest extends AdmAssert {
 
     @Test
     public void oneMorphoAnalysis() throws Exception {
-        MorphoAnalysis ma = new MorphoAnalysis.Builder().lemma("plainLemma").build();
+        MorphoAnalysis ma = new MorphoAnalysis.Builder().lemma("plainLemma").secondaryPartOfSpeech("2pos").build();
         String json = objectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(ma);
         System.out.println(json);
         MorphoAnalysis readBack = objectMapper().readValue(json, MorphoAnalysis.class);
@@ -51,6 +51,7 @@ public class MorphoListTest extends AdmAssert {
     public void morphoAnalysisList() throws Exception {
         Token.Builder tokenBuilder = new Token.Builder(0, 10, "Hello");
         final MorphoAnalysis.Builder plainMaBuilder = new MorphoAnalysis.Builder().lemma("plainLemma");
+        plainMaBuilder.secondaryPartOfSpeech("2pos");
         plainMaBuilder.extendedProperty("plain", "simple");
         tokenBuilder.addAnalysis(plainMaBuilder.build());
         tokenBuilder.addAnalysis(new HanMorphoAnalysis.Builder().addReading("areading").lemma("han").build());

@@ -44,6 +44,34 @@ public class MorphoAnalysis extends BaseAttribute implements Serializable {
     private final List<Token> components;
     private final String raw; // raw representation of the analysis; interpretation depends on the language and implementation.
     private final TagSet tagSet;
+    private final String secondaryPartOfSpeech;
+
+    /**
+     * Creates an analysis.
+     *
+     * @param partOfSpeech part of speech
+     * @param lemma the lemma
+     * @param components compound components
+     * @param raw raw analysis
+     * @param tagSet the tag set
+     * @param secondaryPartOfSpeech secondary part of speech
+     * @param extendedProperties extended properties
+     */
+    protected MorphoAnalysis(String partOfSpeech,
+                             String lemma,
+                             List<Token> components,
+                             String raw,
+                             TagSet tagSet,
+                             String secondaryPartOfSpeech,
+                             Map<String, Object> extendedProperties) {
+        super(extendedProperties);
+        this.partOfSpeech = partOfSpeech;
+        this.lemma = lemma;
+        this.components = listOrNull(components);
+        this.raw = raw;
+        this.tagSet = tagSet;
+        this.secondaryPartOfSpeech = secondaryPartOfSpeech;
+    }
 
     /**
      * Creates an analysis.
@@ -61,12 +89,7 @@ public class MorphoAnalysis extends BaseAttribute implements Serializable {
                              String raw,
                              TagSet tagSet,
                              Map<String, Object> extendedProperties) {
-        super(extendedProperties);
-        this.partOfSpeech = partOfSpeech;
-        this.lemma = lemma;
-        this.components = listOrNull(components);
-        this.raw = raw;
-        this.tagSet = tagSet;
+        this(partOfSpeech, lemma, components, raw, tagSet, null, extendedProperties);
     }
 
     /**
@@ -83,7 +106,7 @@ public class MorphoAnalysis extends BaseAttribute implements Serializable {
                              List<Token> components,
                              String raw,
                              Map<String, Object> extendedProperties) {
-        this(partOfSpeech, lemma, components, raw, null, extendedProperties);
+        this(partOfSpeech, lemma, components, raw, null, null, extendedProperties);
     }
 
     /**
@@ -134,13 +157,23 @@ public class MorphoAnalysis extends BaseAttribute implements Serializable {
         return tagSet;
     }
 
+    /**
+     * Returns the secondary part of speech.
+     *
+     * @return the secondary part of speech
+     */
+    public String getSecondaryPartOfSpeech() {
+        return secondaryPartOfSpeech;
+    }
+
     protected MoreObjects.ToStringHelper toStringHelper() {
         return super.toStringHelper()
                 .add("partOfSpeech", partOfSpeech)
                 .add("lemma", lemma)
                 .add("components", components)
                 .add("raw", raw)
-                .add("tagSet", tagSet);
+                .add("tagSet", tagSet)
+                .add("secondaryPartOfSpeech", secondaryPartOfSpeech);
     }
 
     @Override
@@ -157,6 +190,7 @@ public class MorphoAnalysis extends BaseAttribute implements Serializable {
         protected List<Token> components;
         protected String raw;
         protected TagSet tagSet;
+        protected String secondaryPartOfSpeech;
 
         /**
          * Constructs a builder with default values.
@@ -168,6 +202,7 @@ public class MorphoAnalysis extends BaseAttribute implements Serializable {
             lemma = null;
             partOfSpeech = null;
             tagSet = null;
+            secondaryPartOfSpeech = null;
         }
 
         /**
@@ -183,6 +218,7 @@ public class MorphoAnalysis extends BaseAttribute implements Serializable {
             addAllToList(components, toCopy.components);
             raw = toCopy.raw;
             tagSet = toCopy.tagSet;
+            secondaryPartOfSpeech = toCopy.secondaryPartOfSpeech;
         }
 
         /**
@@ -230,6 +266,17 @@ public class MorphoAnalysis extends BaseAttribute implements Serializable {
         }
 
         /**
+         * Specifies the secondary part of speech.
+         *
+         * @param secondaryPartOfSpeech the secondary part of speech
+         * @return this
+         */
+        public B secondaryPartOfSpeech(String secondaryPartOfSpeech) {
+            this.secondaryPartOfSpeech = secondaryPartOfSpeech;
+            return getThis();
+        }
+
+        /**
          * Adds a compound component.
          *
          * @param component the component
@@ -256,7 +303,8 @@ public class MorphoAnalysis extends BaseAttribute implements Serializable {
          * @return the new analysis
          */
         public MorphoAnalysis build() {
-            return new MorphoAnalysis(partOfSpeech, lemma, components, raw, tagSet, buildExtendedProperties());
+            return new MorphoAnalysis(partOfSpeech, lemma, components, raw, tagSet, secondaryPartOfSpeech,
+                    buildExtendedProperties());
         }
 
         // because this class is not abstract, we can't have an abstract method.

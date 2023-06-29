@@ -1,5 +1,12 @@
 # Cumulative Release Notes for the Annotated Data Model
 
+## 2.9.0
+
+### [ETROG-3636](https://basistech.atlassian.net/browse/ETROG-3636) Expose secondary parts of speech in Chinese
+
+Adds a field `secondaryPartOfSpeech` to `MorphoAnalysis` for tag sets that support annotating tokens with secondary
+parts of speech
+
 ## 2.8.0
 
 ### [COMN-299](https://basistech.atlassian.net/browse/COMN-299) New parent POM for 2023 Q2

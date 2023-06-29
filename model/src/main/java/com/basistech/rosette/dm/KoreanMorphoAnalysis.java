@@ -1,5 +1,5 @@
 /*
-* Copyright 2019 Basis Technology Corp.
+* Copyright 2023 Basis Technology Corp.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -40,8 +40,9 @@ public class KoreanMorphoAnalysis extends MorphoAnalysis implements Serializable
                                    List<String> morphemes,
                                    List<String> morphemeTags,
                                    TagSet tagSet,
+                                   String secondaryPartOfSpeech,
                                    Map<String, Object> extendedProperties) {
-        super(partOfSpeech, lemma, components, raw, tagSet, extendedProperties);
+        super(partOfSpeech, lemma, components, raw, tagSet, secondaryPartOfSpeech, extendedProperties);
         this.morphemes = listOrNull(morphemes);
         this.morphemeTags = listOrNull(morphemeTags);
     }
@@ -52,8 +53,20 @@ public class KoreanMorphoAnalysis extends MorphoAnalysis implements Serializable
                                    String raw,
                                    List<String> morphemes,
                                    List<String> morphemeTags,
+                                   TagSet tagSet,
                                    Map<String, Object> extendedProperties) {
-        this(partOfSpeech, lemma, components, raw, morphemes, morphemeTags, null, extendedProperties);
+        this(partOfSpeech, lemma, components, raw, morphemes, morphemeTags, tagSet, null, extendedProperties);
+    }
+
+
+    protected KoreanMorphoAnalysis(String partOfSpeech,
+                                   String lemma,
+                                   List<Token> components,
+                                   String raw,
+                                   List<String> morphemes,
+                                   List<String> morphemeTags,
+                                   Map<String, Object> extendedProperties) {
+        this(partOfSpeech, lemma, components, raw, morphemes, morphemeTags, null, null, extendedProperties);
     }
 
     /**
@@ -136,7 +149,7 @@ public class KoreanMorphoAnalysis extends MorphoAnalysis implements Serializable
          * @return the analysis
          */
         public KoreanMorphoAnalysis build() {
-            return new KoreanMorphoAnalysis(partOfSpeech, lemma, components, raw, morphemes, morphemeTags, tagSet,
+            return new KoreanMorphoAnalysis(partOfSpeech, lemma, components, raw, morphemes, morphemeTags, tagSet, null,
                     buildExtendedProperties());
         }
     }
