@@ -19,6 +19,7 @@ import com.basistech.rosette.dm.ArabicMorphoAnalysis;
 import com.basistech.rosette.dm.HanMorphoAnalysis;
 import com.basistech.rosette.dm.KoreanMorphoAnalysis;
 import com.basistech.rosette.dm.MorphoAnalysis;
+import com.basistech.rosette.dm.TagSet;
 import com.basistech.rosette.dm.Token;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.common.collect.Lists;
@@ -33,7 +34,8 @@ public class MorphoListTest extends AdmAssert {
 
     @Test
     public void oneMorphoAnalysis() throws Exception {
-        MorphoAnalysis ma = new MorphoAnalysis.Builder().lemma("plainLemma").secondaryPartOfSpeech("2pos").build();
+        MorphoAnalysis ma = new MorphoAnalysis.Builder().lemma("plainLemma").tagSet(TagSet.BT_ENGLISH)
+                .secondaryPartOfSpeech("2pos").build();
         String json = objectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(ma);
         System.out.println(json);
         MorphoAnalysis readBack = objectMapper().readValue(json, MorphoAnalysis.class);
@@ -51,6 +53,7 @@ public class MorphoListTest extends AdmAssert {
     public void morphoAnalysisList() throws Exception {
         Token.Builder tokenBuilder = new Token.Builder(0, 10, "Hello");
         final MorphoAnalysis.Builder plainMaBuilder = new MorphoAnalysis.Builder().lemma("plainLemma");
+        plainMaBuilder.tagSet(TagSet.BT_ENGLISH);
         plainMaBuilder.secondaryPartOfSpeech("2pos");
         plainMaBuilder.extendedProperty("plain", "simple");
         tokenBuilder.addAnalysis(plainMaBuilder.build());
