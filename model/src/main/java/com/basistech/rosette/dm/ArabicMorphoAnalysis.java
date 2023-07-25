@@ -1,5 +1,5 @@
 /*
-* Copyright 2019 Basis Technology Corp.
+* Copyright 2023 Basis Technology Corp.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -38,7 +38,7 @@ import java.util.Map;
  * prefix:         wAl
  * stem:           ktb
  * suffix:
- * part-of-speech: NOUN
+ * part of speech: NOUN
  * prefix:         [w, Al]
  * prefixTags:     [CONJ, DET]
  * stems:          [ktb]
@@ -80,8 +80,9 @@ public class ArabicMorphoAnalysis extends MorphoAnalysis implements Serializable
                          List<String> stemTags,
                          List<String> suffixTags,
                          TagSet tagSet,
+                         String secondaryPartOfSpeech,
                          Map<String, Object> extendedProperties) {
-        super(partOfSpeech, lemma, components, raw, tagSet, extendedProperties);
+        super(partOfSpeech, lemma, components, raw, tagSet, secondaryPartOfSpeech, extendedProperties);
         this.prefixLength = prefixLength;
         this.stemLength = stemLength;
         this.root = root;
@@ -93,6 +94,27 @@ public class ArabicMorphoAnalysis extends MorphoAnalysis implements Serializable
         this.suffixTags = listOrNull(suffixTags);
         this.definiteArticle = definiteArticle;
         this.strippablePrefix = strippablePrefix;
+    }
+
+    protected ArabicMorphoAnalysis(String partOfSpeech,
+                         String lemma,
+                         List<Token> components,
+                         String raw,
+                         int prefixLength,
+                         int stemLength,
+                         String root,
+                         boolean definiteArticle,
+                         boolean strippablePrefix,
+                         List<String> prefixes,
+                         List<String> stems,
+                         List<String> suffixes,
+                         List<String> prefixTags,
+                         List<String> stemTags,
+                         List<String> suffixTags,
+                         TagSet tagSet,
+                         Map<String, Object> extendedProperties) {
+        this(partOfSpeech, lemma, components, raw, prefixLength, stemLength, root, definiteArticle, strippablePrefix,
+                prefixes, stems, suffixes, prefixTags, stemTags, suffixTags, tagSet, null, extendedProperties);
     }
 
     protected ArabicMorphoAnalysis(String partOfSpeech,
@@ -111,9 +133,8 @@ public class ArabicMorphoAnalysis extends MorphoAnalysis implements Serializable
                                    List<String> stemTags,
                                    List<String> suffixTags,
                                    Map<String, Object> extendedProperties) {
-        this(partOfSpeech, lemma, components, raw, prefixLength, stemLength, root, definiteArticle,
-                strippablePrefix, prefixes, stems, suffixes, prefixTags, stemTags, suffixTags,
-                null, extendedProperties);
+        this(partOfSpeech, lemma, components, raw, prefixLength, stemLength, root, definiteArticle, strippablePrefix,
+                prefixes, stems, suffixes, prefixTags, stemTags, suffixTags, null, null, extendedProperties);
     }
 
     /**
@@ -427,6 +448,7 @@ public class ArabicMorphoAnalysis extends MorphoAnalysis implements Serializable
                     stemTags,
                     suffixTags,
                     tagSet,
+                    secondaryPartOfSpeech,
                     buildExtendedProperties());
         }
     }

@@ -1,5 +1,5 @@
 /*
-* Copyright 2019 Basis Technology Corp.
+* Copyright 2023 Basis Technology Corp.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -43,8 +43,9 @@ public class HanMorphoAnalysis extends MorphoAnalysis implements Serializable {
                                 String raw,
                                 List<String> readings,
                                 TagSet tagSet,
+                                String secondaryPartOfSpeech,
                                 Map<String, Object> extendedProperties) {
-        super(partOfSpeech, lemma, components, raw, tagSet, extendedProperties);
+        super(partOfSpeech, lemma, components, raw, tagSet, secondaryPartOfSpeech, extendedProperties);
         this.readings = listOrNull(readings);
     }
 
@@ -53,8 +54,18 @@ public class HanMorphoAnalysis extends MorphoAnalysis implements Serializable {
                                 List<Token> components,
                                 String raw,
                                 List<String> readings,
+                                TagSet tagSet,
                                 Map<String, Object> extendedProperties) {
-        this(partOfSpeech, lemma, components, raw, readings, null, extendedProperties);
+        this(partOfSpeech, lemma, components, raw, readings, tagSet, null, extendedProperties);
+    }
+
+    protected HanMorphoAnalysis(String partOfSpeech,
+                                String lemma,
+                                List<Token> components,
+                                String raw,
+                                List<String> readings,
+                                Map<String, Object> extendedProperties) {
+        this(partOfSpeech, lemma, components, raw, readings, null, null, extendedProperties);
     }
 
     /**
@@ -124,7 +135,8 @@ public class HanMorphoAnalysis extends MorphoAnalysis implements Serializable {
          * @return the analysis
          */
         public HanMorphoAnalysis build() {
-            return new HanMorphoAnalysis(partOfSpeech, lemma, components, raw, readings, tagSet, buildExtendedProperties());
+            return new HanMorphoAnalysis(partOfSpeech, lemma, components, raw, readings, tagSet, secondaryPartOfSpeech,
+                    buildExtendedProperties());
         }
     }
 }

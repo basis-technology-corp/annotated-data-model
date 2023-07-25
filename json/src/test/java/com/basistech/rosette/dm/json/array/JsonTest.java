@@ -1,5 +1,5 @@
 /*
-* Copyright 2019 Basis Technology Corp.
+* Copyright 2023 Basis Technology Corp.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -203,6 +203,7 @@ public class JsonTest extends AdmAssert {
         Token.Builder compTokBuilder = new Token.Builder(0, 2, "Th");
         maBuilder.addComponent(compTokBuilder.build());
         maBuilder.tagSet(TagSet.BT_ENGLISH);
+        maBuilder.secondaryPartOfSpeech("+bark");
         MorphoAnalysis morphoAnalysis = maBuilder.build();
         tokenBuilder.addAnalysis(morphoAnalysis);
 
@@ -218,6 +219,7 @@ public class JsonTest extends AdmAssert {
         araMaBuilder.partOfSpeech("pos");
         araMaBuilder.raw("raw");
         araMaBuilder.tagSet(TagSet.BT_ARABIC);
+        // test null secondary part of speech
         tokenBuilder.addAnalysis(araMaBuilder.build());
 
         HanMorphoAnalysis.Builder hanMaBuilder = new HanMorphoAnalysis.Builder();
@@ -225,6 +227,7 @@ public class JsonTest extends AdmAssert {
         hanMaBuilder.lemma("lemma");
         hanMaBuilder.partOfSpeech("pos");
         // test null tag set
+        maBuilder.secondaryPartOfSpeech("pos2");
         tokenBuilder.addAnalysis(hanMaBuilder.build());
 
         KoreanMorphoAnalysis.Builder korMaBuilder = new KoreanMorphoAnalysis.Builder();
@@ -233,6 +236,7 @@ public class JsonTest extends AdmAssert {
         korMaBuilder.partOfSpeech("korean");
         korMaBuilder.lemma("koreanLemma");
         korMaBuilder.tagSet(TagSet.BT_KOREAN);
+        // test null secondary part of speech
         tokenBuilder.addAnalysis(korMaBuilder.build());
 
         token = tokenBuilder.build();

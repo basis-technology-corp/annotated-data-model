@@ -1,5 +1,5 @@
 /*
-* Copyright 2014 Basis Technology Corp.
+* Copyright 2023 Basis Technology Corp.
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -236,6 +236,9 @@ public final class MorphoAnalysisListDeserializer extends JsonDeserializer<List<
         }
         if (analysis.getTagSet() != null) {
             builder.tagSet(analysis.getTagSet());
+        }
+        if (analysis.getSecondaryPartOfSpeech() != null) {
+            builder.secondaryPartOfSpeech(analysis.getSecondaryPartOfSpeech());
         }
         if (analysis.getComponents() != null) {
             for (Token token : analysis.getComponents()) {
