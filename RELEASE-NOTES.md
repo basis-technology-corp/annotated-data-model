@@ -2,6 +2,8 @@
 
 ## 2.9.0
 
+### [COMN-301](https://basistech.atlassian.net/browse/COMN-301) Release new parent POMs for 2023 Q3
+
 ### [ETROG-3636](https://basistech.atlassian.net/browse/ETROG-3636) Expose secondary parts of speech in Chinese
 
 Adds a field `secondaryPartOfSpeech` to `MorphoAnalysis` for tag sets that support annotating tokens with secondary
