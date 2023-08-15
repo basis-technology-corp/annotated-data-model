@@ -1,8 +1,6 @@
-[![Build Status](https://travis-ci.org/basis-technology-corp/annotated-data-model.svg?branch=master)](https://travis-ci.org/basis-technology-corp/annotated-data-model)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.basistech/annotated-data-model/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.basistech/annotated-data-model)
-[![Javadocs](https://www.javadoc.io/badge/com.basistech/annotated-data-model.svg)](https://www.javadoc.io/doc/com.basistech/annotated-data-model)
 
-# Annotated Data Model #
+# Annotated Data Model
 
 The Annotated Data Model (ADM) is a family of Java classes that represent a text and a set of annotations
 on the text. The text, which would typically derive from a document, is represented as an ordinary Java String
@@ -16,6 +14,20 @@ to allow for arbitrary annotations, either via a compiled schema or via complete
 
 The ADM is defined as a set of Java classes, together with a Jackson module that provides a standard 
 Json serialization representation.
+
+## Release Process
+
+#### Maven Central
+```
+mvn --batch-mode \
+    --activate-profiles release \
+    release:prepare \
+    release:perform \
+    -Darguments=-Dgpg.passphrase=MY_PASSPHRASE
+```
+
+#### Internal Release
+TBD
 
 ## Texts, Annotations, and Attributes ##
 
