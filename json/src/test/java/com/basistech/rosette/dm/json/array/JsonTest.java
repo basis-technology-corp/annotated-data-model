@@ -248,7 +248,7 @@ public class JsonTest extends AdmAssert {
 
         TextDomain germanDomain = new TextDomain(ISO15924.Latn, LanguageCode.GERMAN, TransliterationScheme.NATIVE);
         String germanText = "Ein.  Zwei.";
-        TranslatedData.Builder tdBuilder = new TranslatedData.Builder(germanDomain, germanDomain, germanText);
+        TranslatedData.Builder tdBuilder = new TranslatedData.Builder(germanDomain, germanText);
         germanTranslatedData = tdBuilder.build();
         translatedDataBuilder.add(germanTranslatedData);
         TextDomain spanishDomain = new TextDomain(ISO15924.Latn, LanguageCode.SPANISH, TransliterationScheme.NATIVE);

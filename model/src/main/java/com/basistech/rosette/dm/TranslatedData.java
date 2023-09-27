@@ -41,6 +41,10 @@ public class TranslatedData extends BaseAttribute implements Serializable {
     private final String translation;
     private final Double confidence;
 
+    protected TranslatedData(TextDomain targetDomain, String translation, Double confidence, Map<String, Object> extendedProperties) {
+        this(null, targetDomain, targetDomain, translation, confidence, extendedProperties);
+    }
+
     protected TranslatedData(TextDomain sourceDomain, TextDomain targetDomain, String translation, Double confidence, Map<String, Object> extendedProperties) {
         this(sourceDomain, targetDomain, targetDomain, translation, confidence, extendedProperties);
     }
@@ -124,6 +128,19 @@ public class TranslatedData extends BaseAttribute implements Serializable {
         /**
          * Constructs a builder from the required properties
          *
+         * @param targetDomain specifies the language and script of the translation
+         * @param translation the translation for the text
+         */
+        public Builder(TextDomain targetDomain, String translation) {
+            this.sourceDomain = null;
+            this.targetDomain = targetDomain;
+            this.translation = translation;
+        }
+
+        /**
+         * Constructs a builder from the required properties
+         *
+         * @param sourceDomain specifies the language and script of the text
          * @param targetDomain specifies the language and script of the translation
          * @param translation the translation for the text
          */
