@@ -26,7 +26,10 @@ import java.util.Map;
  */
 public abstract class TranslatedDataMixin {
     @JsonCreator
-    TranslatedDataMixin(@JsonProperty("domain") TextDomain domain,
+    TranslatedDataMixin(
+                        @JsonProperty("sourceDomain") TextDomain sourceDomain,
+                        @JsonProperty("targetDomain") TextDomain targetDomain,
+                        @JsonProperty("domain") TextDomain domain,
                         @JsonProperty("translation") String translation,
                         @JsonProperty("confidence") Double confidence,
                         @JsonProperty("extendedProperties") Map<String, Object> extendedProperties) {

@@ -71,11 +71,12 @@ public class AnnotatedTextTest {
         ListAttribute.Builder<TranslatedData> translatedDataBuilder =
             new ListAttribute.Builder<>(TranslatedData.class);
 
+        TextDomain sourceDomain = new TextDomain(ISO15924.Latn, LanguageCode.ENGLISH, TransliterationScheme.NATIVE);
         TextDomain domain = new TextDomain(ISO15924.Latn, LanguageCode.GERMAN, TransliterationScheme.NATIVE);
-        TranslatedData.Builder tdBuilder = new TranslatedData.Builder(domain, germanText);
+        TranslatedData.Builder tdBuilder = new TranslatedData.Builder(sourceDomain, domain, germanText);
         translatedDataBuilder.add(tdBuilder.build());
         domain = new TextDomain(ISO15924.Latn, LanguageCode.SPANISH, TransliterationScheme.NATIVE);
-        tdBuilder = new TranslatedData.Builder(domain, spanishText);
+        tdBuilder = new TranslatedData.Builder(sourceDomain, domain, spanishText);
         translatedDataBuilder.add(tdBuilder.build());
 
         builder.translatedData(translatedDataBuilder.build());
@@ -84,7 +85,7 @@ public class AnnotatedTextTest {
         ListAttribute<TranslatedData> dataTranslations = text.getTranslatedData();
 
         TranslatedData data = dataTranslations.get(0);
-        TextDomain dataDomain = data.getDomain();
+        TextDomain dataDomain = data.getTargetDomain();
         ISO15924 script = dataDomain.getScript();
         LanguageCode language = dataDomain.getLanguage();
         TransliterationScheme scheme = dataDomain.getTransliterationScheme();
@@ -96,7 +97,7 @@ public class AnnotatedTextTest {
         assertEquals(translation, germanText);
 
         data = dataTranslations.get(1);
-        dataDomain = data.getDomain();
+        dataDomain = data.getTargetDomain();
         script = dataDomain.getScript();
         language = dataDomain.getLanguage();
         scheme = dataDomain.getTransliterationScheme();
