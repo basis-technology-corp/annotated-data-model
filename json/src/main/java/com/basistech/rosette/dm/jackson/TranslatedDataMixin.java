@@ -16,6 +16,8 @@
 package com.basistech.rosette.dm.jackson;
 
 import com.basistech.util.TextDomain;
+
+import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -28,8 +30,8 @@ public abstract class TranslatedDataMixin {
     @JsonCreator
     TranslatedDataMixin(
                         @JsonProperty("sourceDomain") TextDomain sourceDomain,
-                        @JsonProperty("targetDomain") TextDomain targetDomain,
-                        @JsonProperty("domain") TextDomain domain,
+                        // TODO: remove @JsonAlias("domain") when TranslatedData.domain is removed
+                        @JsonProperty("targetDomain") @JsonAlias("domain") TextDomain targetDomain,
                         @JsonProperty("translation") String translation,
                         @JsonProperty("confidence") Double confidence,
                         @JsonProperty("extendedProperties") Map<String, Object> extendedProperties) {
