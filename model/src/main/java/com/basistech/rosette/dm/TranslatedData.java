@@ -97,10 +97,9 @@ public class TranslatedData extends BaseAttribute implements Serializable {
 
     @Override
     protected MoreObjects.ToStringHelper toStringHelper() {
-        // FIXME: targetDomain and sourceDomain is not represented in the output
-        //  but domain is, though it is deprecated.
         MoreObjects.ToStringHelper helper = MoreObjects.toStringHelper(this)
-                .add("domain", targetDomain)
+                .add("sourceDomain", sourceDomain)
+                .add("targetDomain", targetDomain)
                 .add("translation", translation);
         if (confidence != null) {
             helper.add("confidence", confidence);
