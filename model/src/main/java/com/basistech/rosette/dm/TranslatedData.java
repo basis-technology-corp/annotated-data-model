@@ -31,33 +31,23 @@ import java.util.Map;
 public class TranslatedData extends BaseAttribute implements Serializable {
     private static final long serialVersionUID = 250L;
     private final TextDomain sourceDomain;
-
-    /**
-     * @deprecated Replaced by targetDomain
-     */
-    @Deprecated(forRemoval = true)
-    private final TextDomain domain;
     private final TextDomain targetDomain;
     private final String translation;
     private final Double confidence;
 
+
+    /**
+     * @deprecated sourceDomain should be specified
+     */
+    @Deprecated(forRemoval = true)
     protected TranslatedData(TextDomain targetDomain, String translation, Double confidence, Map<String, Object> extendedProperties) {
-        this(null, targetDomain, targetDomain, translation, confidence, extendedProperties);
+        this(null, targetDomain, translation, confidence, extendedProperties);
     }
 
     protected TranslatedData(TextDomain sourceDomain, TextDomain targetDomain, String translation, Double confidence, Map<String, Object> extendedProperties) {
-        this(sourceDomain, targetDomain, targetDomain, translation, confidence, extendedProperties);
-    }
-
-    /**
-     * @deprecated should be removed when {@link TranslatedData#domain} is removed
-     */
-    @Deprecated(forRemoval = true)
-    protected TranslatedData(TextDomain sourceDomain, TextDomain targetDomain, TextDomain domain, String translation, Double confidence, Map<String, Object> extendedProperties) {
         super(extendedProperties);
         this.sourceDomain = sourceDomain;
         this.targetDomain = targetDomain;
-        this.domain = domain;
         this.translation = translation;
         this.confidence = confidence;
     }
@@ -77,7 +67,7 @@ public class TranslatedData extends BaseAttribute implements Serializable {
      */
     @Deprecated(forRemoval = true)
     public TextDomain getDomain() {
-        return domain;
+        return targetDomain;
     }
 
     /**
@@ -107,8 +97,10 @@ public class TranslatedData extends BaseAttribute implements Serializable {
 
     @Override
     protected MoreObjects.ToStringHelper toStringHelper() {
+        // FIXME: targetDomain and sourceDomain is not represented in the output
+        //  but domain is, though it is deprecated.
         MoreObjects.ToStringHelper helper = MoreObjects.toStringHelper(this)
-                .add("domain", domain)
+                .add("domain", targetDomain)
                 .add("translation", translation);
         if (confidence != null) {
             helper.add("confidence", confidence);
