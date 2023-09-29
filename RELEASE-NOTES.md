@@ -1,5 +1,11 @@
 # Cumulative Release Notes for the Annotated Data Model
 
+## 2.10.0
+[RLPNC-7169](https://basistech.atlassian.net/browse/RLPNC-7169) `TranslatedData` now holds source domain. `domain` is renamed to `targetDomain`
+
+`TranslatedData#getDomain` is marked for removal as well as
+the constructors which don't require `sourceDomain` to be specified.
+
 ## 2.9.0
 
 ### [COMN-301](https://basistech.atlassian.net/browse/COMN-301) Release new parent POMs for 2023 Q3
