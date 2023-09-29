@@ -121,7 +121,9 @@ public class TranslatedData extends BaseAttribute implements Serializable {
          *
          * @param targetDomain specifies the language and script of the translation
          * @param translation the translation for the text
+         * @deprecated sourceDomain should become required in the future
          */
+        @Deprecated(forRemoval = true)
         public Builder(TextDomain targetDomain, String translation) {
             this.sourceDomain = null;
             this.targetDomain = targetDomain;
