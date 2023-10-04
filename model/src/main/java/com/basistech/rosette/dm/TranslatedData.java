@@ -30,25 +30,52 @@ import java.util.Map;
 @EqualsAndHashCode(callSuper = true)
 public class TranslatedData extends BaseAttribute implements Serializable {
     private static final long serialVersionUID = 250L;
-    private final TextDomain domain;
+    private final TextDomain sourceDomain;
+    private final TextDomain targetDomain;
     private final String translation;
     private final Double confidence;
 
-    protected TranslatedData(TextDomain domain, String translation, Double confidence, Map<String, Object> extendedProperties) {
+
+    /**
+     * @deprecated sourceDomain should be specified
+     */
+    @Deprecated(forRemoval = true)
+    protected TranslatedData(TextDomain targetDomain, String translation, Double confidence, Map<String, Object> extendedProperties) {
+        this(null, targetDomain, translation, confidence, extendedProperties);
+    }
+
+    protected TranslatedData(TextDomain sourceDomain, TextDomain targetDomain, String translation, Double confidence, Map<String, Object> extendedProperties) {
         super(extendedProperties);
-        this.domain = domain;
+        this.sourceDomain = sourceDomain;
+        this.targetDomain = targetDomain;
         this.translation = translation;
         this.confidence = confidence;
     }
 
     /**
+     * Returns the sourceDomain for this object.
+     *
+     * @return the sourceDomain for this object
+     */
+    public TextDomain getSourceDomain() { return sourceDomain; }
+
+    /**
      * Returns the domain for this object.
      *
+     * @deprecated use targetDomain and getTargetDomain instead
      * @return the domain for this object
      */
+    @Deprecated(forRemoval = true)
     public TextDomain getDomain() {
-        return domain;
+        return targetDomain;
     }
+
+    /**
+     * Returns the targetDomain for this object.
+     *
+     * @return the targetDomain for this object
+     */
+    public TextDomain getTargetDomain() { return targetDomain; }
 
     /**
      * Returns the translation for this object.
@@ -71,7 +98,8 @@ public class TranslatedData extends BaseAttribute implements Serializable {
     @Override
     protected MoreObjects.ToStringHelper toStringHelper() {
         MoreObjects.ToStringHelper helper = MoreObjects.toStringHelper(this)
-                .add("domain", domain)
+                .add("sourceDomain", sourceDomain)
+                .add("targetDomain", targetDomain)
                 .add("translation", translation);
         if (confidence != null) {
             helper.add("confidence", confidence);
@@ -83,18 +111,35 @@ public class TranslatedData extends BaseAttribute implements Serializable {
      * Builder class for TranslatedData.
      */
     public static class Builder extends BaseAttribute.Builder<TranslatedData, TranslatedData.Builder> {
-        private TextDomain domain;
-        private String translation;
+        private final TextDomain sourceDomain;
+        private final TextDomain targetDomain;
+        private final String translation;
         private Double confidence;
 
         /**
          * Constructs a builder from the required properties
          *
-         * @param domain specifies the language and script of the translation
+         * @param targetDomain specifies the language and script of the translation
+         * @param translation the translation for the text
+         * @deprecated sourceDomain should become required in the future
+         */
+        @Deprecated(forRemoval = true)
+        public Builder(TextDomain targetDomain, String translation) {
+            this.sourceDomain = null;
+            this.targetDomain = targetDomain;
+            this.translation = translation;
+        }
+
+        /**
+         * Constructs a builder from the required properties
+         *
+         * @param sourceDomain specifies the language and script of the text
+         * @param targetDomain specifies the language and script of the translation
          * @param translation the translation for the text
          */
-        public Builder(TextDomain domain, String translation) {
-            this.domain = domain;
+        public Builder(TextDomain sourceDomain, TextDomain targetDomain, String translation) {
+            this.sourceDomain = sourceDomain;
+            this.targetDomain = targetDomain;
             this.translation = translation;
         }
 
@@ -105,7 +150,8 @@ public class TranslatedData extends BaseAttribute implements Serializable {
          */
         public Builder(TranslatedData toCopy) {
             super(toCopy);
-            this.domain = toCopy.domain;
+            this.sourceDomain = toCopy.sourceDomain;
+            this.targetDomain = toCopy.targetDomain;
             this.translation = toCopy.getTranslation();
         }
 
@@ -126,7 +172,7 @@ public class TranslatedData extends BaseAttribute implements Serializable {
          * @return a new TranslatedData object.
          */
         public TranslatedData build() {
-            return new TranslatedData(domain, translation, confidence, buildExtendedProperties());
+            return new TranslatedData(sourceDomain, targetDomain, translation, confidence, buildExtendedProperties());
         }
 
         @Override

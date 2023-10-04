@@ -223,7 +223,7 @@ public class SerializableTest {
         translatedDataBuilder.add(germanTranslatedData);
         spanishDomain = new TextDomain(ISO15924.Latn, LanguageCode.SPANISH, TransliterationScheme.NATIVE);
         String spanishText = "Uno.  Dos.";
-        tdBuilder = new TranslatedData.Builder(spanishDomain, spanishText);
+        tdBuilder = new TranslatedData.Builder(germanDomain, spanishDomain, spanishText);
         spanishTranslatedData = tdBuilder.build();
         translatedDataBuilder.add(spanishTranslatedData);
         builder.translatedData(translatedDataBuilder.build());
