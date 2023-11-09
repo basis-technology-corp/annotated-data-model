@@ -4,3 +4,4 @@ target/
 .idea
 pom.xml.releaseBackup
 dependency-reduced-pom.xml
+schema/adm-schema-generated.json
