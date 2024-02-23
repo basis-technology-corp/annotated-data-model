@@ -1,5 +1,11 @@
 # Cumulative Release Notes for the Annotated Data Model
 
+## 3.0.0
+
+### [COMN-306](https://babelstreet.atlassian.net/browse/COMN-306) Remove OSGi support from Annotated Data Model
+
+OSGi support has been removed.
+
 ## 2.10.0
 [RLPNC-7169](https://basistech.atlassian.net/browse/RLPNC-7169) `TranslatedData` now holds source domain. `domain` is renamed to `targetDomain`
 

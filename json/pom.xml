@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!--
-  Copyright 2019 Basis Technology Corp.
+  Copyright 2015-2024 Basis Technology Corp.
  
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>adm-json</artifactId>
     <name>adm-json</name>
-    <packaging>bundle</packaging>
     <parent>
         <groupId>com.basistech</groupId>
         <artifactId>annotated-data-model</artifactId>
@@ -33,42 +32,6 @@
             </resource>
         </resources>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>copy-bundles</id>
-                        <phase>generate-test-resources</phase>
-                        <goals>
-                            <goal>copy-dependencies</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${project.build.directory}/bundles</outputDirectory>
-                            <!--
-                              Exclude the ones that are not OSGi
-                              components, plus OSGi itself.
-                          -->
-                            <excludeArtifactIds>org.osgi.core</excludeArtifactIds>
-                            <excludeGroupIds>org.slf4j</excludeGroupIds>
-                            <includeScope>compile</includeScope>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.felix</groupId>
-                <artifactId>maven-bundle-plugin</artifactId>
-                <extensions>true</extensions>
-                <configuration>
-                    <instructions>
-                        <Bundle-Version>${osgi-version}</Bundle-Version>
-                        <Import-Package>com.basistech.rosette.dm.jackson,com.basistech.rosette.dm.jackson.array,*</Import-Package>
-                        <Export-Package>com.basistech.rosette.dm.jackson,com.basistech.rosette.dm.jackson.array</Export-Package>
-                        <Include-Resource>{META-INF/maven/dependencies.properties=${project.build.directory}/classes/META-INF/maven/dependencies.properties},{maven-resources}</Include-Resource>
-                    </instructions>
-                </configuration>
-            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
@@ -97,12 +60,6 @@
     <dependencies>
         <dependency>
             <groupId>com.basistech</groupId>
-            <artifactId>adm-common-test</artifactId>
-            <version>${project.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.basistech</groupId>
             <artifactId>common-api</artifactId>
         </dependency>
         <dependency>
@@ -112,19 +69,6 @@
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.felix</groupId>
-            <artifactId>org.apache.felix.framework</artifactId>
-            <version>7.0.3</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.basistech</groupId>
-            <artifactId>pax-exam-test-composite</artifactId>
-            <version>0.0.11</version>
-            <type>pom</type>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
@@ -158,6 +102,10 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
+        <dependency>
           <groupId>org.apache.commons</groupId>
           <artifactId>commons-math3</artifactId>
           <version>3.3</version>
@@ -173,12 +121,6 @@
             <artifactId>snappy-java</artifactId>
             <version>1.1.10.1</version>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.osgi</groupId>
-            <artifactId>org.osgi.core</artifactId>
-            <version>6.0.0</version>
-            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>
