@@ -17,7 +17,4 @@
 /**
  * Utility classes related to the data model.
  */
-@RosetteSystemBundlePackage
 package com.basistech.rosette.dm.util;
-
-import com.basistech.rosette.RosetteSystemBundlePackage;

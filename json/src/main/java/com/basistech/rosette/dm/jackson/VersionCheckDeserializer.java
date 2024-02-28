@@ -20,6 +20,7 @@ package com.basistech.rosette.dm.jackson;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 
 import java.io.IOException;
@@ -32,7 +33,8 @@ public class VersionCheckDeserializer extends JsonDeserializer<String> {
     @Override
     public String deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
         if (p.getCurrentToken() != JsonToken.VALUE_STRING) {
-            throw ctxt.wrongTokenException(p, JsonToken.VALUE_STRING, "The value of 'version' must be a string");
+            throw ctxt.wrongTokenException(
+                    p, (JavaType) null, JsonToken.VALUE_STRING, "The value of 'version' must be a string");
         }
         String version = p.readValueAs(String.class);
         String[] bits = version.split("\\.");
