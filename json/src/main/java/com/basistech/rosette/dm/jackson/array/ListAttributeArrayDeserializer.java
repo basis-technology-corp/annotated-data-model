@@ -22,7 +22,9 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.google.common.collect.Lists;
 
 import java.io.IOException;
@@ -41,11 +43,11 @@ public class ListAttributeArrayDeserializer extends JsonDeserializer<ListAttribu
             // we advance to be in the same place the 'else' will be -- the first FIELD_NAME.
             jp.nextToken();
         } else {
-            throw ctxt.wrongTokenException(jp, JsonToken.START_ARRAY, "ListAttributeDeserializer called not array start.");
+            throw ctxt.wrongTokenException(jp, (JavaType) null, JsonToken.START_ARRAY, "ListAttributeDeserializer called not array start.");
         }
 
         if (jp.getCurrentToken() != JsonToken.VALUE_STRING) {
-            throw ctxt.mappingException("Expected VALUE_STRING for item type.");
+            throw JsonMappingException.from(ctxt.getParser(), "Expected VALUE_STRING for item type.");
         }
         String itemTypeKeyName = jp.getText();
 
@@ -59,7 +61,7 @@ public class ListAttributeArrayDeserializer extends JsonDeserializer<ListAttribu
         List<BaseAttribute> items = Lists.newArrayList();
 
         if (jp.nextToken() != JsonToken.START_ARRAY) {
-            throw ctxt.wrongTokenException(jp, JsonToken.START_ARRAY, "No array of values for list.");
+            throw ctxt.wrongTokenException(jp, (JavaType) null, JsonToken.START_ARRAY, "No array of values for list.");
         }
 
         // we just read the elements as we see them,
@@ -70,7 +72,8 @@ public class ListAttributeArrayDeserializer extends JsonDeserializer<ListAttribu
         builder.setItems(items);
         // we are still in the top-level array ...
         if (jp.nextToken() != JsonToken.START_OBJECT) {
-            throw ctxt.wrongTokenException(jp, JsonToken.START_OBJECT, "No extended properties for list.");
+            throw ctxt.wrongTokenException(
+                    jp, (JavaType) null, JsonToken.START_OBJECT, "No extended properties for list.");
         }
         Map<String, Object> props = jp.readValueAs(new TypeReference<Map<String, Object>>() {
         });

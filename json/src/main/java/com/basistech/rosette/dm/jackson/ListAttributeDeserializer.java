@@ -22,7 +22,9 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.core.util.JsonParserSequence;
 import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.util.TokenBuffer;
 import com.google.common.collect.Lists;
 
@@ -44,7 +46,7 @@ public class ListAttributeDeserializer extends JsonDeserializer<ListAttribute> {
             /* In a full AnnotatedText, which is already doing some polymorphism shuffling, we end up here. */
             /* We find a FIELD_NAME for the first field of the object */
             if (jp.getCurrentToken() != JsonToken.FIELD_NAME) {
-                throw ctxt.wrongTokenException(jp, JsonToken.START_OBJECT, "ListAttributeDeserializer called not at or FIELD_NAME of first field");
+                throw ctxt.wrongTokenException(jp, (JavaType) null, JsonToken.START_OBJECT, "ListAttributeDeserializer called not at or FIELD_NAME of first field");
             }
             /* We are at the field name, ready for the loop. */
         }
@@ -59,7 +61,7 @@ public class ListAttributeDeserializer extends JsonDeserializer<ListAttribute> {
             }
             tb.copyCurrentStructure(jp);
         }
-        throw ctxt.mappingException("No itemType provided in a list");
+        throw JsonMappingException.from(ctxt.getParser(), "No itemType provided in a list");
     }
 
     // called with field_name for the itemType field as the current position, perhaps with a buffer to merge in after that.
@@ -85,7 +87,7 @@ public class ListAttributeDeserializer extends JsonDeserializer<ListAttribute> {
         JsonToken nextToken;
         while ((nextToken = jp.nextToken()) != JsonToken.END_OBJECT) {
             if (nextToken != JsonToken.FIELD_NAME) {
-                throw ctxt.wrongTokenException(jp, JsonToken.END_OBJECT, "Expected field name.");
+                throw ctxt.wrongTokenException(jp, (JavaType) null, JsonToken.END_OBJECT, "Expected field name.");
             } else {
                 String name = jp.getCurrentName();
                 if ("items".equals(name)) {
@@ -97,10 +99,13 @@ public class ListAttributeDeserializer extends JsonDeserializer<ListAttribute> {
                             // when using JsonTree, sometimes Jackson just sticks the entire Java object in here.
                             items.addAll((List) o);
                         } else {
-                            throw ctxt.mappingException("List contains VALUE_EMBEDDED_OBJECT for items, but it wasn't a list.");
+                            throw JsonMappingException.from(
+                                    ctxt.getParser(),
+                                    "List contains VALUE_EMBEDDED_OBJECT for items, but it wasn't a list.");
                         }
                     } else if (nextToken != JsonToken.START_ARRAY) { // what about nothing?
-                        throw ctxt.wrongTokenException(jp, JsonToken.START_ARRAY, "Expected array of items");
+                        throw ctxt.wrongTokenException(
+                                jp, (JavaType) null, JsonToken.START_ARRAY, "Expected array of items");
                     } else {
                         // the START_ARRAY case, which is _normal_. Read the elements.
                         while (jp.nextToken() != JsonToken.END_ARRAY) {

@@ -109,7 +109,7 @@ public final class MorphoAnalysisListDeserializer extends JsonDeserializer<List<
          * This will be entered pointing to the array start.
          */
         if (jp.getCurrentToken() != JsonToken.START_ARRAY) {
-            throw ctxt.wrongTokenException(jp, JsonToken.START_ARRAY, "Expected array of items");
+            throw ctxt.wrongTokenException(jp, (JavaType) null, JsonToken.START_ARRAY, "Expected array of items");
         }
 
         JsonDeserializer<Object> currentDeserializer =

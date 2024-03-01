@@ -20,6 +20,7 @@ import com.basistech.rosette.dm.MorphoAnalysis;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
@@ -35,7 +36,7 @@ public final class MorphoAnalysisListArrayDeserializer extends JsonDeserializer<
     @Override
     public List<MorphoAnalysis> deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
         if (jp.getCurrentToken() != JsonToken.START_ARRAY) {
-            throw ctxt.wrongTokenException(jp, JsonToken.START_ARRAY, "Expected array of items");
+            throw ctxt.wrongTokenException(jp, (JavaType) null, JsonToken.START_ARRAY, "Expected array of items");
         }
         List<MorphoAnalysis> results = Lists.newArrayList();
         MorphoAnalysisTypes type = MorphoAnalysisTypes.PLAIN;

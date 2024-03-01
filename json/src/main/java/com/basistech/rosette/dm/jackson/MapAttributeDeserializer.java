@@ -22,7 +22,9 @@ import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.core.util.JsonParserSequence;
 import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.util.TokenBuffer;
 import com.google.common.collect.Maps;
 import com.google.common.reflect.TypeParameter;
@@ -47,7 +49,7 @@ public class MapAttributeDeserializer extends JsonDeserializer<MapAttribute> {
             /* In a full AnnotatedText, which is already doing some polymorphism shuffling, we end up here. */
             /* We find a FIELD_NAME for the first field of the object */
             if (jp.getCurrentToken() != JsonToken.FIELD_NAME) {
-                throw ctxt.wrongTokenException(jp, JsonToken.START_OBJECT, "MapAttributeDeserializer called not at or FIELD_NAME of first field");
+                throw ctxt.wrongTokenException(jp, (JavaType) null, JsonToken.START_OBJECT, "MapAttributeDeserializer called not at or FIELD_NAME of first field");
             }
             /* We are at the field name, ready for the loop. */
         }
@@ -74,9 +76,9 @@ public class MapAttributeDeserializer extends JsonDeserializer<MapAttribute> {
             }
         }
         if (keyName == null) {
-            throw ctxt.mappingException("No keyType provided in a map");
+            throw JsonMappingException.from(ctxt.getParser(), "No keyType provided in a map");
         }
-        throw ctxt.mappingException("No valueType provided in a map");
+        throw JsonMappingException.from(ctxt.getParser(), "No valueType provided in a map");
     }
 
     private String getName(JsonParser jp) throws IOException {
@@ -123,7 +125,7 @@ public class MapAttributeDeserializer extends JsonDeserializer<MapAttribute> {
         JsonToken nextToken;
         while ((nextToken = jp.nextToken()) != JsonToken.END_OBJECT) {
             if (nextToken != JsonToken.FIELD_NAME) {
-                throw ctxt.wrongTokenException(jp, JsonToken.END_OBJECT, "Expected field name.");
+                throw ctxt.wrongTokenException(jp, (JavaType) null, JsonToken.END_OBJECT, "Expected field name.");
             } else {
                 String name = jp.getCurrentName();
                 if ("items".equals(name)) {
@@ -134,10 +136,13 @@ public class MapAttributeDeserializer extends JsonDeserializer<MapAttribute> {
                         if (o instanceof Map) {
                             items.putAll((Map) o);
                         } else {
-                            throw ctxt.mappingException("Map contains VALUE_EMBEDDED_OBJECT for items, but it wasn't a map.");
+                            throw JsonMappingException.from(
+                                    ctxt.getParser(),
+                                    "Map contains VALUE_EMBEDDED_OBJECT for items, but it wasn't a map.");
                         }
                     } else if (nextToken != JsonToken.START_OBJECT) { // what about nothing?
-                        throw ctxt.wrongTokenException(jp, JsonToken.START_OBJECT, "Expected object of items");
+                        throw ctxt.wrongTokenException(
+                                jp, (JavaType) null, JsonToken.START_OBJECT, "Expected object of items");
                     } else {
                         // the START_OBJECT case, which is _normal_. Read the elements.
                         // Dynamically build the type reference and parse.
