@@ -53,7 +53,6 @@
     </distributionManagement>
     <properties>
         <skip-dependency-convergence>true</skip-dependency-convergence>
-        <maven-javadoc-plugin.version>2.9.1</maven-javadoc-plugin.version>
     </properties>
     <modules>
         <module>model</module>
@@ -77,9 +76,11 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
             </plugin>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <configuration>
                     <failOnError>false</failOnError>
