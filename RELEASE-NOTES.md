@@ -1,5 +1,9 @@
 # Cumulative Release Notes for the Annotated Data Model
 
+## 3.0.1
+
+### [COMN-314](https://babelstreet.atlassian.net/browse/COMN-314) Release new parent POMs for 2024 Q2
+
 ## 3.0.0
 
 ### [COMN-306](https://babelstreet.atlassian.net/browse/COMN-306) Remove OSGi support from Annotated Data Model
