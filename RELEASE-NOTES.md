@@ -1,5 +1,13 @@
 # Cumulative Release Notes for the Annotated Data Model
 
+## 3.0.4
+
+### [COMN-363](https://babelstreet.atlassian.net/browse/COMN-363) Release new parent POMs for 2025 Q1
+
+## 3.0.3
+
+### [COMN-341](https://babelstreet.atlassian.net/browse/COMN-341) Release new parent POMs for 2024 Q4
+
 ## 3.0.2
 
 ### [COMN-318](https://babelstreet.atlassian.net/browse/COMN-318) Release new parent POMs for 2024 Q3

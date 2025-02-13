@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!--
-  Copyright 2014-2024 Basis Technology Corp.
+  Copyright 2014-2025 Basis Technology Corp.
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@
     <parent>
         <artifactId>open-source-parent</artifactId>
         <groupId>com.basistech</groupId>
-        <version>21.0.0</version>
+        <version>22.0.0</version>
     </parent>
 
     <description>
