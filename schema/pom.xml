@@ -4,7 +4,7 @@
   and may only be used as permitted under the license agreement under which
   it has been distributed, and in no other way.
   
-  Copyright (c) 2021-2024 Basis Technology Corporation All rights reserved.
+  Copyright (c) 2021-2025 Basis Technology Corporation All rights reserved.
   
   The technical data and information provided herein are provided with
   `limited rights', and the computer software provided herein is provided
@@ -14,11 +14,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <artifactId>adm-json-schema-gen</artifactId>
-  <version>3.0.4-SNAPSHOT</version>
+  <version>3.0.5-SNAPSHOT</version>
   <parent>
       <groupId>com.basistech</groupId>
       <artifactId>annotated-data-model</artifactId>
-      <version>3.0.4-SNAPSHOT</version>
+      <version>3.0.5-SNAPSHOT</version>
   </parent>
     <build>
         <plugins>
