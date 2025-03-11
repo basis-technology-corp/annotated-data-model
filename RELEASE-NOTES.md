@@ -610,20 +610,20 @@ with -1 chainIds, and they may need to add checks for null.
 
 ### [COMN-140](http://jira.basistech.net/browse/COMN-140) AraDmConverter - separate api/cli
 
-AraDmConverter#main has been moved to a separate class [AraDmConverterCommand](https://git.basistech.net/textanalytics/annotated-data-model/blob/6e469a572bdf3991280c11fee1c5ace204aa6d0b/tools/src/main/java/com/basistech/rosette/dm/tools/AraDmConverterCommand.java).  This avoids the need for users of the AraDmConverter api
+AraDmConverter#main has been moved to a separate class [AraDmConverterCommand](https://github.com/basis-technology-corp/annotated-data-model/blob/6e469a572bdf3991280c11fee1c5ace204aa6d0b/tools/src/main/java/com/basistech/rosette/dm/tools/AraDmConverterCommand.java).  This avoids the need for users of the AraDmConverter api
 to depend on args4j.
 
 ### [COMN-137](http://jira.basistech.net/browse/COMN-137) Name translation api
 
 Added the
-[Name](https://git.basistech.net/textanalytics/annotated-data-model/blob/07802b864ac9ba79419695e1a3bd1b45734eb0b1/model/src/main/java/com/basistech/rosette/dm/Name.java)
+[Name](https://github.com/basis-technology-corp/annotated-data-model/blob/07802b864ac9ba79419695e1a3bd1b45734eb0b1/model/src/main/java/com/basistech/rosette/dm/Name.java)
 class, which is a stripped down version of the RNI Name.  The intent
 is to allow RNT functionality via the ADM.
 
 ### [COMN-61](http://jira.basistech.net/browse/COMN-61) Add map api for metadata
 
 Added
-[documentMetadata](https://git.basistech.net/textanalytics/annotated-data-model/blob/fa0d46f034aec71296f2fc455b412e06b09ceb92/model/src/main/java/com/basistech/rosette/dm/AnnotatedText.java#L502)
+[documentMetadata](https://github.com/basis-technology-corp/annotated-data-model/blob/fa0d46f034aec71296f2fc455b412e06b09ceb92/model/src/main/java/com/basistech/rosette/dm/AnnotatedText.java#L502)
 convenience method to build metadata from a map.
 
 ### [COMN-73](http://jira.basistech.net/browse/COMN-73) Lang code serialization
