@@ -1,5 +1,9 @@
 # Cumulative Release Notes for the Annotated Data Model
 
+## 3.0.6
+
+### [COMN-396](https://babelstreet.atlassian.net/browse/COMN-396) Release new parent POMs for 2025 Q2
+
 ## 3.0.5
 
 ### [COMN-396](https://babelstreet.atlassian.net/browse/COMN-396) Release new parent POMs for 2025 Q2
