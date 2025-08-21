@@ -3,9 +3,9 @@
   of, Basis Technology Corp.  It is given in confidence by Basis Technology
   and may only be used as permitted under the license agreement under which
   it has been distributed, and in no other way.
-  
+
   Copyright (c) 2021-2025 Basis Technology Corporation All rights reserved.
-  
+
   The technical data and information provided herein are provided with
   `limited rights', and the computer software provided herein is provided
   with `restricted rights' as those terms are defined in DAR and ASPR
@@ -14,6 +14,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <artifactId>adm-json-schema-gen</artifactId>
+    <name>adm-json-schema-gen</name>
   <version>3.0.7-SNAPSHOT</version>
   <parent>
       <groupId>com.basistech</groupId>
