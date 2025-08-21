@@ -17,17 +17,9 @@ Json serialization representation.
 
 ## Release Process
 
-#### Maven Central
-```
-mvn --batch-mode \
-    --activate-profiles release \
-    release:prepare \
-    release:perform \
-    -Darguments=-Dgpg.passphrase=MY_PASSPHRASE
-```
+### Maven Central
 
-#### Internal Release
-TBD
+See [`open-source-parent`](https://github.com/basis-technology-corp/open-source-parent#release-instructions)
 
 ## Texts, Annotations, and Attributes ##
 
