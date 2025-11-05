@@ -15,11 +15,11 @@
   <modelVersion>4.0.0</modelVersion>
   <artifactId>adm-json-schema-gen</artifactId>
     <name>adm-json-schema-gen</name>
-  <version>3.0.8</version>
+  <version>3.0.9-SNAPSHOT</version>
   <parent>
       <groupId>com.basistech</groupId>
       <artifactId>annotated-data-model</artifactId>
-      <version>3.0.8</version>
+      <version>3.0.9-SNAPSHOT</version>
   </parent>
     <build>
         <plugins>
