@@ -19,7 +19,7 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>annotated-data-model</artifactId>
     <name>annotated-data-model</name>
-    <version>3.0.8-SNAPSHOT</version>
+    <version>3.0.8</version>
     <packaging>pom</packaging>
     <parent>
         <artifactId>open-source-parent</artifactId>
@@ -44,7 +44,7 @@
     <scm>
         <connection>scm:git:git@github.com:basis-technology-corp/annotated-data-model.git</connection>
         <developerConnection>scm:git:git@github.com:basis-technology-corp/annotated-data-model.git</developerConnection>
-      <tag>HEAD</tag>
+      <tag>annotated-data-model-3.0.8</tag>
     </scm>
     <distributionManagement>
         <site>
