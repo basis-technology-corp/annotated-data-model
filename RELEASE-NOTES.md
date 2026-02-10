@@ -1,5 +1,10 @@
 # Cumulative Release Notes for the Annotated Data Model
 
+## 3.0.9
+
+### [COMN-422](https://babelstreet.atlassian.net/browse/COMN-422) Update parent POM to compile with Java 25 and target Java 17
+### [COMN-423](https://babelstreet.atlassian.net/browse/COMN-423) Java 25 cleanup and release
+
 ## 3.0.8
 
 ### [COMN-419](https://babelstreet.atlassian.net/browse/COMN-419) Release new parent POMs for 2025 Q4
