@@ -1,27 +1,30 @@
 /*
-* Copyright 2018 Basis Technology Corp.
-*
-* Licensed under the Apache License, Version 2.0 (the "License");
-* you may not use this file except in compliance with the License.
-* You may obtain a copy of the License at
-*
-* http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
+ * Copyright 2026 Babel Street Rosette Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.basistech.rosette.dm;
 
 import com.basistech.util.ISO15924;
 import com.basistech.util.LanguageCode;
 import com.google.common.base.MoreObjects;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Map;
+import java.util.Objects;
 
 /*
  * This class is designed to be enough to support an RNT web service, and no more.
@@ -35,8 +38,10 @@ import java.util.Map;
  * {@linkplain com.basistech.rosette.dm.Mention} is used for reference inside of documents, while
  * {@linkplain Name} is used for names unrelated to documents.
  */
+@Getter
 @EqualsAndHashCode(callSuper = true)
 public class Name extends BaseAttribute implements Serializable {
+    @Serial
     private static final long serialVersionUID = 250L;
     private final String text;
     private final String type;
@@ -44,82 +49,13 @@ public class Name extends BaseAttribute implements Serializable {
     private final LanguageCode languageOfOrigin;
     private final LanguageCode languageOfUse;
 
-    // work around a Jackson bug.
-    Name() {
-        text = "";
-        type = null;
-        script = ISO15924.Zyyy;
-        languageOfUse = LanguageCode.UNKNOWN;
-        languageOfOrigin = LanguageCode.UNKNOWN;
-    }
-
     protected Name(String text, String type, ISO15924 script, LanguageCode languageOfOrigin, LanguageCode languageOfUse, Map<String, Object> extendedProperties) {
         super(extendedProperties);
-
-        if (text == null) {
-            this.text = "";
-        } else {
-            this.text = text;
-        }
-
+        this.text = Objects.requireNonNullElse(text, "");
         this.type = type;
-
-        if (script == null) {
-            this.script = ISO15924.Zyyy;
-        } else {
-            this.script = script;
-        }
-
-        if (languageOfOrigin == null) {
-            this.languageOfOrigin = LanguageCode.UNKNOWN;
-        } else {
-            this.languageOfOrigin = languageOfOrigin;
-        }
-
-        if (languageOfUse == null) {
-            this.languageOfUse = LanguageCode.UNKNOWN;
-        } else {
-            this.languageOfUse = languageOfUse;
-        }
-    }
-
-    /**
-     * @return the text of this name.
-     */
-    public String getText() {
-        return text;
-    }
-
-    /**
-     * @return the type of the name, or null. Types are types of things in the world, such as
-     * 'PERSON' or 'LOCATION'.
-     */
-    public String getType() {
-        return type;
-    }
-
-    /**
-     * @return the script code for this name. If the script is not specified, this will return
-     * {@link com.basistech.util.ISO15924#Zyyy }.
-     */
-    public ISO15924 getScript() {
-        return script;
-    }
-
-    /**
-     * @return the language of origin for this name. If the language of origin is not specified,
-     * this will return {@link LanguageCode#UNKNOWN}.
-     */
-    public LanguageCode getLanguageOfOrigin() {
-        return languageOfOrigin;
-    }
-
-    /**
-     * @return the language of use for this name. If the language of use is not specified,
-     * this will return {@link LanguageCode#UNKNOWN}.
-     */
-    public LanguageCode getLanguageOfUse() {
-        return languageOfUse;
+        this.script = Objects.requireNonNullElse(script, ISO15924.Zyyy);
+        this.languageOfOrigin = Objects.requireNonNullElse(languageOfOrigin, LanguageCode.UNKNOWN);
+        this.languageOfUse = Objects.requireNonNullElse(languageOfUse, LanguageCode.UNKNOWN);
     }
 
     @Override

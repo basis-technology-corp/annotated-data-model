@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!--
-  Copyright 2014-2025 Basis Technology Corp.
+  Copyright 2014-2026 Babel Street Rosette Ltd.
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -19,12 +19,12 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>annotated-data-model</artifactId>
     <name>annotated-data-model</name>
-    <version>3.0.9-SNAPSHOT</version>
+    <version>3.0.10-SNAPSHOT</version>
     <packaging>pom</packaging>
     <parent>
         <artifactId>open-source-parent</artifactId>
         <groupId>com.basistech</groupId>
-        <version>26.0.0</version>
+        <version>26.0.1</version>
     </parent>
 
     <description>
