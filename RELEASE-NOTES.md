@@ -1,5 +1,9 @@
 # Cumulative Release Notes for the Annotated Data Model
 
+## 3.0.10
+
+### [BX-71911](https://babelstreet.atlassian.net/browse/BX-71911) Release new parent POMs for Q2 2026
+
 ## 3.0.9
 
 ### [BX-69329](https://babelstreet.atlassian.net/browse/BX-69329) Release new parent POMs for Q1 2026
