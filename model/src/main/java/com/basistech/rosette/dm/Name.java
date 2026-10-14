@@ -21,7 +21,6 @@ import com.google.common.base.MoreObjects;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
-import java.io.Serial;
 import java.io.Serializable;
 import java.util.Map;
 import java.util.Objects;
@@ -41,7 +40,6 @@ import java.util.Objects;
 @Getter
 @EqualsAndHashCode(callSuper = true)
 public class Name extends BaseAttribute implements Serializable {
-    @Serial
     private static final long serialVersionUID = 250L;
     private final String text;
     private final String type;
