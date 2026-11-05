@@ -1,5 +1,9 @@
 # Cumulative Release Notes for the Annotated Data Model
 
+## 3.0.12
+
+### [BX-77990](https://babelstreet.atlassian.net/browse/BX-77990) Release new parent POMs targetting Java 11
+
 ## 3.0.11
 
 ### [BX-75273](https://babelstreet.atlassian.net/browse/BX-75273) Release new parent POMs for Q3 2026
